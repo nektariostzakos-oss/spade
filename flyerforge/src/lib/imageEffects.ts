@@ -78,3 +78,20 @@ export async function blackAndWhite(photoDataUrl: string): Promise<string> {
     return photoDataUrl;
   }
 }
+
+/** Subtle cinematic grade — lifts warmth & contrast without desaturating. */
+export async function colorGraded(photoDataUrl: string): Promise<string> {
+  const raw = decodeDataUrl(photoDataUrl);
+  if (!raw) return photoDataUrl;
+
+  try {
+    const out = await sharp(raw)
+      .modulate({ saturation: 1.15, brightness: 1.02 })
+      .linear(1.08, -6)
+      .png({ compressionLevel: 9 })
+      .toBuffer();
+    return `data:image/png;base64,${out.toString("base64")}`;
+  } catch {
+    return photoDataUrl;
+  }
+}

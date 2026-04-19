@@ -1,29 +1,78 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
 
-export type FontFamily = "Bebas Neue" | "Playfair Display" | "Inter" | "Anton";
+/**
+ * 7 font families sourced from Google Fonts via TTF (for Satori). Locally
+ * mirrored TTFs in `public/fonts/` take precedence; missing files fall back
+ * to a live fetch against the Google Fonts CSS2 API using an old-Chrome UA
+ * trick that forces a TTF response (the modern WOFF2 response can't be fed
+ * to Satori).
+ *
+ * Net TTF payload: ~2.8MB across 18 weight files. Fetched once per process
+ * and cached in module scope.
+ */
+
+export type FontFamily =
+  | "Inter"
+  | "Fraunces"
+  | "Oswald"
+  | "Archivo Black"
+  | "Space Grotesk"
+  | "Space Mono"
+  | "Bodoni Moda"
+  | "Khand";
+
+export type FontWeight = 400 | 500 | 700 | 900;
 
 export type LoadedFont = {
   name: FontFamily;
   data: ArrayBuffer;
-  weight: 400 | 700;
-  style: "normal";
+  weight: FontWeight;
+  style: "normal" | "italic";
 };
 
 type Spec = {
   name: FontFamily;
-  weight: 400 | 700;
-  file: string; // local filename in public/fonts/
-  googleFamily: string; // Google Fonts family name for CSS2 API
+  weight: FontWeight;
+  style: "normal" | "italic";
+  file: string;
+  googleFamily: string;
 };
 
 const SPECS: Spec[] = [
-  { name: "Bebas Neue", weight: 400, file: "BebasNeue-Regular.ttf", googleFamily: "Bebas+Neue" },
-  { name: "Playfair Display", weight: 400, file: "PlayfairDisplay-Regular.ttf", googleFamily: "Playfair+Display" },
-  { name: "Playfair Display", weight: 700, file: "PlayfairDisplay-Bold.ttf", googleFamily: "Playfair+Display" },
-  { name: "Inter", weight: 400, file: "Inter-Regular.ttf", googleFamily: "Inter" },
-  { name: "Inter", weight: 700, file: "Inter-Bold.ttf", googleFamily: "Inter" },
-  { name: "Anton", weight: 400, file: "Anton-Regular.ttf", googleFamily: "Anton" },
+  // Inter — universal workhorse sans
+  { name: "Inter", weight: 400, style: "normal", file: "Inter-Regular.ttf", googleFamily: "Inter" },
+  { name: "Inter", weight: 500, style: "normal", file: "Inter-Medium.ttf",  googleFamily: "Inter" },
+  { name: "Inter", weight: 700, style: "normal", file: "Inter-Bold.ttf",    googleFamily: "Inter" },
+  { name: "Inter", weight: 900, style: "normal", file: "Inter-Black.ttf",   googleFamily: "Inter" },
+
+  // Fraunces — editorial serif w/ real italic
+  { name: "Fraunces", weight: 400, style: "normal", file: "Fraunces-Regular.ttf",     googleFamily: "Fraunces" },
+  { name: "Fraunces", weight: 400, style: "italic", file: "Fraunces-Italic.ttf",      googleFamily: "Fraunces" },
+  { name: "Fraunces", weight: 700, style: "normal", file: "Fraunces-Bold.ttf",        googleFamily: "Fraunces" },
+  { name: "Fraunces", weight: 900, style: "normal", file: "Fraunces-Black.ttf",       googleFamily: "Fraunces" },
+
+  // Oswald — condensed humanist (Knockout substitute)
+  { name: "Oswald", weight: 500, style: "normal", file: "Oswald-Medium.ttf", googleFamily: "Oswald" },
+  { name: "Oswald", weight: 700, style: "normal", file: "Oswald-Bold.ttf",   googleFamily: "Oswald" },
+
+  // Archivo Black — brutalist heavy display
+  { name: "Archivo Black", weight: 400, style: "normal", file: "ArchivoBlack-Regular.ttf", googleFamily: "Archivo+Black" },
+
+  // Space Grotesk — brutalist/Swiss accent
+  { name: "Space Grotesk", weight: 500, style: "normal", file: "SpaceGrotesk-Medium.ttf", googleFamily: "Space+Grotesk" },
+  { name: "Space Grotesk", weight: 700, style: "normal", file: "SpaceGrotesk-Bold.ttf",   googleFamily: "Space+Grotesk" },
+
+  // Space Mono — Factory catalog numbers
+  { name: "Space Mono", weight: 400, style: "normal", file: "SpaceMono-Regular.ttf", googleFamily: "Space+Mono" },
+
+  // Bodoni Moda — high-contrast Didone (Saville direction)
+  { name: "Bodoni Moda", weight: 700, style: "normal", file: "BodoniModa-Bold.ttf",  googleFamily: "Bodoni+Moda" },
+  { name: "Bodoni Moda", weight: 900, style: "normal", file: "BodoniModa-Black.ttf", googleFamily: "Bodoni+Moda" },
+
+  // Khand — tight condensed (Druk substitute)
+  { name: "Khand", weight: 500, style: "normal", file: "Khand-Medium.ttf", googleFamily: "Khand" },
+  { name: "Khand", weight: 700, style: "normal", file: "Khand-Bold.ttf",   googleFamily: "Khand" },
 ];
 
 /** Forces Google Fonts to return a TTF (instead of WOFF2) by using an old UA. */
@@ -43,11 +92,15 @@ async function readLocal(file: string): Promise<ArrayBuffer | null> {
 }
 
 async function fetchGoogleFont(spec: Spec): Promise<ArrayBuffer> {
-  const key = `${spec.googleFamily}:${spec.weight}`;
+  const key = `${spec.googleFamily}:${spec.weight}:${spec.style}`;
   const hit = remoteBytesCache.get(key);
   if (hit) return hit;
 
-  const cssUrl = `https://fonts.googleapis.com/css2?family=${spec.googleFamily}:wght@${spec.weight}&display=swap`;
+  // Google's CSS2 API uses `ital,wght@0,400;1,400` syntax for italic.
+  const axis = spec.style === "italic"
+    ? `ital,wght@1,${spec.weight}`
+    : `wght@${spec.weight}`;
+  const cssUrl = `https://fonts.googleapis.com/css2?family=${spec.googleFamily}:${axis}&display=swap`;
   const cssRes = await fetch(cssUrl, { headers: { "User-Agent": TTF_UA } });
   if (!cssRes.ok) {
     throw new Error(`Google Fonts CSS fetch failed: ${cssRes.status} for ${spec.name} ${spec.weight}`);
@@ -79,7 +132,7 @@ export async function loadFonts(): Promise<LoadedFont[]> {
     SPECS.map(async (spec) => ({
       name: spec.name,
       weight: spec.weight,
-      style: "normal" as const,
+      style: spec.style,
       data: await resolveFont(spec),
     })),
   );

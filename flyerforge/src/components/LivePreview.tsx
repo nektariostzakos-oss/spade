@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Loader2, Shuffle } from "lucide-react";
-import type { TemplateId } from "@/templates";
+import type { Design } from "@/lib/design/axes";
 import type { EventFormData } from "@/components/EventForm";
 
 // A canned form so the preview has something nice to show on first load.
@@ -16,13 +16,13 @@ const DEMO_FORM: EventFormData = {
 };
 
 type Props = {
-  templateId: TemplateId;
+  design: Design;
   formData: EventFormData;
   photoBase64: string | null;
   logoBase64: string | null;
   accentColor: string;
   tagline: string;
-  onShuffleTemplate?: () => void;
+  onShuffleDesign?: () => void;
 };
 
 type Status =
@@ -35,19 +35,17 @@ type Status =
 const DEBOUNCE_MS = 700;
 
 export function LivePreview({
-  templateId,
+  design,
   formData,
   photoBase64,
   logoBase64,
   accentColor,
   tagline,
-  onShuffleTemplate,
+  onShuffleDesign,
 }: Props) {
   const [status, setStatus] = useState<Status>({ kind: "idle" });
   const latestUrl = useRef<string | null>(null);
 
-  // If the user hasn't typed anything yet, feed the preview endpoint demo
-  // data so new visitors see a fully-rendered flyer instead of an empty box.
   const userHasInput = useMemo(
     () =>
       formData.eventName.trim().length > 0 ||
@@ -67,7 +65,7 @@ export function LivePreview({
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            templateId,
+            design,
             formData: effectiveFormData,
             photoBase64,
             logoBase64,
@@ -85,7 +83,6 @@ export function LivePreview({
         const blob = await res.blob();
         const url = URL.createObjectURL(blob);
 
-        // Free the previous blob URL once the new one is in place.
         if (latestUrl.current) URL.revokeObjectURL(latestUrl.current);
         latestUrl.current = url;
 
@@ -103,7 +100,7 @@ export function LivePreview({
       controller.abort();
       window.clearTimeout(timer);
     };
-  }, [templateId, effectiveFormData, photoBase64, logoBase64, accentColor, effectiveTagline]);
+  }, [design, effectiveFormData, photoBase64, logoBase64, accentColor, effectiveTagline]);
 
   useEffect(() => {
     return () => {
@@ -148,14 +145,14 @@ export function LivePreview({
         ) : null}
       </div>
 
-      {onShuffleTemplate ? (
+      {onShuffleDesign ? (
         <button
           type="button"
-          onClick={onShuffleTemplate}
+          onClick={onShuffleDesign}
           className="inline-flex items-center gap-2 rounded-full border border-border bg-card/50 px-4 py-2 text-xs font-medium text-foreground transition-colors hover:border-primary/60 hover:bg-card"
         >
           <Shuffle className="h-3.5 w-3.5 text-primary" />
-          Shuffle template
+          Shuffle design
         </button>
       ) : null}
     </div>

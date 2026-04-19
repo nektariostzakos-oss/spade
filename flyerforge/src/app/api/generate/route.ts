@@ -3,14 +3,14 @@ import JSZip from "jszip";
 import { SIZES } from "@/lib/sizes";
 import { generateAsset, type BaseProps } from "@/lib/generateAsset";
 import { removeBackground } from "@/lib/removeBg";
-import type { TemplateId } from "@/templates";
+import type { Design } from "@/lib/design/axes";
 import type { EventFormData } from "@/components/EventForm";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
 
 type Body = {
-  templateId: TemplateId;
+  design: Design;
   formData: EventFormData;
   photoBase64: string;
   logoBase64?: string | null;
@@ -27,20 +27,20 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
   }
 
-  const { templateId, formData, photoBase64, removeBg } = body ?? {};
+  const { design, formData, photoBase64, removeBg } = body ?? {};
 
-  if (!templateId || !formData || !photoBase64) {
+  if (!design || !formData) {
     return NextResponse.json(
-      { error: "Missing templateId, formData, or photoBase64" },
+      { error: "Missing design or formData" },
       { status: 400 },
     );
   }
 
-  let effectivePhoto = photoBase64;
+  let effectivePhoto = photoBase64 ?? "";
   let warning: string | undefined;
 
-  if (removeBg) {
-    const result = await removeBackground(photoBase64);
+  if (removeBg && effectivePhoto) {
+    const result = await removeBackground(effectivePhoto);
     effectivePhoto = result.photoBase64;
     if (!result.ok) warning = result.warning;
   }
@@ -62,7 +62,7 @@ export async function POST(req: Request) {
     const pngs = await Promise.all(
       SIZES.map(async (size) => ({
         filename: size.filename,
-        buffer: await generateAsset(templateId, base, size),
+        buffer: await generateAsset(design, base, size),
       })),
     );
 

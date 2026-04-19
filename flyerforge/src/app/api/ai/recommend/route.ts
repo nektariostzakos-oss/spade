@@ -1,7 +1,14 @@
 import { NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
 import { extractJson, extractText, getAnthropic } from "@/lib/ai/anthropic";
-import type { TemplateId } from "@/templates";
+import {
+  DEFAULT_DESIGN,
+  type Design,
+  type Layout,
+  type Palette,
+  type Treatment,
+  type TypePair,
+} from "@/lib/design/axes";
 
 export const runtime = "nodejs";
 export const maxDuration = 30;
@@ -10,32 +17,72 @@ type Body = {
   eventName?: string;
   venueName?: string;
   vibe?: string;
+  hasPhoto?: boolean;
 };
 
-type Recommendation = {
-  templateId: TemplateId;
-  accentColor: string;
+type AiPick = {
+  layout: Layout;
+  typePair: TypePair;
+  palette: Palette;
+  treatment: Treatment;
   reason: string;
 };
 
-const VALID_IDS: TemplateId[] = [
-  "club-night",
-  "live-stage",
-  "afternoon-party",
-  "minimal-editorial",
-  "festival-burst",
-  "corporate-launch",
+const LAYOUTS: Layout[] = ["noir", "brutalist", "memphis", "editorial", "duotone", "swiss"];
+const TYPE_PAIRS: TypePair[] = [
+  "serif-editorial",
+  "condensed-punch",
+  "heavy-display",
+  "neutral-sans",
+  "classical-mono",
+  "tight-condensed",
 ];
+const PALETTES: Palette[] = [
+  "oxblood",
+  "hazard",
+  "tomato",
+  "cobalt",
+  "gold-ink",
+  "cream-ink",
+  "cream-red",
+  "duo-custom",
+];
+const TREATMENTS: Treatment[] = ["bw", "duotone", "graded", "untouched", "none"];
 
-const SYSTEM = `You are an art director matching events to templates. Pick ONE template and ONE accent color.
-Templates:
-- "club-night": late-night DJ / club. Gold on black. Moody, cinematic.
-- "live-stage": acoustic / live band. Cream paper, ink headlines. Editorial, warm.
-- "afternoon-party": daytime, brunch, rooftop. Coral/peach gradient. Playful.
-- "minimal-editorial": cultural / reading / gallery. Paper. Restrained, intellectual.
-- "festival-burst": outdoor festival / pride / summer. Rainbow gradient. Loud, joyful.
-- "corporate-launch": conference / product launch / keynote. White + blue accent. Clean, confident.
-Accent color: return a CSS hex like #ff3b6b. Choose something that fits the event mood and reads legibly.`;
+const SYSTEM = `You are an art director. Pick one value from each of four orthogonal design axes for an event flyer.
+
+Layouts:
+- "noir": A24 cinematic. Photo dominant, title bottom-scrim, hairline rules. Best for club nights, moody shows.
+- "brutalist": 032c. Off-grid, type bleeds off edge, photo half-bleed. Best for underground, punk, warehouse.
+- "memphis": Paula Scher. Stacked saturated type, geometric shapes. Best for festivals, daytime, playful events.
+- "editorial": Gentlewoman. Centered masthead, italic deck, framed photo. Best for gallery openings, readings, launches.
+- "duotone": Peter Saville. Image-driven, small typography. Best for concerts, record-launch aesthetic.
+- "swiss": Müller-Brockmann. Flush-left grid, hairlines. Best for corporate, conferences, talks.
+
+TypePairs:
+- "serif-editorial": Fraunces + Inter. Editorial, warm.
+- "condensed-punch": Oswald + Space Grotesk. Poster energy.
+- "heavy-display": Archivo Black + Space Grotesk. Brutal, loud.
+- "neutral-sans": Inter only. Understated.
+- "classical-mono": Bodoni Moda + Space Mono. Museum catalog.
+- "tight-condensed": Khand + Inter. Tight, technical.
+
+Palettes:
+- "oxblood": deep red on ink (moody).
+- "hazard": bright red on black (punk).
+- "tomato": warm orange on cream (playful).
+- "cobalt": electric blue on bone (corporate, crisp).
+- "gold-ink": metallic on black (luxe).
+- "cream-ink": editorial newsprint (quiet).
+- "cream-red": swiss hazard (sharp).
+- "duo-custom": uses the user's custom accent.
+
+Treatments:
+- "bw": desaturated cinematic.
+- "duotone": two-color halftone (needs photo).
+- "graded": warm cinematic grade.
+- "untouched": photo as-is.
+- "none": no photo, pure typography (use ONLY when hasPhoto=false).`;
 
 export async function POST(req: Request) {
   let body: Body;
@@ -49,11 +96,12 @@ export async function POST(req: Request) {
     body.eventName ? `Event: ${body.eventName}` : null,
     body.venueName ? `Venue: ${body.venueName}` : null,
     body.vibe ? `Vibe: ${body.vibe}` : null,
+    `hasPhoto: ${body.hasPhoto ? "true" : "false"}`,
   ]
     .filter(Boolean)
     .join("\n");
 
-  if (!brief) {
+  if (!body.eventName && !body.venueName && !body.vibe) {
     return NextResponse.json(
       { error: "Give me at least an event name to recommend from." },
       { status: 400 },
@@ -74,12 +122,12 @@ export async function POST(req: Request) {
 ${brief}
 
 Return ONLY a JSON object, no prose, no code fence:
-{"templateId": "one-of-the-six", "accentColor": "#rrggbb", "reason": "one short sentence"}`;
+{"layout": "...", "typePair": "...", "palette": "...", "treatment": "...", "reason": "one short sentence"}`;
 
   try {
     const message = await client.messages.create({
       model: "claude-haiku-4-5",
-      max_tokens: 200,
+      max_tokens: 240,
       system: [
         {
           type: "text",
@@ -91,16 +139,33 @@ Return ONLY a JSON object, no prose, no code fence:
     });
 
     const text = extractText(message);
-    const parsed = extractJson<Recommendation>(text);
+    const parsed = extractJson<AiPick>(text);
 
-    if (!VALID_IDS.includes(parsed.templateId)) {
-      throw new Error(`AI returned unknown templateId: ${parsed.templateId}`);
+    if (!LAYOUTS.includes(parsed.layout)) {
+      throw new Error(`AI returned unknown layout: ${parsed.layout}`);
     }
-    if (!/^#[0-9a-fA-F]{6}$/.test(parsed.accentColor)) {
-      throw new Error(`AI returned invalid hex color: ${parsed.accentColor}`);
+    if (!TYPE_PAIRS.includes(parsed.typePair)) {
+      throw new Error(`AI returned unknown typePair: ${parsed.typePair}`);
+    }
+    if (!PALETTES.includes(parsed.palette)) {
+      throw new Error(`AI returned unknown palette: ${parsed.palette}`);
+    }
+    if (!TREATMENTS.includes(parsed.treatment)) {
+      throw new Error(`AI returned unknown treatment: ${parsed.treatment}`);
     }
 
-    return NextResponse.json(parsed);
+    // If the caller said no photo, force a photo-free treatment regardless of
+    // what the model returned — layouts still render fine, just without a plate.
+    const treatment: Treatment = body.hasPhoto ? parsed.treatment : "none";
+
+    const design: Design = {
+      layout: parsed.layout,
+      typePair: parsed.typePair,
+      palette: parsed.palette,
+      treatment,
+    };
+
+    return NextResponse.json({ design, reason: parsed.reason });
   } catch (e) {
     if (e instanceof Anthropic.APIError) {
       return NextResponse.json(
@@ -108,12 +173,12 @@ Return ONLY a JSON object, no prose, no code fence:
         { status: e.status ?? 500 },
       );
     }
+    // Fallback to default design rather than failing the UI entirely.
     return NextResponse.json(
       {
         error:
-          e instanceof Error
-            ? e.message
-            : "AI template recommendation failed.",
+          e instanceof Error ? e.message : "AI design recommendation failed.",
+        design: DEFAULT_DESIGN,
       },
       { status: 500 },
     );

@@ -2,51 +2,63 @@ import satori from "satori";
 import sharp from "sharp";
 import { loadFonts } from "./fonts";
 import type { AssetSize } from "./sizes";
-import { TEMPLATES, type TemplateId } from "@/templates";
-import type { TemplateProps } from "@/templates/shared";
-import { blackAndWhite, duotone, grainDataUrl } from "./imageEffects";
+import { LAYOUT_COMPONENTS } from "@/templates";
+import type { LayoutProps } from "@/templates/shared";
+import type { Design } from "@/lib/design/axes";
+import { resolvePalette } from "@/lib/design/palettes";
+import { blackAndWhite, colorGraded, duotone, grainDataUrl } from "./imageEffects";
 
-export type BaseProps = Omit<TemplateProps, "width" | "height">;
+export type BaseProps = Omit<LayoutProps, "width" | "height" | "sizeId" | "design">;
 
-/** Some templates expect the photo to be pre-processed (duotone, B&W) because
- *  Satori has no `mix-blend-mode` or `filter` on images. Doing it once here
- *  keeps templates pure and the pipeline honest. */
-async function applyMediaTreatment(
-  templateId: TemplateId,
+/**
+ * Treatment is independent of layout now — we switch on `design.treatment`
+ * and run the corresponding Sharp pipeline once before Satori. Satori itself
+ * has no `filter` support for images.
+ */
+async function applyTreatment(
+  design: Design,
   base: BaseProps,
 ): Promise<BaseProps> {
   if (!base.photoUrl) return base;
+  if (design.treatment === "none") {
+    // Typographic layouts — drop the photo entirely.
+    return { ...base, photoUrl: "" };
+  }
 
-  switch (templateId) {
-    case "club-night":
+  const accent = resolvePalette(design.palette, base.accentColor).accent;
+
+  switch (design.treatment) {
+    case "bw":
       return { ...base, photoUrl: await blackAndWhite(base.photoUrl) };
-    case "festival-burst":
-      return {
-        ...base,
-        photoUrl: await duotone(base.photoUrl, base.accentColor || "#ff3b6b"),
-      };
+    case "duotone":
+      return { ...base, photoUrl: await duotone(base.photoUrl, accent) };
+    case "graded":
+      return { ...base, photoUrl: await colorGraded(base.photoUrl) };
+    case "untouched":
     default:
       return base;
   }
 }
 
 export async function generateAsset(
-  templateId: TemplateId,
+  design: Design,
   base: BaseProps,
   size: AssetSize,
 ): Promise<Buffer> {
-  const Template = TEMPLATES[templateId];
-  if (!Template) throw new Error(`Unknown templateId: ${templateId}`);
+  const Layout = LAYOUT_COMPONENTS[design.layout];
+  if (!Layout) throw new Error(`Unknown layout: ${design.layout}`);
 
   const [fonts, prepared, grainUrl] = await Promise.all([
     loadFonts(),
-    applyMediaTreatment(templateId, base),
+    applyTreatment(design, base),
     grainDataUrl(),
   ]);
 
-  const element = Template({
+  const element = Layout({
     ...prepared,
     grainUrl,
+    design,
+    sizeId: size.id,
     width: size.width,
     height: size.height,
   });

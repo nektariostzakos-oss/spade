@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
 import { generateAsset, type BaseProps } from "@/lib/generateAsset";
-import type { TemplateId } from "@/templates";
+import type { Design } from "@/lib/design/axes";
 import type { EventFormData } from "@/components/EventForm";
 
 export const runtime = "nodejs";
 export const maxDuration = 30;
 
 type Body = {
-  templateId: TemplateId;
+  design: Design;
   formData: EventFormData;
   photoBase64?: string | null;
   logoBase64?: string | null;
@@ -28,10 +28,10 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
   }
 
-  const { templateId, formData } = body ?? {};
-  if (!templateId || !formData) {
+  const { design, formData } = body ?? {};
+  if (!design || !formData) {
     return NextResponse.json(
-      { error: "Missing templateId or formData" },
+      { error: "Missing design or formData" },
       { status: 400 },
     );
   }
@@ -50,7 +50,7 @@ export async function POST(req: Request) {
   };
 
   try {
-    const buffer = await generateAsset(templateId, base, {
+    const buffer = await generateAsset(design, base, {
       id: "preview",
       label: "Preview",
       width: PREVIEW_WIDTH,

@@ -1,35 +1,18 @@
 import type { ReactElement } from "react";
-import { ClubNight } from "./ClubNight";
-import { LiveStage } from "./LiveStage";
-import { AfternoonParty } from "./AfternoonParty";
-import { MinimalEditorial } from "./MinimalEditorial";
-import { FestivalBurst } from "./FestivalBurst";
-import { CorporateLaunch } from "./CorporateLaunch";
-import type { TemplateProps } from "./shared";
+import type { Layout } from "@/lib/design/axes";
+import type { LayoutProps } from "./shared";
+import { NoirLayout } from "./layouts/NoirLayout";
+import { BrutalistLayout } from "./layouts/BrutalistLayout";
+import { MemphisLayout } from "./layouts/MemphisLayout";
+import { EditorialLayout } from "./layouts/EditorialLayout";
+import { DuotoneLayout } from "./layouts/DuotoneLayout";
+import { SwissLayout } from "./layouts/SwissLayout";
 
-export type TemplateId =
-  | "club-night"
-  | "live-stage"
-  | "afternoon-party"
-  | "minimal-editorial"
-  | "festival-burst"
-  | "corporate-launch";
-
-export const TEMPLATES: Record<TemplateId, (p: TemplateProps) => ReactElement> = {
-  "club-night": ClubNight,
-  "live-stage": LiveStage,
-  "afternoon-party": AfternoonParty,
-  "minimal-editorial": MinimalEditorial,
-  "festival-burst": FestivalBurst,
-  "corporate-launch": CorporateLaunch,
-};
-
-/** Default accent color per template — used as the color picker's initial value. */
-export const TEMPLATE_DEFAULT_ACCENT: Record<TemplateId, string> = {
-  "club-night": "#7A1E1E",
-  "live-stage": "#ff2d16",
-  "afternoon-party": "#e8502a",
-  "minimal-editorial": "#8a2b2b",
-  "festival-burst": "#ff3b6b",
-  "corporate-launch": "#d7281d",
+export const LAYOUT_COMPONENTS: Record<Layout, (p: LayoutProps) => ReactElement> = {
+  noir: NoirLayout,
+  brutalist: BrutalistLayout,
+  memphis: MemphisLayout,
+  editorial: EditorialLayout,
+  duotone: DuotoneLayout,
+  swiss: SwissLayout,
 };

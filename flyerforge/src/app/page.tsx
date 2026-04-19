@@ -24,9 +24,10 @@ import {
   EMPTY_FORM,
   type EventFormData,
 } from "@/components/EventForm";
-import { TemplatePicker, TEMPLATE_META } from "@/components/TemplatePicker";
+import { AxisPicker } from "@/components/AxisPicker";
 import { PreviewGrid } from "@/components/PreviewGrid";
-import { TEMPLATE_DEFAULT_ACCENT, type TemplateId } from "@/templates";
+import { DEFAULT_DESIGN, type Design } from "@/lib/design/axes";
+import { curate, explainDesign, shuffleDesign } from "@/lib/design/curator";
 import { slugify } from "@/lib/utils";
 import { SIZES } from "@/lib/sizes";
 
@@ -40,10 +41,9 @@ export default function Page() {
   const [photoBase64, setPhotoBase64] = useState<string | null>(null);
   const [logoBase64, setLogoBase64] = useState<string | null>(null);
   const [form, setForm] = useState<EventFormData>(EMPTY_FORM);
-  const [templateId, setTemplateId] = useState<TemplateId>("club-night");
-  const [accentColor, setAccentColor] = useState<string>(
-    TEMPLATE_DEFAULT_ACCENT["club-night"],
-  );
+  const [design, setDesign] = useState<Design>(DEFAULT_DESIGN);
+  const [autoCurate, setAutoCurate] = useState(true);
+  const [accentColor, setAccentColor] = useState<string>("#7A1E1E");
   const [tagline, setTagline] = useState<string>("");
   const [removeBg, setRemoveBg] = useState(false);
   const [status, setStatus] = useState<Status>({ kind: "idle" });
@@ -64,25 +64,43 @@ export default function Page() {
     }
   }, [status.kind]);
 
-  function pickTemplate(next: TemplateId) {
-    setTemplateId(next);
-    // Reset accent color to the template's default whenever the user changes
-    // templates. They can re-customize with the color picker afterwards.
-    setAccentColor(TEMPLATE_DEFAULT_ACCENT[next]);
+  // Auto-curate: re-run the curator whenever the inputs change (debounced).
+  // Disable by flipping the Auto switch, which lets manual AxisPicker edits
+  // stick without being overwritten.
+  useEffect(() => {
+    if (!autoCurate) return;
+    const t = window.setTimeout(() => {
+      const next = curate({
+        eventName: form.eventName,
+        venueName: form.venueName,
+        artistName: form.artistName,
+        tagline,
+        hasPhoto: Boolean(photoBase64),
+      });
+      setDesign(next);
+    }, 400);
+    return () => window.clearTimeout(t);
+  }, [autoCurate, form.eventName, form.venueName, form.artistName, tagline, photoBase64]);
+
+  function onDesignOverride(next: Design) {
+    // User touched an axis — pin the design and stop auto-curating.
+    setAutoCurate(false);
+    setDesign(next);
   }
 
-  function shuffleTemplate() {
-    const others = TEMPLATE_META.filter((t) => t.id !== templateId);
-    const next = others[Math.floor(Math.random() * others.length)];
-    pickTemplate(next.id);
+  function shuffleCurrent() {
+    setAutoCurate(false);
+    const next = shuffleDesign(design);
+    setDesign(next);
   }
 
   function reset() {
     setPhotoBase64(null);
     setLogoBase64(null);
     setForm(EMPTY_FORM);
-    setTemplateId("club-night");
-    setAccentColor(TEMPLATE_DEFAULT_ACCENT["club-night"]);
+    setDesign(DEFAULT_DESIGN);
+    setAutoCurate(true);
+    setAccentColor("#7A1E1E");
     setTagline("");
     setRemoveBg(false);
     setAiPrompt("");
@@ -91,10 +109,11 @@ export default function Page() {
   }
 
   function validate(): string | null {
-    if (!photoBase64) return "Please upload or generate a photo.";
     if (!form.eventName.trim()) return "Event name is required.";
     if (!form.date) return "Event date is required.";
     if (!form.venueName.trim()) return "Venue name is required.";
+    if (design.treatment !== "none" && !photoBase64)
+      return "Upload a photo or switch to the Typographic treatment.";
     return null;
   }
 
@@ -130,7 +149,7 @@ export default function Page() {
     }
   }
 
-  async function onSuggestTemplate() {
+  async function onSuggestDesign() {
     if (aiBusy) return;
     setAiBusy("recommend");
     setAiNote(null);
@@ -141,21 +160,22 @@ export default function Page() {
         body: JSON.stringify({
           eventName: form.eventName,
           venueName: form.venueName,
+          hasPhoto: Boolean(photoBase64),
         }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? `HTTP ${res.status}`);
-      setTemplateId(data.templateId);
-      setAccentColor(data.accentColor);
+      setAutoCurate(false);
+      setDesign(data.design);
       setAiNote({
         kind: "info",
-        text: `AI picked: ${data.templateId} — ${data.reason}`,
+        text: `AI picked: ${data.design.layout} + ${data.design.palette} — ${data.reason ?? ""}`,
       });
     } catch (e) {
       setAiNote({
         kind: "error",
         text:
-          e instanceof Error ? `Template AI: ${e.message}` : "Template AI failed.",
+          e instanceof Error ? `Design AI: ${e.message}` : "Design AI failed.",
       });
     } finally {
       setAiBusy(null);
@@ -228,9 +248,9 @@ export default function Page() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          templateId,
+          design,
           formData: form,
-          photoBase64,
+          photoBase64: photoBase64 ?? "",
           logoBase64,
           accentColor,
           tagline,
@@ -260,6 +280,23 @@ export default function Page() {
   }
 
   const working = status.kind === "working";
+
+  // Only show the curator-explanation hint when Auto is on and user has typed
+  // enough to make the explanation actually meaningful.
+  const showCuratorHint =
+    autoCurate && (form.eventName.trim().length > 0 || form.venueName.trim().length > 0);
+  const curatorHint = showCuratorHint
+    ? explainDesign(
+        {
+          eventName: form.eventName,
+          venueName: form.venueName,
+          artistName: form.artistName,
+          tagline,
+          hasPhoto: Boolean(photoBase64),
+        },
+        design,
+      )
+    : null;
 
   return (
     <main
@@ -427,13 +464,13 @@ export default function Page() {
               <CardHeader>
                 <CardTitle className="flex items-center justify-between">
                   <span className="flex items-center gap-3">
-                    <StepBadge n={4} /> Template
+                    <StepBadge n={4} /> Design
                   </span>
                   <Button
                     type="button"
                     variant="ghost"
                     size="sm"
-                    onClick={onSuggestTemplate}
+                    onClick={onSuggestDesign}
                     disabled={aiBusy !== null}
                   >
                     {aiBusy === "recommend" ? (
@@ -441,12 +478,36 @@ export default function Page() {
                     ) : (
                       <Sparkles className="mr-2 h-3.5 w-3.5" />
                     )}
-                    {aiBusy === "recommend" ? "Thinking…" : "Suggest template"}
+                    {aiBusy === "recommend" ? "Thinking…" : "Suggest design"}
                   </Button>
                 </CardTitle>
               </CardHeader>
-              <CardContent>
-                <TemplatePicker value={templateId} onChange={pickTemplate} />
+              <CardContent className="space-y-4">
+                <div className="flex items-center justify-between rounded-md border border-border bg-card/50 p-3">
+                  <div className="flex flex-col">
+                    <Label htmlFor="auto-curate-switch">Auto</Label>
+                    <span className="text-xs text-muted-foreground">
+                      Re-picks the design from your event name &amp; venue.
+                    </span>
+                  </div>
+                  <Switch
+                    id="auto-curate-switch"
+                    checked={autoCurate}
+                    onCheckedChange={setAutoCurate}
+                  />
+                </div>
+
+                {curatorHint ? (
+                  <p className="rounded-md border border-primary/20 bg-primary/5 p-2 text-xs text-muted-foreground">
+                    {curatorHint}
+                  </p>
+                ) : null}
+
+                <AxisPicker
+                  value={design}
+                  onChange={onDesignOverride}
+                  onRandomize={shuffleCurrent}
+                />
               </CardContent>
             </Card>
 
@@ -504,13 +565,13 @@ export default function Page() {
               </CardHeader>
               <CardContent className="flex justify-center">
                 <LivePreview
-                  templateId={templateId}
+                  design={design}
                   formData={form}
                   photoBase64={photoBase64}
                   logoBase64={logoBase64}
                   accentColor={accentColor}
                   tagline={tagline}
-                  onShuffleTemplate={shuffleTemplate}
+                  onShuffleDesign={shuffleCurrent}
                 />
               </CardContent>
             </Card>
