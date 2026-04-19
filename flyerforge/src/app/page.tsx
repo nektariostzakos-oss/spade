@@ -17,7 +17,7 @@ import {
   EMPTY_FORM,
   type EventFormData,
 } from "@/components/EventForm";
-import { TemplatePicker } from "@/components/TemplatePicker";
+import { TemplatePicker, TEMPLATE_META } from "@/components/TemplatePicker";
 import { PreviewGrid } from "@/components/PreviewGrid";
 import { TEMPLATE_DEFAULT_ACCENT, type TemplateId } from "@/templates";
 import { slugify } from "@/lib/utils";
@@ -51,6 +51,12 @@ export default function Page() {
     // Reset accent color to the template's default whenever the user changes
     // templates. They can re-customize with the color picker afterwards.
     setAccentColor(TEMPLATE_DEFAULT_ACCENT[next]);
+  }
+
+  function shuffleTemplate() {
+    const others = TEMPLATE_META.filter((t) => t.id !== templateId);
+    const next = others[Math.floor(Math.random() * others.length)];
+    pickTemplate(next.id);
   }
 
   function reset() {
@@ -427,6 +433,7 @@ export default function Page() {
                   logoBase64={logoBase64}
                   accentColor={accentColor}
                   tagline={tagline}
+                  onShuffleTemplate={shuffleTemplate}
                 />
               </CardContent>
             </Card>
