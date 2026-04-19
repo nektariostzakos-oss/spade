@@ -72,7 +72,7 @@ export async function POST(req: Request) {
     };
     if (warning) headers["X-FlyerForge-Warning"] = warning;
 
-    return new NextResponse(zipBuffer, { status: 200, headers });
+    return new NextResponse(new Uint8Array(zipBuffer), { status: 200, headers });
   } catch (e) {
     const message =
       e instanceof Error ? e.message : "Asset generation failed unexpectedly.";

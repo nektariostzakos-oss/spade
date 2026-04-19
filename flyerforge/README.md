@@ -13,7 +13,17 @@ Generate 6 event-flyer assets from one photo and a short form. Pick a template, 
 | Printable A5 @ 300dpi   | 1748×2480   |
 | WhatsApp status         | 1080×1920   |
 
-## Deploy to Vercel (mobile-friendly)
+## Deploy to Hostinger (mobile-friendly, no build needed)
+
+A prebuilt, ready-to-upload bundle lives at
+[`dist/flyerforge-hostinger.zip`](./dist/flyerforge-hostinger.zip) (~15 MB).
+
+1. Download the ZIP from GitHub on your phone.
+2. Follow the step-by-step instructions in [`dist/DEPLOY.md`](./dist/DEPLOY.md) — TL;DR: create a Node.js app in hPanel, upload + extract the ZIP, set `server.js` as the startup file, optionally add `REMOVE_BG_API_KEY`, click Start.
+
+The bundle is a **Next.js standalone build**: `node_modules` (with Linux x64 sharp binaries), `.next/`, `public/`, and `server.js` are all included. You don't need `npm install` or `npm run build` on the server.
+
+## Deploy to Vercel (alternative)
 
 Tap the button, sign in with GitHub, and Vercel gives you a public URL in ~60s. The build fetches the 5 fonts from Google Fonts at runtime — you don't need to commit any `.ttf` files.
 

@@ -1,9 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  experimental: {
-    serverComponentsExternalPackages: ["sharp", "satori"],
-  },
+  output: "standalone",
+  serverExternalPackages: ["sharp", "satori"],
 };
 
 export default nextConfig;
