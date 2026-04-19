@@ -1,8 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { saveAs } from "file-saver";
-import { Sparkles, Wand2, Download, RotateCcw } from "lucide-react";
+import {
+  AlertCircle,
+  CheckCircle2,
+  Loader2,
+  RotateCcw,
+  Sparkles,
+  Wand2,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -44,7 +51,18 @@ export default function Page() {
     null,
   );
   const [aiPrompt, setAiPrompt] = useState("");
-  const [aiNote, setAiNote] = useState<string | null>(null);
+  const [aiNote, setAiNote] = useState<
+    null | { kind: "info" | "error"; text: string }
+  >(null);
+  const topRef = useRef<HTMLElement | null>(null);
+
+  // Scroll back to the top when we land on the success screen so the CTA
+  // isn't hidden below the fold on mobile.
+  useEffect(() => {
+    if (status.kind === "success" && topRef.current) {
+      topRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [status.kind]);
 
   function pickTemplate(next: TemplateId) {
     setTemplateId(next);
@@ -101,11 +119,12 @@ export default function Page() {
         setForm((f) => ({ ...f, eventName: data.headline }));
       }
       if (data.tagline) setTagline(data.tagline);
-      setAiNote(`AI: ${data.headline} — ${data.tagline}`);
+      setAiNote({ kind: "info", text: `AI: ${data.headline} — ${data.tagline}` });
     } catch (e) {
-      setAiNote(
-        e instanceof Error ? `Copy AI: ${e.message}` : "Copy AI failed.",
-      );
+      setAiNote({
+        kind: "error",
+        text: e instanceof Error ? `Copy AI: ${e.message}` : "Copy AI failed.",
+      });
     } finally {
       setAiBusy(null);
     }
@@ -128,13 +147,16 @@ export default function Page() {
       if (!res.ok) throw new Error(data.error ?? `HTTP ${res.status}`);
       setTemplateId(data.templateId);
       setAccentColor(data.accentColor);
-      setAiNote(`AI picked: ${data.templateId} — ${data.reason}`);
+      setAiNote({
+        kind: "info",
+        text: `AI picked: ${data.templateId} — ${data.reason}`,
+      });
     } catch (e) {
-      setAiNote(
-        e instanceof Error
-          ? `Template AI: ${e.message}`
-          : "Template AI failed.",
-      );
+      setAiNote({
+        kind: "error",
+        text:
+          e instanceof Error ? `Template AI: ${e.message}` : "Template AI failed.",
+      });
     } finally {
       setAiBusy(null);
     }
@@ -143,11 +165,17 @@ export default function Page() {
   async function onGenerateBackground() {
     if (aiBusy) return;
     if (!aiPrompt.trim()) {
-      setAiNote("Describe what you want in the background first.");
+      setAiNote({
+        kind: "error",
+        text: "Describe what you want in the background first.",
+      });
       return;
     }
     setAiBusy("image");
-    setAiNote("Generating background image (this takes ~15s)...");
+    setAiNote({
+      kind: "info",
+      text: "Generating background image (this takes ~15s)…",
+    });
     try {
       const res = await fetch("/api/ai/image", {
         method: "POST",
@@ -157,11 +185,15 @@ export default function Page() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? `HTTP ${res.status}`);
       setPhotoBase64(data.photoBase64);
-      setAiNote("AI background loaded into the photo slot.");
+      setAiNote({
+        kind: "info",
+        text: "AI background loaded into the photo slot.",
+      });
     } catch (e) {
-      setAiNote(
-        e instanceof Error ? `Image AI: ${e.message}` : "Image AI failed.",
-      );
+      setAiNote({
+        kind: "error",
+        text: e instanceof Error ? `Image AI: ${e.message}` : "Image AI failed.",
+      });
     } finally {
       setAiBusy(null);
     }
@@ -230,7 +262,10 @@ export default function Page() {
   const working = status.kind === "working";
 
   return (
-    <main className="relative mx-auto w-full max-w-[960px] px-4 py-8 sm:py-12">
+    <main
+      ref={topRef}
+      className="relative mx-auto w-full max-w-[960px] px-4 py-8 sm:py-12"
+    >
       <header className="mb-10 space-y-3 text-center">
         <div className="inline-flex items-center gap-2 rounded-full border border-border bg-card/50 px-3 py-1 text-xs text-muted-foreground">
           <Sparkles className="h-3 w-3 text-primary" /> AI-powered flyer studio
@@ -245,19 +280,24 @@ export default function Page() {
       </header>
 
       {status.kind === "success" ? (
-        <Card>
+        <Card className="border-primary/40 bg-gradient-to-br from-primary/10 via-card to-card">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Download className="h-5 w-5 text-primary" /> All done.
+            <CardTitle className="flex items-center gap-3">
+              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/20">
+                <CheckCircle2 className="h-6 w-6 text-primary" />
+              </span>
+              <span>All six assets ready.</span>
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <p className="text-sm text-muted-foreground">
               Downloaded{" "}
               <span className="font-mono text-foreground">{status.filename}</span>.
+              Check your Downloads folder.
             </p>
             {status.warning ? (
-              <p className="rounded-md border border-yellow-500/40 bg-yellow-500/10 p-3 text-xs text-yellow-200">
+              <p className="flex items-start gap-2 rounded-md border border-yellow-500/40 bg-yellow-500/10 p-3 text-xs text-yellow-200">
+                <AlertCircle className="mt-0.5 h-3.5 w-3.5 shrink-0" />
                 {status.warning}
               </p>
             ) : null}
@@ -268,10 +308,12 @@ export default function Page() {
         </Card>
       ) : (
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_320px]">
-          <div className="space-y-6">
+          <div className="order-last space-y-6 lg:order-none">
             <Card>
               <CardHeader>
-                <CardTitle>1. Photo</CardTitle>
+                <CardTitle className="flex items-center gap-3">
+                  <StepBadge n={1} /> Photo
+                </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <UploadZone
@@ -296,8 +338,12 @@ export default function Page() {
                       onClick={onGenerateBackground}
                       disabled={aiBusy !== null}
                     >
-                      <Wand2 className="mr-2 h-4 w-4" />
-                      {aiBusy === "image" ? "Generating..." : "Generate"}
+                      {aiBusy === "image" ? (
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      ) : (
+                        <Wand2 className="mr-2 h-4 w-4" />
+                      )}
+                      {aiBusy === "image" ? "Generating…" : "Generate"}
                     </Button>
                   </div>
                 </div>
@@ -306,7 +352,9 @@ export default function Page() {
 
             <Card>
               <CardHeader>
-                <CardTitle>2. Brand</CardTitle>
+                <CardTitle className="flex items-center gap-3">
+                  <StepBadge n={2} /> Brand
+                </CardTitle>
               </CardHeader>
               <CardContent className="space-y-5">
                 <LogoUpload
@@ -326,7 +374,9 @@ export default function Page() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center justify-between">
-                  <span>3. Event details</span>
+                  <span className="flex items-center gap-3">
+                    <StepBadge n={3} /> Event details
+                  </span>
                   <Button
                     type="button"
                     variant="ghost"
@@ -334,8 +384,12 @@ export default function Page() {
                     onClick={onSuggestCopy}
                     disabled={aiBusy !== null}
                   >
-                    <Sparkles className="mr-2 h-3.5 w-3.5" />
-                    {aiBusy === "copy" ? "Thinking..." : "Suggest copy"}
+                    {aiBusy === "copy" ? (
+                      <Loader2 className="mr-2 h-3.5 w-3.5 animate-spin" />
+                    ) : (
+                      <Sparkles className="mr-2 h-3.5 w-3.5" />
+                    )}
+                    {aiBusy === "copy" ? "Thinking…" : "Suggest copy"}
                   </Button>
                 </CardTitle>
               </CardHeader>
@@ -351,8 +405,19 @@ export default function Page() {
                   />
                 </div>
                 {aiNote ? (
-                  <p className="rounded-md border border-primary/30 bg-primary/10 p-2 text-xs text-foreground">
-                    {aiNote}
+                  <p
+                    className={
+                      aiNote.kind === "error"
+                        ? "flex items-start gap-2 rounded-md border border-destructive/40 bg-destructive/10 p-2 text-xs text-destructive-foreground"
+                        : "flex items-start gap-2 rounded-md border border-primary/30 bg-primary/10 p-2 text-xs text-foreground"
+                    }
+                  >
+                    {aiNote.kind === "error" ? (
+                      <AlertCircle className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+                    ) : (
+                      <Sparkles className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary" />
+                    )}
+                    <span>{aiNote.text}</span>
                   </p>
                 ) : null}
               </CardContent>
@@ -361,7 +426,9 @@ export default function Page() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center justify-between">
-                  <span>4. Template</span>
+                  <span className="flex items-center gap-3">
+                    <StepBadge n={4} /> Template
+                  </span>
                   <Button
                     type="button"
                     variant="ghost"
@@ -369,8 +436,12 @@ export default function Page() {
                     onClick={onSuggestTemplate}
                     disabled={aiBusy !== null}
                   >
-                    <Sparkles className="mr-2 h-3.5 w-3.5" />
-                    {aiBusy === "recommend" ? "Thinking..." : "Suggest template"}
+                    {aiBusy === "recommend" ? (
+                      <Loader2 className="mr-2 h-3.5 w-3.5 animate-spin" />
+                    ) : (
+                      <Sparkles className="mr-2 h-3.5 w-3.5" />
+                    )}
+                    {aiBusy === "recommend" ? "Thinking…" : "Suggest template"}
                   </Button>
                 </CardTitle>
               </CardHeader>
@@ -379,9 +450,11 @@ export default function Page() {
               </CardContent>
             </Card>
 
-            <Card>
+            <Card className="border-primary/40 bg-gradient-to-br from-primary/10 via-card to-card shadow-lg shadow-primary/10">
               <CardHeader>
-                <CardTitle>5. Generate</CardTitle>
+                <CardTitle className="flex items-center gap-3 text-xl">
+                  <StepBadge n={5} highlight /> Generate
+                </CardTitle>
               </CardHeader>
               <CardContent className="space-y-5">
                 <div className="flex items-center justify-between rounded-md border border-border bg-card/50 p-3">
@@ -408,19 +481,23 @@ export default function Page() {
                   onClick={onGenerate}
                   disabled={working}
                 >
+                  {working ? (
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  ) : null}
                   {working ? status.message : "Generate 6 Assets"}
                 </Button>
 
                 {status.kind === "error" ? (
-                  <p className="rounded-md border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive-foreground">
-                    {status.message}
+                  <p className="flex items-start gap-2 rounded-md border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive-foreground">
+                    <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
+                    <span>{status.message}</span>
                   </p>
                 ) : null}
               </CardContent>
             </Card>
           </div>
 
-          <aside className="lg:sticky lg:top-8 lg:self-start">
+          <aside className="order-first lg:sticky lg:top-8 lg:order-none lg:self-start">
             <Card>
               <CardHeader>
                 <CardTitle className="text-sm">Live preview</CardTitle>
@@ -441,5 +518,20 @@ export default function Page() {
         </div>
       )}
     </main>
+  );
+}
+
+function StepBadge({ n, highlight }: { n: number; highlight?: boolean }) {
+  return (
+    <span
+      className={
+        highlight
+          ? "flex h-8 w-8 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground"
+          : "flex h-7 w-7 items-center justify-center rounded-full border border-border bg-background text-xs font-bold text-muted-foreground"
+      }
+      aria-hidden
+    >
+      {n}
+    </span>
   );
 }

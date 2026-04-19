@@ -1,9 +1,19 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Loader2, Shuffle } from "lucide-react";
 import type { TemplateId } from "@/templates";
 import type { EventFormData } from "@/components/EventForm";
+
+// A canned form so the preview has something nice to show on first load.
+const DEMO_FORM: EventFormData = {
+  eventName: "Last Light",
+  date: "2026-06-12",
+  time: "21:00",
+  venueName: "Club Atlas",
+  venueAddress: "12 Seaside Rd, Athens",
+  artistName: "Helios",
+};
 
 type Props = {
   templateId: TemplateId;
@@ -36,16 +46,19 @@ export function LivePreview({
   const [status, setStatus] = useState<Status>({ kind: "idle" });
   const latestUrl = useRef<string | null>(null);
 
-  useEffect(() => {
-    const canRender =
+  // If the user hasn't typed anything yet, feed the preview endpoint demo
+  // data so new visitors see a fully-rendered flyer instead of an empty box.
+  const userHasInput = useMemo(
+    () =>
       formData.eventName.trim().length > 0 ||
       formData.venueName.trim().length > 0 ||
-      Boolean(photoBase64);
-    if (!canRender) {
-      setStatus({ kind: "idle" });
-      return;
-    }
+      Boolean(photoBase64),
+    [formData.eventName, formData.venueName, photoBase64],
+  );
+  const effectiveFormData = userHasInput ? formData : DEMO_FORM;
+  const effectiveTagline = userHasInput ? tagline : "ONE NIGHT ONLY";
 
+  useEffect(() => {
     const controller = new AbortController();
     const timer = window.setTimeout(async () => {
       setStatus({ kind: "loading" });
@@ -55,11 +68,11 @@ export function LivePreview({
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             templateId,
-            formData,
+            formData: effectiveFormData,
             photoBase64,
             logoBase64,
             accentColor,
-            tagline,
+            tagline: effectiveTagline,
           }),
           signal: controller.signal,
         });
@@ -90,7 +103,7 @@ export function LivePreview({
       controller.abort();
       window.clearTimeout(timer);
     };
-  }, [templateId, formData, photoBase64, logoBase64, accentColor, tagline]);
+  }, [templateId, effectiveFormData, photoBase64, logoBase64, accentColor, effectiveTagline]);
 
   useEffect(() => {
     return () => {
@@ -117,8 +130,14 @@ export function LivePreview({
         ) : null}
 
         {status.kind === "idle" ? (
-          <div className="px-4 text-center text-xs text-muted-foreground">
-            Add an event name, venue, or photo to see a live preview.
+          <div className="absolute inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm">
+            <Loader2 className="h-6 w-6 animate-spin text-primary" />
+          </div>
+        ) : null}
+
+        {!userHasInput && status.kind === "ready" ? (
+          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 rounded-full border border-border bg-background/80 px-2 py-0.5 text-[10px] uppercase tracking-widest text-muted-foreground backdrop-blur">
+            demo
           </div>
         ) : null}
 

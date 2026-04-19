@@ -1,5 +1,11 @@
 import { color, formatDate, formatTime, scale, type TemplateProps } from "./shared";
 
+/**
+ * Duotone Photographic — Peter Saville / Factory Records / New Order.
+ * The photo is pre-baked duotone upstream. Composition is sparse:
+ * giant ink-plate title stacked vertical, a thin rule, corner IDs, a
+ * single accent bar. No gradients, no confetti.
+ */
 export function FestivalBurst(props: TemplateProps) {
   const {
     eventName,
@@ -17,8 +23,9 @@ export function FestivalBurst(props: TemplateProps) {
   } = props;
 
   const s = (px: number) => scale(width, px);
+  const ink = "#0b0b0b";
+  const chalk = "#f6f1e7";
   const accent = color(accentColor, "#ff3b6b");
-  const ink = "#0e0030";
 
   return (
     <div
@@ -27,35 +34,34 @@ export function FestivalBurst(props: TemplateProps) {
         height,
         display: "flex",
         position: "relative",
-        backgroundImage:
-          "linear-gradient(135deg, #ff3b6b 0%, #ff8a3d 45%, #ffd23d 100%)",
+        backgroundColor: ink,
         fontFamily: "Inter",
         overflow: "hidden",
       }}
     >
+      {photoUrl ? (
+        // eslint-disable-next-line jsx-a11y/alt-text
+        <img
+          src={photoUrl}
+          width={width}
+          height={height}
+          style={{
+            position: "absolute",
+            inset: 0,
+            width,
+            height,
+            objectFit: "cover",
+          }}
+        />
+      ) : null}
+
+      {/* Soft vignette to anchor type */}
       <div
         style={{
           position: "absolute",
-          top: -s(120),
-          right: -s(120),
-          width: s(480),
-          height: s(480),
-          borderRadius: s(480),
-          backgroundColor: accent,
-          opacity: 0.35,
-          display: "flex",
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          bottom: -s(160),
-          left: -s(100),
-          width: s(500),
-          height: s(500),
-          borderRadius: s(500),
-          backgroundColor: "#4a148c",
-          opacity: 0.25,
+          inset: 0,
+          background:
+            "linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 40%, rgba(0,0,0,0.55) 100%)",
           display: "flex",
         }}
       />
@@ -70,92 +76,80 @@ export function FestivalBurst(props: TemplateProps) {
           justifyContent: "space-between",
         }}
       >
+        {/* Top row: index + logo */}
         <div
           style={{
             display: "flex",
-            alignItems: "center",
+            alignItems: "flex-start",
             justifyContent: "space-between",
           }}
         >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              backgroundColor: ink,
-              color: "#ffd23d",
-              padding: `${s(12)}px ${s(20)}px`,
-              fontFamily: "Inter",
-              fontWeight: 700,
-              fontSize: s(26),
-              letterSpacing: s(4),
-              textTransform: "uppercase",
-            }}
-          >
-            Festival
+          <div style={{ display: "flex", flexDirection: "column", gap: s(8) }}>
+            <div
+              style={{
+                color: chalk,
+                fontFamily: "Inter",
+                fontSize: s(20),
+                fontWeight: 700,
+                letterSpacing: s(6),
+                textTransform: "uppercase",
+                display: "flex",
+              }}
+            >
+              FAC · {new Date().getFullYear()}
+            </div>
+            <div
+              style={{
+                width: s(40),
+                height: s(2),
+                backgroundColor: accent,
+                display: "flex",
+              }}
+            />
           </div>
           {logoUrl ? (
             // eslint-disable-next-line jsx-a11y/alt-text
             <img
               src={logoUrl}
-              width={s(110)}
-              height={s(110)}
-              style={{ width: s(110), height: s(110), objectFit: "contain" }}
+              width={s(80)}
+              height={s(80)}
+              style={{ width: s(80), height: s(80), objectFit: "contain", opacity: 0.9 }}
             />
-          ) : null}
+          ) : (
+            <div
+              style={{
+                color: chalk,
+                fontFamily: "Inter",
+                fontSize: s(20),
+                fontWeight: 700,
+                letterSpacing: s(6),
+                textTransform: "uppercase",
+                display: "flex",
+              }}
+            >
+              EDITION / 01
+            </div>
+          )}
         </div>
 
+        {/* Title plate */}
         <div
           style={{
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
-            gap: s(16),
+            alignItems: "flex-start",
+            gap: s(18),
           }}
         >
-          {photoUrl ? (
-            <div
-              style={{
-                display: "flex",
-                width: s(300),
-                height: s(300),
-                borderRadius: s(300),
-                overflow: "hidden",
-                border: `${s(8)}px solid ${ink}`,
-              }}
-            >
-              {/* eslint-disable-next-line jsx-a11y/alt-text */}
-              <img
-                src={photoUrl}
-                width={s(300)}
-                height={s(300)}
-                style={{ width: s(300), height: s(300), objectFit: "cover" }}
-              />
-            </div>
-          ) : null}
-
-          <div
-            style={{
-              color: ink,
-              fontFamily: "Bebas Neue",
-              fontSize: s(180),
-              lineHeight: 0.9,
-              letterSpacing: s(2),
-              textTransform: "uppercase",
-              textAlign: "center",
-              maxWidth: width - s(120),
-              display: "flex",
-            }}
-          >
-            {eventName || "Summer Fest"}
-          </div>
-
           {tagline ? (
             <div
               style={{
+                backgroundColor: accent,
                 color: ink,
+                padding: `${s(6)}px ${s(14)}px`,
                 fontFamily: "Inter",
+                fontSize: s(22),
                 fontWeight: 700,
-                fontSize: s(28),
                 letterSpacing: s(4),
                 textTransform: "uppercase",
                 display: "flex",
@@ -164,42 +158,126 @@ export function FestivalBurst(props: TemplateProps) {
               {tagline}
             </div>
           ) : null}
-        </div>
 
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: s(6),
-            color: ink,
-            fontFamily: "Inter",
-          }}
-        >
-          <div style={{ fontSize: s(36), fontWeight: 700, display: "flex" }}>
-            {formatDate(date)}
-            {time ? `  ·  ${formatTime(time)}` : ""}
+          <div
+            style={{
+              color: chalk,
+              fontFamily: "Anton",
+              fontSize: s(230),
+              lineHeight: 0.86,
+              letterSpacing: s(-4),
+              textTransform: "uppercase",
+              maxWidth: width - s(128),
+              display: "flex",
+            }}
+          >
+            {eventName || "Unknown Pleasures"}
           </div>
-          <div style={{ fontSize: s(28), fontWeight: 700, display: "flex" }}>
-            {venueName}
-          </div>
-          <div style={{ fontSize: s(22), opacity: 0.75, display: "flex" }}>
-            {venueAddress}
-          </div>
+
           {artistName ? (
             <div
               style={{
-                marginTop: s(8),
-                fontSize: s(24),
-                fontWeight: 700,
+                color: chalk,
+                fontFamily: "Inter",
+                fontSize: s(26),
+                fontWeight: 400,
+                letterSpacing: s(4),
                 textTransform: "uppercase",
+                display: "flex",
+              }}
+            >
+              ft. {artistName}
+            </div>
+          ) : null}
+        </div>
+
+        {/* Bottom row: meta, split */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "flex-end",
+            justifyContent: "space-between",
+            gap: s(32),
+          }}
+        >
+          <div style={{ display: "flex", flexDirection: "column", gap: s(4) }}>
+            <div
+              style={{
+                color: accent,
+                fontFamily: "Inter",
+                fontSize: s(18),
+                fontWeight: 700,
+                letterSpacing: s(6),
+                textTransform: "uppercase",
+                display: "flex",
+              }}
+            >
+              Scheduled
+            </div>
+            <div
+              style={{
+                color: chalk,
+                fontFamily: "Inter",
+                fontSize: s(28),
+                fontWeight: 700,
+                letterSpacing: s(3),
+                textTransform: "uppercase",
+                display: "flex",
+              }}
+            >
+              {formatDate(date) || "TBA"}
+              {time ? ` · ${formatTime(time)}` : ""}
+            </div>
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-end",
+              gap: s(4),
+              textAlign: "right",
+            }}
+          >
+            <div
+              style={{
+                color: accent,
+                fontFamily: "Inter",
+                fontSize: s(18),
+                fontWeight: 700,
+                letterSpacing: s(6),
+                textTransform: "uppercase",
+                display: "flex",
+              }}
+            >
+              Venue
+            </div>
+            <div
+              style={{
+                color: chalk,
+                fontFamily: "Inter",
+                fontSize: s(28),
+                fontWeight: 700,
+                letterSpacing: s(3),
+                textTransform: "uppercase",
+                display: "flex",
+              }}
+            >
+              {venueName}
+            </div>
+            <div
+              style={{
+                color: chalk,
+                opacity: 0.75,
+                fontFamily: "Inter",
+                fontSize: s(20),
                 letterSpacing: s(3),
                 display: "flex",
               }}
             >
-              Headlining · {artistName}
+              {venueAddress}
             </div>
-          ) : null}
+          </div>
         </div>
       </div>
     </div>

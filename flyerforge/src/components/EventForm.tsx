@@ -32,7 +32,7 @@ export function EventForm({ value, onChange }: Props) {
 
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-      <Field label="Event name" className="sm:col-span-2">
+      <Field label="Event name" required className="sm:col-span-2">
         <Input
           value={value.eventName}
           onChange={(e) => set("eventName", e.target.value)}
@@ -40,7 +40,7 @@ export function EventForm({ value, onChange }: Props) {
         />
       </Field>
 
-      <Field label="Date">
+      <Field label="Date" required>
         <Input
           type="date"
           value={value.date}
@@ -56,7 +56,7 @@ export function EventForm({ value, onChange }: Props) {
         />
       </Field>
 
-      <Field label="Venue name">
+      <Field label="Venue name" required>
         <Input
           value={value.venueName}
           onChange={(e) => set("venueName", e.target.value)}
@@ -86,15 +86,24 @@ export function EventForm({ value, onChange }: Props) {
 function Field({
   label,
   children,
+  required,
   className,
 }: {
   label: string;
   children: React.ReactNode;
+  required?: boolean;
   className?: string;
 }) {
   return (
     <div className={`space-y-1.5 ${className ?? ""}`}>
-      <Label>{label}</Label>
+      <Label>
+        {label}
+        {required ? (
+          <span className="ml-1 text-destructive" aria-label="required">
+            *
+          </span>
+        ) : null}
+      </Label>
       {children}
     </div>
   );

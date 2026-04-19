@@ -3,14 +3,14 @@
 import { cn } from "@/lib/utils";
 
 const SWATCHES = [
-  "#c4a96a",
-  "#ff3b6b",
-  "#2b5cff",
-  "#10b981",
-  "#f59e0b",
-  "#8b5cf6",
-  "#0a0a0a",
-  "#ffffff",
+  "#7A1E1E", // oxblood
+  "#d7281d", // swiss red
+  "#ff2d16", // hazard
+  "#e8502a", // tomato
+  "#c4a96a", // gold
+  "#2b5cff", // cobalt
+  "#0a0a0a", // ink
+  "#f4efe7", // bone
 ];
 
 type Props = {
@@ -21,6 +21,12 @@ type Props = {
 export function ColorPicker({ value, onChange }: Props) {
   return (
     <div className="flex flex-wrap items-center gap-2">
+      <div
+        className="h-8 w-8 rounded-md border-2 border-border shadow-inner"
+        style={{ backgroundColor: value }}
+        aria-label="Current accent color"
+      />
+      <span className="mr-1 font-mono text-xs text-muted-foreground">{value}</span>
       {SWATCHES.map((c) => {
         const selected = c.toLowerCase() === value.toLowerCase();
         return (
@@ -51,7 +57,6 @@ export function ColorPicker({ value, onChange }: Props) {
           className="absolute inset-0 cursor-pointer opacity-0"
         />
       </label>
-      <span className="ml-1 font-mono text-xs text-muted-foreground">{value}</span>
     </div>
   );
 }

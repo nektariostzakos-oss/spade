@@ -9,6 +9,10 @@ export type TemplateProps = {
   photoUrl: string;
   logoUrl?: string;
   accentColor?: string;
+  /** Data URL of a 256x256 grain tile. Provided by the pipeline so templates
+   *  that want film grain can use it via `backgroundImage`. Optional — if
+   *  absent the template should degrade cleanly. */
+  grainUrl?: string;
   width: number;
   height: number;
 };

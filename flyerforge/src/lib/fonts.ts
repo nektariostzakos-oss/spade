@@ -1,7 +1,7 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
 
-export type FontFamily = "Bebas Neue" | "Playfair Display" | "Inter";
+export type FontFamily = "Bebas Neue" | "Playfair Display" | "Inter" | "Anton";
 
 export type LoadedFont = {
   name: FontFamily;
@@ -23,6 +23,7 @@ const SPECS: Spec[] = [
   { name: "Playfair Display", weight: 700, file: "PlayfairDisplay-Bold.ttf", googleFamily: "Playfair+Display" },
   { name: "Inter", weight: 400, file: "Inter-Regular.ttf", googleFamily: "Inter" },
   { name: "Inter", weight: 700, file: "Inter-Bold.ttf", googleFamily: "Inter" },
+  { name: "Anton", weight: 400, file: "Anton-Regular.ttf", googleFamily: "Anton" },
 ];
 
 /** Forces Google Fonts to return a TTF (instead of WOFF2) by using an old UA. */

@@ -15,43 +15,44 @@ type TemplateMeta = {
 export const TEMPLATE_META: TemplateMeta[] = [
   {
     id: "club-night",
-    label: "Club Night",
-    tagline: "Gold on black. Late-night heat.",
-    swatch: "linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 60%, #c4a96a 100%)",
+    label: "Noir",
+    tagline: "Cinematic B&W, Playfair, oxblood hairlines.",
+    swatch: "linear-gradient(180deg, #0e0d0c 0%, #2b1513 70%, #7A1E1E 100%)",
   },
   {
     id: "live-stage",
-    label: "Live Stage",
-    tagline: "Editorial. Photo on top, cream below.",
+    label: "Brutalist",
+    tagline: "Concrete grays, Anton, sliced strips.",
     swatch:
-      "linear-gradient(180deg, #2a2a2a 0%, #2a2a2a 55%, #f5f0e8 55%, #f5f0e8 100%)",
+      "linear-gradient(180deg, #d9d4cb 0%, #d9d4cb 55%, #0a0a0a 55%, #0a0a0a 80%, #ff2d16 80%, #ff2d16 100%)",
   },
   {
     id: "afternoon-party",
-    label: "Afternoon Party",
-    tagline: "Bright, playful, coral and peach.",
-    swatch: "linear-gradient(135deg, #ffd1a3 0%, #ff6f61 100%)",
+    label: "Memphis",
+    tagline: "Cream field, tomato circle, stacked type.",
+    swatch:
+      "radial-gradient(circle at 35% 40%, #e8502a 0%, #e8502a 40%, #f4e6c3 41%, #f4e6c3 100%)",
   },
   {
     id: "minimal-editorial",
-    label: "Minimal Editorial",
-    tagline: "Paper. Serif. Quiet confidence.",
+    label: "Editorial",
+    tagline: "Newsprint cream, Playfair, hairline rules.",
     swatch:
-      "linear-gradient(180deg, #faf7f2 0%, #faf7f2 55%, #1a1a1a 55%, #1a1a1a 100%)",
+      "linear-gradient(180deg, #f6f1e7 0%, #f6f1e7 55%, #141413 56%, #141413 58%, #f6f1e7 59%, #f6f1e7 100%)",
   },
   {
     id: "festival-burst",
-    label: "Festival Burst",
-    tagline: "Rainbow gradient. Loud and joyful.",
+    label: "Duotone",
+    tagline: "Saville-grade single-color photographic.",
     swatch:
-      "linear-gradient(135deg, #ff3b6b 0%, #ff8a3d 45%, #ffd23d 100%)",
+      "linear-gradient(135deg, #0b0b0b 0%, #ff3b6b 100%)",
   },
   {
     id: "corporate-launch",
-    label: "Corporate Launch",
-    tagline: "White + blue accent. Clean, confident.",
+    label: "Swiss Grid",
+    tagline: "Helvetica-clean, red accent block, 12 col.",
     swatch:
-      "linear-gradient(90deg, #ffffff 0%, #ffffff 55%, #2b5cff 55%, #2b5cff 100%)",
+      "linear-gradient(90deg, #fbfaf7 0%, #fbfaf7 55%, #d7281d 55%, #d7281d 75%, #fbfaf7 75%, #fbfaf7 100%)",
   },
 ];
 
