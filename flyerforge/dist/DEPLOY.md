@@ -56,7 +56,9 @@ Final layout on the server must look like:
 
 In the Node.js app settings, add:
 
-- `REMOVE_BG_API_KEY` — your [remove.bg](https://www.remove.bg/api) key. **Optional** — if missing, the app falls back to the original photo and surfaces a warning.
+- `REMOVE_BG_API_KEY` — [remove.bg](https://www.remove.bg/api) key. Optional — without it, the app falls back to the original photo.
+- `ANTHROPIC_API_KEY` — [Anthropic console](https://console.anthropic.com/settings/keys) key. Optional — powers the "Suggest copy" and "Suggest template" AI buttons.
+- `OPENAI_API_KEY` — [OpenAI platform](https://platform.openai.com/api-keys) key. Optional — powers the "Generate background" AI image button (~$0.04/image).
 - `HOSTNAME=0.0.0.0` — only if Hostinger doesn't set it automatically.
 
 `PORT` is injected by Hostinger's Node.js manager — don't set it manually.
