@@ -1,4 +1,4 @@
-import { formatDate, formatTime, scale, type TemplateProps } from "./shared";
+import { color, formatDate, formatTime, scale, type TemplateProps } from "./shared";
 
 export function AfternoonParty(props: TemplateProps) {
   const {
@@ -9,12 +9,14 @@ export function AfternoonParty(props: TemplateProps) {
     venueAddress,
     artistName,
     photoUrl,
+    logoUrl,
+    accentColor,
     width,
     height,
   } = props;
 
   const s = (px: number) => scale(width, px);
-  const ink = "#3a1f1a";
+  const ink = color(accentColor, "#3a1f1a");
 
   const photoSize = Math.round(Math.min(width, height) * 0.55);
 
@@ -40,6 +42,15 @@ export function AfternoonParty(props: TemplateProps) {
           gap: s(8),
         }}
       >
+        {logoUrl ? (
+          // eslint-disable-next-line jsx-a11y/alt-text
+          <img
+            src={logoUrl}
+            width={s(100)}
+            height={s(100)}
+            style={{ width: s(100), height: s(100), objectFit: "contain" }}
+          />
+        ) : null}
         <div
           style={{
             color: ink,

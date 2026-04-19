@@ -1,4 +1,4 @@
-import { formatDate, formatTime, scale, type TemplateProps } from "./shared";
+import { color, formatDate, formatTime, scale, type TemplateProps } from "./shared";
 
 export function LiveStage(props: TemplateProps) {
   const {
@@ -9,13 +9,15 @@ export function LiveStage(props: TemplateProps) {
     venueAddress,
     artistName,
     photoUrl,
+    logoUrl,
+    accentColor,
     width,
     height,
   } = props;
 
   const s = (px: number) => scale(width, px);
   const cream = "#f5f0e8";
-  const ink = "#2a2a2a";
+  const ink = color(accentColor, "#2a2a2a");
 
   const photoHeight = Math.round(height * 0.6);
 
@@ -71,6 +73,15 @@ export function LiveStage(props: TemplateProps) {
           gap: s(18),
         }}
       >
+        {logoUrl ? (
+          // eslint-disable-next-line jsx-a11y/alt-text
+          <img
+            src={logoUrl}
+            width={s(90)}
+            height={s(90)}
+            style={{ width: s(90), height: s(90), objectFit: "contain" }}
+          />
+        ) : null}
         <div
           style={{
             color: ink,

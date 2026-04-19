@@ -13,6 +13,9 @@ type Body = {
   templateId: TemplateId;
   formData: EventFormData;
   photoBase64: string;
+  logoBase64?: string | null;
+  accentColor?: string | null;
+  tagline?: string | null;
   removeBg?: boolean;
 };
 
@@ -49,7 +52,10 @@ export async function POST(req: Request) {
     venueName: formData.venueName,
     venueAddress: formData.venueAddress,
     artistName: formData.artistName || undefined,
+    tagline: body.tagline || undefined,
     photoUrl: effectivePhoto,
+    logoUrl: body.logoBase64 || undefined,
+    accentColor: body.accentColor || undefined,
   };
 
   try {

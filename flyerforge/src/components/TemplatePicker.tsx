@@ -1,15 +1,18 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import type { TemplateId } from "@/templates";
 
-export type TemplateId = "club-night" | "live-stage" | "afternoon-party";
+export type { TemplateId } from "@/templates";
 
-const TEMPLATES: {
+type TemplateMeta = {
   id: TemplateId;
   label: string;
   tagline: string;
   swatch: string;
-}[] = [
+};
+
+export const TEMPLATE_META: TemplateMeta[] = [
   {
     id: "club-night",
     label: "Club Night",
@@ -29,6 +32,27 @@ const TEMPLATES: {
     tagline: "Bright, playful, coral and peach.",
     swatch: "linear-gradient(135deg, #ffd1a3 0%, #ff6f61 100%)",
   },
+  {
+    id: "minimal-editorial",
+    label: "Minimal Editorial",
+    tagline: "Paper. Serif. Quiet confidence.",
+    swatch:
+      "linear-gradient(180deg, #faf7f2 0%, #faf7f2 55%, #1a1a1a 55%, #1a1a1a 100%)",
+  },
+  {
+    id: "festival-burst",
+    label: "Festival Burst",
+    tagline: "Rainbow gradient. Loud and joyful.",
+    swatch:
+      "linear-gradient(135deg, #ff3b6b 0%, #ff8a3d 45%, #ffd23d 100%)",
+  },
+  {
+    id: "corporate-launch",
+    label: "Corporate Launch",
+    tagline: "White + blue accent. Clean, confident.",
+    swatch:
+      "linear-gradient(90deg, #ffffff 0%, #ffffff 55%, #2b5cff 55%, #2b5cff 100%)",
+  },
 ];
 
 type Props = {
@@ -38,8 +62,8 @@ type Props = {
 
 export function TemplatePicker({ value, onChange }: Props) {
   return (
-    <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-      {TEMPLATES.map((t) => {
+    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+      {TEMPLATE_META.map((t) => {
         const selected = t.id === value;
         return (
           <button
@@ -53,7 +77,7 @@ export function TemplatePicker({ value, onChange }: Props) {
                 : "border-border hover:border-muted-foreground",
             )}
           >
-            <div className="h-24 w-full" style={{ background: t.swatch }} />
+            <div className="h-20 w-full" style={{ background: t.swatch }} />
             <div className="p-3">
               <div className="text-sm font-semibold">{t.label}</div>
               <div className="mt-1 text-xs text-muted-foreground">{t.tagline}</div>

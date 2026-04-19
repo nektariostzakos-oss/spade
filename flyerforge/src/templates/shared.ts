@@ -5,7 +5,10 @@ export type TemplateProps = {
   venueName: string;
   venueAddress: string;
   artistName?: string;
+  tagline?: string;
   photoUrl: string;
+  logoUrl?: string;
+  accentColor?: string;
   width: number;
   height: number;
 };
@@ -38,4 +41,10 @@ export function formatTime(raw: string): string {
  *  cleanly at 1080, 1200, and 1748 widths. */
 export function scale(width: number, px: number): number {
   return Math.max(1, Math.round((px * width) / 1080));
+}
+
+/** Normalize a hex/css color string. Returns fallback if input is empty. */
+export function color(input: string | undefined, fallback: string): string {
+  const v = (input ?? "").trim();
+  return v.length > 0 ? v : fallback;
 }

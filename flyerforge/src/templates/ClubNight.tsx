@@ -1,4 +1,4 @@
-import { formatDate, formatTime, scale, type TemplateProps } from "./shared";
+import { color, formatDate, formatTime, scale, type TemplateProps } from "./shared";
 
 export function ClubNight(props: TemplateProps) {
   const {
@@ -9,12 +9,14 @@ export function ClubNight(props: TemplateProps) {
     venueAddress,
     artistName,
     photoUrl,
+    logoUrl,
+    accentColor,
     width,
     height,
   } = props;
 
   const s = (px: number) => scale(width, px);
-  const gold = "#c4a96a";
+  const gold = color(accentColor, "#c4a96a");
 
   return (
     <div
@@ -63,21 +65,32 @@ export function ClubNight(props: TemplateProps) {
           justifyContent: "space-between",
         }}
       >
-        <div style={{ display: "flex", flexDirection: "column", gap: s(8) }}>
-          <div
-            style={{
-              color: gold,
-              fontSize: s(28),
-              letterSpacing: s(6),
-              fontFamily: "Inter",
-              fontWeight: 700,
-              textTransform: "uppercase",
-              display: "flex",
-            }}
-          >
-            Presents
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: s(8) }}>
+            <div
+              style={{
+                color: gold,
+                fontSize: s(28),
+                letterSpacing: s(6),
+                fontFamily: "Inter",
+                fontWeight: 700,
+                textTransform: "uppercase",
+                display: "flex",
+              }}
+            >
+              Presents
+            </div>
+            <div style={{ width: s(80), height: s(3), backgroundColor: gold }} />
           </div>
-          <div style={{ width: s(80), height: s(3), backgroundColor: gold }} />
+          {logoUrl ? (
+            // eslint-disable-next-line jsx-a11y/alt-text
+            <img
+              src={logoUrl}
+              width={s(120)}
+              height={s(120)}
+              style={{ width: s(120), height: s(120), objectFit: "contain" }}
+            />
+          ) : null}
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: s(16) }}>
