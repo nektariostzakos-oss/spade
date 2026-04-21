@@ -23,9 +23,9 @@ export default function Testimonials() {
     title_en: t("testimonials.title"),
     title_el: t("testimonials.title"),
     items: [
-      { quote_en: t("tt1.q"), quote_el: t("tt1.q"), name: "Giorgos M.", role_en: t("tt1.r"), role_el: t("tt1.r") },
-      { quote_en: t("tt2.q"), quote_el: t("tt2.q"), name: "Stefan K.", role_en: t("tt2.r"), role_el: t("tt2.r") },
-      { quote_en: t("tt3.q"), quote_el: t("tt3.q"), name: "Dimitris L.", role_en: t("tt3.r"), role_el: t("tt3.r") },
+      { quote_en: t("tt1.q"), quote_el: t("tt1.q"), name: "George M.", role_en: t("tt1.r"), role_el: t("tt1.r") },
+      { quote_en: t("tt2.q"), quote_el: t("tt2.q"), name: "Sophia K.", role_en: t("tt2.r"), role_el: t("tt2.r") },
+      { quote_en: t("tt3.q"), quote_el: t("tt3.q"), name: "Daniel L.", role_en: t("tt3.r"), role_el: t("tt3.r") },
     ] as Quote[],
   });
   const items: Quote[] = (c.items as Quote[]) ?? [];

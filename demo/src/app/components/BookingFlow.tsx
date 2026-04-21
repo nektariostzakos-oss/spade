@@ -160,15 +160,9 @@ export default function BookingFlow() {
           duration: service.duration,
           barberId: barber.id,
           barberName:
-            lang === "el" && barber.id === "andreas"
-              ? "Ανδρέας Παππάς"
-              : lang === "el" && barber.id === "nikos"
-                ? "Νίκος Σταθάκης"
-                : lang === "el" && barber.id === "petros"
-                  ? "Πέτρος Λάμπρου"
-                  : lang === "el" && barber.id === "any"
-                    ? "Όποιος είναι ελεύθερος"
-                    : barber.name,
+            lang === "el" && barber.id === "any"
+              ? "Όποιος είναι ελεύθερος"
+              : barber.name,
           date,
           time,
           name,
@@ -351,15 +345,9 @@ export default function BookingFlow() {
                       }`}
                     >
                       <p className="font-serif text-lg">
-                        {lang === "el" && b.id === "andreas"
-                          ? "Ανδρέας Παππάς"
-                          : lang === "el" && b.id === "nikos"
-                            ? "Νίκος Σταθάκης"
-                            : lang === "el" && b.id === "petros"
-                              ? "Πέτρος Λάμπρου"
-                              : lang === "el" && b.id === "any"
-                                ? "Όποιος είναι ελεύθερος"
-                                : b.name}
+                        {lang === "el" && b.id === "any"
+                          ? "Όποιος είναι ελεύθερος"
+                          : b.name}
                       </p>
                       <p className="mt-1 text-xs uppercase tracking-widest text-white/40">
                         {b.role}

@@ -35,7 +35,7 @@ export default function Hero({ nextSlot }: { nextSlot?: NextSlotInfo }) {
       "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=1200&q=80&auto=format&fit=crop",
     sideRole_en: t("hero.role"),
     sideRole_el: t("hero.role"),
-    sideName: "Andreas Pappas",
+    sideName: "Hannah Carter",
     bgVideo: "",
     bgVideoPoster: "",
     bgOpacity: 90,

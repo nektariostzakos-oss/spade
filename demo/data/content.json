@@ -62,39 +62,39 @@
     "items": [
       {
         "id": "svc-1",
-        "name_en": "Men's Haircut",
-        "name_el": "Κούρεμα Ανδρικό",
-        "price": 12,
-        "duration": 30,
-        "desc_en": "Classic men's cut with hot towel finish.",
-        "desc_el": "Κλασικό κούρεμα με ζεστή πετσέτα."
+        "name_en": "Women's Cut",
+        "name_el": "Γυναικείο κούρεμα",
+        "price": 65,
+        "duration": 60,
+        "desc_en": "Precision cut, consultation and blow-dry.",
+        "desc_el": "Precision cut, consultation, blow-dry."
       },
       {
         "id": "svc-2",
-        "name_en": "Kids Haircut",
-        "name_el": "Κούρεμα Παιδικό",
-        "price": 10,
-        "duration": 25,
-        "desc_en": "Careful, patient work for kids.",
-        "desc_el": "Προσεκτικό κούρεμα για παιδιά."
+        "name_en": "Men's Cut",
+        "name_el": "Αντρικό κούρεμα",
+        "price": 45,
+        "duration": 45,
+        "desc_en": "Scissor or clipper cut with a sharp finish.",
+        "desc_el": "Με ψαλίδι ή μηχανή, καθαρό τελείωμα."
       },
       {
         "id": "svc-3",
-        "name_en": "Beard Trim",
-        "name_el": "Μούσι",
-        "price": 5,
-        "duration": 15,
-        "desc_en": "Shaped and razor-lined.",
-        "desc_el": "Σχηματισμένο με ξυράφι."
+        "name_en": "Balayage",
+        "name_el": "Balayage",
+        "price": 180,
+        "duration": 180,
+        "desc_en": "Hand-painted lights, gloss, cut and blow-dry.",
+        "desc_el": "Hand-painted ανταύγειες, gloss, κούρεμα και styling."
       },
       {
         "id": "svc-4",
-        "name_en": "Cut + Beard",
-        "name_el": "Κούρεμα + Μούσι",
-        "price": 15,
-        "duration": 45,
-        "desc_en": "Haircut plus beard sculpt.",
-        "desc_el": "Κούρεμα με περιποίηση γενειάδας."
+        "name_en": "Cut + Colour",
+        "name_el": "Κούρεμα + βαφή",
+        "price": 140,
+        "duration": 150,
+        "desc_en": "Full colour and precision cut, finished and styled.",
+        "desc_el": "Πλήρης βαφή και precision cut."
       }
     ]
   },
@@ -193,33 +193,33 @@
     "title_el": "Τρεις καρέκλες. Τρεις ιστορίες.",
     "members": [
       {
-        "name_en": "Andreas Pappas",
-        "name_el": "Ανδρέας Παππάς",
-        "role_en": "Master Barber · Founder",
-        "role_el": "Master Barber · Ιδρυτής",
+        "name_en": "Hannah Carter",
+        "name_el": "Hannah Carter",
+        "role_en": "Senior Stylist · Founder",
+        "role_el": "Senior Stylist · Ιδρύτρια",
         "years_en": "12 years",
         "years_el": "12 χρόνια",
-        "slug": "andreas",
+        "slug": "hannah",
         "image": "https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=900&q=80&auto=format&fit=crop"
       },
       {
-        "name_en": "Nikos Stathakis",
-        "name_el": "Νίκος Σταθάκης",
-        "role_en": "Senior Barber",
-        "role_el": "Senior Barber",
+        "name_en": "Mira Patel",
+        "name_el": "Mira Patel",
+        "role_en": "Colour Specialist",
+        "role_el": "Colour Specialist",
         "years_en": "8 years",
         "years_el": "8 χρόνια",
-        "slug": "nikos",
+        "slug": "mira",
         "image": "https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=900&q=80&auto=format&fit=crop"
       },
       {
-        "name_en": "Petros Lambrou",
-        "name_el": "Πέτρος Λάμπρου",
-        "role_en": "Barber",
-        "role_el": "Barber",
+        "name_en": "Oliver Reed",
+        "name_el": "Oliver Reed",
+        "role_en": "Stylist",
+        "role_el": "Stylist",
         "years_en": "4 years",
         "years_el": "4 χρόνια",
-        "slug": "petros",
+        "slug": "oliver",
         "image": "https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=900&q=80&auto=format&fit=crop"
       }
     ]
