@@ -2,6 +2,7 @@ import { loadBusiness } from "../../lib/settings";
 import { loadContent } from "../../lib/content";
 import { SERVICES } from "../../lib/services";
 import { listProducts } from "../../lib/products";
+import { listPages } from "../../lib/pages";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://spade.gr";
 
@@ -28,11 +29,13 @@ type ContentShape = {
 };
 
 export async function GET() {
-  const [b, content, products] = await Promise.all([
+  const [b, content, products, posts] = await Promise.all([
     loadBusiness(),
     loadContent() as Promise<ContentShape>,
     listProducts().catch(() => []),
+    listPages("post").catch(() => []),
   ]);
+  const publishedPosts = posts.filter((p) => p.published);
 
   const lines: string[] = [];
   lines.push(`# ${b.name}`);
@@ -112,12 +115,23 @@ export async function GET() {
     }
   }
 
+  if (publishedPosts.length) {
+    lines.push("## Recent articles");
+    for (const p of publishedPosts.slice(0, 15)) {
+      lines.push(
+        `- ${p.title_en || p.title_el} — ${SITE_URL}/blog/${p.slug}${p.excerpt_en ? `. ${p.excerpt_en}` : ""}`
+      );
+    }
+    lines.push("");
+  }
+
   lines.push("## Key pages");
   lines.push(`- Home: ${SITE_URL}/`);
   lines.push(`- Services: ${SITE_URL}/services`);
   lines.push(`- Shop: ${SITE_URL}/shop`);
   lines.push(`- Gallery: ${SITE_URL}/gallery`);
   lines.push(`- Team: ${SITE_URL}/about`);
+  lines.push(`- Blog: ${SITE_URL}/blog`);
   lines.push(`- Contact: ${SITE_URL}/contact`);
   lines.push(`- Book online: ${SITE_URL}/book`);
   lines.push("");

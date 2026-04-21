@@ -11,6 +11,8 @@ type Quote = {
   name: string;
   role_en: string;
   role_el: string;
+  source?: string; // e.g. "Google Reviews", "Verified customer"
+  date?: string;   // ISO date or free-form "March 2026"
 };
 
 export default function Testimonials() {
@@ -71,6 +73,11 @@ export default function Testimonials() {
                 <p className="text-xs text-white/50">
                   {pick(it.role_en, it.role_el)}
                 </p>
+                {(it.source || it.date) && (
+                  <p className="mt-2 text-[10px] uppercase tracking-widest text-white/40">
+                    {[it.source, it.date].filter(Boolean).join(" · ")}
+                  </p>
+                )}
               </figcaption>
             </motion.figure>
           ))}
