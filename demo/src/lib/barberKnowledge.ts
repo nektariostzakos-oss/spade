@@ -89,7 +89,7 @@ function expandAliases(tokens: string[]): string[] {
  *  +1 per token found in answer text
  *  Stemmed prefix matching (≥3 chars) for Greek/English morphology.
  */
-export function searchKb(text: string, entries: KbEntry[], lang: "en" | "el"): KbEntry | null {
+export function searchKb(text: string, entries: KbEntry[], _lang: "en" | "el"): KbEntry | null {
   const q = normalize(text);
   if (!q) return null;
   const rawTokens = q.split(/\s+/).filter((t) => t.length >= 3);

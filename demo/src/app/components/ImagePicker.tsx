@@ -84,9 +84,14 @@ export default function ImagePicker({
         }}
       >
         {value && (
+          // eslint-disable-next-line @next/next/no-img-element
           <img
             src={value}
             alt=""
+            width={56}
+            height={56}
+            decoding="async"
+            loading="lazy"
             style={{
               width: 56,
               height: 56,

@@ -54,6 +54,7 @@ export async function GET() {
   if (b.priceRange) lines.push(`- Price range: ${b.priceRange}`);
   if (b.latitude != null && b.longitude != null)
     lines.push(`- Coordinates: ${b.latitude}, ${b.longitude}`);
+  if (b.timezone) lines.push(`- Timezone: ${b.timezone}`);
   lines.push(`- Website: ${SITE_URL}`);
   lines.push("");
 
