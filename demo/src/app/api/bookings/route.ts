@@ -8,6 +8,8 @@ import {
 import { isStaff } from "../../../lib/auth";
 import { sendBookingConfirmation } from "../../../lib/email";
 import { allowAction, clientIp } from "../../../lib/rateLimit";
+import { loadBusiness } from "../../../lib/settings";
+import { wallClockInTzToUtc } from "../../../lib/tz";
 
 const MAX_FIELD = 200;
 const MAX_NOTES = 1000;
@@ -120,8 +122,12 @@ export async function POST(req: NextRequest) {
     if (!/^\d{2}:\d{2}$/.test(String(body.time))) {
       return NextResponse.json({ error: "Invalid time." }, { status: 400 });
     }
-    // Reject past dates.
-    const slotTs = new Date(`${body.date}T${body.time}:00`).getTime();
+    // Reject past dates. Booking date+time are wall-clock in the business
+    // timezone — convert to UTC ms before comparing to Date.now() to avoid
+    // a UTC-host false-positive that rejects valid near-term slots.
+    const business = await loadBusiness();
+    const tz = business.timezone || "Europe/Athens";
+    const slotTs = wallClockInTzToUtc(String(body.date), String(body.time), tz);
     if (Number.isFinite(slotTs) && slotTs < Date.now() - 5 * 60_000) {
       return NextResponse.json(
         { error: "That time is in the past." },

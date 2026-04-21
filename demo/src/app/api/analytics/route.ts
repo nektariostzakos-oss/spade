@@ -4,19 +4,19 @@ import { listBookings } from "../../../lib/bookings";
 import { listOrders } from "../../../lib/orders";
 import { listProducts } from "../../../lib/products";
 import { listViews } from "../../../lib/views";
+import { loadBusiness } from "../../../lib/settings";
+import { dateAtOffsetInTz } from "../../../lib/tz";
 
 function dayKey(iso: string): string {
   return iso.slice(0, 10);
 }
 
-function rangeDays(days: number): string[] {
+function rangeDays(days: number, tz: string): string[] {
+  // Walk N days back from *today* in the business timezone, so admin analytics
+  // align with the wall-clock day the shop experiences (not UTC day).
   const out: string[] = [];
-  const today = new Date();
-  today.setUTCHours(0, 0, 0, 0);
   for (let i = days - 1; i >= 0; i--) {
-    const d = new Date(today);
-    d.setUTCDate(today.getUTCDate() - i);
-    out.push(d.toISOString().slice(0, 10));
+    out.push(dateAtOffsetInTz(-i, tz).iso);
   }
   return out;
 }
@@ -27,7 +27,9 @@ export async function GET(req: NextRequest) {
   }
   const url = new URL(req.url);
   const days = Math.min(365, Math.max(1, Number(url.searchParams.get("days")) || 30));
-  const window = rangeDays(days);
+  const business = await loadBusiness();
+  const tz = business.timezone || "Europe/Athens";
+  const window = rangeDays(days, tz);
   const windowSet = new Set(window);
 
   const [bookings, orders, products, views] = await Promise.all([

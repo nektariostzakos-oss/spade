@@ -76,3 +76,36 @@ export function dateAtOffsetInTz(offsetDays: number, tz: string = DEFAULT_TZ, no
     dayOfWeek: WEEKDAY_MAP[futurePart.weekday] ?? 0,
   };
 }
+
+/**
+ * Convert a wall-clock date+time that is *local to a given IANA timezone*
+ * into a UTC ms timestamp. Correctly handles DST boundaries.
+ *
+ * e.g. wallClockInTzToUtc("2026-04-21", "14:30", "Europe/Athens") returns
+ * the UTC ms for 11:30 UTC on that day (Athens was +3 in summer).
+ */
+export function wallClockInTzToUtc(dateIso: string, time: string, tz: string = DEFAULT_TZ): number {
+  const [y, m, d] = dateIso.split("-").map(Number);
+  const [hh, mm] = time.split(":").map(Number);
+  if (![y, m, d, hh, mm].every(Number.isFinite)) return NaN;
+  // First guess: treat the wall clock as if it were UTC
+  const guessUtc = Date.UTC(y, m - 1, d, hh, mm);
+  // Ask Intl what wall clock that UTC instant shows in the target TZ
+  let seen: number;
+  try {
+    const p = parts(tz, new Date(guessUtc));
+    const seenH = parseInt(p.hour, 10) === 24 ? 0 : parseInt(p.hour, 10);
+    seen = Date.UTC(
+      parseInt(p.year, 10),
+      parseInt(p.month, 10) - 1,
+      parseInt(p.day, 10),
+      seenH,
+      parseInt(p.minute, 10)
+    );
+  } catch {
+    return guessUtc;
+  }
+  // The TZ offset at that instant = seen - guessUtc
+  // The *intended* UTC instant = guess shifted back by that offset
+  return guessUtc - (seen - guessUtc);
+}

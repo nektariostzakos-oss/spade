@@ -1,5 +1,7 @@
 import { promises as fs } from "fs";
 import path from "path";
+import { wallClockInTzToUtc } from "./tz";
+import { loadBusiness } from "./settings";
 
 const FILE = path.join(process.cwd(), "data", "bookings.json");
 
@@ -124,7 +126,8 @@ export async function markReminded(id: string): Promise<void> {
  * fires every 5 min, so this window guarantees we catch each booking once.
  */
 export async function dueForReminder(): Promise<Booking[]> {
-  const all = await readAll();
+  const [all, business] = await Promise.all([readAll(), loadBusiness()]);
+  const tz = business.timezone || "Europe/Athens";
   const now = Date.now();
   const from = now + (8 * 60 - 5) * 60_000; // 7h55m
   const to = now + (8 * 60 + 5) * 60_000;   // 8h05m
@@ -132,7 +135,10 @@ export async function dueForReminder(): Promise<Booking[]> {
     if (b.status === "cancelled" || b.status === "completed") return false;
     if (b.remindedAt) return false;
     if (!b.email) return false;
-    const t = new Date(`${b.date}T${b.time}:00`).getTime();
-    return t >= from && t <= to;
+    // Booking date + time are wall-clock in the business timezone. Convert
+    // to a real UTC instant before comparing to Date.now() — otherwise on a
+    // UTC host the reminder fires at the wrong wall-clock time (off by the TZ offset).
+    const t = wallClockInTzToUtc(b.date, b.time, tz);
+    return Number.isFinite(t) && t >= from && t <= to;
   });
 }
