@@ -10,20 +10,20 @@
   "branding": {
     "logoUrl": "/brand/default-logo.svg",
     "faviconUrl": "/favicon.ico",
-    "wordmark": "SPADE",
-    "tagline_en": "Barber · Loutraki",
-    "tagline_el": "Barber · Λουτράκι"
+    "wordmark": "VERDE",
+    "tagline_en": "Cucina italiana · since 1962",
+    "tagline_el": "Ιταλική κουζίνα · από το 1962"
   },
   "business": {
-    "name": "MINDCROLLERS LLC",
-    "streetAddress": "30 N GOULD ST STE R",
-    "city": "SHERIDAN",
-    "postalCode": "82801",
-    "country": "United States",
-    "phone": "+306931151063",
-    "email": "hello@mindcrollersllc.com",
-    "latitude": null,
-    "longitude": null,
+    "name": "Verde Cucina",
+    "streetAddress": "Via Roma 12",
+    "city": "Milano",
+    "postalCode": "20121",
+    "country": "IT",
+    "phone": "",
+    "email": "hello@verde.example",
+    "latitude": 45.4685,
+    "longitude": 9.1824,
     "hours": [
       {
         "day": "mon",
@@ -78,58 +78,16 @@
   },
   "nav": {
     "links": [
-      {
-        "id": "home",
-        "label_en": "Home",
-        "label_el": "Αρχική",
-        "href": "/",
-        "enabled": true
-      },
-      {
-        "id": "services",
-        "label_en": "Services",
-        "label_el": "Υπηρεσίες",
-        "href": "/services",
-        "enabled": true
-      },
-      {
-        "id": "shop",
-        "label_en": "Shop",
-        "label_el": "Κατάστημα",
-        "href": "/shop",
-        "enabled": true
-      },
-      {
-        "id": "gallery",
-        "label_en": "Gallery",
-        "label_el": "Γκαλερί",
-        "href": "/gallery",
-        "enabled": true
-      },
-      {
-        "id": "team",
-        "label_en": "Team",
-        "label_el": "Ομάδα",
-        "href": "/about",
-        "enabled": true
-      },
-      {
-        "id": "contact",
-        "label_en": "Contact",
-        "label_el": "Επικοινωνία",
-        "href": "/contact",
-        "enabled": true
-      },
-      {
-        "id": "blog",
-        "label_en": "Blog",
-        "label_el": "Blog",
-        "href": "/blog",
-        "enabled": true
-      }
+      { "id": "home", "label_en": "Home", "label_el": "Αρχική", "href": "/", "enabled": true },
+      { "id": "menu", "label_en": "Menu", "label_el": "Μενού", "href": "/menu", "enabled": true },
+      { "id": "experiences", "label_en": "Experiences", "label_el": "Εμπειρίες", "href": "/experiences", "enabled": true },
+      { "id": "gallery", "label_en": "Gallery", "label_el": "Γκαλερί", "href": "/gallery", "enabled": true },
+      { "id": "team", "label_en": "Our Family", "label_el": "Η οικογένεια", "href": "/about", "enabled": true },
+      { "id": "contact", "label_en": "Contact", "label_el": "Επικοινωνία", "href": "/contact", "enabled": true },
+      { "id": "blog", "label_en": "Journal", "label_el": "Ημερολόγιο", "href": "/blog", "enabled": true }
     ],
-    "bookLabel_en": "Book a chair",
-    "bookLabel_el": "Κλείσε καρέκλα",
+    "bookLabel_en": "Reserve a table",
+    "bookLabel_el": "Κρατήστε τραπέζι",
     "bookHref": "/book"
   },
   "templates": {
@@ -153,19 +111,19 @@
   },
   "onboarded": true,
   "theme": {
-    "background": "#0a0806",
-    "foreground": "#f5efe6",
-    "primary": "#c9a961",
-    "primaryAccent": "#d4b878",
-    "surface": "rgba(255, 255, 255, 0.03)",
-    "surfaceStrong": "rgba(255, 255, 255, 0.06)",
-    "border": "rgba(255, 255, 255, 0.1)",
-    "borderStrong": "rgba(255, 255, 255, 0.18)",
-    "muted": "rgba(245, 239, 230, 0.65)",
-    "muted2": "rgba(245, 239, 230, 0.45)"
+    "background": "#f5ede0",
+    "foreground": "#2b2419",
+    "primary": "#6b7a42",
+    "primaryAccent": "#8a9a5a",
+    "surface": "rgba(0, 0, 0, 0.03)",
+    "surfaceStrong": "rgba(0, 0, 0, 0.07)",
+    "border": "rgba(0, 0, 0, 0.1)",
+    "borderStrong": "rgba(0, 0, 0, 0.2)",
+    "muted": "rgba(43, 36, 25, 0.7)",
+    "muted2": "rgba(43, 36, 25, 0.5)"
   },
   "typography": {
-    "headingFont": "playfair",
-    "bodyFont": "geist"
+    "headingFont": "fraunces",
+    "bodyFont": "manrope"
   }
 }

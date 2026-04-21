@@ -77,6 +77,74 @@ select option {
   background: rgba(201, 169, 97, 0.4);
   color: white;
 }
+
+/* === Light-theme overrides for hardcoded dark-mode utilities ===
+   Public-site components were written with text-white/X, bg-white/[0.X],
+   border-white/X baked in. On a light template those render invisible.
+   Scope-override every relevant Tailwind arbitrary utility to use
+   var(--foreground) so light templates (cream / paper) stay legible
+   without rewriting every component. Scoped to public pages only — admin
+   and setup stay dark by design. */
+html[data-theme="light"] main .text-white,
+html[data-theme="light"] header:not(.spade-admin-header) .text-white,
+html[data-theme="light"] footer .text-white { color: var(--foreground) !important; }
+
+html[data-theme="light"] main {
+  --tw-mix-fg: var(--foreground);
+}
+html[data-theme="light"] main .text-white\/95,
+html[data-theme="light"] footer .text-white\/95 { color: color-mix(in srgb, var(--foreground) 95%, transparent) !important; }
+html[data-theme="light"] main .text-white\/90,
+html[data-theme="light"] footer .text-white\/90 { color: color-mix(in srgb, var(--foreground) 90%, transparent) !important; }
+html[data-theme="light"] main .text-white\/85,
+html[data-theme="light"] footer .text-white\/85 { color: color-mix(in srgb, var(--foreground) 85%, transparent) !important; }
+html[data-theme="light"] main .text-white\/80,
+html[data-theme="light"] footer .text-white\/80 { color: color-mix(in srgb, var(--foreground) 80%, transparent) !important; }
+html[data-theme="light"] main .text-white\/75,
+html[data-theme="light"] footer .text-white\/75 { color: color-mix(in srgb, var(--foreground) 75%, transparent) !important; }
+html[data-theme="light"] main .text-white\/70,
+html[data-theme="light"] footer .text-white\/70 { color: color-mix(in srgb, var(--foreground) 70%, transparent) !important; }
+html[data-theme="light"] main .text-white\/65,
+html[data-theme="light"] footer .text-white\/65 { color: color-mix(in srgb, var(--foreground) 65%, transparent) !important; }
+html[data-theme="light"] main .text-white\/60,
+html[data-theme="light"] footer .text-white\/60 { color: color-mix(in srgb, var(--foreground) 60%, transparent) !important; }
+html[data-theme="light"] main .text-white\/55,
+html[data-theme="light"] footer .text-white\/55 { color: color-mix(in srgb, var(--foreground) 55%, transparent) !important; }
+html[data-theme="light"] main .text-white\/50,
+html[data-theme="light"] footer .text-white\/50 { color: color-mix(in srgb, var(--foreground) 50%, transparent) !important; }
+html[data-theme="light"] main .text-white\/45,
+html[data-theme="light"] footer .text-white\/45 { color: color-mix(in srgb, var(--foreground) 45%, transparent) !important; }
+html[data-theme="light"] main .text-white\/40,
+html[data-theme="light"] footer .text-white\/40 { color: color-mix(in srgb, var(--foreground) 40%, transparent) !important; }
+html[data-theme="light"] main .text-white\/30,
+html[data-theme="light"] footer .text-white\/30 { color: color-mix(in srgb, var(--foreground) 30%, transparent) !important; }
+
+html[data-theme="light"] main .bg-white\/\[0\.02\],
+html[data-theme="light"] footer .bg-white\/\[0\.02\] { background-color: color-mix(in srgb, var(--foreground) 3%, transparent) !important; }
+html[data-theme="light"] main .bg-white\/\[0\.03\],
+html[data-theme="light"] footer .bg-white\/\[0\.03\] { background-color: color-mix(in srgb, var(--foreground) 4%, transparent) !important; }
+html[data-theme="light"] main .bg-white\/\[0\.04\],
+html[data-theme="light"] footer .bg-white\/\[0\.04\] { background-color: color-mix(in srgb, var(--foreground) 5%, transparent) !important; }
+html[data-theme="light"] main .bg-white\/\[0\.05\],
+html[data-theme="light"] footer .bg-white\/\[0\.05\] { background-color: color-mix(in srgb, var(--foreground) 6%, transparent) !important; }
+html[data-theme="light"] main .bg-white\/\[0\.06\],
+html[data-theme="light"] footer .bg-white\/\[0\.06\] { background-color: color-mix(in srgb, var(--foreground) 8%, transparent) !important; }
+html[data-theme="light"] main .bg-white\/5,
+html[data-theme="light"] footer .bg-white\/5 { background-color: color-mix(in srgb, var(--foreground) 5%, transparent) !important; }
+html[data-theme="light"] main .bg-white\/10,
+html[data-theme="light"] footer .bg-white\/10 { background-color: color-mix(in srgb, var(--foreground) 10%, transparent) !important; }
+
+html[data-theme="light"] main .border-white\/10,
+html[data-theme="light"] footer .border-white\/10 { border-color: color-mix(in srgb, var(--foreground) 12%, transparent) !important; }
+html[data-theme="light"] main .border-white\/15,
+html[data-theme="light"] footer .border-white\/15 { border-color: color-mix(in srgb, var(--foreground) 16%, transparent) !important; }
+html[data-theme="light"] main .border-white\/20,
+html[data-theme="light"] footer .border-white\/20 { border-color: color-mix(in srgb, var(--foreground) 20%, transparent) !important; }
+html[data-theme="light"] main .border-white\/30,
+html[data-theme="light"] footer .border-white\/30 { border-color: color-mix(in srgb, var(--foreground) 30%, transparent) !important; }
+
+html[data-theme="light"] main .placeholder-white\/30::placeholder { color: color-mix(in srgb, var(--foreground) 35%, transparent) !important; }
+html[data-theme="light"] main .bg-\[\#14110d\] { background-color: var(--surface-strong) !important; color: var(--foreground) !important; }
 /* === Inline edit pencil + side panel === */
 .spade-edit-pencil {
   position: absolute;

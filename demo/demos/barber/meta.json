@@ -27,6 +27,20 @@
     "tagline_en": "Barber · Loutraki",
     "tagline_el": "Barber · Λουτράκι"
   },
+  "nav": {
+    "links": [
+      { "id": "home", "label_en": "Home", "label_el": "Αρχική", "href": "/", "enabled": true },
+      { "id": "services", "label_en": "Services", "label_el": "Υπηρεσίες", "href": "/services", "enabled": true },
+      { "id": "shop", "label_en": "Shop", "label_el": "Κατάστημα", "href": "/shop", "enabled": true },
+      { "id": "gallery", "label_en": "Gallery", "label_el": "Γκαλερί", "href": "/gallery", "enabled": true },
+      { "id": "team", "label_en": "Team", "label_el": "Ομάδα", "href": "/about", "enabled": true },
+      { "id": "contact", "label_en": "Contact", "label_el": "Επικοινωνία", "href": "/contact", "enabled": true },
+      { "id": "blog", "label_en": "Blog", "label_el": "Blog", "href": "/blog", "enabled": true }
+    ],
+    "bookLabel_en": "Book a chair",
+    "bookLabel_el": "Κλείσε καρέκλα",
+    "bookHref": "/book"
+  },
   "features": [
     "Online booking with slot conflicts",
     "Products shop · 5 categories, 15 items",

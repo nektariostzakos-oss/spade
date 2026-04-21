@@ -11,7 +11,7 @@
     "shortDesc_el": "Ψητό ψωμί, ντομάτα, σκόρδο, βασιλικός, ελαιόλαδο.",
     "longDesc_en": "Thick slices of our wood-oven sourdough, rubbed with garlic, piled with diced San Marzano tomatoes, torn basil, a pinch of sea salt, and a thread of Ligurian olive oil.",
     "longDesc_el": "Χοντρές φέτες προζυμένιο από τον ξυλόφουρνο μας, τρίμματα σκόρδο, ντομάτες San Marzano, βασιλικός και ελαιόλαδο από τη Λιγουρία.",
-    "image": "/menu/antipasti.svg",
+    "image": "https://images.unsplash.com/photo-1551218808-94e220e084d2?w=1200&q=85&auto=format&fit=crop",
     "stock": 99,
     "featured": true
   },
@@ -27,7 +27,7 @@
     "shortDesc_el": "Burrata Puglia, prosciutto 24 μηνών, μαρμελάδα σύκου.",
     "longDesc_en": "A whole burrata from Andria, laid on aged prosciutto di Parma, crowned with fig jam and a scatter of fresh rocket.",
     "longDesc_el": "Ολόκληρη burrata από την Ανδρία, πάνω σε prosciutto di Parma, μαρμελάδα σύκου και φρέσκο ρόκα.",
-    "image": "/menu/antipasti.svg",
+    "image": "https://images.unsplash.com/photo-1481931098730-318b6f776db0?w=1200&q=85&auto=format&fit=crop",
     "stock": 99,
     "featured": false
   },
@@ -43,7 +43,7 @@
     "shortDesc_el": "Λεπτές φέτες ωμό μοσχάρι, παρμεζάνα, λεμόνι, κάπαρη, ρόκα.",
     "longDesc_en": "Prime beef sliced paper-thin, dressed with lemon and extra-virgin oil, finished with aged Parmigiano shavings and a scatter of salted capers.",
     "longDesc_el": "Λεπτές φέτες εκλεκτό μοσχάρι, λεμόνι και έξτρα παρθένο ελαιόλαδο, με φλούδες παρμεζάνας και αλατισμένη κάπαρη.",
-    "image": "/menu/antipasti.svg",
+    "image": "https://images.unsplash.com/photo-1555243896-c709bfa0b564?w=1200&q=85&auto=format&fit=crop",
     "stock": 99,
     "featured": false
   },
@@ -59,7 +59,7 @@
     "shortDesc_el": "Χειροποίητα tagliatelle, ραγού 6 ωρών, παρμεζάνα.",
     "longDesc_en": "Fresh egg pasta cut by hand each morning, bathed in a ragù we start before lunch and finish just in time for service. Finished with 24-month Parmigiano.",
     "longDesc_el": "Φρέσκα αυγόφυλλα κομμένα στο χέρι, με ραγού που σιγοβράζει από το πρωί, παρμεζάνα 24 μηνών.",
-    "image": "/menu/primi.svg",
+    "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1200&q=85&auto=format&fit=crop",
     "stock": 99,
     "featured": true
   },
@@ -75,7 +75,7 @@
     "shortDesc_el": "Ρύζι Carnaroli, άγρια πορτσίνι, παρμεζάνα, τρούφα.",
     "longDesc_en": "Carnaroli rice brought to the table all'onda — wavy — finished with wild porcini, aged Parmigiano, and a knob of white truffle butter.",
     "longDesc_el": "Ρύζι Carnaroli στον κρεμώδη τρόπο all'onda, με άγρια πορτσίνι, παρμεζάνα και βούτυρο λευκής τρούφας.",
-    "image": "/menu/primi.svg",
+    "image": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200&q=85&auto=format&fit=crop",
     "stock": 99,
     "featured": false
   },
@@ -91,7 +91,7 @@
     "shortDesc_el": "Πατάτα gnocchi, πέστο Λιγουρίας, κουκουνάρια, Pecorino.",
     "longDesc_en": "Pillowy potato gnocchi made each morning, tossed through pesto we pound in a marble mortar from Liguria basil, pine nuts, and aged Pecorino.",
     "longDesc_el": "Αφράτα gnocchi φρέσκα καθημερινά, με πέστο που κοπανάμε στο γουδί — βασιλικός Λιγουρίας, κουκουνάρια, Pecorino.",
-    "image": "/menu/primi.svg",
+    "image": "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=1200&q=85&auto=format&fit=crop",
     "stock": 99,
     "featured": false
   },
@@ -107,7 +107,7 @@
     "shortDesc_el": "Μοσχαρίσιο κότσι σιγομαγειρεμένο, ριζότο με σαφράν, gremolata.",
     "longDesc_en": "Veal shank braised four hours in white wine and tomato, served over saffron risotto alla milanese and a bright parsley-lemon gremolata.",
     "longDesc_el": "Μοσχαρίσιο κότσι σιγοβρασμένο τέσσερις ώρες σε λευκό κρασί και ντομάτα, με ριζότο σαφράν και gremolata.",
-    "image": "/menu/secondi.svg",
+    "image": "https://images.unsplash.com/photo-1476887334197-56adbf254e1a?w=1200&q=85&auto=format&fit=crop",
     "stock": 99,
     "featured": true
   },
@@ -123,7 +123,7 @@
     "shortDesc_el": "Ολόκληρο λαυράκι ψημένο σε κρούστα αλατιού, λεμόνι, βότανα.",
     "longDesc_en": "Whole Mediterranean sea bass sealed in a salt crust and cracked open at the table. Served with lemon, braised fennel, and herbed olive oil.",
     "longDesc_el": "Ολόκληρο λαυράκι μέσα σε κρούστα αλατιού που σπάμε στο τραπέζι. Συνοδεύεται με λεμόνι, μάραθο και αρωματισμένο ελαιόλαδο.",
-    "image": "/menu/secondi.svg",
+    "image": "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200&q=85&auto=format&fit=crop",
     "stock": 99,
     "featured": false
   },
@@ -139,7 +139,7 @@
     "shortDesc_el": "Ριμπάι, ρόκα, παρμεζάνα, balsamico.",
     "longDesc_en": "Dry-aged ribeye grilled over charcoal, sliced across the grain, set over wild rocket and aged Parmigiano, finished with 12-year balsamic.",
     "longDesc_el": "Ριμπάι dry-aged στα κάρβουνα, κομμένο κόντρα στις ίνες, ρόκα, παρμεζάνα, balsamico 12 ετών.",
-    "image": "/menu/secondi.svg",
+    "image": "https://images.unsplash.com/photo-1601924582970-9238bcb495d9?w=1200&q=85&auto=format&fit=crop",
     "stock": 99,
     "featured": false
   },
@@ -155,7 +155,7 @@
     "shortDesc_el": "Μασκαρπόνε, σαβαγιάρ με espresso, Marsala, κακάο.",
     "longDesc_en": "Our tiramisù uses mascarpone whipped with egg yolk and Marsala, layered with savoiardi soaked in Neapolitan espresso, dusted with Valrhona cocoa.",
     "longDesc_el": "Μασκαρπόνε χτυπημένο με κρόκο αυγού και Marsala, σαβαγιάρ βουτηγμένα σε espresso, κακάο Valrhona.",
-    "image": "/menu/dolci.svg",
+    "image": "https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=1200&q=85&auto=format&fit=crop",
     "stock": 99,
     "featured": true
   },
@@ -171,7 +171,7 @@
     "shortDesc_el": "Λεμόνι Αμάλφι, βανίλια Μαδαγασκάρης, coulis βατόμουρου.",
     "longDesc_en": "Silky panna cotta infused with Amalfi lemon zest and Madagascar vanilla, set overnight, served with a sharp raspberry coulis.",
     "longDesc_el": "Βελούδινη panna cotta με φλούδα λεμονιού Αμάλφι και βανίλια Μαδαγασκάρης, με coulis βατόμουρου.",
-    "image": "/menu/dolci.svg",
+    "image": "https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=1200&q=85&auto=format&fit=crop",
     "stock": 99,
     "featured": false
   },
@@ -187,7 +187,7 @@
     "shortDesc_el": "Τραγανές θήκες, ρικότα πρόβειου, ζαχαρωμένο πορτοκάλι, φυστίκι Αιγίνης.",
     "longDesc_en": "Two cannoli shells fried to order, piped with sweet sheep-milk ricotta, candied Sicilian orange, and crushed Bronte pistachio.",
     "longDesc_el": "Δύο cannoli τηγανητά στη στιγμή, γεμιστά με γλυκιά ρικότα πρόβειου, ζαχαρωμένο πορτοκάλι Σικελίας και φυστίκι Bronte.",
-    "image": "/menu/dolci.svg",
+    "image": "https://images.unsplash.com/photo-1558030006-450675393462?w=1200&q=85&auto=format&fit=crop",
     "stock": 99,
     "featured": false
   },
@@ -203,7 +203,7 @@
     "shortDesc_el": "Τοσκάνη · 2019 · Sangiovese · μέτριο σώμα.",
     "longDesc_en": "Aged 24 months in French oak. Cherry, leather, and dried herb on the nose. Perfect with tagliatelle al ragù or tagliata.",
     "longDesc_el": "Παλαίωση 24 μήνες σε γαλλικό δρυ. Κεράσι, δέρμα, ξερά βότανα. Ιδανικό με tagliatelle al ragù ή tagliata.",
-    "image": "/menu/vini.svg",
+    "image": "https://images.unsplash.com/photo-1566740933430-b5e70b06d2d5?w=1200&q=85&auto=format&fit=crop",
     "stock": 99,
     "featured": true
   },
@@ -219,7 +219,7 @@
     "shortDesc_el": "Πιεμόντε · 2017 · Nebbiolo · πλήρες σώμα.",
     "longDesc_en": "The king of Italian reds. Rose petal and tar, firm tannins, decades of aging potential. Pairs with osso buco or aged cheeses.",
     "longDesc_el": "Ο βασιλιάς των ιταλικών ερυθρών. Άρωμα τριαντάφυλλου και πίσσας, τανίνες, παλαίωση δεκαετιών. Ιδανικό με osso buco.",
-    "image": "/menu/vini.svg",
+    "image": "https://images.unsplash.com/photo-1516900557549-41557d405adf?w=1200&q=85&auto=format&fit=crop",
     "stock": 99,
     "featured": false
   },
@@ -235,7 +235,7 @@
     "shortDesc_el": "Σαρδηνία · 2022 · Vermentino · φρέσκο, εσπεριδοειδή.",
     "longDesc_en": "A taut, mineral Sardinian white with yellow apple, almond, and a sea-salt edge. A natural match for branzino or carpaccio.",
     "longDesc_el": "Στυφό, ορυκτό λευκό από τη Σαρδηνία με μήλο, αμύγδαλο και νότες θαλασσινής αλμύρας. Ταιριάζει με λαυράκι.",
-    "image": "/menu/vini.svg",
+    "image": "https://images.unsplash.com/photo-1510627498534-cf7e9002facc?w=1200&q=85&auto=format&fit=crop",
     "stock": 99,
     "featured": false
   }

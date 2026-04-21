@@ -27,6 +27,20 @@
     "tagline_en": "Cucina italiana · since 1962",
     "tagline_el": "Ιταλική κουζίνα · από το 1962"
   },
+  "nav": {
+    "links": [
+      { "id": "home", "label_en": "Home", "label_el": "Αρχική", "href": "/", "enabled": true },
+      { "id": "menu", "label_en": "Menu", "label_el": "Μενού", "href": "/menu", "enabled": true },
+      { "id": "experiences", "label_en": "Experiences", "label_el": "Εμπειρίες", "href": "/experiences", "enabled": true },
+      { "id": "gallery", "label_en": "Gallery", "label_el": "Γκαλερί", "href": "/gallery", "enabled": true },
+      { "id": "team", "label_en": "Our Family", "label_el": "Η οικογένεια", "href": "/about", "enabled": true },
+      { "id": "contact", "label_en": "Contact", "label_el": "Επικοινωνία", "href": "/contact", "enabled": true },
+      { "id": "blog", "label_en": "Journal", "label_el": "Ημερολόγιο", "href": "/blog", "enabled": true }
+    ],
+    "bookLabel_en": "Reserve a table",
+    "bookLabel_el": "Κρατήστε τραπέζι",
+    "bookHref": "/book"
+  },
   "features": [
     "Course-based menu (5 sections, 15 dishes)",
     "Full wine list with regional pairings",

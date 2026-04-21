@@ -50,6 +50,17 @@ const fraunces = Fraunces({
 });
 const FONT_VARS = `${geistSans.variable} ${inter.variable} ${manrope.variable} ${playfair.variable} ${cormorant.variable} ${fraunces.variable}`;
 
+function isLightColor(bg: string): boolean {
+  const hex = bg.trim();
+  if (!hex.startsWith("#")) return false;
+  const c = hex.length === 4
+    ? hex.slice(1).split("").map((x) => parseInt(x + x, 16))
+    : [parseInt(hex.slice(1, 3), 16), parseInt(hex.slice(3, 5), 16), parseInt(hex.slice(5, 7), 16)];
+  // relative luminance
+  const l = 0.299 * c[0] + 0.587 * c[1] + 0.114 * c[2];
+  return l > 160;
+}
+
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://spade.gr";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -172,12 +183,14 @@ export default async function RootLayout({
   const headingVar = FONT_VAR[typography.headingFont];
   const bodyVar = FONT_VAR[typography.bodyFont];
   const themeCss = `:root{--background:${theme.background};--foreground:${theme.foreground};--gold:${theme.primary};--gold-2:${theme.primaryAccent};--surface:${theme.surface};--surface-strong:${theme.surfaceStrong};--border:${theme.border};--border-strong:${theme.borderStrong};--muted:${theme.muted};--muted-2:${theme.muted2};--font-heading:${headingVar};--font-body:${bodyVar};}body{font-family:var(--font-body),system-ui,sans-serif;}.font-serif{font-family:var(--font-heading),Georgia,serif;}`;
+  const isLight = isLightColor(theme.background);
   return (
     <html
       lang="el"
       data-scroll-behavior="smooth"
+      data-theme={isLight ? "light" : "dark"}
       suppressHydrationWarning
-      className={`${FONT_VARS} h-full antialiased`}
+      className={`${FONT_VARS} h-full antialiased${isLight ? " light" : ""}`}
     >
       <head>
         <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="" />

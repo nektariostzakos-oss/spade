@@ -1,0 +1,8 @@
+[
+  { "id": "tasting-menu", "tkey": "svc.tasting", "name": "Tasting Menu (6 courses)", "desc": "Chef's choice, six plates across the full kitchen. Wine pairing optional.", "duration": 150, "price": 85, "category": "Experiences", "enabled": true, "order": 0 },
+  { "id": "wine-pairing", "tkey": "svc.pairing", "name": "Wine Pairing", "desc": "Four-glass pairing by Bianca, from Piedmontese reds to Sardinian whites.", "duration": 150, "price": 45, "category": "Experiences", "enabled": true, "order": 1 },
+  { "id": "private-dining", "tkey": "svc.private", "name": "Private Dining Room", "desc": "Back room for up to 18 guests. Set menu from €75/person.", "duration": 180, "price": 75, "category": "Experiences", "enabled": true, "order": 2 },
+  { "id": "chefs-table", "tkey": "svc.chefs", "name": "Chef's Table", "desc": "Four seats at the pass. Paolo cooks for you, explains each plate.", "duration": 180, "price": 150, "category": "Experiences", "enabled": true, "order": 3 },
+  { "id": "pasta-class", "tkey": "svc.pasta", "name": "Pasta Class with Marco", "desc": "Two hours at the marble table. Roll sfoglia by hand, cut tagliatelle, eat what you make.", "duration": 120, "price": 65, "category": "Experiences", "enabled": true, "order": 4 },
+  { "id": "lunch-set", "tkey": "svc.lunch", "name": "Lunch Menu (3 courses)", "desc": "Antipasto + primo or secondo + dolce. Weekdays only.", "duration": 75, "price": 32, "category": "Experiences", "enabled": true, "order": 5 }
+]

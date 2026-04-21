@@ -180,6 +180,9 @@ export async function POST(req: NextRequest) {
   const metaBranding = (meta.branding as Record<string, string> | undefined) ?? {};
   const metaTheme = (meta.theme as Record<string, string> | undefined) ?? {};
   const metaTypography = (meta.typography as Record<string, string> | undefined) ?? {};
+  const metaNav = meta.nav as
+    | { links?: Array<{ id: string; label_en: string; label_el: string; href: string; enabled?: boolean }>; bookLabel_en?: string; bookLabel_el?: string; bookHref?: string }
+    | undefined;
 
   await saveSettings({
     ...current,
@@ -191,6 +194,14 @@ export async function POST(req: NextRequest) {
       tagline_en: metaBranding.tagline_en || "",
       tagline_el: metaBranding.tagline_el || metaBranding.tagline_en || "",
     },
+    nav: metaNav && Array.isArray(metaNav.links) && metaNav.links.length > 0
+      ? {
+          links: metaNav.links.map((l) => ({ ...l, enabled: l.enabled !== false })),
+          bookLabel_en: metaNav.bookLabel_en || "Book",
+          bookLabel_el: metaNav.bookLabel_el || "Κράτηση",
+          bookHref: metaNav.bookHref || "/book",
+        }
+      : current.nav,
     theme: Object.keys(metaTheme).length > 0 ? (metaTheme as never) : current.theme,
     typography: Object.keys(metaTypography).length > 0 ? (metaTypography as never) : current.typography,
     onboarded: true,
