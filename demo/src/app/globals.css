@@ -506,3 +506,10 @@ html.light .bg-red-500\/10 { background-color: rgba(239,68,68,0.1) !important; }
 html.light .border-emerald-400\/40 { border-color: rgba(16,185,129,0.5) !important; }
 html.light .border-amber-400\/40 { border-color: rgba(245,158,11,0.5) !important; }
 html.light .border-red-400\/40 { border-color: rgba(239,68,68,0.5) !important; }
+
+/* === Dual-rendered i18n (server-safe, no per-request dynamic reads) ===
+ * Server components can emit both <span data-i18n="en"> and <span data-i18n="el">
+ * variants; the browser hides the one that doesn't match the current html lang.
+ * LangProvider keeps <html lang> in sync with the user's preference. */
+html:lang(el) [data-i18n="en"] { display: none; }
+html:lang(en) [data-i18n="el"] { display: none; }

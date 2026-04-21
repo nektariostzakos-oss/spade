@@ -1,18 +1,23 @@
 import Link from "next/link";
-import { cookies } from "next/headers";
 import { getTakenSlots } from "../../lib/bookings";
 import { getSlotsForDay } from "../../lib/services";
 import { loadBookingMode, loadBusiness } from "../../lib/settings";
 import { todayIsoInTz, nowMinutesInTz, dayOfWeekInTz } from "../../lib/tz";
 
-async function getLang(): Promise<"en" | "el"> {
-  try {
-    const c = await cookies();
-    const v = c.get("spade_lang")?.value;
-    return v === "el" ? "el" : "en";
-  } catch {
-    return "en";
-  }
+// IMPORTANT: do NOT call cookies() here — it opts the component's tree
+// into dynamic rendering on every request, which overrides the home page's
+// `revalidate = 60` ISR and causes 503s on memory-constrained shared hosts.
+// We emit both EN and EL strings side-by-side with data-i18n attributes;
+// CSS in globals.css hides the one that doesn't match the current html lang
+// (LangProvider keeps html.lang synced to the user's preference).
+
+function L({ en, el }: { en: React.ReactNode; el: React.ReactNode }) {
+  return (
+    <>
+      <span data-i18n="en">{en}</span>
+      <span data-i18n="el">{el}</span>
+    </>
+  );
 }
 
 function slotMinutes(s: string): number {
@@ -37,14 +42,14 @@ const DAY_NAMES_EL: Record<number, string> = {
 export default async function AvailabilitySnapshot() {
   const mode = await loadBookingMode();
   const business = await loadBusiness();
-  const lang = await getLang();
   const tz = business.timezone || "Europe/Athens";
   const today = todayIsoInTz(tz);
   const taken = await getTakenSlots(today, "any");
-  const cutoff = nowMinutesInTz(tz) + 45; // need at least 45 min lead time
+  const cutoff = nowMinutesInTz(tz) + 45;
 
   const dayIdx = dayOfWeekInTz(tz);
-  const dow = lang === "el" ? DAY_NAMES_EL[dayIdx] : DAY_NAMES_EN[dayIdx];
+  const dowEn = DAY_NAMES_EN[dayIdx];
+  const dowEl = DAY_NAMES_EL[dayIdx];
 
   const allSlots = mode === "reservation" ? RESERVATION_SLOTS : getSlotsForDay(dayIdx, business.hours);
   const allFreeToday = allSlots.filter((s) => !taken.includes(s) && slotMinutes(s) >= cutoff);
@@ -63,18 +68,21 @@ export default async function AvailabilitySnapshot() {
           style={{ borderColor: "var(--border)", background: "var(--background)" }}
         >
           <div>
-            <p className="eyebrow">{lang === "el" ? `Σήμερα · ${dow}` : `Today · ${dow}`}</p>
+            <p className="eyebrow">
+              <L en={`Today · ${dowEn}`} el={`Σήμερα · ${dowEl}`} />
+            </p>
             <p className="mt-2 font-serif text-2xl" style={{ color: "var(--foreground)" }}>
-              {lang === "el" ? "Είμαστε κλειστά σήμερα." : "We're closed today."}
+              <L en="We're closed today." el="Είμαστε κλειστά σήμερα." />
             </p>
             <p className="mt-1 text-sm" style={{ color: "var(--muted)" }}>
-              {lang === "el"
-                ? "Οι κρατήσεις για αύριο είναι ανοιχτές — διάλεξε ημερομηνία που σου ταιριάζει."
-                : "Booking opens for tomorrow — pick a date that works."}
+              <L
+                en="Booking opens for tomorrow — pick a date that works."
+                el="Οι κρατήσεις για αύριο είναι ανοιχτές — διάλεξε ημερομηνία που σου ταιριάζει."
+              />
             </p>
           </div>
           <Link href="/book" className="btn-premium-outline">
-            {lang === "el" ? "Δες το ημερολόγιο" : "See full calendar"}
+            <L en="See full calendar" el="Δες το ημερολόγιο" />
           </Link>
         </div>
       </section>
@@ -88,33 +96,26 @@ export default async function AvailabilitySnapshot() {
           style={{ borderColor: "var(--border)", background: "var(--background)" }}
         >
           <div>
-            <p className="eyebrow">{lang === "el" ? "Σήμερα · Γεμάτο" : "Today · Fully booked"}</p>
+            <p className="eyebrow">
+              <L en="Today · Fully booked" el="Σήμερα · Γεμάτο" />
+            </p>
             <p className="mt-2 font-serif text-2xl" style={{ color: "var(--foreground)" }}>
-              {lang === "el" ? "Δεν υπάρχουν άλλες θέσεις για σήμερα." : "No openings left for today."}
+              <L en="No openings left for today." el="Δεν υπάρχουν άλλες θέσεις για σήμερα." />
             </p>
             <p className="mt-1 text-sm" style={{ color: "var(--muted)" }}>
-              {lang === "el"
-                ? "Αύριο υπάρχουν πολλές επιλογές — διάλεξε την ώρα σου."
-                : "Tomorrow has plenty — pick your time."}
+              <L
+                en="Tomorrow has plenty — pick your time."
+                el="Αύριο υπάρχουν πολλές επιλογές — διάλεξε την ώρα σου."
+              />
             </p>
           </div>
           <Link href="/book" className="btn-premium-outline">
-            {lang === "el" ? "Δες το αύριο" : "View tomorrow"}
+            <L en="View tomorrow" el="Δες το αύριο" />
           </Link>
         </div>
       </section>
     );
   }
-
-  const eyebrow = mode === "reservation"
-    ? (lang === "el" ? "Απόψε · διαθέσιμο" : "Tonight · still available")
-    : (lang === "el" ? `Σήμερα · ${dow}` : `Today · ${dow}`);
-  const headline = mode === "reservation"
-    ? (lang === "el" ? "Τραπέζια διαθέσιμα απόψε." : "Tables open tonight.")
-    : (lang === "el" ? "Θέσεις διαθέσιμες σήμερα." : "Walk-in slots open today.");
-  const cta = mode === "reservation"
-    ? (lang === "el" ? "Κράτηση τραπεζιού" : "Reserve a table")
-    : (lang === "el" ? "Δες το ημερολόγιο" : "See full calendar");
 
   return (
     <section className="px-6 py-12" style={{ background: "var(--surface)" }}>
@@ -133,20 +134,39 @@ export default async function AvailabilitySnapshot() {
                 className="inline-block h-1.5 w-1.5 animate-pulse rounded-full"
                 style={{ background: "#22c55e" }}
               />
-              {eyebrow}
+              {mode === "reservation" ? (
+                <L en="Tonight · still available" el="Απόψε · διαθέσιμο" />
+              ) : (
+                <L en={`Today · ${dowEn}`} el={`Σήμερα · ${dowEl}`} />
+              )}
             </p>
             <h2 className="mt-2 font-serif text-3xl sm:text-4xl" style={{ color: "var(--foreground)" }}>
-              {headline}
+              {mode === "reservation" ? (
+                <L en="Tables open tonight." el="Τραπέζια διαθέσιμα απόψε." />
+              ) : (
+                <L en="Walk-in slots open today." el="Θέσεις διαθέσιμες σήμερα." />
+              )}
             </h2>
             {totalFree > 0 && totalFree <= 5 && (
               <p className="mt-2 text-sm font-medium" style={{ color: "var(--gold)" }}>
-                {lang === "el"
-                  ? (totalFree === 1 ? "Μόνο 1 θέση απομένει σήμερα." : `Μόνο ${totalFree} θέσεις απομένουν σήμερα.`)
-                  : (totalFree === 1 ? "Only 1 spot left today." : `Only ${totalFree} spots left today.`)}
+                {totalFree === 1 ? (
+                  <L en="Only 1 spot left today." el="Μόνο 1 θέση απομένει σήμερα." />
+                ) : (
+                  <L
+                    en={`Only ${totalFree} spots left today.`}
+                    el={`Μόνο ${totalFree} θέσεις απομένουν σήμερα.`}
+                  />
+                )}
               </p>
             )}
           </div>
-          <Link href="/book" className="btn-premium">{cta}</Link>
+          <Link href="/book" className="btn-premium">
+            {mode === "reservation" ? (
+              <L en="Reserve a table" el="Κράτηση τραπεζιού" />
+            ) : (
+              <L en="See full calendar" el="Δες το ημερολόγιο" />
+            )}
+          </Link>
         </div>
 
         <div className="mt-6 flex flex-wrap gap-3">
@@ -162,20 +182,24 @@ export default async function AvailabilitySnapshot() {
             >
               <span className="font-serif text-lg">{s}</span>
               <span className="text-[9px] uppercase tracking-widest opacity-70">
-                {lang === "el" ? "ελεύθερο" : "free"}
+                <L en="free" el="ελεύθερο" />
               </span>
             </Link>
           ))}
         </div>
 
         <p className="mt-4 text-xs" style={{ color: "var(--muted-2)" }}>
-          {mode === "reservation"
-            ? (lang === "el"
-              ? "Οι τρεις επόμενες διαθέσιμες ώρες τραπεζιού. Πάτησε μία για να κάνεις κράτηση."
-              : "Showing the next three open seatings. Tap a time to start your reservation.")
-            : (lang === "el"
-              ? "Οι τρεις επόμενες διαθέσιμες θέσεις για σήμερα. Πάτησε μία για να την κλείσεις."
-              : "Showing the next three open chairs. Tap a slot to lock it in.")}
+          {mode === "reservation" ? (
+            <L
+              en="Showing the next three open seatings. Tap a time to start your reservation."
+              el="Οι τρεις επόμενες διαθέσιμες ώρες τραπεζιού. Πάτησε μία για να κάνεις κράτηση."
+            />
+          ) : (
+            <L
+              en="Showing the next three open chairs. Tap a slot to lock it in."
+              el="Οι τρεις επόμενες διαθέσιμες θέσεις για σήμερα. Πάτησε μία για να την κλείσεις."
+            />
+          )}
         </p>
       </div>
     </section>
