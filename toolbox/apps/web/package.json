@@ -11,12 +11,19 @@
     "clean": "rm -rf .next .turbo *.tsbuildinfo"
   },
   "dependencies": {
+    "@clerk/nextjs": "^6.4.0",
+    "@mux/mux-player-react": "^3.1.0",
+    "@mux/upchunk": "^3.4.0",
     "@toolbox/design-tokens": "workspace:*",
     "@toolbox/shared": "workspace:*",
     "@toolbox/ui-web": "workspace:*",
+    "hls.js": "^1.5.17",
     "next": "^15.0.3",
+    "next-intl": "^3.25.1",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "swr": "^2.2.5",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.0.0-beta.4",

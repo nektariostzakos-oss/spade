@@ -11,6 +11,7 @@
     "clean": "rm -rf .next .turbo *.tsbuildinfo"
   },
   "dependencies": {
+    "@clerk/nextjs": "^6.4.0",
     "@toolbox/db": "workspace:*",
     "@toolbox/design-tokens": "workspace:*",
     "@toolbox/shared": "workspace:*",

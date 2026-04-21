@@ -1,18 +1,28 @@
 import { tokens } from '@toolbox/design-tokens';
 import { Button } from '@toolbox/ui-native';
+import { SignedIn, SignedOut, useAuth } from '@clerk/clerk-expo';
+import { Link } from 'expo-router';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 
-export default function Index() {
+export default function FeedHome() {
+  const { signOut } = useAuth();
   return (
     <SafeAreaView style={styles.root}>
       <View style={styles.inner}>
-        <Text style={styles.kicker}>PHASE 0 · FOUNDATION</Text>
+        <Text style={styles.kicker}>FEED · COMING PHASE 3</Text>
         <Text style={styles.title}>Toolbox</Text>
         <Text style={styles.subtitle}>
-          Vertical video for the trades. Pros post, homeowners hire, apprentices learn.
+          Vertical video for the trades.{'\n'}Pros post, homeowners hire, apprentices learn.
         </Text>
         <View style={{ height: tokens.size.space[6] }} />
-        <Button label="Get started" />
+        <SignedOut>
+          <Link href="/sign-in" asChild>
+            <Button label="Sign in" />
+          </Link>
+        </SignedOut>
+        <SignedIn>
+          <Button label="Sign out" variant="secondary" onPress={() => signOut()} />
+        </SignedIn>
       </View>
     </SafeAreaView>
   );

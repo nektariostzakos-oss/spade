@@ -1,3 +1,4 @@
+import { ClerkProvider } from '@clerk/nextjs';
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
 
@@ -16,8 +17,21 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body>{children}</body>
-    </html>
+    <ClerkProvider
+      appearance={{
+        variables: {
+          colorPrimary: '#FFC107',
+          colorBackground: '#0A0A0A',
+          colorText: '#FAFAFA',
+          colorInputBackground: '#1A1A1A',
+          colorInputText: '#FAFAFA',
+          borderRadius: '10px',
+        },
+      }}
+    >
+      <html lang="en">
+        <body>{children}</body>
+      </html>
+    </ClerkProvider>
   );
 }
