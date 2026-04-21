@@ -96,9 +96,9 @@ export async function ensureSeedAdmin(): Promise<void> {
   if (all.length > 0) return;
   const seed: User = {
     id: `u_${Date.now().toString(36)}`,
-    email: "admin@spade.gr",
+    email: "admin@oakline.studio",
     role: "admin",
-    passwordHash: hashPassword("spade2026"),
+    passwordHash: hashPassword("oakline2026"),
     createdAt: new Date().toISOString(),
   };
   await writeAll([seed]);

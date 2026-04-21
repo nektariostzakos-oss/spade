@@ -3,14 +3,7 @@
     "id": "u_mo7z9lpp",
     "email": "admin@oakline.studio",
     "role": "admin",
-    "passwordHash": "b8fdfa3b112df08d0d8fbb9fe25a21b8:ee7d23afeee2af8b9de89773552a29a21640bcbce053aa75fd3b8053c325f331",
+    "passwordHash": "0a9151bd0aaae98ac3aeaa92c770fc7d:fc9183a30d24b97d9b98f165d59ff3b2f8f49684aa8168e63d08f6b646f905ee",
     "createdAt": "2026-04-21T02:01:24.024Z"
-  },
-  {
-    "id": "u_mo7zqe0s_fd28",
-    "email": "aaa@aaa.aa",
-    "role": "admin",
-    "passwordHash": "57f90d2a6a47834a49ce407a32d62a0e:15940f78ead13850719a976f2af49b0965a147321efba32bcc455c1872bd5719",
-    "createdAt": "2026-04-21T02:14:27.208Z"
   }
 ]
