@@ -46,6 +46,7 @@ export type BusinessSettings = {
     tiktok: string;
   };
   priceRange: string;
+  timezone?: string; // IANA name, e.g. "Europe/Athens". Used for slot/today calcs.
 };
 
 export type NavLink = {
@@ -226,6 +227,7 @@ export const DEFAULT_BUSINESS: BusinessSettings = {
   country: "GR",
   phone: "+30 694 532 5780",
   email: "hello@spade.gr",
+  timezone: "Europe/Athens",
   latitude: 37.977,
   longitude: 22.974,
   hours: [

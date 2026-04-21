@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { getTakenSlots } from "../../lib/bookings";
 import { getDailySlots } from "../../lib/services";
 import { loadBookingMode, loadBusiness } from "../../lib/settings";
+import { todayIsoInTz, nowMinutesInTz, dayOfWeekInTz } from "../../lib/tz";
 
 async function getLang(): Promise<"en" | "el"> {
   try {
@@ -12,20 +13,6 @@ async function getLang(): Promise<"en" | "el"> {
   } catch {
     return "en";
   }
-}
-
-function pad(n: number) {
-  return n.toString().padStart(2, "0");
-}
-
-function todayIso(): string {
-  const d = new Date();
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
-}
-
-function nowMinutes(): number {
-  const d = new Date();
-  return d.getHours() * 60 + d.getMinutes();
 }
 
 function slotMinutes(s: string): number {
@@ -51,21 +38,21 @@ export default async function AvailabilitySnapshot() {
   const mode = await loadBookingMode();
   const business = await loadBusiness();
   const lang = await getLang();
-  const today = todayIso();
+  const tz = business.timezone || "Europe/Athens";
+  const today = todayIsoInTz(tz);
   const taken = await getTakenSlots(today, "any");
-  const cutoff = nowMinutes() + 45; // need at least 45 min lead time
+  const cutoff = nowMinutesInTz(tz) + 45; // need at least 45 min lead time
 
   const allSlots = mode === "reservation" ? RESERVATION_SLOTS : getDailySlots();
   const allFreeToday = allSlots.filter((s) => !taken.includes(s) && slotMinutes(s) >= cutoff);
   const free = allFreeToday.slice(0, 3);
   const totalFree = allFreeToday.length;
 
-  const dow = lang === "el"
-    ? DAY_NAMES_EL[new Date().getDay()]
-    : DAY_NAMES_EN[new Date().getDay()];
+  const dayIdx = dayOfWeekInTz(tz);
+  const dow = lang === "el" ? DAY_NAMES_EL[dayIdx] : DAY_NAMES_EN[dayIdx];
 
   const closedToday = business.hours?.find((h) => {
-    const d = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"][new Date().getDay()];
+    const d = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"][dayIdx];
     return h.day === d;
   })?.closed;
 

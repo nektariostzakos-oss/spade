@@ -678,6 +678,11 @@ export default function SettingsPanel() {
           onChange={(v) => setBusinessLocal({ ...business, country: v })}
         />
         <Field
+          label="Timezone (IANA, e.g. Europe/Athens)"
+          value={business.timezone || "Europe/Athens"}
+          onChange={(v) => setBusinessLocal({ ...business, timezone: v })}
+        />
+        <Field
           label="Phone"
           value={business.phone}
           onChange={(v) => setBusinessLocal({ ...business, phone: v })}

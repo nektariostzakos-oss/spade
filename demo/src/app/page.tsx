@@ -11,6 +11,7 @@ import TransformationsStrip from "./components/TransformationsStrip";
 import { getTakenSlots } from "../lib/bookings";
 import { getDailySlots } from "../lib/services";
 import { loadBusiness } from "../lib/settings";
+import { todayIsoInTz, nowMinutesInTz, dayOfWeekInTz, dateAtOffsetInTz } from "../lib/tz";
 
 // Revalidate the home page every 60s. Fresh enough for the "next slot" badge
 // (slots move in 30-min increments), and avoids full SSR every request —
@@ -21,11 +22,6 @@ const DAY_KEYS = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"] as const;
 const DAY_EN = { sun: "Sun", mon: "Mon", tue: "Tue", wed: "Wed", thu: "Thu", fri: "Fri", sat: "Sat" } as const;
 const DAY_EL = { sun: "Κυρ", mon: "Δευ", tue: "Τρί", wed: "Τετ", thu: "Πέμ", fri: "Παρ", sat: "Σάβ" } as const;
 
-function pad(n: number) { return n.toString().padStart(2, "0"); }
-function todayIso(): string {
-  const d = new Date();
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
-}
 function slotMinutes(s: string): number {
   const [h, m] = s.split(":").map(Number);
   return h * 60 + m;
@@ -34,15 +30,15 @@ function slotMinutes(s: string): number {
 async function computeNextSlot(): Promise<NextSlotInfo> {
   try {
     const business = await loadBusiness();
-    const now = new Date();
-    const dow = DAY_KEYS[now.getDay()];
-    const todayHours = business.hours?.find((h) => h.day === dow);
-    const cutoff = now.getHours() * 60 + now.getMinutes() + 45;
+    const tz = business.timezone || "Europe/Athens";
+    const todayDow = DAY_KEYS[dayOfWeekInTz(tz)];
+    const todayHours = business.hours?.find((h) => h.day === todayDow);
+    const cutoff = nowMinutesInTz(tz) + 45;
     const allSlots = getDailySlots();
 
     // Today's free slots (if open)
     if (!todayHours?.closed) {
-      const taken = await getTakenSlots(todayIso(), "any");
+      const taken = await getTakenSlots(todayIsoInTz(tz), "any");
       const free = allSlots
         .filter((s) => !taken.includes(s) && slotMinutes(s) >= cutoff)
         .slice(0, 1);
@@ -53,13 +49,11 @@ async function computeNextSlot(): Promise<NextSlotInfo> {
 
     // Try next 7 days for the first open day with a slot
     for (let offset = 1; offset <= 7; offset++) {
-      const d = new Date(now);
-      d.setDate(d.getDate() + offset);
-      const dkey = DAY_KEYS[d.getDay()];
+      const future = dateAtOffsetInTz(offset, tz);
+      const dkey = DAY_KEYS[future.dayOfWeek];
       const dh = business.hours?.find((h) => h.day === dkey);
       if (dh?.closed) continue;
-      const iso = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
-      const taken = await getTakenSlots(iso, "any");
+      const taken = await getTakenSlots(future.iso, "any");
       const free = allSlots.filter((s) => !taken.includes(s)).slice(0, 1);
       if (free.length > 0) {
         const label_en = offset === 1 ? "Tomorrow" : DAY_EN[dkey];

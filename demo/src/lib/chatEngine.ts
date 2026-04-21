@@ -6,6 +6,7 @@
 
 import type { BusinessSettings } from "./settings";
 import type { Product } from "./products";
+import { dayOfWeekInTz } from "./tz";
 
 type Lang = "en" | "el";
 
@@ -323,7 +324,8 @@ function formatHours(b: BusinessSettings, lang: Lang): string {
     mon: { en: "Mon", el: "Δευ" }, tue: { en: "Tue", el: "Τρι" }, wed: { en: "Wed", el: "Τετ" },
     thu: { en: "Thu", el: "Πεμ" }, fri: { en: "Fri", el: "Παρ" }, sat: { en: "Sat", el: "Σαβ" }, sun: { en: "Sun", el: "Κυρ" },
   };
-  const today = ORDER[(new Date().getDay() + 6) % 7]; // convert Sun=0 to Mon=0
+  // Use business timezone so "today" matches shop's wall clock, not the server's UTC.
+  const today = ORDER[(dayOfWeekInTz(b.timezone) + 6) % 7]; // convert Sun=0 to Mon=0
   const open = b.hours?.find((h) => h.day === today);
   const header = open?.closed
     ? (lang === "el" ? "**Σήμερα είμαστε κλειστά.**\n\n" : "**We're closed today.**\n\n")
