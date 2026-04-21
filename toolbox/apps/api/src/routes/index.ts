@@ -3,9 +3,12 @@ import { adminRoutes } from './admin';
 import { authRoutes } from './auth';
 import { feedRoutes } from './feed';
 import { healthRoutes } from './health';
+import { jobsRoutes } from './jobs';
+import { leadsRoutes } from './leads';
 import { muxRoutes } from './mux';
 import { proRoutes } from './pros';
 import { socialRoutes } from './social';
+import { stripeRoutes } from './stripe';
 import { videoRoutes } from './videos';
 
 export async function registerRoutes(app: FastifyInstance): Promise<void> {
@@ -17,9 +20,12 @@ export async function registerRoutes(app: FastifyInstance): Promise<void> {
       await videoRoutes(v1);
       await feedRoutes(v1);
       await socialRoutes(v1);
+      await jobsRoutes(v1);
+      await leadsRoutes(v1);
       await adminRoutes(v1);
     },
     { prefix: '/v1' },
   );
   await app.register(muxRoutes, { prefix: '/webhooks' });
+  await app.register(stripeRoutes, { prefix: '/webhooks' });
 }
