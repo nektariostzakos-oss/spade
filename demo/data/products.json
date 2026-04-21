@@ -153,8 +153,8 @@
     "category_el": "Δωροεπιταγές",
     "shortDesc_en": "€30 credit redeemable in-shop. Never expires.",
     "shortDesc_el": "€30 πίστωση για το μαγαζί. Δε λήγει ποτέ.",
-    "longDesc_en": "A €30 credit redeemable against any Spade service or product in-shop. Sent as a printable PDF after purchase. Never expires.",
-    "longDesc_el": "Πίστωση €30 για οποιαδήποτε υπηρεσία ή προϊόν του Spade. Αποστέλλεται ως PDF μετά την αγορά. Δε λήγει ποτέ.",
+    "longDesc_en": "A €30 credit redeemable against any Oakline service or product in-shop. Sent as a printable PDF after purchase. Never expires.",
+    "longDesc_el": "Πίστωση €30 για οποιαδήποτε υπηρεσία ή προϊόν του Oakline. Αποστέλλεται ως PDF μετά την αγορά. Δε λήγει ποτέ.",
     "image": "/products/voucher-30.svg",
     "stock": 999,
     "featured": false
@@ -185,8 +185,8 @@
     "category_el": "Δωροεπιταγές",
     "shortDesc_en": "€100 credit — the full grooming experience.",
     "shortDesc_el": "€100 πίστωση — όλη η εμπειρία grooming.",
-    "longDesc_en": "A €100 credit covering the complete Spade grooming experience: cut, beard, skin treatment, plus a take-home product. Arrives as a printable PDF. Never expires.",
-    "longDesc_el": "Πίστωση €100 που καλύπτει όλη την εμπειρία Spade: κούρεμα, μούσι, περιποίηση, συν ένα προϊόν για το σπίτι. PDF για εκτύπωση. Δε λήγει ποτέ.",
+    "longDesc_en": "A €100 credit covering the complete Oakline grooming experience: cut, beard, skin treatment, plus a take-home product. Arrives as a printable PDF. Never expires.",
+    "longDesc_el": "Πίστωση €100 που καλύπτει όλη την εμπειρία Oakline: κούρεμα, μούσι, περιποίηση, συν ένα προϊόν για το σπίτι. PDF για εκτύπωση. Δε λήγει ποτέ.",
     "image": "/products/voucher-100.svg",
     "stock": 999,
     "featured": false

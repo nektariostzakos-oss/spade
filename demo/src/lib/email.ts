@@ -34,7 +34,7 @@ async function buildTransport() {
 
 async function fromAddress() {
   const s = await loadSmtp();
-  return s.from || `Spade Barber <${s.user || "hello@spade.gr"}>`;
+  return s.from || `Oakline Scissors <${s.user || "hello@oakline.studio"}>`;
 }
 
 async function appendLog(entry: SentEmail) {

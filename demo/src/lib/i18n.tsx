@@ -78,11 +78,11 @@ const STRINGS: Record<Lang, Strings> = {
     "page.team.eyebrow": "Our team",
     "page.team.title": "Three barbers. One standard.",
     "page.team.sub":
-      "The chairs at Spade are run by three barbers who care about the work and the people in front of them.",
+      "The chairs at Oakline are run by three stylists who care about the work and the people in front of them.",
     "page.contact.eyebrow": "Contact",
-    "page.contact.title": "Find us in Loutraki.",
+    "page.contact.title": "Find us in South Kensington.",
     "page.contact.sub":
-      "Two blocks from the seafront. Free parking on the side street, espresso bar across the road.",
+      "Two minutes from Gloucester Road tube. Flat-white next door, coffee on the bench while you wait.",
     "page.book.eyebrow": "Booking",
     "page.book.title": "Pick a chair, pick a time.",
     "page.book.sub":
@@ -123,13 +123,13 @@ const STRINGS: Record<Lang, Strings> = {
 
     // About / story
     "about.eyebrow": "Our story",
-    "about.title": "A barber shop, the way it should be.",
+    "about.title": "A hair studio, the way it should be.",
     "about.p1":
-      "Spade opened in Loutraki in 2018 with one chair, one barber, and a stubborn idea: take the time, do the work properly, and the people will come back.",
+      "Oakline opened in South Kensington in 2018 with one chair, one stylist, and a stubborn idea: take the time, do the work properly, and people come back.",
     "about.p2":
       "Eight years later we've added two more chairs and a small team — but the philosophy hasn't budged. No production line. No rushing. Just sharp work in a quiet, well-lit room with good music and proper coffee.",
     "about.p3":
-      "We work on classic cuts, modern fades, full beard sculpting, and the kind of hot-towel shave you book the day before. Walk-ins welcome when chairs are open.",
+      "We work on precision cuts, colour with care, treatments and styling. Walk-ins welcome when chairs are open.",
 
     // Team grid
     "team.eyebrow": "The team",
@@ -160,7 +160,7 @@ const STRINGS: Record<Lang, Strings> = {
     "contact.phone.label": "Phone",
     "contact.phone.value": "+30 27440 00000",
     "contact.email.label": "Email",
-    "contact.email.value": "hello@spade.gr",
+    "contact.email.value": "hello@oakline.studio",
     "contact.hours.label": "Hours",
     "contact.hours.value": "Mon–Sat · 09:00–21:00\nSunday · Closed",
 
@@ -171,7 +171,7 @@ const STRINGS: Record<Lang, Strings> = {
     "footer.shop": "Shop",
     "footer.visit": "Visit",
     "footer.contact": "Contact",
-    "footer.copy": "© {year} Spade Barber Shop · Loutraki, GR",
+    "footer.copy": "© {year} Oakline Scissors · London, UK",
 
     // Booking flow
     "book.step.service": "Pick a service",
@@ -289,11 +289,11 @@ const STRINGS: Record<Lang, Strings> = {
     "page.team.eyebrow": "Η ομαδα μας",
     "page.team.title": "Τρεις κουρείς. Ένα στάνταρ.",
     "page.team.sub":
-      "Στις τρεις καρέκλες του Spade δουλεύουν τρεις κουρείς που νοιάζονται για τη δουλειά και για όποιον κάθεται μπροστά τους.",
+      "Στις τρεις καρέκλες του Oakline δουλεύουν τρεις stylists που νοιάζονται για τη δουλειά και για όποιον κάθεται μπροστά τους.",
     "page.contact.eyebrow": "Επικοινωνια",
-    "page.contact.title": "Θα μας βρεις στο Λουτράκι.",
+    "page.contact.title": "Θα μας βρεις στο South Kensington.",
     "page.contact.sub":
-      "Δύο τετράγωνα από την παραλία. Δωρεάν πάρκινγκ στον κάθετο δρόμο, καφές απέναντι.",
+      "Δύο λεπτά από τον σταθμό Gloucester Road. Flat white δίπλα, καφές στον πάγκο όσο περιμένεις.",
     "page.book.eyebrow": "Κρατηση",
     "page.book.title": "Διάλεξε καρέκλα, διάλεξε ώρα.",
     "page.book.sub":
@@ -334,13 +334,13 @@ const STRINGS: Record<Lang, Strings> = {
 
     // About / story
     "about.eyebrow": "Η ιστορια μας",
-    "about.title": "Ένα κουρείο, όπως πρέπει να είναι.",
+    "about.title": "Ένα στούντιο, όπως πρέπει να είναι.",
     "about.p1":
-      "Το Spade άνοιξε στο Λουτράκι το 2018 με μία καρέκλα, έναν κουρέα και μία πεισματάρικη ιδέα: άφησε το χρόνο να κάνει τη δουλειά σωστά, και ο κόσμος θα ξαναέρθει.",
+      "Το Oakline άνοιξε στο South Kensington το 2018 με μία καρέκλα, ένα stylist και μία πεισματάρικη ιδέα: άφησε τον χρόνο να κάνει τη δουλειά σωστά, και ο κόσμος επιστρέφει.",
     "about.p2":
-      "Οκτώ χρόνια μετά έχουμε προσθέσει δύο ακόμα καρέκλες και μια μικρή ομάδα — η φιλοσοφία όμως δεν άλλαξε. Καμία γραμμή παραγωγής. Καμία βιασύνη. Μόνο καθαρή δουλειά σ’ ένα ήσυχο, καλά φωτισμένο μαγαζί με σωστή μουσική και καλό καφέ.",
+      "Οκτώ χρόνια μετά έχουμε προσθέσει δύο ακόμα καρέκλες και μια μικρή ομάδα — η φιλοσοφία όμως δεν άλλαξε. Καμία γραμμή παραγωγής. Καμία βιασύνη. Μόνο καθαρή δουλειά σ’ ένα ήσυχο, καλά φωτισμένο στούντιο με σωστή μουσική και καλό καφέ.",
     "about.p3":
-      "Δουλεύουμε κλασικά κουρέματα, μοντέρνα fades, ολόκληρα γένια, και το ξύρισμα με ζεστή πετσέτα που θες να κλείσεις από την προηγούμενη. Walk-in δεκτό όταν υπάρχει ελεύθερη καρέκλα.",
+      "Δουλεύουμε precision cuts, βαφές με φροντίδα, θεραπείες και styling. Walk-in δεκτό όταν υπάρχει ελεύθερη καρέκλα.",
 
     // Team
     "team.eyebrow": "Η ομαδα",
@@ -372,7 +372,7 @@ const STRINGS: Record<Lang, Strings> = {
     "contact.phone.label": "Τηλεφωνο",
     "contact.phone.value": "+30 27440 00000",
     "contact.email.label": "Email",
-    "contact.email.value": "hello@spade.gr",
+    "contact.email.value": "hello@oakline.studio",
     "contact.hours.label": "Ωραριο",
     "contact.hours.value": "Δευ–Σαβ · 09:00–21:00\nΚυριακή · Κλειστά",
 
@@ -383,7 +383,7 @@ const STRINGS: Record<Lang, Strings> = {
     "footer.shop": "Καταστημα",
     "footer.visit": "Που θα μας βρεις",
     "footer.contact": "Επικοινωνια",
-    "footer.copy": "© {year} Spade Barber Shop · Λουτράκι, GR",
+    "footer.copy": "© {year} Oakline Scissors · Λονδίνο, UK",
 
     // Booking flow
     "book.step.service": "Διάλεξε υπηρεσία",

@@ -1,7 +1,7 @@
 import { listPages } from "../../../lib/pages";
 import { loadBranding, loadBusiness } from "../../../lib/settings";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://spade.gr";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://oakline.studio";
 
 function escape(s: string): string {
   return s
@@ -15,15 +15,15 @@ function escape(s: string): string {
 export async function GET() {
   const [posts, branding, business] = await Promise.all([
     listPages("post").catch(() => []),
-    loadBranding().catch(() => ({ wordmark: "Spade" })),
-    loadBusiness().catch(() => ({ name: "Spade" })),
+    loadBranding().catch(() => ({ wordmark: "Oakline" })),
+    loadBusiness().catch(() => ({ name: "Oakline" })),
   ]);
   const published = posts
     .filter((p) => p.published)
     .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))
     .slice(0, 50);
 
-  const brandName = branding.wordmark || business.name || "Spade";
+  const brandName = branding.wordmark || business.name || "Oakline";
   const items = published
     .map((p) => {
       const pubDate = p.publishedAt ? new Date(p.publishedAt).toUTCString() : new Date().toUTCString();

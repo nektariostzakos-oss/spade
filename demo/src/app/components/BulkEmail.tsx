@@ -25,20 +25,20 @@ const TEMPLATES = [
   {
     id: "reminder",
     label: "Appointment reminder",
-    subject: "Reminder · Your Spade booking",
-    body: `Hi {name},\n\nQuick reminder of your booking at Spade Barber tomorrow.\nWe're at Eleftheriou Venizelou 12, Loutraki.\n\nSee you soon,\nThe Spade Team`,
+    subject: "Reminder · Your Oakline booking",
+    body: `Hi {name},\n\nQuick reminder of your booking at Oakline Scissors tomorrow.\nWe're at 47 Cranley Mews, South Kensington, London.\n\nSee you soon,\nThe Oakline Team`,
   },
   {
     id: "promo",
     label: "Monthly promo",
-    subject: "10% off this month at Spade",
-    body: `Hi {name},\n\nA small thank-you for being one of our regulars — 10% off any service this month.\nMention the code SPADE10 at the chair.\n\nSee you soon,\nThe Spade Team`,
+    subject: "10% off this month at Oakline",
+    body: `Hi {name},\n\nA small thank-you for being one of our regulars — 10% off any service this month.\nMention the code OAKLINE10 at the chair.\n\nSee you soon,\nThe Oakline Team`,
   },
   {
     id: "closure",
     label: "Holiday closure",
     subject: "We're closed — short break ahead",
-    body: `Hi {name},\n\nA quick heads-up: the shop will be closed from {date} to {date2} for a short break.\nBookings outside that window remain confirmed.\n\nThanks for your patience,\nThe Spade Team`,
+    body: `Hi {name},\n\nA quick heads-up: the studio will be closed from {date} to {date2} for a short break.\nBookings outside that window remain confirmed.\n\nThanks for your patience,\nThe Oakline Team`,
   },
   {
     id: "blank",

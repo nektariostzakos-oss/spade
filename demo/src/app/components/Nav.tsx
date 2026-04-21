@@ -79,7 +79,7 @@ export default function Nav() {
                 className="block font-serif text-xl font-semibold tracking-wider"
                 style={{ color: "var(--foreground)" }}
               >
-                {branding.wordmark || "SPADE"}
+                {branding.wordmark || "OAKLINE"}
               </span>
               {tagline && (
                 <span

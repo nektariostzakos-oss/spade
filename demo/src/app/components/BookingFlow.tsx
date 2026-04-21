@@ -225,7 +225,8 @@ export default function BookingFlow() {
               const startDt = new Date(`${date}T${time}:00`);
               const endDt = new Date(startDt.getTime() + (service?.duration ?? 30) * 60_000);
               const fmt = (d: Date) => d.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
-              const title = `${pickName(service!)} · ${lang === "el" ? "Spade" : "Spade"}`;
+              const brand = business.name || "Oakline";
+              const title = `${pickName(service!)} · ${brand}`;
               const details = [
                 `${t("book.sum.service")}: ${pickName(service!)}`,
                 barber?.name ? `${t("book.sum.barber")}: ${barber.name}` : "",
@@ -235,9 +236,9 @@ export default function BookingFlow() {
               const icsLines = [
                 "BEGIN:VCALENDAR",
                 "VERSION:2.0",
-                "PRODID:-//Spade//Booking//EN",
+                "PRODID:-//Oakline//Booking//EN",
                 "BEGIN:VEVENT",
-                `UID:${done.ref}@spade.gr`,
+                `UID:${done.ref}@oakline.studio`,
                 `DTSTAMP:${fmt(new Date())}`,
                 `DTSTART:${fmt(startDt)}`,
                 `DTEND:${fmt(endDt)}`,
@@ -259,7 +260,7 @@ export default function BookingFlow() {
                   </a>
                   <a
                     href={ics}
-                    download={`spade-${done.ref}.ics`}
+                    download={`oakline-${done.ref}.ics`}
                     className="inline-flex items-center gap-2 rounded-full border border-white/20 px-5 py-2.5 text-xs font-semibold uppercase tracking-widest text-white hover:border-white/40"
                   >
                     {lang === "el" ? "Apple / Outlook (.ics)" : "Apple / Outlook (.ics)"}

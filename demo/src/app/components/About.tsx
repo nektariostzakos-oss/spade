@@ -37,7 +37,7 @@ export default function About() {
         >
           <Image
             src={c.image}
-            alt="Spade Barber Shop"
+            alt="Oakline Scissors studio"
             fill
             sizes="(max-width: 1024px) 100vw, 50vw"
             className="object-cover"

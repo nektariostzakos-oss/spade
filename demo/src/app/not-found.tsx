@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 export const metadata = {
-  title: "Page not found — Spade Barber",
+  title: "Page not found — Oakline Scissors",
   robots: { index: false, follow: true },
 };
 

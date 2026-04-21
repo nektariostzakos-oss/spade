@@ -11,26 +11,27 @@ import {
 import type { BusinessSettings } from "./settings";
 
 const DEFAULT: BusinessSettings = {
-  name: "Spade Barber",
-  streetAddress: "El. Venizelou 37",
-  city: "Loutraki",
-  postalCode: "20300",
-  country: "GR",
-  phone: "+30 694 532 5780",
-  email: "hello@spade.gr",
-  latitude: 37.977,
-  longitude: 22.974,
+  name: "Oakline Scissors",
+  streetAddress: "47 Cranley Mews",
+  city: "London",
+  postalCode: "SW7 3BY",
+  country: "GB",
+  phone: "+44 20 7946 0412",
+  email: "hello@oakline.studio",
+  timezone: "Europe/London",
+  latitude: 51.4935,
+  longitude: -0.1781,
   hours: [
-    { day: "mon", open: "09:00", close: "21:00", closed: false },
-    { day: "tue", open: "09:00", close: "21:00", closed: false },
-    { day: "wed", open: "09:00", close: "21:00", closed: false },
-    { day: "thu", open: "09:00", close: "21:00", closed: false },
-    { day: "fri", open: "09:00", close: "21:00", closed: false },
-    { day: "sat", open: "09:00", close: "21:00", closed: false },
+    { day: "mon", open: "10:00", close: "17:00", closed: false },
+    { day: "tue", open: "10:00", close: "14:00", closed: false, open2: "17:00", close2: "21:00" },
+    { day: "wed", open: "10:00", close: "17:00", closed: false },
+    { day: "thu", open: "10:00", close: "14:00", closed: false, open2: "17:00", close2: "21:00" },
+    { day: "fri", open: "10:00", close: "21:00", closed: false },
+    { day: "sat", open: "10:00", close: "21:00", closed: false },
     { day: "sun", open: "00:00", close: "00:00", closed: true },
   ],
   social: { instagram: "", facebook: "", whatsapp: "", tiktok: "" },
-  priceRange: "€€",
+  priceRange: "£££",
 };
 
 type Ctx = {

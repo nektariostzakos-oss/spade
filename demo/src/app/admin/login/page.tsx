@@ -1,7 +1,7 @@
 import LoginForm from "../../components/LoginForm";
 
 export const metadata = {
-  title: "Sign in — Spade Admin",
+  title: "Sign in — Oakline Admin",
   robots: { index: false, follow: false, nocache: true },
 };
 
@@ -10,7 +10,7 @@ export default function LoginPage() {
     <main className="flex min-h-screen items-center justify-center bg-[#0a0806] px-6">
       <div className="w-full max-w-md rounded-2xl border border-white/10 bg-white/[0.03] p-10 backdrop-blur">
         <p className="text-xs uppercase tracking-[0.3em] text-[#c9a961]">
-          Spade · Admin
+          Oakline · Admin
         </p>
         <h1 className="mt-2 font-serif text-3xl font-semibold text-white">
           Sign in
@@ -22,8 +22,8 @@ export default function LoginPage() {
           <LoginForm />
         </div>
         <p className="mt-6 text-xs text-white/30">
-          Default admin: <code className="text-[#c9a961]">admin@spade.gr</code> /{" "}
-          <code className="text-[#c9a961]">spade2026</code>.
+          Default admin: <code className="text-[#c9a961]">admin@oakline.studio</code> /{" "}
+          <code className="text-[#c9a961]">oakline2026</code>.
           Change it from the Settings tab after first login.
         </p>
       </div>

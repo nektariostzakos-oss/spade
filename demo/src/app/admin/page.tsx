@@ -6,7 +6,7 @@ import { loadSettings } from "../../lib/settings";
 import AdminDashboard from "../components/AdminDashboard";
 
 export const metadata = {
-  title: "Admin · Bookings — Spade",
+  title: "Admin · Bookings — Oakline",
   robots: { index: false, follow: false, nocache: true },
 };
 

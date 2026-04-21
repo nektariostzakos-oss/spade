@@ -29,10 +29,10 @@ export async function POST(req: NextRequest) {
       auth: s.user ? { user: s.user, pass: s.pass } : undefined,
     });
     await transport.sendMail({
-      from: s.from || `Spade Barber <${s.user}>`,
+      from: s.from || `Oakline Scissors <${s.user}>`,
       to,
-      subject: "Spade SMTP test",
-      text: "If you can read this, your SMTP settings work.\n\n— Spade",
+      subject: "Oakline SMTP test",
+      text: "If you can read this, your SMTP settings work.\n\n— Oakline",
     });
     return NextResponse.json({ ok: true });
   } catch (e) {

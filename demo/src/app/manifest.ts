@@ -2,18 +2,19 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Spade Barber Loutraki",
-    short_name: "Spade",
+    name: "Oakline Scissors London",
+    short_name: "Oakline",
     description:
-      "Spade Barber Shop in Loutraki. Classic cuts, sharp fades, hot shaves.",
+      "Oakline Scissors — a precision hair studio in South Kensington, London. Cuts, colour and care.",
     start_url: "/",
     display: "standalone",
     background_color: "#0a0806",
     theme_color: "#c9a961",
     orientation: "portrait",
-    lang: "el",
+    lang: "en-GB",
     icons: [
-      { src: "/favicon.ico", sizes: "any", type: "image/x-icon" },
+      { src: "/icon", sizes: "any", type: "image/png" },
+      { src: "/apple-icon", sizes: "180x180", type: "image/png" },
     ],
   };
 }

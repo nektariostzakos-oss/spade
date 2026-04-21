@@ -1065,9 +1065,9 @@ function BusinessStep({ value, onChange }: { value: Business; onChange: (v: Busi
       </div>
 
       <div className="mt-6 grid gap-4 sm:grid-cols-2">
-        <Field label="Business name *" value={value.name} onChange={updateName} placeholder="Spade Barber" />
-        <Field label="City *" value={value.city} onChange={(v) => onChange({ ...value, city: v })} placeholder="Loutraki" />
-        <Field label="Street address" value={value.streetAddress} onChange={(v) => onChange({ ...value, streetAddress: v })} placeholder="El. Venizelou 37" />
+        <Field label="Business name *" value={value.name} onChange={updateName} placeholder="Oakline Scissors" />
+        <Field label="City *" value={value.city} onChange={(v) => onChange({ ...value, city: v })} placeholder="London" />
+        <Field label="Street address" value={value.streetAddress} onChange={(v) => onChange({ ...value, streetAddress: v })} placeholder="47 Cranley Mews" />
         <Field label="Postal code (→ autofills city)" value={value.postalCode} onChange={updatePostal} placeholder="20300" />
         <Field label="Country (ISO)" value={value.country} onChange={(v) => onChange({ ...value, country: v })} placeholder="GR" />
         <Field label="Phone" value={value.phone} onChange={(v) => onChange({ ...value, phone: v })} placeholder="+30 694 532 5780" />

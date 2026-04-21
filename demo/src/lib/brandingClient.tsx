@@ -13,9 +13,9 @@ import type { BrandingSettings } from "./settings";
 const DEFAULT_BRANDING: BrandingSettings = {
   logoUrl: "/brand/default-logo.svg",
   faviconUrl: "/favicon.ico",
-  wordmark: "SPADE",
-  tagline_en: "Barber · Loutraki",
-  tagline_el: "Barber · Λουτράκι",
+  wordmark: "OAKLINE",
+  tagline_en: "Scissors · London",
+  tagline_el: "Ψαλίδι · Λονδίνο",
 };
 
 type Ctx = {

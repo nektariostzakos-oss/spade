@@ -1,23 +1,23 @@
 {
   "smtp": { "host": "", "port": 587, "user": "", "pass": "", "from": "", "secure": "tls" },
   "branding": {
-    "logoUrl": "/brand/spade-logo-light.svg",
-    "logoUrlDark": "/brand/spade-logo-dark.svg",
-    "faviconUrl": "/brand/spade-favicon.svg",
-    "wordmark": "SPADE",
-    "tagline_en": "Barber · Loutraki",
-    "tagline_el": "Barber · Λουτράκι"
+    "logoUrl": "",
+    "logoUrlDark": "",
+    "faviconUrl": "",
+    "wordmark": "OAKLINE",
+    "tagline_en": "Scissors · London",
+    "tagline_el": "Ψαλίδι · Λονδίνο"
   },
   "business": {
-    "name": "Spade Barber",
-    "streetAddress": "El. Venizelou 37",
-    "city": "Loutraki",
-    "postalCode": "20300",
-    "country": "GR",
-    "phone": "+30 694 532 5780",
-    "email": "hello@spade.gr",
-    "latitude": 37.977,
-    "longitude": 22.974,
+    "name": "Oakline Scissors",
+    "streetAddress": "47 Cranley Mews",
+    "city": "London",
+    "postalCode": "SW7 3BY",
+    "country": "GB",
+    "phone": "+44 20 7946 0412",
+    "email": "hello@oakline.studio",
+    "latitude": 51.4935,
+    "longitude": -0.1781,
     "hours": [
       { "day": "mon", "open": "10:00", "close": "17:00", "closed": false },
       { "day": "tue", "open": "10:00", "close": "14:00", "closed": false, "open2": "17:00", "close2": "21:00" },
@@ -27,9 +27,9 @@
       { "day": "sat", "open": "10:00", "close": "21:00", "closed": false },
       { "day": "sun", "open": "00:00", "close": "00:00", "closed": true }
     ],
-    "timezone": "Europe/Athens",
-    "social": { "instagram": "", "facebook": "", "whatsapp": "+306945325780", "tiktok": "" },
-    "priceRange": "€€"
+    "timezone": "Europe/London",
+    "social": { "instagram": "https://instagram.com/oakline.scissors", "facebook": "", "whatsapp": "+442079460412", "tiktok": "" },
+    "priceRange": "£££"
   },
   "nav": {
     "links": [

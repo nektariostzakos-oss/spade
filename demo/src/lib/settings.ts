@@ -178,9 +178,9 @@ export async function loadIndustryId(): Promise<string> {
 export const DEFAULT_BRANDING: BrandingSettings = {
   logoUrl: "/brand/default-logo.svg",
   faviconUrl: "/favicon.ico",
-  wordmark: "SPADE",
-  tagline_en: "Barber · Loutraki",
-  tagline_el: "Barber · Λουτράκι",
+  wordmark: "OAKLINE",
+  tagline_en: "Scissors · London",
+  tagline_el: "Ψαλίδι · Λονδίνο",
 };
 
 export const DEFAULT_ANALYTICS: AnalyticsSettings = {
@@ -224,16 +224,16 @@ export const DEFAULT_NAV: NavSettings = {
 };
 
 export const DEFAULT_BUSINESS: BusinessSettings = {
-  name: "Spade Barber",
-  streetAddress: "El. Venizelou 37",
-  city: "Loutraki",
-  postalCode: "20300",
-  country: "GR",
-  phone: "+30 694 532 5780",
-  email: "hello@spade.gr",
-  timezone: "Europe/Athens",
-  latitude: 37.977,
-  longitude: 22.974,
+  name: "Oakline Scissors",
+  streetAddress: "47 Cranley Mews",
+  city: "London",
+  postalCode: "SW7 3BY",
+  country: "GB",
+  phone: "+44 20 7946 0412",
+  email: "hello@oakline.studio",
+  timezone: "Europe/London",
+  latitude: 51.4935,
+  longitude: -0.1781,
   hours: [
     { day: "mon", open: "10:00", close: "17:00", closed: false },
     { day: "tue", open: "10:00", close: "14:00", closed: false, open2: "17:00", close2: "21:00" },

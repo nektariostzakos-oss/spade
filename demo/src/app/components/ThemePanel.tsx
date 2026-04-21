@@ -67,7 +67,7 @@ function light(fg: string): { muted: string; muted2: string } {
 }
 
 const PRESETS: { name: string; theme: Theme }[] = [
-  { name: "Spade · gold on black", theme: DEFAULT_THEME },
+  { name: "Oakline · gold on black", theme: DEFAULT_THEME },
   {
     name: "Bone & ink · light",
     theme: {
@@ -250,7 +250,7 @@ export default function ThemePanel() {
           {msg && <span className="text-xs text-white/60">{msg}</span>}
           <button
             onClick={() => {
-              if (!confirm("Reset theme and fonts to the Spade defaults?")) return;
+              if (!confirm("Reset theme and fonts to the Oakline defaults?")) return;
               setTheme(DEFAULT_THEME);
               setTypography({ headingFont: "playfair", bodyFont: "geist" });
               setMsg("Defaults loaded — click Save to persist.");

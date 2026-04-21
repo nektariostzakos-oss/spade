@@ -41,7 +41,7 @@ export default function LoginForm() {
           onChange={(e) => setEmail(e.target.value)}
           autoFocus
           autoComplete="email"
-          placeholder="admin@spade.gr"
+          placeholder="admin@oakline.studio"
           className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/30 outline-none transition-colors focus:border-white/40"
         />
       </div>

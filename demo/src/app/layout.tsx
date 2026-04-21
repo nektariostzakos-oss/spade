@@ -63,7 +63,7 @@ function isLightColor(bg: string): boolean {
   return l > 160;
 }
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://spade.gr";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://oakline.studio";
 
 export async function generateMetadata(): Promise<Metadata> {
   const branding = await loadBranding();
@@ -83,42 +83,42 @@ export async function generateMetadata(): Promise<Metadata> {
     metadataBase: new URL(SITE_URL),
     title: {
       default: homeTitle,
-      template: "%s · Spade Barber Loutraki",
+      template: "%s · Oakline Scissors London",
     },
     description: homeDesc,
     keywords: [
-      "barber Loutraki",
-      "κουρείο Λουτράκι",
-      "Spade barber",
-      "κουρείο κοντά μου",
-      "men's grooming",
-      "ξύρισμα Λουτράκι",
-      "κούρεμα Λουτράκι",
-      "beard trim Loutraki",
+      "hair salon London",
+      "scissors cut London",
+      "Oakline Scissors",
+      "salon near me",
+      "South Kensington hair",
+      "precision haircut London",
+      "hairdresser SW7",
+      "colour salon London",
     ],
-    applicationName: "Spade Barber",
-    authors: [{ name: "Spade Barber" }],
-    creator: "Spade Barber Loutraki",
-    publisher: "Spade Barber Loutraki",
+    applicationName: "Oakline Scissors",
+    authors: [{ name: "Oakline Scissors" }],
+    creator: "Oakline Scissors London",
+    publisher: "Oakline Scissors London",
     alternates: {
       canonical: "/",
       languages: {
-        "el-GR": "/",
+        "en-GB": "/",
         "en-US": "/",
       },
     },
     openGraph: {
       type: "website",
-      locale: "el_GR",
+      locale: "en_GB",
       alternateLocale: ["en_US"],
       url: SITE_URL,
-      siteName: "Spade Barber Loutraki",
+      siteName: "Oakline Scissors London",
       title: homeTitle,
       description: homeDesc,
       ...(homeOg
         ? {
             images: [
-              { url: homeOg, width: 1200, height: 630, alt: "Spade Barber Shop Loutraki" },
+              { url: homeOg, width: 1200, height: 630, alt: "Oakline Scissors · London salon" },
             ],
           }
         : {}),
@@ -195,7 +195,7 @@ export default async function RootLayout({
         <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="" />
         <link rel="dns-prefetch" href="https://images.unsplash.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link rel="alternate" type="application/rss+xml" title="Spade Blog · RSS" href="/blog/rss.xml" />
+        <link rel="alternate" type="application/rss+xml" title="Oakline Blog · RSS" href="/blog/rss.xml" />
         <style dangerouslySetInnerHTML={{ __html: themeCss }} />
         <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
         <JsonLd />

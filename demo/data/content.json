@@ -37,14 +37,14 @@
       {
         "label_en": "Address",
         "label_el": "Διευθυνση",
-        "value_en": "El. Venizelou 37, Loutraki",
-        "value_el": "Ελ. Βενιζέλου 37, Λουτράκι"
+        "value_en": "47 Cranley Mews, South Kensington, London",
+        "value_el": "47 Cranley Mews, South Kensington, Λονδίνο"
       },
       {
         "label_en": "Phone",
         "label_el": "Τηλεφωνο",
-        "value_en": "+30 694 532 5780",
-        "value_el": "+30 694 532 5780"
+        "value_en": "+44 20 7946 0412",
+        "value_el": "+44 20 7946 0412"
       },
       {
         "label_en": "Walk-ins",
@@ -178,8 +178,8 @@
     "eyebrow_el": "Η ιστορια μας",
     "title_en": "A barber shop, the way it should be.",
     "title_el": "Ένα κουρείο, όπως πρέπει να είναι.",
-    "p1_en": "Spade opened in Loutraki in 2018 with one chair, one barber, and a stubborn idea: take the time, do the work properly, and the people will come back.",
-    "p1_el": "Το Spade άνοιξε στο Λουτράκι το 2018 με μία καρέκλα, έναν κουρέα και μία πεισματάρικη ιδέα: άφησε το χρόνο να κάνει τη δουλειά σωστά, και ο κόσμος θα ξαναέρθει.",
+    "p1_en": "Oakline opened in South Kensington in 2018 with one chair, one stylist, and a stubborn idea: take the time, do the work properly, and people come back.",
+    "p1_el": "Το Oakline άνοιξε στο South Kensington το 2018 με μία καρέκλα, έναν stylist και μία πεισματάρικη ιδέα: άφησε τον χρόνο να κάνει τη δουλειά σωστά, και ο κόσμος επιστρέφει.",
     "p2_en": "Eight years later we've added two more chairs and a small team — but the philosophy hasn't budged. No production line. No rushing. Just sharp work in a quiet, well-lit room with good music and proper coffee.",
     "p2_el": "Οκτώ χρόνια μετά έχουμε προσθέσει δύο ακόμα καρέκλες και μια μικρή ομάδα — η φιλοσοφία όμως δεν άλλαξε. Καμία γραμμή παραγωγής. Καμία βιασύνη. Μόνο καθαρή δουλειά σ’ ένα ήσυχο, καλά φωτισμένο μαγαζί με σωστή μουσική και καλό καφέ.",
     "p3_en": "We work on classic cuts, modern fades, full beard sculpting, and the kind of hot-towel shave you book the day before. Walk-ins welcome when chairs are open.",
@@ -257,8 +257,8 @@
       {
         "q_en": "Where exactly are you?",
         "q_el": "Πού ακριβώς είστε;",
-        "a_en": "El. Venizelou 37, Loutraki, two blocks from the seafront. Free parking on the side street.",
-        "a_el": "Ελ. Βενιζέλου 37, Λουτράκι, δύο τετράγωνα από την παραλία. Δωρεάν πάρκινγκ στον κάθετο δρόμο."
+        "a_en": "47 Cranley Mews, South Kensington, London SW7 3BY. Two minutes from Gloucester Road tube.",
+        "a_el": "47 Cranley Mews, South Kensington, Λονδίνο SW7 3BY. Δύο λεπτά από τον σταθμό Gloucester Road."
       }
     ]
   },
@@ -268,26 +268,26 @@
       {
         "label_en": "Address",
         "label_el": "Διευθυνση",
-        "value_en": "El. Venizelou 37\nLoutraki 20300, Greece",
-        "value_el": "Ελ. Βενιζέλου 37\nΛουτράκι 20300, Ελλάδα"
+        "value_en": "47 Cranley Mews\nSouth Kensington, London SW7 3BY",
+        "value_el": "47 Cranley Mews\nSouth Kensington, Λονδίνο SW7 3BY"
       },
       {
         "label_en": "Phone",
         "label_el": "Τηλεφωνο",
-        "value_en": "+30 694 532 5780",
-        "value_el": "+30 694 532 5780"
+        "value_en": "+44 20 7946 0412",
+        "value_el": "+44 20 7946 0412"
       },
       {
         "label_en": "Email",
         "label_el": "Email",
-        "value_en": "hello@spade.gr",
-        "value_el": "hello@spade.gr"
+        "value_en": "hello@oakline.studio",
+        "value_el": "hello@oakline.studio"
       },
       {
         "label_en": "Hours",
         "label_el": "Ωραριο",
-        "value_en": "Mon–Sat · 09:00–21:00\nSunday · Closed",
-        "value_el": "Δευ–Σαβ · 09:00–21:00\nΚυριακή · Κλειστά"
+        "value_en": "Mon, Wed · 10:00–17:00\nTue, Thu · 10:00–14:00, 17:00–21:00\nFri, Sat · 10:00–21:00\nSunday · Closed",
+        "value_el": "Δευ, Τετ · 10:00–17:00\nΤρι, Πεμ · 10:00–14:00, 17:00–21:00\nΠαρ, Σαβ · 10:00–21:00\nΚυριακή · Κλειστά"
       }
     ]
   },
@@ -298,23 +298,23 @@
     "title_el": "Τι λένε όσοι κάθονται στην καρέκλα μας.",
     "items": [
       {
-        "quote_en": "Best skin fade in Loutraki, easily. Andreas takes his time and the finish is razor sharp.",
-        "quote_el": "Το καλύτερο skin fade στο Λουτράκι, χωρίς αντίρρηση. Ο Ανδρέας παίρνει το χρόνο του και η λεπτομέρεια είναι κοφτερή.",
-        "name": "Giorgos M.",
+        "quote_en": "Best precision cut in SW7, easily. Hannah takes her time and the finish is razor sharp.",
+        "quote_el": "Το καλύτερο precision κούρεμα στο SW7, χωρίς αντίρρηση. Η Hannah παίρνει τον χρόνο της και η λεπτομέρεια είναι κοφτερή.",
+        "name": "George M.",
         "role_en": "Regular since 2021",
         "role_el": "Σταθερός πελάτης από το 2021"
       },
       {
-        "quote_en": "Hot towel shave was a religious experience. Walked out a different man.",
-        "quote_el": "Το ξύρισμα με ζεστή πετσέτα ήταν εμπειρία ζωής. Βγήκα άλλος άνθρωπος.",
-        "name": "Stefan K.",
-        "role_en": "Visitor from Athens",
-        "role_el": "Επισκέπτης από Αθήνα"
+        "quote_en": "Balayage + treatment was a religious experience. Walked out a different person.",
+        "quote_el": "Το balayage με treatment ήταν εμπειρία ζωής. Βγήκα άλλος άνθρωπος.",
+        "name": "Sophia K.",
+        "role_en": "Visitor from Manchester",
+        "role_el": "Επισκέπτρια από Manchester"
       },
       {
         "quote_en": "Booking online is dead simple. Show up, sit down, leave looking sharp.",
         "quote_el": "Η online κράτηση είναι παιχνιδάκι. Έρχεσαι, κάθεσαι, φεύγεις κοφτερός.",
-        "name": "Dimitris L.",
+        "name": "Daniel L.",
         "role_en": "Regular since 2019",
         "role_el": "Σταθερός πελάτης από το 2019"
       }
@@ -348,18 +348,18 @@
   "page_team": {
     "eyebrow_en": "Our team",
     "eyebrow_el": "Η ομαδα μας",
-    "title_en": "Three barbers. One standard.",
-    "title_el": "Τρεις κουρείς. Ένα στάνταρ.",
-    "sub_en": "The chairs at Spade are run by three barbers who care about the work and the people in front of them.",
-    "sub_el": "Στις τρεις καρέκλες του Spade δουλεύουν τρεις κουρείς που νοιάζονται για τη δουλειά και για όποιον κάθεται μπροστά τους."
+    "title_en": "Three stylists. One standard.",
+    "title_el": "Τρεις stylists. Ένα στάνταρ.",
+    "sub_en": "The chairs at Oakline are run by three stylists who care about the work and the people in front of them.",
+    "sub_el": "Στις τρεις καρέκλες του Oakline δουλεύουν τρεις stylists που νοιάζονται για τη δουλειά και για όποιον κάθεται μπροστά τους."
   },
   "page_contact": {
     "eyebrow_en": "Contact",
     "eyebrow_el": "Επικοινωνια",
-    "title_en": "Find us in Loutraki.",
-    "title_el": "Θα μας βρεις στο Λουτράκι.",
-    "sub_en": "Two blocks from the seafront. Free parking on the side street, espresso bar across the road.",
-    "sub_el": "Δύο τετράγωνα από την παραλία. Δωρεάν πάρκινγκ στον κάθετο δρόμο, καφές απέναντι."
+    "title_en": "Find us in South Kensington.",
+    "title_el": "Θα μας βρεις στο South Kensington.",
+    "sub_en": "Two minutes from Gloucester Road tube. Flat-white next door, coffee on the bench while you wait.",
+    "sub_el": "Δύο λεπτά από τον σταθμό Gloucester Road. Flat white δίπλα, καφές στον πάγκο όσο περιμένεις."
   },
   "page_book": {
     "eyebrow_en": "Booking",
@@ -374,8 +374,8 @@
     "lede_el": "Κλασικά κουρέματα, μοντέρνα fades, και το ξύρισμα με ζεστή πετσέτα που θες να κλείσεις από την προηγούμενη. Walk-in δεκτό όταν υπάρχει ελεύθερη καρέκλα.",
     "cta_en": "Take a seat.",
     "cta_el": "Πάρε θέση.",
-    "copy_en": "© 2026 Spade Barber Shop · Loutraki, GR",
-    "copy_el": "© 2026 Spade Barber Shop · Λουτράκι, GR",
+    "copy_en": "© 2026 Oakline Scissors · London, UK",
+    "copy_el": "© 2026 Oakline Scissors · Λονδίνο, UK",
     "tagline_en": "Sharp since 2018.",
     "tagline_el": "Κοφτεροί από το 2018."
   }
