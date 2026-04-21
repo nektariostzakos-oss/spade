@@ -195,6 +195,7 @@ export default async function RootLayout({
         <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="" />
         <link rel="dns-prefetch" href="https://images.unsplash.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link rel="alternate" type="application/rss+xml" title="Spade Blog · RSS" href="/blog/rss.xml" />
         <style dangerouslySetInnerHTML={{ __html: themeCss }} />
         <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
         <JsonLd />
