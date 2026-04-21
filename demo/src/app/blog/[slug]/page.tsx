@@ -7,6 +7,20 @@ import { loadBranding, loadBusiness } from "../../../lib/settings";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://spade.gr";
 
+// Static-generate each published post at build time. New posts added after
+// deploy are served via on-demand SSG (cached after first hit).
+export async function generateStaticParams() {
+  try {
+    const posts = await listPages("post");
+    return posts.filter((p) => p.published).map((p) => ({ slug: p.slug }));
+  } catch {
+    return [];
+  }
+}
+
+// Revalidate each post's static HTML every 10 min so admin edits show up.
+export const revalidate = 600;
+
 export async function generateMetadata({
   params,
 }: {
