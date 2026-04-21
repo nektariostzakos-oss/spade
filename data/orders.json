@@ -1,0 +1,30 @@
+[
+  {
+    "items": [
+      {
+        "id": "p_shampoo",
+        "name": "Natural Shampoo",
+        "price": 14,
+        "qty": 2
+      },
+      {
+        "id": "p_pomade-classic",
+        "name": "Classic Pomade",
+        "price": 18,
+        "qty": 1
+      }
+    ],
+    "subtotal": 46,
+    "name": "mindscrollers LLC",
+    "phone": "6931151063",
+    "email": "nektariostzakos@gmail.com",
+    "address": "30 N GOULD ST STE R",
+    "city": "SHERIDAN",
+    "postal": "82801",
+    "notes": "",
+    "lang": "en",
+    "id": "o_mo3pb6fu_kf3w",
+    "status": "new",
+    "createdAt": "2026-04-18T02:11:36.666Z"
+  }
+]

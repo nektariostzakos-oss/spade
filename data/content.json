@@ -1,0 +1,418 @@
+{
+  "page_home": {
+    "bgImage": "https://images.unsplash.com/photo-1517832606299-7ae9b720a186?w=2400&q=80&auto=format&fit=crop",
+    "bgOpacity": 42
+  },
+  "hero": {
+    "pill_en": "Loutraki, Greece",
+    "pill_el": "Λουτρακι, Ελλαδα",
+    "title_en": "Sharp cuts.",
+    "title_el": "Κοφτερά κουρέματα.",
+    "titleAccent_en": "Quiet luxury.",
+    "titleAccent_el": "Ήσυχη πολυτέλεια.",
+    "subtitle_en": "Old-school craft, modern detail. From classic scissor work to skin fades and hot-towel shaves — book the chair, leave a different man.",
+    "subtitle_el": "Κλασική τέχνη, σύγχρονη πινελιά. Από κούρεμα με ψαλίδι μέχρι skin fade και ξύρισμα με ζεστή πετσέτα — κάθεσαι στην καρέκλα, σηκώνεσαι αλλιώτικος.",
+    "meta1_en": "★★★★★ 4.9 / 412 reviews",
+    "meta1_el": "★★★★★ 4.9 / 412 κριτικές",
+    "meta2_en": "Open today · 09:00–21:00",
+    "meta2_el": "Σήμερα ανοιχτά · 09:00–21:00",
+    "bgImage": "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=2400&q=80&auto=format&fit=crop",
+    "bgVideo": "",
+    "bgVideoPoster": "",
+    "sideImage": "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=1200&q=80&auto=format&fit=crop",
+    "sideRole_en": "Master barber",
+    "sideRole_el": "Master barber",
+    "sideName": "Andreas Pappas",
+    "bgOpacity": 66,
+    "overlayStrength": 40
+  },
+  "info": {
+    "items": [
+      {
+        "label_en": "Open today",
+        "label_el": "Σημερα ανοιχτα",
+        "value_en": "09:00 – 21:00",
+        "value_el": "09:00 – 21:00"
+      },
+      {
+        "label_en": "Address",
+        "label_el": "Διευθυνση",
+        "value_en": "El. Venizelou 37, Loutraki",
+        "value_el": "Ελ. Βενιζέλου 37, Λουτράκι"
+      },
+      {
+        "label_en": "Phone",
+        "label_el": "Τηλεφωνο",
+        "value_en": "+30 694 532 5780",
+        "value_el": "+30 694 532 5780"
+      },
+      {
+        "label_en": "Walk-ins",
+        "label_el": "Χωρις ραντεβου",
+        "value_en": "When chairs are open",
+        "value_el": "Όποτε υπάρχει ελεύθερη καρέκλα"
+      }
+    ]
+  },
+  "services": {
+    "eyebrow_en": "The menu",
+    "eyebrow_el": "Οι υπηρεσιες",
+    "title_en": "Cuts, beards, the works.",
+    "title_el": "Κουρέματα, γένια, και όλα τα ενδιάμεσα.",
+    "items": [
+      {
+        "id": "mens-cut",
+        "price": 12,
+        "duration": 30,
+        "name_en": "Men's Haircut",
+        "name_el": "Κούρεμα ανδρικό",
+        "desc_en": "Classic men's cut, finished with hot towel and styling.",
+        "desc_el": "Κλασικό αντρικό κούρεμα, τελείωμα με ζεστή πετσέτα και styling."
+      },
+      {
+        "id": "kids-cut",
+        "price": 10,
+        "duration": 25,
+        "name_en": "Kids Haircut",
+        "name_el": "Κούρεμα παιδικό",
+        "desc_en": "Patient, careful work for our youngest clients.",
+        "desc_el": "Υπομονετική, προσεκτική δουλειά για τους μικρούς μας πελάτες."
+      },
+      {
+        "id": "beard",
+        "price": 5,
+        "duration": 15,
+        "name_en": "Beard",
+        "name_el": "Μούσι",
+        "desc_en": "Beard shaped and lined up with the straight razor.",
+        "desc_el": "Σχηματισμός και γραμμή στο μούσι με ξυράφι."
+      },
+      {
+        "id": "skin-refresh",
+        "price": 5,
+        "duration": 15,
+        "name_en": "Skin Refresh (scrub)",
+        "name_el": "Skin Refresh (scrub)",
+        "desc_en": "Gentle face scrub that wakes the skin up.",
+        "desc_el": "Απαλό scrub που ξυπνάει την επιδερμίδα."
+      },
+      {
+        "id": "black-mask",
+        "price": 5,
+        "duration": 15,
+        "name_en": "Face Cleanse · Black Mask",
+        "name_el": "Καθαρισμός προσώπου · black mask",
+        "desc_en": "Deep cleansing with the black peel-off mask.",
+        "desc_el": "Σε βάθος καθαρισμός με τη μαύρη μάσκα peel-off."
+      },
+      {
+        "id": "cut-beard",
+        "price": 15,
+        "duration": 45,
+        "name_en": "Haircut + Beard",
+        "name_el": "Κούρεμα + μούσι",
+        "desc_en": "Full haircut paired with beard sculpt and razor line-up.",
+        "desc_el": "Πλήρες κούρεμα μαζί με σχηματισμό μουσιού και γραμμή με ξυράφι."
+      },
+      {
+        "id": "full-grooming",
+        "price": 18,
+        "duration": 60,
+        "name_en": "Full Grooming",
+        "name_el": "Full Grooming",
+        "desc_en": "Haircut, beard and ear/nose wax. The complete session.",
+        "desc_el": "Κούρεμα, μούσι και wax (αυτιά / μύτη). Η πλήρης περιποίηση."
+      },
+      {
+        "id": "cut-beard-mask",
+        "price": 18,
+        "duration": 60,
+        "name_en": "Haircut + Beard + Black Mask",
+        "name_el": "Κούρεμα + μούσι + black mask",
+        "desc_en": "Haircut, beard sculpt, and a deep-cleansing black mask.",
+        "desc_el": "Κούρεμα, σχηματισμός μουσιού και καθαρισμός με τη μαύρη μάσκα."
+      }
+    ]
+  },
+  "gallery_strip": {
+    "eyebrow_en": "Inside the shop",
+    "eyebrow_el": "Μεσα στο μαγαζι",
+    "title_en": "Where good cuts happen.",
+    "title_el": "Εδώ γίνονται τα ωραία κουρέματα.",
+    "images": [
+      {
+        "src": "https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=1200&q=80&auto=format&fit=crop"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=1200&q=80&auto=format&fit=crop"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=1200&q=80&auto=format&fit=crop"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=1200&q=80&auto=format&fit=crop"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=1200&q=80&auto=format&fit=crop"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1517832606299-7ae9b720a186?w=1200&q=80&auto=format&fit=crop"
+      }
+    ]
+  },
+  "gallery": {
+    "items": [
+      {
+        "src": "https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=1600&q=80&auto=format&fit=crop",
+        "tag": "Cuts",
+        "big": true
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=1200&q=80&auto=format&fit=crop",
+        "tag": "Beards",
+        "big": false
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=1200&q=80&auto=format&fit=crop",
+        "tag": "Shop",
+        "big": false
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=1200&q=80&auto=format&fit=crop",
+        "tag": "Cuts",
+        "big": false
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=1200&q=80&auto=format&fit=crop",
+        "tag": "Cuts",
+        "big": false
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1517832606299-7ae9b720a186?w=1200&q=80&auto=format&fit=crop",
+        "tag": "Shop",
+        "big": false
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1581417478175-a9ef18f210c2?w=1200&q=80&auto=format&fit=crop",
+        "tag": "Beards",
+        "big": false
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=1200&q=80&auto=format&fit=crop&sat=-100",
+        "tag": "Shop",
+        "big": false
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=1200&q=80&auto=format&fit=crop",
+        "tag": "Cuts",
+        "big": false
+      }
+    ]
+  },
+  "about": {
+    "eyebrow_en": "Our story",
+    "eyebrow_el": "Η ιστορια μας",
+    "title_en": "A barber shop, the way it should be.",
+    "title_el": "Ένα κουρείο, όπως πρέπει να είναι.",
+    "p1_en": "Spade opened in Loutraki in 2018 with one chair, one barber, and a stubborn idea: take the time, do the work properly, and the people will come back.",
+    "p1_el": "Το Spade άνοιξε στο Λουτράκι το 2018 με μία καρέκλα, έναν κουρέα και μία πεισματάρικη ιδέα: άφησε το χρόνο να κάνει τη δουλειά σωστά, και ο κόσμος θα ξαναέρθει.",
+    "p2_en": "Eight years later we've added two more chairs and a small team — but the philosophy hasn't budged. No production line. No rushing. Just sharp work in a quiet, well-lit room with good music and proper coffee.",
+    "p2_el": "Οκτώ χρόνια μετά έχουμε προσθέσει δύο ακόμα καρέκλες και μια μικρή ομάδα — η φιλοσοφία όμως δεν άλλαξε. Καμία γραμμή παραγωγής. Καμία βιασύνη. Μόνο καθαρή δουλειά σ’ ένα ήσυχο, καλά φωτισμένο μαγαζί με σωστή μουσική και καλό καφέ.",
+    "p3_en": "We work on classic cuts, modern fades, full beard sculpting, and the kind of hot-towel shave you book the day before. Walk-ins welcome when chairs are open.",
+    "p3_el": "Δουλεύουμε κλασικά κουρέματα, μοντέρνα fades, ολόκληρα γένια, και το ξύρισμα με ζεστή πετσέτα που θες να κλείσεις από την προηγούμενη. Walk-in δεκτό όταν υπάρχει ελεύθερη καρέκλα.",
+    "image": "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=1200&q=80&auto=format&fit=crop"
+  },
+  "team": {
+    "eyebrow_en": "The team",
+    "eyebrow_el": "Η ομαδα",
+    "title_en": "Three chairs. Three stories.",
+    "title_el": "Τρεις καρέκλες. Τρεις ιστορίες.",
+    "members": [
+      {
+        "name_en": "Andreas Pappas",
+        "name_el": "Ανδρέας Παππάς",
+        "role_en": "Master Barber · Founder",
+        "role_el": "Master Barber · Ιδρυτής",
+        "years_en": "12 years",
+        "years_el": "12 χρόνια",
+        "slug": "andreas",
+        "image": "https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=900&q=80&auto=format&fit=crop"
+      },
+      {
+        "name_en": "Nikos Stathakis",
+        "name_el": "Νίκος Σταθάκης",
+        "role_en": "Senior Barber",
+        "role_el": "Senior Barber",
+        "years_en": "8 years",
+        "years_el": "8 χρόνια",
+        "slug": "nikos",
+        "image": "https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=900&q=80&auto=format&fit=crop"
+      },
+      {
+        "name_en": "Petros Lambrou",
+        "name_el": "Πέτρος Λάμπρου",
+        "role_en": "Barber",
+        "role_el": "Barber",
+        "years_en": "4 years",
+        "years_el": "4 χρόνια",
+        "slug": "petros",
+        "image": "https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=900&q=80&auto=format&fit=crop"
+      }
+    ]
+  },
+  "faq": {
+    "eyebrow_en": "Questions",
+    "eyebrow_el": "Συχνες ερωτησεις",
+    "title_en": "Good to know.",
+    "title_el": "Καλό να ξέρεις.",
+    "items": [
+      {
+        "q_en": "Do I need an appointment?",
+        "q_el": "Χρειάζομαι ραντεβού;",
+        "a_en": "We recommend booking online — chairs fill up fast. Walk-ins are welcome whenever a chair is free.",
+        "a_el": "Σου προτείνουμε να κλείσεις online — οι καρέκλες γεμίζουν γρήγορα. Walk-in δεκτό όποτε υπάρχει ελεύθερη θέση."
+      },
+      {
+        "q_en": "What's your cancellation policy?",
+        "q_el": "Μπορώ να ακυρώσω;",
+        "a_en": "Free cancellation up to 4 hours before your slot. After that we ask for 50% of the service price.",
+        "a_el": "Δωρεάν ακύρωση μέχρι 4 ώρες πριν το ραντεβού. Μετά χρεώνουμε το 50% της υπηρεσίας."
+      },
+      {
+        "q_en": "Do you take card?",
+        "q_el": "Δέχεστε κάρτα;",
+        "a_en": "Card, cash, Apple Pay, Google Pay — all good. Tips appreciated, never expected.",
+        "a_el": "Κάρτα, μετρητά, Apple Pay, Google Pay — όλα παίζουν. Το φιλοδώρημα εκτιμάται, ποτέ δεν περιμένεται."
+      },
+      {
+        "q_en": "Can I bring my kid?",
+        "q_el": "Μπορώ να φέρω το παιδί μου;",
+        "a_en": "Of course. We have a dedicated kids cut and our team is patient with young clients.",
+        "a_el": "Φυσικά. Έχουμε ξεχωριστό κούρεμα για παιδιά και η ομάδα είναι υπομονετική με τους μικρούς πελάτες."
+      },
+      {
+        "q_en": "Where exactly are you?",
+        "q_el": "Πού ακριβώς είστε;",
+        "a_en": "El. Venizelou 37, Loutraki, two blocks from the seafront. Free parking on the side street.",
+        "a_el": "Ελ. Βενιζέλου 37, Λουτράκι, δύο τετράγωνα από την παραλία. Δωρεάν πάρκινγκ στον κάθετο δρόμο."
+      }
+    ]
+  },
+  "contact": {
+    "image": "https://images.unsplash.com/photo-1517832606299-7ae9b720a186?w=1400&q=80&auto=format&fit=crop",
+    "blocks": [
+      {
+        "label_en": "Address",
+        "label_el": "Διευθυνση",
+        "value_en": "El. Venizelou 37\nLoutraki 20300, Greece",
+        "value_el": "Ελ. Βενιζέλου 37\nΛουτράκι 20300, Ελλάδα"
+      },
+      {
+        "label_en": "Phone",
+        "label_el": "Τηλεφωνο",
+        "value_en": "+30 694 532 5780",
+        "value_el": "+30 694 532 5780"
+      },
+      {
+        "label_en": "Email",
+        "label_el": "Email",
+        "value_en": "hello@spade.gr",
+        "value_el": "hello@spade.gr"
+      },
+      {
+        "label_en": "Hours",
+        "label_el": "Ωραριο",
+        "value_en": "Mon–Sat · 09:00–21:00\nSunday · Closed",
+        "value_el": "Δευ–Σαβ · 09:00–21:00\nΚυριακή · Κλειστά"
+      }
+    ]
+  },
+  "testimonials": {
+    "eyebrow_en": "From the chair",
+    "eyebrow_el": "Απο την καρεκλα",
+    "title_en": "What our regulars say.",
+    "title_el": "Τι λένε όσοι κάθονται στην καρέκλα μας.",
+    "items": [
+      {
+        "quote_en": "Best skin fade in Loutraki, easily. Andreas takes his time and the finish is razor sharp.",
+        "quote_el": "Το καλύτερο skin fade στο Λουτράκι, χωρίς αντίρρηση. Ο Ανδρέας παίρνει το χρόνο του και η λεπτομέρεια είναι κοφτερή.",
+        "name": "Giorgos M.",
+        "role_en": "Regular since 2021",
+        "role_el": "Σταθερός πελάτης από το 2021"
+      },
+      {
+        "quote_en": "Hot towel shave was a religious experience. Walked out a different man.",
+        "quote_el": "Το ξύρισμα με ζεστή πετσέτα ήταν εμπειρία ζωής. Βγήκα άλλος άνθρωπος.",
+        "name": "Stefan K.",
+        "role_en": "Visitor from Athens",
+        "role_el": "Επισκέπτης από Αθήνα"
+      },
+      {
+        "quote_en": "Booking online is dead simple. Show up, sit down, leave looking sharp.",
+        "quote_el": "Η online κράτηση είναι παιχνιδάκι. Έρχεσαι, κάθεσαι, φεύγεις κοφτερός.",
+        "name": "Dimitris L.",
+        "role_en": "Regular since 2019",
+        "role_el": "Σταθερός πελάτης από το 2019"
+      }
+    ]
+  },
+  "cta": {
+    "eyebrow_en": "Take a seat",
+    "eyebrow_el": "Παρε θεση",
+    "title_en": "The next chair has your name on it.",
+    "title_el": "Η επόμενη καρέκλα γράφει τ’ όνομά σου.",
+    "subtitle_en": "Book in under a minute. Choose your service, your barber, and the time that works.",
+    "subtitle_el": "Κλείνεις σε ένα λεπτό. Διαλέγεις υπηρεσία, κουρέα και ώρα — εμείς αναλαμβάνουμε τα υπόλοιπα.",
+    "bgImage": "https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=2000&q=80&auto=format&fit=crop"
+  },
+  "page_services": {
+    "eyebrow_en": "The menu",
+    "eyebrow_el": "Οι υπηρεσιες",
+    "title_en": "Cuts, beards, and the full ritual.",
+    "title_el": "Κουρέματα, γένια, και η πλήρης διαδικασία.",
+    "sub_en": "Honest pricing, real time slots. Add a beard or hot shave to any cut at the chair.",
+    "sub_el": "Καθαρές τιμές, αληθινά διαθέσιμα ραντεβού. Πρόσθεσε γένια ή ξύρισμα στο κούρεμα όταν κάθεσαι στην καρέκλα."
+  },
+  "page_gallery": {
+    "eyebrow_en": "Gallery",
+    "eyebrow_el": "Φωτογραφιες",
+    "title_en": "Inside the shop. On the chair.",
+    "title_el": "Μέσα στο μαγαζί. Πάνω στην καρέκλα.",
+    "sub_en": "A look at the room, the team, and the work that walks out the door.",
+    "sub_el": "Μια ματιά στον χώρο, στην ομάδα, και στα κουρέματα που βγαίνουν από την πόρτα."
+  },
+  "page_team": {
+    "eyebrow_en": "Our team",
+    "eyebrow_el": "Η ομαδα μας",
+    "title_en": "Three barbers. One standard.",
+    "title_el": "Τρεις κουρείς. Ένα στάνταρ.",
+    "sub_en": "The chairs at Spade are run by three barbers who care about the work and the people in front of them.",
+    "sub_el": "Στις τρεις καρέκλες του Spade δουλεύουν τρεις κουρείς που νοιάζονται για τη δουλειά και για όποιον κάθεται μπροστά τους."
+  },
+  "page_contact": {
+    "eyebrow_en": "Contact",
+    "eyebrow_el": "Επικοινωνια",
+    "title_en": "Find us in Loutraki.",
+    "title_el": "Θα μας βρεις στο Λουτράκι.",
+    "sub_en": "Two blocks from the seafront. Free parking on the side street, espresso bar across the road.",
+    "sub_el": "Δύο τετράγωνα από την παραλία. Δωρεάν πάρκινγκ στον κάθετο δρόμο, καφές απέναντι."
+  },
+  "page_book": {
+    "eyebrow_en": "Booking",
+    "eyebrow_el": "Κρατηση",
+    "title_en": "Pick a chair, pick a time.",
+    "title_el": "Διάλεξε καρέκλα, διάλεξε ώρα.",
+    "sub_en": "Takes about a minute. You'll get an email confirmation and a reminder 8 hours before your appointment.",
+    "sub_el": "Σου παίρνει ένα λεπτό. Θα λάβεις επιβεβαίωση στο email και υπενθύμιση 8 ώρες πριν το ραντεβού σου."
+  },
+  "footer": {
+    "lede_en": "Classic cuts, modern fades, and the kind of hot-towel shave you book the day before. Walk-ins welcome when the chairs are open.",
+    "lede_el": "Κλασικά κουρέματα, μοντέρνα fades, και το ξύρισμα με ζεστή πετσέτα που θες να κλείσεις από την προηγούμενη. Walk-in δεκτό όταν υπάρχει ελεύθερη καρέκλα.",
+    "cta_en": "Take a seat.",
+    "cta_el": "Πάρε θέση.",
+    "copy_en": "© 2026 Spade Barber Shop · Loutraki, GR",
+    "copy_el": "© 2026 Spade Barber Shop · Λουτράκι, GR",
+    "tagline_en": "Sharp since 2018.",
+    "tagline_el": "Κοφτεροί από το 2018."
+  }
+}

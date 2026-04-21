@@ -1,0 +1,58 @@
+[
+  {
+    "to": "nektariostzakos@gmail.com",
+    "subject": "Spade Barber — your booking is confirmed",
+    "body": "Hi mindscrollers LLC,\n\nYour booking is confirmed:\n\n· Skin Refresh (scrub) (€5)\n· With First Available\n· On 2026-04-23 at 10:30\n\nWe'll send a reminder 8 hours before. Need to reschedule or cancel? Reply to this email or give us a call.\n\nSee you soon,\nSpade Barber, Loutraki",
+    "sentAt": "2026-04-18T01:37:23.797Z",
+    "delivered": false,
+    "error": "SMTP not configured (preview mode)"
+  },
+  {
+    "to": "test+el@example.com",
+    "subject": "Reminder · Your Spade booking",
+    "body": "Hi {name},\n\nQuick reminder of your booking at Spade Barber tomorrow.\nWe're at Eleftheriou Venizelou 12, Loutraki.\n\nSee you soon,\nThe Spade Team",
+    "sentAt": "2026-04-17T23:16:52.288Z",
+    "delivered": false,
+    "error": "SMTP not configured (preview mode)"
+  },
+  {
+    "to": "nektariostzakos@gmail.com",
+    "subject": "Reminder · Your Spade booking",
+    "body": "Hi {name},\n\nQuick reminder of your booking at Spade Barber tomorrow.\nWe're at Eleftheriou Venizelou 12, Loutraki.\n\nSee you soon,\nThe Spade Team",
+    "sentAt": "2026-04-17T23:16:52.286Z",
+    "delivered": false,
+    "error": "SMTP not configured (preview mode)"
+  },
+  {
+    "to": "nektariostzakos@gmail.com",
+    "subject": "Spade Barber — booking received",
+    "body": "Hi Entison Tzako,\n\nWe received your booking:\n\n· Men's Haircut (€12)\n· With Petros Lambrou\n· On 2026-04-22 at 11:00\n\nWe'll send a confirmation shortly. Reply to this email for any change.\n\nSee you soon,\nSpade Barber, Loutraki",
+    "sentAt": "2026-04-17T23:00:47.550Z",
+    "delivered": false,
+    "error": "SMTP not configured (preview mode)"
+  },
+  {
+    "to": "test+el@example.com",
+    "subject": "Spade Barber — λάβαμε το ραντεβού σας",
+    "body": "Γεια σου ????�? ?e??t??,\n\nΛάβαμε το ραντεβού σου:\n\n· ????e�a a?d???? (€12)\n· Με τον/την ??d??a? ?app??\n· Στις 2026-04-19 και ώρα 10:00\n\nΘα σου στείλουμε επιβεβαίωση σύντομα. Απάντησε σε αυτό το email για οποιαδήποτε αλλαγή.\n\nΘα σε δούμε σύντομα,\nSpade Barber, Λουτράκι",
+    "sentAt": "2026-04-17T22:49:06.362Z",
+    "delivered": false,
+    "error": "SMTP not configured (preview mode)"
+  },
+  {
+    "to": "nektariostzakos@gmail.com",
+    "subject": "Spade Barber — λάβαμε το ραντεβού σας",
+    "body": "Γεια σου Entison Tzako,\n\nΛάβαμε το ραντεβού σου:\n\n· Haircut + Beard (€15)\n· Με τον/την Nikos Stathakis\n· Στις 2026-04-22 και ώρα 19:30\n\nΘα σου στείλουμε επιβεβαίωση σύντομα. Απάντησε σε αυτό το email για οποιαδήποτε αλλαγή.\n\nΘα σε δούμε σύντομα,\nSpade Barber, Λουτράκι",
+    "sentAt": "2026-04-17T22:44:05.077Z",
+    "delivered": false,
+    "error": "SMTP not configured (preview mode)"
+  },
+  {
+    "to": "nektariostzakos@gmail.com",
+    "subject": "10% off this month at Spade",
+    "body": "Hi {name},\n\nA small thank-you for being one of our regulars — 10% off any service this month.\nMention the code SPADE10 at the chair.\n\nSee you soon,\nThe Spade Team",
+    "sentAt": "2026-04-17T20:54:56.423Z",
+    "delivered": false,
+    "error": "SMTP not configured (preview mode)"
+  }
+]
