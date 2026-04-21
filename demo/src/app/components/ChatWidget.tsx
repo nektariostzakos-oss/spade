@@ -6,6 +6,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLang } from "../../lib/i18n";
 import { useBranding } from "../../lib/brandingClient";
+import { useBusiness } from "../../lib/businessClient";
 
 type Action = { label: string; href: string };
 type Msg = { role: "user" | "assistant"; content: string; actions?: Action[] };
@@ -14,8 +15,9 @@ const STORAGE_KEY = "atelier_chat_v2";
 
 export default function ChatWidget() {
   const pathname = usePathname();
-  const { lang } = useLang();
+  const { lang, setLang } = useLang();
   const { branding } = useBranding();
+  const { business } = useBusiness();
 
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Msg[]>([]);
@@ -26,7 +28,10 @@ export default function ChatWidget() {
   // Voice
   const [listening, setListening] = useState(false);
   const [voiceOn, setVoiceOn] = useState(false);
-  const [speechSupported, setSpeechSupported] = useState(false);
+  const [recogSupported, setRecogSupported] = useState(false);
+  const [ttsSupported, setTtsSupported] = useState(false);
+  const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
+  const [unread, setUnread] = useState(0);
   const recognitionRef = useRef<unknown>(null);
   const lastSpokenRef = useRef<string>("");
 
@@ -45,16 +50,25 @@ export default function ChatWidget() {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [messages, busy]);
 
-  // Detect browser speech support
+  // Detect browser speech support — decoupled so mic still shows when only recog is present, etc.
   useEffect(() => {
     const w = window as unknown as { SpeechRecognition?: unknown; webkitSpeechRecognition?: unknown };
-    const hasRecog = !!(w.SpeechRecognition || w.webkitSpeechRecognition);
+    setRecogSupported(!!(w.SpeechRecognition || w.webkitSpeechRecognition));
     const hasTTS = typeof window !== "undefined" && "speechSynthesis" in window;
-    setSpeechSupported(hasRecog && hasTTS);
+    setTtsSupported(hasTTS);
     try {
       const pref = localStorage.getItem("atelier_chat_voice");
       if (pref === "1") setVoiceOn(true);
     } catch {}
+    // Warm-load voice list (some browsers load asynchronously)
+    if (hasTTS) {
+      const load = () => setVoices(window.speechSynthesis.getVoices());
+      load();
+      window.speechSynthesis.onvoiceschanged = load;
+      // Chrome sometimes needs a kick to populate voices
+      setTimeout(load, 250);
+      setTimeout(load, 1000);
+    }
   }, []);
 
   useEffect(() => {
@@ -70,9 +84,38 @@ export default function ChatWidget() {
     }
   }
 
+  // Pick the most natural-sounding voice available for a given BCP-47 lang code.
+  // Browsers expose wildly different voices — we rank for neural/premium/online engines.
+  function pickBestVoice(list: SpeechSynthesisVoice[], targetLang: string): SpeechSynthesisVoice | undefined {
+    if (!list.length) return undefined;
+    const langBase = targetLang.toLowerCase().split("-")[0];
+    const exact = list.filter((v) => v.lang.toLowerCase() === targetLang.toLowerCase());
+    const base = list.filter((v) => v.lang.toLowerCase().startsWith(langBase));
+    const pool = exact.length ? exact : base;
+    if (!pool.length) return list[0];
+    const score = (v: SpeechSynthesisVoice) => {
+      const n = v.name.toLowerCase();
+      let s = 0;
+      // Neural / natural / premium engines (Microsoft Edge, Google, Apple Enhanced)
+      if (/natural/.test(n)) s += 120;
+      if (/neural/.test(n)) s += 110;
+      if (/online/.test(n)) s += 70;   // MS Edge "Online (Natural)" voices
+      if (/premium|enhanced|hd/.test(n)) s += 60;
+      if (/google/.test(n)) s += 50;
+      if (/microsoft/.test(n)) s += 20;
+      if (/apple|siri|samantha|alex/.test(n)) s += 30;
+      // Prefer non-default voices — default is usually the lower-quality one
+      if (v.default) s -= 10;
+      // Prefer female-labeled for concierge warmth (tiny bias)
+      if (/aria|jenny|stefanos|nestoras|olga|zoe|alice|emma|sofia/.test(n)) s += 5;
+      return s;
+    };
+    return pool.slice().sort((a, b) => score(b) - score(a))[0];
+  }
+
   // Speak the last assistant reply aloud when voice is on
   useEffect(() => {
-    if (!voiceOn || !speechSupported) return;
+    if (!voiceOn || !ttsSupported) return;
     const last = messages[messages.length - 1];
     if (!last || last.role !== "assistant" || !last.content) return;
     if (lastSpokenRef.current === last.content) return;
@@ -80,29 +123,54 @@ export default function ChatWidget() {
     try {
       const synth = window.speechSynthesis;
       synth.cancel();
-      // Strip markdown-ish formatting before speaking
-      const plain = last.content.replace(/\*\*/g, "").replace(/\n+/g, ". ").slice(0, 600);
+      // Strip markdown/emojis/brand characters before speaking — and keep punctuation for natural pauses
+      const plain = last.content
+        .replace(/\*\*/g, "")
+        .replace(/[•·]/g, ",")
+        .replace(/\n+/g, ". ")
+        .replace(/\s+/g, " ")
+        .slice(0, 600);
+      const target = bcp47(lang);
+      const voice = pickBestVoice(voices.length ? voices : synth.getVoices(), target);
       const u = new SpeechSynthesisUtterance(plain);
-      u.lang = bcp47(lang);
-      u.rate = 1.0;
-      u.pitch = 1.0;
-      // Prefer a native voice in the target language if available
-      const voices = synth.getVoices();
-      const match = voices.find((v) => v.lang.toLowerCase().startsWith(u.lang.toLowerCase().split("-")[0]));
-      if (match) u.voice = match;
+      u.lang = target;
+      // Slightly slower + marginally higher pitch reads more warmly than defaults
+      u.rate = 0.97;
+      u.pitch = 1.05;
+      u.volume = 1.0;
+      if (voice) u.voice = voice;
       synth.speak(u);
     } catch {}
-  }, [messages, voiceOn, speechSupported, lang]);
+  }, [messages, voiceOn, ttsSupported, lang, voices]);
 
-  function startListening() {
-    if (!speechSupported || listening) return;
+  async function startListening() {
+    if (!recogSupported || listening) return;
+    // Require secure context (HTTPS or localhost) — mic is blocked otherwise
+    if (typeof window !== "undefined" && !window.isSecureContext) {
+      setErr(lang === "el"
+        ? "Η φωνητική εισαγωγή απαιτεί ασφαλή σύνδεση (HTTPS)."
+        : "Voice input requires a secure connection (HTTPS).");
+      return;
+    }
+    // Proactively request mic permission so we get a clear error if denied
+    try {
+      if (navigator?.mediaDevices?.getUserMedia) {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        stream.getTracks().forEach((t) => t.stop());
+      }
+    } catch {
+      setErr(lang === "el"
+        ? "Δώστε άδεια μικροφώνου στο πρόγραμμα περιήγησης."
+        : "Please allow microphone access in your browser.");
+      return;
+    }
     try {
       const w = window as unknown as { SpeechRecognition?: new () => unknown; webkitSpeechRecognition?: new () => unknown };
       const Ctor = (w.SpeechRecognition || w.webkitSpeechRecognition) as new () => {
         lang: string; interimResults: boolean; continuous: boolean; maxAlternatives: number;
         start: () => void; stop: () => void; abort: () => void;
         onresult: (e: { results: Array<Array<{ transcript: string }>> & { length: number } }) => void;
-        onerror: () => void; onend: () => void;
+        onerror: (e: { error?: string }) => void; onend: () => void;
       };
       const rec = new Ctor();
       rec.lang = bcp47(lang);
@@ -118,7 +186,30 @@ export default function ChatWidget() {
         finalText = transcript;
         setInput(transcript);
       };
-      rec.onerror = () => { setListening(false); };
+      rec.onerror = (e) => {
+        setListening(false);
+        const code = e?.error || "";
+        const msg = lang === "el"
+          ? (code === "not-allowed" || code === "service-not-allowed"
+              ? "Δώστε άδεια μικροφώνου στο πρόγραμμα περιήγησης."
+              : code === "no-speech"
+                ? "Δεν άκουσα κάτι. Δοκιμάστε ξανά."
+                : code === "audio-capture"
+                  ? "Δεν βρέθηκε μικρόφωνο."
+                  : code === "network"
+                    ? "Πρόβλημα δικτύου κατά την αναγνώριση φωνής."
+                    : `Σφάλμα φωνής: ${code || "unknown"}`)
+          : (code === "not-allowed" || code === "service-not-allowed"
+              ? "Microphone permission was blocked. Allow it in your browser."
+              : code === "no-speech"
+                ? "I didn't catch that — try again."
+                : code === "audio-capture"
+                  ? "No microphone detected."
+                  : code === "network"
+                    ? "Network error during speech recognition."
+                    : `Voice error: ${code || "unknown"}`);
+        setErr(msg);
+      };
       rec.onend = () => {
         setListening(false);
         if (finalText.trim()) {
@@ -128,10 +219,12 @@ export default function ChatWidget() {
         }
       };
       recognitionRef.current = rec;
+      setErr(null);
       rec.start();
       setListening(true);
-    } catch {
+    } catch (e) {
       setListening(false);
+      setErr((e as Error)?.message || (lang === "el" ? "Αποτυχία εκκίνησης φωνητικής εισαγωγής." : "Failed to start voice input."));
     }
   }
 
@@ -145,7 +238,52 @@ export default function ChatWidget() {
     try { window.speechSynthesis.cancel(); } catch {}
   }
 
+  // Proactive nudge: after 20s of inactivity on a page, pulse the button (first visit only).
+  // The setTimeout callback runs outside React's render, so it is not a "setState in effect".
+  useEffect(() => {
+    if (open || messages.length > 0) return;
+    let stale = false;
+    try { if (sessionStorage.getItem("atelier_chat_nudged")) return; } catch {}
+    const t = setTimeout(() => {
+      if (stale) return;
+      setUnread((n) => (n === 0 ? 1 : n));
+      try { sessionStorage.setItem("atelier_chat_nudged", "1"); } catch {}
+    }, 20_000);
+    return () => { stale = true; clearTimeout(t); };
+  }, [open, messages.length]);
+
+  // Lightweight language auto-detect from the user's very first message.
+  // Greek characters → switch UI to EL; otherwise leave as-is. Only once per session.
+  useEffect(() => {
+    if (messages.length !== 1) return;
+    const first = messages[0];
+    if (first.role !== "user") return;
+    try { if (sessionStorage.getItem("atelier_chat_lang_detected")) return; } catch {}
+    const greekRe = /[\u0370-\u03FF\u1F00-\u1FFF]/;
+    const detected: "el" | "en" = greekRe.test(first.content) ? "el" : "en";
+    if (detected !== lang) setLang(detected);
+    try { sessionStorage.setItem("atelier_chat_lang_detected", "1"); } catch {}
+  }, [messages, lang, setLang]);
+
   if (pathname?.startsWith("/admin") || pathname?.startsWith("/setup")) return null;
+
+  // Build human-handoff action using whatever contact channel is configured
+  function handoffAction(): Action | null {
+    const wa = (business.social?.whatsapp || "").replace(/[^+\d]/g, "");
+    if (wa) {
+      const msg = lang === "el"
+        ? `Γεια, θα ήθελα λίγη βοήθεια από ${branding.wordmark || "την ομάδα σας"}.`
+        : `Hi, I'd like some help from ${branding.wordmark || "your team"}.`;
+      return { label: lang === "el" ? "WhatsApp" : "WhatsApp", href: `https://wa.me/${wa.replace(/^\+/, "")}?text=${encodeURIComponent(msg)}` };
+    }
+    if (business.phone) {
+      return { label: lang === "el" ? "Κλήση" : "Call us", href: `tel:${business.phone.replace(/\s+/g, "")}` };
+    }
+    if (business.email) {
+      return { label: lang === "el" ? "Email" : "Email us", href: `mailto:${business.email}` };
+    }
+    return null;
+  }
 
   const greeting = lang === "el"
     ? `Γεια σας · είμαι ο concierge του ${branding.wordmark || "site"}. Ρωτήστε με για ραντεβού, τιμές, ωράριο ή προϊόντα.`
@@ -172,6 +310,7 @@ export default function ChatWidget() {
           content: typeof d.text === "string" ? d.text : (d.reply || ""),
           actions: Array.isArray(d.actions) ? d.actions : undefined,
         }]);
+        if (!open) setUnread((n) => Math.min(n + 1, 9));
       }
     } catch (e) {
       setErr((e as Error).message);
@@ -201,7 +340,7 @@ export default function ChatWidget() {
     <>
       {/* Floating trigger */}
       <motion.button
-        onClick={() => setOpen((v) => !v)}
+        onClick={() => { setOpen((v) => !v); setUnread(0); }}
         aria-label={open ? "Close concierge" : "Open concierge"}
         initial={{ opacity: 0, scale: 0.8, y: 8 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -228,6 +367,17 @@ export default function ChatWidget() {
             <circle cx="12" cy="12" r="1" fill="currentColor"/>
             <circle cx="15" cy="12" r="1" fill="currentColor"/>
           </svg>
+        )}
+        {!open && unread > 0 && (
+          <motion.span
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            className="absolute -top-1 -right-1 inline-flex h-5 min-w-[20px] items-center justify-center rounded-full px-1.5 text-[10px] font-semibold"
+            style={{ background: "#e04d4d", color: "white", boxShadow: "0 0 0 2px var(--background)" }}
+            aria-label={`${unread} unread messages`}
+          >
+            {unread > 9 ? "9+" : unread}
+          </motion.span>
         )}
       </motion.button>
 
@@ -266,7 +416,7 @@ export default function ChatWidget() {
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                {speechSupported && (
+                {ttsSupported && (
                   <button
                     onClick={() => { if (voiceOn) stopSpeaking(); setVoiceOn((v) => !v); }}
                     aria-label={voiceOn ? "Mute voice" : "Enable voice replies"}
@@ -323,7 +473,7 @@ export default function ChatWidget() {
               )}
 
               {messages.map((m, i) => (
-                <div key={i} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
+                <div key={i} className={`group flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
                   <div className="max-w-[85%] space-y-2">
                     <div
                       className="rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed"
@@ -350,6 +500,45 @@ export default function ChatWidget() {
                         ))}
                       </div>
                     )}
+                    {m.role === "assistant" && m.content && (
+                      <div className="flex items-center gap-3 pl-1 opacity-0 transition-opacity group-hover:opacity-100">
+                        <button
+                          onClick={() => {
+                            try {
+                              navigator.clipboard.writeText(m.content.replace(/\*\*/g, ""));
+                            } catch {}
+                          }}
+                          className="text-[10px] uppercase tracking-widest hover:underline"
+                          style={{ color: "var(--muted-2)" }}
+                          aria-label={lang === "el" ? "Αντιγραφή" : "Copy"}
+                        >
+                          {lang === "el" ? "Αντιγραφή" : "Copy"}
+                        </button>
+                        {ttsSupported && (
+                          <button
+                            onClick={() => {
+                              try {
+                                const synth = window.speechSynthesis;
+                                synth.cancel();
+                                const plain = m.content.replace(/\*\*/g, "").replace(/\n+/g, ". ").slice(0, 600);
+                                const u = new SpeechSynthesisUtterance(plain);
+                                u.lang = bcp47(lang);
+                                u.rate = 0.97;
+                                u.pitch = 1.05;
+                                const v = pickBestVoice(voices.length ? voices : synth.getVoices(), u.lang);
+                                if (v) u.voice = v;
+                                synth.speak(u);
+                              } catch {}
+                            }}
+                            className="text-[10px] uppercase tracking-widest hover:underline"
+                            style={{ color: "var(--muted-2)" }}
+                            aria-label={lang === "el" ? "Άκουσε" : "Listen"}
+                          >
+                            {lang === "el" ? "Άκουσε" : "Listen"}
+                          </button>
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}
@@ -363,20 +552,31 @@ export default function ChatWidget() {
               )}
 
               {err && (
-                <div className="rounded-lg border px-3 py-2 text-xs"
+                <div className="rounded-lg border px-3 py-2 text-xs space-y-2"
                   style={{
                     borderColor: "color-mix(in srgb, #e04d4d 35%, transparent)",
                     background: "color-mix(in srgb, #e04d4d 10%, transparent)",
                     color: "#e89c9c",
                   }}>
-                  {err}
+                  <div>{err}</div>
+                  {handoffAction() && (
+                    <Link
+                      href={handoffAction()!.href}
+                      target={handoffAction()!.href.startsWith("http") ? "_blank" : undefined}
+                      rel={handoffAction()!.href.startsWith("http") ? "noreferrer" : undefined}
+                      className="inline-flex items-center rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-widest"
+                      style={{ background: "var(--gold)", color: "var(--background)" }}
+                    >
+                      {lang === "el" ? "Μίλησε με άνθρωπο" : "Talk to a human"} · {handoffAction()!.label}
+                    </Link>
+                  )}
                 </div>
               )}
             </div>
 
             <div className="flex items-end gap-2 px-3 py-3"
               style={{ borderTop: "1px solid var(--border)", background: "var(--surface)" }}>
-              {speechSupported && (
+              {recogSupported && (
                 <button
                   onClick={listening ? stopListening : startListening}
                   disabled={busy}

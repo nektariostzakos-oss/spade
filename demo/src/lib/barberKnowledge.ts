@@ -127,11 +127,40 @@ export function searchKb(text: string, entries: KbEntry[], lang: "en" | "el"): K
     }
   }
 
-  // Require EITHER a strong signal (≥2.0 avg) OR at least one keyword hit with decent score
+  // Threshold: require either ≥2 distinct keyword hits, OR 1 keyword hit + a
+  // strong overall score. A single generic keyword like "hair" shouldn't be
+  // enough — too many entries contain it, causing false positives. Weak matches
+  // fall through to synthesizeFallback, which frames them as "related topic".
   if (!best) return null;
-  if (best.keywordHits < 1) return null;
-  if (best.score < 2.0) return null;
-  return best.entry;
+  if (best.keywordHits >= 2) return best.entry;
+  if (best.keywordHits >= 1 && best.score >= 2.0) return best.entry;
+  return null;
+}
+
+/**
+ * Find the top N KB entries for broad retrieval — used by the fallback
+ * synthesizer to offer "related topics" even when no single entry matches well.
+ */
+export function topKbCandidates(text: string, entries: KbEntry[], limit = 3): KbEntry[] {
+  const q = normalize(text);
+  if (!q) return [];
+  const rawTokens = q.split(/\s+/).filter((t) => t.length >= 3);
+  const tokens = expandAliases(rawTokens.filter((t) => !STOP_WORDS.has(t)));
+  if (tokens.length === 0) return [];
+
+  const scored: Array<{ score: number; entry: KbEntry }> = [];
+  for (const e of entries) {
+    const keywords = [...(e.keywords_en || []), ...(e.keywords_el || [])].map((k) => normalize(k));
+    const hay = normalize(`${e.question_en} ${e.question_el} ${e.answer_en} ${e.answer_el}`);
+    let s = 0;
+    for (const t of tokens) {
+      if (keywords.some((k) => k === t || k.includes(t) || t.startsWith(k))) s += 3;
+      else if (hay.includes(t)) s += 1;
+    }
+    if (s > 0) scored.push({ score: s, entry: e });
+  }
+  scored.sort((a, b) => b.score - a.score);
+  return scored.slice(0, limit).map((x) => x.entry);
 }
 
 export function getKbAnswer(entry: KbEntry, lang: "en" | "el"): string {

@@ -81,11 +81,13 @@ const INTENTS: Intent[] = [
       text: lang === "el" ? "Στη διάθεσή σας · τα λέμε σύντομα ✂" : "You're welcome — see you in the chair ✂",
     }),
   },
-  // Hours
+  // Hours — only match direct schedule vocabulary. Generic words like "today", "now",
+  // "tomorrow" are too noisy (they hit weather / date / unrelated queries), so they're out.
   {
     id: "hours",
-    match: (t) => includesAny(t, ["hour", "open", "close", "when", "schedule", "today", "now", "tomorrow",
-      "ωραρι", "ανοιχτ", "κλειστ", "ποτε", "σημερα", "αυριο", "τωρα"]),
+    match: (t) => includesAny(t, ["hour", "hours", "opening", "closing", "schedule",
+      "when are you open", "when do you open", "when do you close", "what time",
+      "ωραρι", "ανοιχτ", "κλειστ", "ωρες λειτουργι"]),
     respond: (ctx, lang) => ({
       intent: "hours",
       text: formatHours(ctx.business, lang),
