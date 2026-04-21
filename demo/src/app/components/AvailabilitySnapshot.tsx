@@ -56,9 +56,9 @@ export default async function AvailabilitySnapshot() {
   const cutoff = nowMinutes() + 45; // need at least 45 min lead time
 
   const allSlots = mode === "reservation" ? RESERVATION_SLOTS : getDailySlots();
-  const free = allSlots
-    .filter((s) => !taken.includes(s) && slotMinutes(s) >= cutoff)
-    .slice(0, 3);
+  const allFreeToday = allSlots.filter((s) => !taken.includes(s) && slotMinutes(s) >= cutoff);
+  const free = allFreeToday.slice(0, 3);
+  const totalFree = allFreeToday.length;
 
   const dow = lang === "el"
     ? DAY_NAMES_EL[new Date().getDay()]
@@ -151,6 +151,13 @@ export default async function AvailabilitySnapshot() {
             <h2 className="mt-2 font-serif text-3xl sm:text-4xl" style={{ color: "var(--foreground)" }}>
               {headline}
             </h2>
+            {totalFree > 0 && totalFree <= 5 && (
+              <p className="mt-2 text-sm font-medium" style={{ color: "var(--gold)" }}>
+                {lang === "el"
+                  ? (totalFree === 1 ? "Μόνο 1 θέση απομένει σήμερα." : `Μόνο ${totalFree} θέσεις απομένουν σήμερα.`)
+                  : (totalFree === 1 ? "Only 1 spot left today." : `Only ${totalFree} spots left today.`)}
+              </p>
+            )}
           </div>
           <Link href="/book" className="btn-premium">{cta}</Link>
         </div>

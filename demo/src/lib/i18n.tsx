@@ -475,6 +475,14 @@ export function LangProvider({ children }: { children: ReactNode }) {
     if (browser.startsWith("el")) setLangState("el");
   }, []);
 
+  // Reflect the current language on <html lang> so screen readers, search
+  // engines and browser spell-checkers pick the right locale.
+  useEffect(() => {
+    if (typeof document !== "undefined") {
+      document.documentElement.lang = lang === "el" ? "el-GR" : "en-US";
+    }
+  }, [lang]);
+
   const value = useMemo<LangCtx>(
     () => ({
       lang,

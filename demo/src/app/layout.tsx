@@ -185,7 +185,7 @@ export default async function RootLayout({
   const isLight = isLightColor(theme.background);
   return (
     <html
-      lang="el"
+      lang="el-GR"
       data-scroll-behavior="smooth"
       data-theme={isLight ? "light" : "dark"}
       suppressHydrationWarning
@@ -244,6 +244,13 @@ export default async function RootLayout({
             />
           </noscript>
         )}
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-50 focus:rounded-full focus:px-4 focus:py-2 focus:text-xs focus:font-semibold focus:uppercase focus:tracking-widest"
+          style={{ background: "var(--gold)", color: "var(--background)" }}
+        >
+          Skip to content
+        </a>
         <ThemeProvider>
           <LangProvider>
             <BrandingProvider initial={initialBranding}>
@@ -252,7 +259,7 @@ export default async function RootLayout({
                   <EditorProvider initialContent={initialContent}>
                     <CartProvider>
                       <Nav />
-                      <div className="flex-1">{children}</div>
+                      <div id="main-content" className="flex-1">{children}</div>
                       <Footer />
                       <EditorPanel />
                       <PageTracker />
