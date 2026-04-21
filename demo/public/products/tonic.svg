@@ -18,6 +18,4 @@
   <rect x="361" y="340" width="78" height="165" rx="4" fill="#6a5530" opacity="0.35"/>
   <!-- label -->
   <rect x="361" y="280" width="78" height="70" fill="#0a0806" stroke="#c9a961" opacity="0.9"/>
-  <text x="400" y="310" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#c9a961" letter-spacing="4">SPADE</text>
-  <text x="400" y="335" text-anchor="middle" font-family="Georgia, serif" font-size="14" fill="#c9a961" letter-spacing="2">TONIC</text>
-</svg>
+  </svg>

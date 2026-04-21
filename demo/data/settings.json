@@ -1,93 +1,47 @@
 {
-  "smtp": {
-    "host": "",
-    "port": 587,
-    "user": "",
-    "pass": "",
-    "from": "",
-    "secure": "tls"
-  },
+  "smtp": { "host": "", "port": 587, "user": "", "pass": "", "from": "", "secure": "tls" },
   "branding": {
-    "logoUrl": "/brand/default-logo.svg",
-    "faviconUrl": "/favicon.ico",
-    "wordmark": "VERDE",
-    "tagline_en": "Cucina italiana · since 1962",
-    "tagline_el": "Ιταλική κουζίνα · από το 1962"
+    "logoUrl": "/brand/spade-logo-light.svg",
+    "logoUrlDark": "/brand/spade-logo-dark.svg",
+    "faviconUrl": "/brand/spade-favicon.svg",
+    "wordmark": "SPADE",
+    "tagline_en": "Barber · Loutraki",
+    "tagline_el": "Barber · Λουτράκι"
   },
   "business": {
-    "name": "Verde Cucina",
-    "streetAddress": "Via Roma 12",
-    "city": "Milano",
-    "postalCode": "20121",
-    "country": "IT",
-    "phone": "",
-    "email": "hello@verde.example",
-    "latitude": 45.4685,
-    "longitude": 9.1824,
+    "name": "Spade Barber",
+    "streetAddress": "El. Venizelou 37",
+    "city": "Loutraki",
+    "postalCode": "20300",
+    "country": "GR",
+    "phone": "+30 694 532 5780",
+    "email": "hello@spade.gr",
+    "latitude": 37.977,
+    "longitude": 22.974,
     "hours": [
-      {
-        "day": "mon",
-        "open": "09:00",
-        "close": "21:00",
-        "closed": false
-      },
-      {
-        "day": "tue",
-        "open": "09:00",
-        "close": "21:00",
-        "closed": false
-      },
-      {
-        "day": "wed",
-        "open": "09:00",
-        "close": "21:00",
-        "closed": false
-      },
-      {
-        "day": "thu",
-        "open": "09:00",
-        "close": "21:00",
-        "closed": false
-      },
-      {
-        "day": "fri",
-        "open": "09:00",
-        "close": "21:00",
-        "closed": false
-      },
-      {
-        "day": "sat",
-        "open": "09:00",
-        "close": "21:00",
-        "closed": false
-      },
-      {
-        "day": "sun",
-        "open": "00:00",
-        "close": "00:00",
-        "closed": true
-      }
+      { "day": "mon", "open": "09:00", "close": "21:00", "closed": false },
+      { "day": "tue", "open": "09:00", "close": "21:00", "closed": false },
+      { "day": "wed", "open": "09:00", "close": "21:00", "closed": false },
+      { "day": "thu", "open": "09:00", "close": "21:00", "closed": false },
+      { "day": "fri", "open": "09:00", "close": "21:00", "closed": false },
+      { "day": "sat", "open": "09:00", "close": "21:00", "closed": false },
+      { "day": "sun", "open": "00:00", "close": "00:00", "closed": true }
     ],
-    "social": {
-      "instagram": "",
-      "facebook": "",
-      "whatsapp": "",
-      "tiktok": ""
-    },
+    "social": { "instagram": "", "facebook": "", "whatsapp": "+306945325780", "tiktok": "" },
     "priceRange": "€€"
   },
   "nav": {
     "links": [
       { "id": "home", "label_en": "Home", "label_el": "Αρχική", "href": "/", "enabled": true },
-      { "id": "menu", "label_en": "Menu", "label_el": "Μενού", "href": "/menu", "enabled": true },
-      { "id": "experiences", "label_en": "Experiences", "label_el": "Εμπειρίες", "href": "/experiences", "enabled": true },
+      { "id": "services", "label_en": "Services", "label_el": "Υπηρεσίες", "href": "/services", "enabled": true },
+      { "id": "shop", "label_en": "Shop", "label_el": "Κατάστημα", "href": "/shop", "enabled": true },
       { "id": "gallery", "label_en": "Gallery", "label_el": "Γκαλερί", "href": "/gallery", "enabled": true },
-      { "id": "team", "label_en": "Our Family", "label_el": "Η οικογένεια", "href": "/about", "enabled": true },
+      { "id": "team", "label_en": "Team", "label_el": "Ομάδα", "href": "/about", "enabled": true },
       { "id": "contact", "label_en": "Contact", "label_el": "Επικοινωνία", "href": "/contact", "enabled": true },
-      { "id": "blog", "label_en": "Journal", "label_el": "Ημερολόγιο", "href": "/blog", "enabled": true }
+      { "id": "blog", "label_en": "Blog", "label_el": "Blog", "href": "/blog", "enabled": true }
     ],
-    "bookLabel_en": "Reserve a table",
-    "bookLabel_el": "Κρατήστε τραπέζι",
+    "bookLabel_en": "Book a chair",
+    "bookLabel_el": "Κλείσε καρέκλα",
     "bookHref": "/book"
   },
   "templates": {
@@ -104,26 +58,21 @@
       "body_el": "Γεια σου {name},\n\nΥπενθύμιση: το ραντεβού σου στο {business} είναι σε περίπου 8 ώρες.\n\n· {service}\n· Με τον/την {barber}\n· {date} στις {time}\n\nΑν χρειαστεί να αλλάξεις ή να ακυρώσεις, απάντησε σε αυτό το email ή πάρε μας τηλέφωνο στο {phone}.\n\nΤα λέμε σύντομα,\n{business}"
     }
   },
-  "analytics": {
-    "ga4": "",
-    "gtm": "",
-    "metaPixel": ""
-  },
+  "analytics": { "ga4": "", "gtm": "", "metaPixel": "" },
   "onboarded": true,
+  "bookingMode": "appointment",
+  "industryId": "barber",
   "theme": {
-    "background": "#f5ede0",
-    "foreground": "#2b2419",
-    "primary": "#6b7a42",
-    "primaryAccent": "#8a9a5a",
-    "surface": "rgba(0, 0, 0, 0.03)",
-    "surfaceStrong": "rgba(0, 0, 0, 0.07)",
-    "border": "rgba(0, 0, 0, 0.1)",
-    "borderStrong": "rgba(0, 0, 0, 0.2)",
-    "muted": "rgba(43, 36, 25, 0.7)",
-    "muted2": "rgba(43, 36, 25, 0.5)"
+    "background": "#0a0806",
+    "foreground": "#f5efe6",
+    "primary": "#c9a961",
+    "primaryAccent": "#d4b878",
+    "surface": "rgba(255, 255, 255, 0.03)",
+    "surfaceStrong": "rgba(255, 255, 255, 0.06)",
+    "border": "rgba(255, 255, 255, 0.1)",
+    "borderStrong": "rgba(255, 255, 255, 0.18)",
+    "muted": "rgba(245, 239, 230, 0.65)",
+    "muted2": "rgba(245, 239, 230, 0.45)"
   },
-  "typography": {
-    "headingFont": "fraunces",
-    "bodyFont": "manrope"
-  }
+  "typography": { "headingFont": "playfair", "bodyFont": "geist" }
 }

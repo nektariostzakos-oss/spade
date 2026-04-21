@@ -18,5 +18,4 @@
   <rect x="360" y="360" width="80" height="140" rx="6" fill="#8a6f33" opacity="0.4"/>
   <!-- label -->
   <rect x="358" y="300" width="84" height="60" fill="#0a0806" stroke="#c9a961" stroke-width="1" opacity="0.9"/>
-  <text x="400" y="335" text-anchor="middle" font-family="Georgia, serif" font-size="14" fill="#c9a961" letter-spacing="3">BEARD OIL</text>
-</svg>
+  </svg>

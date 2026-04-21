@@ -21,6 +21,4 @@
   <rect x="275" y="300" width="250" height="200" rx="14" fill="url(#glass)" stroke="#3a332a" stroke-width="2"/>
   <rect x="265" y="250" width="270" height="60" rx="10" fill="url(#gold)"/>
   <rect x="270" y="252" width="260" height="6" rx="3" fill="#f4e2b3" opacity="0.8"/>
-  <text x="400" y="410" text-anchor="middle" font-family="Georgia, serif" font-size="28" fill="#c9a961" letter-spacing="6">SPADE</text>
-  <text x="400" y="440" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="#8a7d63" letter-spacing="4">POMADE</text>
-</svg>
+  </svg>

@@ -75,7 +75,22 @@
       "Bash(git stash *)",
       "Bash(git -C \"C:/Users/nekta/Desktop/coworker/code\" cherry-pick 238e40a)",
       "Bash(GIT_EDITOR=true git -C \"C:/Users/nekta/Desktop/coworker/code\" cherry-pick --continue)",
-      "Bash(git -C \"C:/Users/nekta/Desktop/coworker/code\" log --oneline -2)"
+      "Bash(git -C \"C:/Users/nekta/Desktop/coworker/code\" log --oneline -2)",
+      "Bash(mkdir -p demo-barber)",
+      "Bash(cp -r demo/src demo-barber/)",
+      "Bash(cp -r demo/public demo-barber/)",
+      "Bash(cp -r demo/data demo-barber/)",
+      "Bash(cp -r demo/demos demo-barber/)",
+      "Bash(cp demos/barber/data/products.json data/products.json)",
+      "Bash(cp demos/barber/data/pages.json data/pages.json)",
+      "Bash(cp demos/barber/data/blog-categories.json data/blog-categories.json)",
+      "Bash(cp demos/barber/data/content.json data/content.json)",
+      "Bash(echo \"[]\")",
+      "Bash(ln -s ../demo/node_modules node_modules)",
+      "Bash(PORT=3001 npx next dev -p 3001)",
+      "Bash(rm -f data/services.json data/staff.json)",
+      "Bash(git -C C:/Users/nekta/Desktop/coworker/code commit -m 'feat\\(ui\\): WhatsApp button + sticky mobile CTA + availability widget + before-after slider *)",
+      "Bash(git -C \"C:/Users/nekta/Desktop/coworker/code\" pull --rebase)"
     ]
   }
 }

@@ -10,8 +10,4 @@
   <rect x="150" y="170" width="500" height="300" rx="18" fill="url(#card)" stroke="url(#gold)" stroke-width="3"/>
   <rect x="165" y="185" width="470" height="270" rx="12" fill="none" stroke="#c9a961" stroke-width="0.5" opacity="0.6"/>
   <rect x="175" y="195" width="450" height="250" rx="8" fill="none" stroke="#c9a961" stroke-width="0.5" opacity="0.3"/>
-  <text x="400" y="270" text-anchor="middle" font-family="Georgia, serif" font-size="24" fill="#c9a961" letter-spacing="10">SPADE</text>
-  <text x="400" y="295" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#8a7d63" letter-spacing="6">GIFT VOUCHER</text>
-  <text x="400" y="395" text-anchor="middle" font-family="Georgia, serif" font-size="92" fill="url(#gold)" font-weight="300">€100</text>
-  <text x="400" y="430" text-anchor="middle" font-family="Georgia, serif" font-size="10" fill="#8a7d63" letter-spacing="4">COMPLETE GROOMING EXPERIENCE</text>
-</svg>
+  </svg>

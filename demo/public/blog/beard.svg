@@ -23,5 +23,4 @@
   <path d="M340 285 Q370 295 400 290 Q430 295 460 285 Q440 305 400 305 Q360 305 340 285 Z" fill="url(#beardG)"/>
   <!-- nose shadow -->
   <path d="M390 260 L400 285 L410 260" stroke="#1a120b" stroke-width="2" fill="none" opacity="0.5"/>
-  <text x="400" y="540" text-anchor="middle" font-family="Georgia, serif" font-size="14" fill="#c9a961" letter-spacing="8">BEARD CARE</text>
-</svg>
+  </svg>

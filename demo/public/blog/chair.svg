@@ -21,5 +21,4 @@
   <!-- arms -->
   <rect x="230" y="290" width="60" height="28" rx="6" fill="url(#leather)"/>
   <rect x="510" y="290" width="60" height="28" rx="6" fill="url(#leather)"/>
-  <text x="400" y="80" text-anchor="middle" font-family="Georgia, serif" font-size="14" fill="#c9a961" letter-spacing="8">BEHIND THE CHAIR</text>
-</svg>
+  </svg>

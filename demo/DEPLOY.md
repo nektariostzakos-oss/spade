@@ -1,95 +1,69 @@
-# Deploying Spade Next.js to Hostinger
+# Deploy to Hostinger
 
-## Prerequisites
+Atelier ships as a standard Node.js Next.js app. Works on any Hostinger plan that exposes Node.js (Cloud, Business, VPS).
 
-Your Hostinger plan must support Node.js:
-- **Cloud Hosting** ✅
-- **Business Hosting** ✅
-- **VPS** ✅
-- Premium / Single shared ❌ (PHP only)
+## 1. Pick your variant
 
-Check in hPanel → **Advanced → Node.js** — if the menu appears, you're good.
+| ZIP | When |
+|---|---|
+| `spade-nextjs-clean.zip` | New customer — first visit triggers the Atelier installer wizard at `/setup` |
+| `spade-nextjs.zip` | Demo / preview — pre-seeded with Spade Barber content, ready at `/` |
 
-## Steps (Cloud / Business hosting via hPanel)
+Both are at the repo root, kept fresh by CI.
 
-### 1. Upload the files
+## 2. Upload + extract
 
-1. hPanel → **Files → File Manager**
-2. Open the `public_html` folder (or create a subfolder for the app)
-3. Upload `spade-nextjs.zip`
-4. Right-click the zip → **Extract** → into the current folder
-5. You should now have `demo/` (or whatever you named it) with `package.json`, `src/`, `public/`, `data/`, etc.
+hPanel → **Files → File Manager** → `public_html/`. Upload the ZIP, right-click → **Extract**.
 
-### 2. Create the Node.js app
+## 3. Create the Node.js app
 
-1. hPanel → **Advanced → Node.js**
-2. Click **Create app**
-3. **Application mode:** Production
-4. **Node.js version:** 20 or 22 (latest LTS)
-5. **Application root:** the path to the extracted folder (e.g. `public_html/demo`)
-6. **Application URL:** your domain or subdomain
-7. **Application startup file:** `node_modules/next/dist/bin/next` with args `start` — or use the npm script (see below)
-8. **Environment variables:** leave empty for now (SMTP is configured via the admin UI)
-9. Click **Create**
+hPanel → **Advanced → Node.js → Create application**.
 
-### 3. Install dependencies + build
+| Field | Value |
+|---|---|
+| Application mode | Production |
+| Node.js version | **22 LTS** (or 20 / 24 — anything ≥ 20.9) |
+| Application root | extracted folder, e.g. `public_html/atelier` |
+| Application URL | your domain or subdomain |
+| Startup file | `node_modules/next/dist/bin/next` · args `start` |
 
-In the Node.js app panel, click **Run NPM Install**. Wait for it to complete.
+Leave env vars empty — SMTP and analytics are configured later from the admin UI.
 
-Then open the terminal (hPanel → Advanced → Terminal, or SSH):
+## 4. Install + build
+
+In the Node.js panel click **Run NPM Install**. When done, open **Terminal**:
 
 ```bash
-cd ~/public_html/demo     # (or your path)
+cd ~/public_html/atelier
 npm run build
 ```
 
-This creates the `.next/` production build.
+Click **Restart Application**. Site is live.
 
-### 4. Start the app
+## 5. First-time setup
 
-Back in hPanel → Node.js → click **Start Application** (or **Restart** if it was running).
+- **Clean variant:** visit your URL → the **Atelier wizard** opens. Pick a template (Spade Barber, Verde Cucina), choose demo data or clean install, fill business info, create admin account, install. ~2 minutes.
+- **Demo variant:** visit `/admin/login` — default seed `admin@spade.gr` / `spade2026`. Change the password immediately in **Settings → Users**.
 
-Your site is live at the domain you configured.
+## 6. Wire up email + analytics (optional)
 
-### 5. First-time setup
+Admin → **Settings → General** → SMTP fields (host, port, user, pass, from). Send test. Booking confirmations + 8h reminders start flowing immediately.
 
-1. Visit `yourdomain.com/admin/login`
-2. Login: `admin@spade.gr` / `spade2026`
-3. Go to **Settings → SMTP** → enter your email provider details → save → send test email
-4. Change your admin password in **Users** tab
-5. Edit content from any page via the ✎ Edit pills (logged-in admin only sees them)
+GA4 / GTM / Meta Pixel IDs go in **Settings → Analytics**.
 
-## What's in the zip
+## 7. Ongoing
 
-- `src/` — all app code (React components, API routes, lib helpers)
-- `public/` — static assets + `public/uploads/` for image uploads
-- `data/` — JSON data: bookings, orders, products, users, content, settings. **Back up regularly!**
-- `package.json`, `package-lock.json` — dependency manifest
-- `next.config.ts`, `tsconfig.json`, `postcss.config.mjs`, `eslint.config.mjs` — config
-- `src/instrumentation.ts` — boots the 8-hour reminder cron on server start
-- `DEPLOY.md` — this file
-
-## Updating the site later
-
-Edit files locally, rebuild the zip (excluding `node_modules` + `.next`), upload via File Manager, extract, then:
-
-```bash
-npm install   # only if dependencies changed
-npm run build
-# Then restart the Node.js app in hPanel
-```
-
-## Backups
-
-Download `data/` periodically — it holds every booking, order, user, and piece of editable content.
+- Edit content with the ✎ pencils (visible only when admin is signed in)
+- Backup any time from **Admin → Settings → Tools → Download backup**
+- Restore from a `.json` snapshot the same way
+- Pull a fresh ZIP from the GitHub Releases / repo root any time you want to upgrade — drop `data/` from the old install into the new one
 
 ## Troubleshooting
 
-- **Port conflict** → Hostinger sets the PORT env var; our `npm start` reads it automatically.
-- **Images not loading** → make sure `public/uploads/` is writable (permission 755 on dir, 644 on files).
-- **Email not sending** → Settings tab shows SMTP status. Use **Send test email** button.
-- **Cron reminders not firing** → the scheduler runs in-process. If the Node app sleeps (free-tier hosts), you'd need an external cron job hitting `GET /api/cron/reminders` every 5 minutes.
-
-## Alternative: deploy on Vercel (free + easier)
-
-If you'd rather skip Hostinger setup, push this folder to a GitHub repo and import it on **vercel.com**. Deploys in ~90 seconds, free SSL, automatic redeploys on git push. Only the `data/` folder needs handling — Vercel's serverless functions don't persist files between requests, so for production use on Vercel you'd need to move data to a database. For Hostinger Cloud/Business (persistent filesystem), the JSON storage works fine.
+| Symptom | Fix |
+|---|---|
+| 502 / app won't start | Hostinger Node.js panel → Logs. Most often missing `npm run build` step. |
+| `/admin` infinite-loops to `/setup` | `data/settings.json` has `"onboarded": false`. Run the wizard, or set it to `true`. |
+| Photos broken | CSP blocks the host. `next.config.ts` already allows `images.unsplash.com` — add yours to `images.remotePatterns`. |
+| Email never arrives | SMTP credentials wrong. Test in Settings → Send test email. Check `data/emails.log.json` for queued items. |
+| Logo doesn't appear | Hard refresh — SVG cache pinned 5 min via `next.config.ts`. Or check `data/settings.json.branding.logoUrl` exists. |

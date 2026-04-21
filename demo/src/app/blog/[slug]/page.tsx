@@ -70,7 +70,7 @@ export default async function BlogPostPage({
         )}
 
         <div
-          className="prose prose-invert mt-10 max-w-none prose-headings:font-serif prose-a:text-[#c9a961]"
+          className="prose prose-invert prose-drop-cap mt-12 max-w-none prose-headings:font-serif prose-headings:text-[var(--foreground)] prose-headings:tracking-tight prose-p:text-[var(--muted)] prose-p:leading-[1.85] prose-a:text-[var(--gold)] prose-strong:text-[var(--foreground)]"
           dangerouslySetInnerHTML={{ __html: renderBody(post.body_en) }}
         />
 

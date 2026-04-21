@@ -9,7 +9,6 @@
   <!-- double header line -->
   <line x1="220" y1="200" x2="580" y2="200" stroke="#c9a961" stroke-width="1"/>
   <line x1="220" y1="206" x2="580" y2="206" stroke="#c9a961" stroke-width="0.5"/>
-  <text x="400" y="185" text-anchor="middle" font-family="Georgia, serif" font-size="26" fill="#c9a961" letter-spacing="8">SPADE · NEWS</text>
   <!-- body text lines -->
   <g stroke="#3a332a" stroke-width="2" stroke-linecap="round">
     <line x1="230" y1="230" x2="570" y2="230"/>
@@ -24,5 +23,4 @@
   </g>
   <!-- small inset photo -->
   <rect x="450" y="320" width="120" height="80" fill="url(#gold)" opacity="0.25"/>
-  <text x="400" y="510" text-anchor="middle" font-family="Georgia, serif" font-size="14" fill="#c9a961" letter-spacing="8">NEWS &amp; UPDATES</text>
-</svg>
+  </svg>

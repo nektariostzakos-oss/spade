@@ -6,13 +6,17 @@ import GalleryStrip from "./components/GalleryStrip";
 import BlogStrip from "./components/BlogStrip";
 import Testimonials from "./components/Testimonials";
 import CTA from "./components/CTA";
+import AvailabilitySnapshot from "./components/AvailabilitySnapshot";
+import TransformationsStrip from "./components/TransformationsStrip";
 
 export default function Home() {
   return (
     <main className="relative">
       <Hero />
+      <AvailabilitySnapshot />
       <InfoStrip />
       <ServicesPreview />
+      <TransformationsStrip />
       <ShopPreview />
       <GalleryStrip />
       <BlogStrip />

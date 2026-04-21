@@ -17,11 +17,7 @@ export default function BookPage() {
         titleKey="page.book.title"
         subKey="page.book.sub"
       />
-      <Suspense
-        fallback={
-          <div className="px-6 py-20 text-center text-white/40">…</div>
-        }
-      >
+      <Suspense fallback={<div className="px-6 py-20 text-center opacity-40">…</div>}>
         <BookingFlow />
       </Suspense>
     </main>

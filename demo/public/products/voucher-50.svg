@@ -12,7 +12,4 @@
   <path d="M630 220 L590 220 M630 220 L630 260" stroke="#c9a961" stroke-width="1.5" fill="none"/>
   <path d="M170 420 L210 420 M170 420 L170 380" stroke="#c9a961" stroke-width="1.5" fill="none"/>
   <path d="M630 420 L590 420 M630 420 L630 380" stroke="#c9a961" stroke-width="1.5" fill="none"/>
-  <text x="400" y="280" text-anchor="middle" font-family="Georgia, serif" font-size="24" fill="#c9a961" letter-spacing="10">SPADE</text>
-  <text x="400" y="305" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#8a7d63" letter-spacing="6">GIFT VOUCHER</text>
-  <text x="400" y="400" text-anchor="middle" font-family="Georgia, serif" font-size="96" fill="url(#gold)" font-weight="300">€50</text>
-</svg>
+  </svg>

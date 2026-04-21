@@ -188,8 +188,8 @@ export async function POST(req: NextRequest) {
     ...current,
     business,
     branding: {
-      logoUrl: "/brand/default-logo.svg",
-      faviconUrl: "/favicon.ico",
+      logoUrl: metaBranding.logoUrl || "/brand/default-logo.svg",
+      faviconUrl: metaBranding.faviconUrl || "/favicon.ico",
       wordmark: metaBranding.wordmark || body.business.name.toUpperCase(),
       tagline_en: metaBranding.tagline_en || "",
       tagline_el: metaBranding.tagline_el || metaBranding.tagline_en || "",
@@ -204,6 +204,8 @@ export async function POST(req: NextRequest) {
       : current.nav,
     theme: Object.keys(metaTheme).length > 0 ? (metaTheme as never) : current.theme,
     typography: Object.keys(metaTypography).length > 0 ? (metaTypography as never) : current.typography,
+    bookingMode: meta.bookingMode === "reservation" ? "reservation" : "appointment",
+    industryId: typeof meta.industryId === "string" ? (meta.industryId as string) : "barber",
     onboarded: true,
   });
 

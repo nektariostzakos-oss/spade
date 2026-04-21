@@ -20,5 +20,4 @@
   <rect x="540" y="370" width="70" height="160" rx="6" fill="url(#glass)" stroke="#2a2520"/>
   <rect x="536" y="355" width="78" height="18" fill="url(#gold)"/>
   <ellipse cx="575" cy="320" rx="55" ry="45" fill="#6a6050"/>
-  <text x="400" y="90" text-anchor="middle" font-family="Georgia, serif" font-size="14" fill="#c9a961" letter-spacing="8">GROOMING TIPS</text>
-</svg>
+  </svg>

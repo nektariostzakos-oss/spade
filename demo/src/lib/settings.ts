@@ -14,6 +14,7 @@ export type SmtpSettings = {
 
 export type BrandingSettings = {
   logoUrl: string;
+  logoUrlDark?: string;
   faviconUrl: string;
   wordmark: string;
   tagline_en: string;
@@ -147,6 +148,8 @@ export const DEFAULT_THEME: ThemeSettings = {
   muted2: "rgba(245, 239, 230, 0.45)",
 };
 
+export type BookingMode = "appointment" | "reservation";
+
 export type AppSettings = {
   smtp?: SmtpSettings;
   branding?: BrandingSettings;
@@ -157,8 +160,15 @@ export type AppSettings = {
   ai?: AiSettings;
   theme?: ThemeSettings;
   typography?: TypographySettings;
+  bookingMode?: BookingMode;
+  industryId?: string;
   onboarded?: boolean;
 };
+
+export async function loadIndustryId(): Promise<string> {
+  const s = await loadSettings();
+  return typeof s.industryId === "string" ? s.industryId : "barber";
+}
 
 export const DEFAULT_BRANDING: BrandingSettings = {
   logoUrl: "/brand/default-logo.svg",
@@ -319,6 +329,11 @@ export async function loadTheme(): Promise<ThemeSettings> {
 export async function loadTypography(): Promise<TypographySettings> {
   const s = await loadSettings();
   return { ...DEFAULT_TYPOGRAPHY, ...(s.typography ?? {}) };
+}
+
+export async function loadBookingMode(): Promise<BookingMode> {
+  const s = await loadSettings();
+  return s.bookingMode === "reservation" ? "reservation" : "appointment";
 }
 
 export async function loadTemplates(): Promise<EmailTemplates> {

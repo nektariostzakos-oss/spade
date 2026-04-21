@@ -1,210 +1,382 @@
 {
+  "page_home": {
+    "bgImage": "https://images.unsplash.com/photo-1517832606299-7ae9b720a186?w=2400&q=80&auto=format&fit=crop",
+    "bgOpacity": 42
+  },
   "hero": {
-    "pill_en": "Slow food · family table · since 1962",
-    "pill_el": "Αργή μαγειρική · οικογενειακό τραπέζι · από το 1962",
-    "title_en": "Tagliatelle, Barolo,",
-    "title_el": "Tagliatelle, Barolo,",
-    "titleAccent_en": "and a long afternoon.",
-    "titleAccent_el": "και ένα μακρύ απόγευμα.",
-    "subtitle_en": "Three generations of one family, two marble pasta tables, one cellar of Piedmontese reds. Lunch at 12, dinner at 7, and everything in between handled like it's for us.",
-    "subtitle_el": "Τρεις γενιές μιας οικογένειας, δύο μαρμάρινα τραπέζια ζύμης, ένα κελάρι με ερυθρά από το Πιεμόντε. Μεσημέρι από τις 12, βράδυ από τις 7.",
-    "meta1_en": "Milan · Via Roma 12",
-    "meta1_el": "Μιλάνο · Via Roma 12",
-    "meta2_en": "Reservations +39 02 0000 0000",
-    "meta2_el": "Κρατήσεις +39 02 0000 0000",
-    "bgImage": "https://images.unsplash.com/photo-1485963631004-f2f00b1d6606?w=1920&q=85&auto=format&fit=crop",
+    "pill_en": "Open today",
+    "pill_el": "Ανοιχτά σήμερα",
+    "title_en": "Sharp cuts.",
+    "title_el": "Ακριβές ψαλίδι.",
+    "titleAccent_en": "Clean finish.",
+    "titleAccent_el": "Καθαρό φινίρισμα.",
+    "subtitle_en": "Classic cuts, fades, and hot-towel shaves. Walk in or book online in under a minute.",
+    "subtitle_el": "Κλασικά κουρέματα, fades και ξυρίσματα με ζεστή πετσέτα. Περάστε ή κλείστε online σε ένα λεπτό.",
+    "meta1_en": "★★★★★ 4.9 / 412 reviews",
+    "meta1_el": "★★★★★ 4.9 / 412 κριτικές",
+    "meta2_en": "Open today · 09:00–21:00",
+    "meta2_el": "Σήμερα ανοιχτά · 09:00–21:00",
+    "bgImage": "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=2400&q=80&auto=format&fit=crop",
     "bgVideo": "",
     "bgVideoPoster": "",
-    "sideImage": "https://images.unsplash.com/photo-1481931098730-318b6f776db0?w=900&q=85&auto=format&fit=crop",
-    "sideRole_en": "Signature antipasto",
-    "sideRole_el": "Σηματοδοτικό antipasto",
-    "sideName": "Burrata di Andria",
-    "bgOpacity": 0.38,
-    "overlayStrength": 0.55
+    "sideImage": "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=1200&q=80&auto=format&fit=crop",
+    "sideRole_en": "Master barber",
+    "sideRole_el": "Master barber",
+    "sideName": "Andreas Pappas",
+    "bgOpacity": 66,
+    "overlayStrength": 40
   },
   "info": {
     "items": [
-      { "label_en": "LUNCH", "label_el": "ΜΕΣΗΜΕΡΙ", "value_en": "12:00 — 15:00", "value_el": "12:00 — 15:00" },
-      { "label_en": "DINNER", "label_el": "ΒΡΑΔΥ", "value_en": "19:00 — 23:30", "value_el": "19:00 — 23:30" },
-      { "label_en": "CLOSED", "label_el": "ΚΛΕΙΣΤΑ", "value_en": "Sundays", "value_el": "Κυριακές" },
-      { "label_en": "DRESS", "label_el": "DRESS CODE", "value_en": "Smart casual", "value_el": "Smart casual" }
+      {
+        "label_en": "Open today",
+        "label_el": "Σημερα ανοιχτα",
+        "value_en": "09:00 – 21:00",
+        "value_el": "09:00 – 21:00"
+      },
+      {
+        "label_en": "Address",
+        "label_el": "Διευθυνση",
+        "value_en": "El. Venizelou 37, Loutraki",
+        "value_el": "Ελ. Βενιζέλου 37, Λουτράκι"
+      },
+      {
+        "label_en": "Phone",
+        "label_el": "Τηλεφωνο",
+        "value_en": "+30 694 532 5780",
+        "value_el": "+30 694 532 5780"
+      },
+      {
+        "label_en": "Walk-ins",
+        "label_el": "Χωρις ραντεβου",
+        "value_en": "When chairs are open",
+        "value_el": "Όποτε υπάρχει ελεύθερη καρέκλα"
+      }
     ]
   },
   "services": {
     "eyebrow_en": "The menu",
-    "eyebrow_el": "Το μενού",
-    "title_en": "Five courses, a hundred years of recipe.",
-    "title_el": "Πέντε πιάτα, εκατό χρόνια συνταγή.",
-    "items": []
+    "eyebrow_el": "Οι υπηρεσιες",
+    "title_en": "Cuts, beards, the works.",
+    "title_el": "Κουρέματα, γένια, και όλα τα ενδιάμεσα.",
+    "items": [
+      {
+        "id": "svc-1",
+        "name_en": "Men's Haircut",
+        "name_el": "Κούρεμα Ανδρικό",
+        "price": 12,
+        "duration": 30,
+        "desc_en": "Classic men's cut with hot towel finish.",
+        "desc_el": "Κλασικό κούρεμα με ζεστή πετσέτα."
+      },
+      {
+        "id": "svc-2",
+        "name_en": "Kids Haircut",
+        "name_el": "Κούρεμα Παιδικό",
+        "price": 10,
+        "duration": 25,
+        "desc_en": "Careful, patient work for kids.",
+        "desc_el": "Προσεκτικό κούρεμα για παιδιά."
+      },
+      {
+        "id": "svc-3",
+        "name_en": "Beard Trim",
+        "name_el": "Μούσι",
+        "price": 5,
+        "duration": 15,
+        "desc_en": "Shaped and razor-lined.",
+        "desc_el": "Σχηματισμένο με ξυράφι."
+      },
+      {
+        "id": "svc-4",
+        "name_en": "Cut + Beard",
+        "name_el": "Κούρεμα + Μούσι",
+        "price": 15,
+        "duration": 45,
+        "desc_en": "Haircut plus beard sculpt.",
+        "desc_el": "Κούρεμα με περιποίηση γενειάδας."
+      }
+    ]
   },
   "gallery_strip": {
-    "eyebrow_en": "The room",
-    "eyebrow_el": "Ο χώρος",
-    "title_en": "A long table, a short walk from the Duomo.",
-    "title_el": "Ένα μακρύ τραπέζι, λίγα βήματα από το Duomo.",
+    "eyebrow_en": "Inside the shop",
+    "eyebrow_el": "Μεσα στο μαγαζι",
+    "title_en": "Where good cuts happen.",
+    "title_el": "Εδώ γίνονται τα ωραία κουρέματα.",
     "images": [
-      { "src": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=900&q=85&auto=format&fit=crop" },
-      { "src": "https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=900&q=85&auto=format&fit=crop" },
-      { "src": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=900&q=85&auto=format&fit=crop" },
-      { "src": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=900&q=85&auto=format&fit=crop" },
-      { "src": "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=900&q=85&auto=format&fit=crop" },
-      { "src": "https://images.unsplash.com/photo-1566740933430-b5e70b06d2d5?w=900&q=85&auto=format&fit=crop" }
+      {
+        "src": "https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=1200&q=80&auto=format&fit=crop"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=1200&q=80&auto=format&fit=crop"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=1200&q=80&auto=format&fit=crop"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=1200&q=80&auto=format&fit=crop"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=1200&q=80&auto=format&fit=crop"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1517832606299-7ae9b720a186?w=1200&q=80&auto=format&fit=crop"
+      }
     ]
   },
   "gallery": {
     "items": [
-      { "src": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1600&q=85&auto=format&fit=crop", "tag": "Primi", "big": true },
-      { "src": "https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=1200&q=85&auto=format&fit=crop", "tag": "The room", "big": false },
-      { "src": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1200&q=85&auto=format&fit=crop", "tag": "Antipasti", "big": false },
-      { "src": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=1600&q=85&auto=format&fit=crop", "tag": "Interior", "big": true },
-      { "src": "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=1200&q=85&auto=format&fit=crop", "tag": "Secondi", "big": false },
-      { "src": "https://images.unsplash.com/photo-1566740933430-b5e70b06d2d5?w=1200&q=85&auto=format&fit=crop", "tag": "Cellar", "big": false },
-      { "src": "https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=1200&q=85&auto=format&fit=crop", "tag": "Dolci", "big": false },
-      { "src": "https://images.unsplash.com/photo-1590846406792-0adc7f938f1d?w=1600&q=85&auto=format&fit=crop", "tag": "Kitchen", "big": true }
+      {
+        "src": "https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=1600&q=80&auto=format&fit=crop",
+        "tag": "Cuts",
+        "big": true
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=1200&q=80&auto=format&fit=crop",
+        "tag": "Beards",
+        "big": false
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=1200&q=80&auto=format&fit=crop",
+        "tag": "Shop",
+        "big": false
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=1200&q=80&auto=format&fit=crop",
+        "tag": "Cuts",
+        "big": false
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=1200&q=80&auto=format&fit=crop",
+        "tag": "Cuts",
+        "big": false
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1517832606299-7ae9b720a186?w=1200&q=80&auto=format&fit=crop",
+        "tag": "Shop",
+        "big": false
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1581417478175-a9ef18f210c2?w=1200&q=80&auto=format&fit=crop",
+        "tag": "Beards",
+        "big": false
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=1200&q=80&auto=format&fit=crop&sat=-100",
+        "tag": "Shop",
+        "big": false
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=1200&q=80&auto=format&fit=crop",
+        "tag": "Cuts",
+        "big": false
+      }
     ]
   },
   "about": {
     "eyebrow_en": "Our story",
-    "eyebrow_el": "Η ιστορία μας",
-    "title_en": "Three generations, one recipe book.",
-    "title_el": "Τρεις γενιές, ένα βιβλίο συνταγών.",
-    "p1_en": "Nonna Maria opened the first Verde in 1962 with twelve seats and her grandmother's tagliatelle recipe. Her son Paolo runs the kitchen today. Her granddaughter Bianca runs the cellar.",
-    "p1_el": "Η γιαγιά Μαρία άνοιξε την πρώτη Verde το 1962 με δώδεκα θέσεις και τη συνταγή tagliatelle της γιαγιάς της. Ο γιος της Paolo διευθύνει τώρα την κουζίνα. Η εγγονή της Bianca το κελάρι.",
-    "p2_en": "We still make our own pasta each morning. We still simmer ragù for six hours. We still hand-crack every wheel of Parmigiano at the table. Nothing on the menu has changed in thirty years — and everything has, because produce changes weekly.",
-    "p2_el": "Φτιάχνουμε ακόμα τα δικά μας ζυμαρικά κάθε πρωί. Σιγοβράζουμε ακόμα ραγού έξι ώρες. Σπάμε ακόμα κάθε κεφάλι παρμεζάνας στο τραπέζι.",
-    "p3_en": "The building is the same one Nonna rented in 1962. The tiles are the ones she chose. The marble tables are where her grandchildren now roll out the sfoglia. We've kept everything we could.",
-    "p3_el": "Το κτίριο είναι το ίδιο που νοίκιασε η γιαγιά το 1962. Τα πλακάκια είναι αυτά που διάλεξε. Τα μαρμάρινα τραπέζια, όπου τώρα τα εγγόνια της ανοίγουν τη σφογλιά.",
-    "image": "https://images.unsplash.com/photo-1590846406792-0adc7f938f1d?w=1400&q=85&auto=format&fit=crop"
+    "eyebrow_el": "Η ιστορια μας",
+    "title_en": "A barber shop, the way it should be.",
+    "title_el": "Ένα κουρείο, όπως πρέπει να είναι.",
+    "p1_en": "Spade opened in Loutraki in 2018 with one chair, one barber, and a stubborn idea: take the time, do the work properly, and the people will come back.",
+    "p1_el": "Το Spade άνοιξε στο Λουτράκι το 2018 με μία καρέκλα, έναν κουρέα και μία πεισματάρικη ιδέα: άφησε το χρόνο να κάνει τη δουλειά σωστά, και ο κόσμος θα ξαναέρθει.",
+    "p2_en": "Eight years later we've added two more chairs and a small team — but the philosophy hasn't budged. No production line. No rushing. Just sharp work in a quiet, well-lit room with good music and proper coffee.",
+    "p2_el": "Οκτώ χρόνια μετά έχουμε προσθέσει δύο ακόμα καρέκλες και μια μικρή ομάδα — η φιλοσοφία όμως δεν άλλαξε. Καμία γραμμή παραγωγής. Καμία βιασύνη. Μόνο καθαρή δουλειά σ’ ένα ήσυχο, καλά φωτισμένο μαγαζί με σωστή μουσική και καλό καφέ.",
+    "p3_en": "We work on classic cuts, modern fades, full beard sculpting, and the kind of hot-towel shave you book the day before. Walk-ins welcome when chairs are open.",
+    "p3_el": "Δουλεύουμε κλασικά κουρέματα, μοντέρνα fades, ολόκληρα γένια, και το ξύρισμα με ζεστή πετσέτα που θες να κλείσεις από την προηγούμενη. Walk-in δεκτό όταν υπάρχει ελεύθερη καρέκλα.",
+    "image": "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=1200&q=80&auto=format&fit=crop"
   },
   "team": {
-    "eyebrow_en": "The family",
-    "eyebrow_el": "Η οικογένεια",
-    "title_en": "The people in the kitchen, and at the cellar.",
-    "title_el": "Οι άνθρωποι στην κουζίνα, και στο κελάρι.",
+    "eyebrow_en": "The team",
+    "eyebrow_el": "Η ομαδα",
+    "title_en": "Three chairs. Three stories.",
+    "title_el": "Τρεις καρέκλες. Τρεις ιστορίες.",
     "members": [
       {
-        "name_en": "Chef Paolo Conti",
-        "name_el": "Σεφ Paolo Conti",
-        "role_en": "Executive Chef · Son of Maria",
-        "role_el": "Αρχιμάγειρας · Γιος της Μαρίας",
-        "years_en": "28 years",
-        "years_el": "28 χρόνια",
-        "slug": "paolo",
-        "image": "https://images.unsplash.com/photo-1484980972926-edee96e0960d?w=900&q=85&auto=format&fit=crop"
+        "name_en": "Andreas Pappas",
+        "name_el": "Ανδρέας Παππάς",
+        "role_en": "Master Barber · Founder",
+        "role_el": "Master Barber · Ιδρυτής",
+        "years_en": "12 years",
+        "years_el": "12 χρόνια",
+        "slug": "andreas",
+        "image": "https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=900&q=80&auto=format&fit=crop"
       },
       {
-        "name_en": "Bianca Conti",
-        "name_el": "Bianca Conti",
-        "role_en": "Sommelier · Maria's granddaughter",
-        "role_el": "Sommelier · Εγγονή της Μαρίας",
+        "name_en": "Nikos Stathakis",
+        "name_el": "Νίκος Σταθάκης",
+        "role_en": "Senior Barber",
+        "role_el": "Senior Barber",
         "years_en": "8 years",
         "years_el": "8 χρόνια",
-        "slug": "bianca",
-        "image": "https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=900&q=85&auto=format&fit=crop"
+        "slug": "nikos",
+        "image": "https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=900&q=80&auto=format&fit=crop"
       },
       {
-        "name_en": "Marco Rossi",
-        "name_el": "Marco Rossi",
-        "role_en": "Head Pasta · Sfoglino",
-        "role_el": "Υπεύθυνος ζύμης · Sfoglino",
-        "years_en": "15 years",
-        "years_el": "15 χρόνια",
-        "slug": "marco",
-        "image": "https://images.unsplash.com/photo-1544005313-3ec99c6094dc?w=900&q=85&auto=format&fit=crop"
-      },
-      {
-        "name_en": "Serena Moretti",
-        "name_el": "Serena Moretti",
-        "role_en": "Pastry Chef",
-        "role_el": "Αρχιζαχαροπλάστης",
-        "years_en": "6 years",
-        "years_el": "6 χρόνια",
-        "slug": "serena",
-        "image": "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=900&q=85&auto=format&fit=crop"
+        "name_en": "Petros Lambrou",
+        "name_el": "Πέτρος Λάμπρου",
+        "role_en": "Barber",
+        "role_el": "Barber",
+        "years_en": "4 years",
+        "years_el": "4 χρόνια",
+        "slug": "petros",
+        "image": "https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=900&q=80&auto=format&fit=crop"
       }
     ]
   },
   "faq": {
     "eyebrow_en": "Questions",
-    "eyebrow_el": "Ερωτήσεις",
-    "title_en": "Before you sit down.",
-    "title_el": "Πριν καθίσετε.",
+    "eyebrow_el": "Συχνες ερωτησεις",
+    "title_en": "Good to know.",
+    "title_el": "Καλό να ξέρεις.",
     "items": [
       {
-        "q_en": "Do you take walk-ins?",
-        "q_el": "Δέχεστε χωρίς κράτηση;",
-        "a_en": "At lunch, usually — the room is small, arriving before 12:30 helps. Dinner is almost always booked; reserve a week ahead for weekends.",
-        "a_el": "Το μεσημέρι συνήθως ναι — ο χώρος είναι μικρός, κάλλιο να έρθετε πριν τις 12:30. Το βράδυ σχεδόν πάντα γεμάτος· κρατήστε μία βδομάδα πριν για το σαββατοκύριακο."
+        "q_en": "Do I need an appointment?",
+        "q_el": "Χρειάζομαι ραντεβού;",
+        "a_en": "We recommend booking online — chairs fill up fast. Walk-ins are welcome whenever a chair is free.",
+        "a_el": "Σου προτείνουμε να κλείσεις online — οι καρέκλες γεμίζουν γρήγορα. Walk-in δεκτό όποτε υπάρχει ελεύθερη θέση."
       },
       {
-        "q_en": "Is the menu fixed?",
-        "q_el": "Είναι σταθερό το μενού;",
-        "a_en": "The staples — tagliatelle, osso buco, tiramisù — never change. Around them we rotate five to six dishes every ten days based on the market.",
-        "a_el": "Τα σταθερά — tagliatelle, osso buco, τιραμισού — δεν αλλάζουν ποτέ. Γύρω τους εναλλάσσονται πέντε-έξι πιάτα κάθε δέκα μέρες."
+        "q_en": "What's your cancellation policy?",
+        "q_el": "Μπορώ να ακυρώσω;",
+        "a_en": "Free cancellation up to 4 hours before your slot. After that we ask for 50% of the service price.",
+        "a_el": "Δωρεάν ακύρωση μέχρι 4 ώρες πριν το ραντεβού. Μετά χρεώνουμε το 50% της υπηρεσίας."
       },
       {
-        "q_en": "Can you accommodate allergies?",
-        "q_el": "Μπορείτε για αλλεργίες;",
-        "a_en": "Gluten-free pasta is available on 24-hour notice. Shellfish and nut allergies — tell us when you book; we can build around almost anything.",
-        "a_el": "Ζυμαρικά χωρίς γλουτένη διαθέσιμα με προειδοποίηση 24 ωρών. Για αλλεργίες, πείτε μας όταν κλείνετε."
+        "q_en": "Do you take card?",
+        "q_el": "Δέχεστε κάρτα;",
+        "a_en": "Card, cash, Apple Pay, Google Pay — all good. Tips appreciated, never expected.",
+        "a_el": "Κάρτα, μετρητά, Apple Pay, Google Pay — όλα παίζουν. Το φιλοδώρημα εκτιμάται, ποτέ δεν περιμένεται."
       },
       {
-        "q_en": "Do you do private events?",
-        "q_el": "Κάνετε ιδιωτικές εκδηλώσεις;",
-        "a_en": "The back room seats 18. We book it Tuesdays, Wednesdays, and Sunday lunch. Set menu starts at €75 per person plus wine.",
-        "a_el": "Το πίσω δωμάτιο χωρά 18 άτομα. Το κλείνουμε Τρίτες, Τετάρτες και κυριακάτικο μεσημέρι. Από €75 το άτομο συν κρασί."
+        "q_en": "Can I bring my kid?",
+        "q_el": "Μπορώ να φέρω το παιδί μου;",
+        "a_en": "Of course. We have a dedicated kids cut and our team is patient with young clients.",
+        "a_el": "Φυσικά. Έχουμε ξεχωριστό κούρεμα για παιδιά και η ομάδα είναι υπομονετική με τους μικρούς πελάτες."
       },
       {
-        "q_en": "Children?",
-        "q_el": "Παιδιά;",
-        "a_en": "Always. Half portions of any pasta at half price. Highchairs available.",
-        "a_el": "Πάντα. Μισές μερίδες οποιουδήποτε ζυμαρικού στη μισή τιμή. Καρεκλάκια διαθέσιμα."
+        "q_en": "Where exactly are you?",
+        "q_el": "Πού ακριβώς είστε;",
+        "a_en": "El. Venizelou 37, Loutraki, two blocks from the seafront. Free parking on the side street.",
+        "a_el": "Ελ. Βενιζέλου 37, Λουτράκι, δύο τετράγωνα από την παραλία. Δωρεάν πάρκινγκ στον κάθετο δρόμο."
       }
     ]
   },
   "contact": {
-    "image": "https://images.unsplash.com/photo-1473093295043-cdd812d0e601?w=1400&q=85&auto=format&fit=crop"
+    "image": "https://images.unsplash.com/photo-1517832606299-7ae9b720a186?w=1400&q=80&auto=format&fit=crop",
+    "blocks": [
+      {
+        "label_en": "Address",
+        "label_el": "Διευθυνση",
+        "value_en": "El. Venizelou 37\nLoutraki 20300, Greece",
+        "value_el": "Ελ. Βενιζέλου 37\nΛουτράκι 20300, Ελλάδα"
+      },
+      {
+        "label_en": "Phone",
+        "label_el": "Τηλεφωνο",
+        "value_en": "+30 694 532 5780",
+        "value_el": "+30 694 532 5780"
+      },
+      {
+        "label_en": "Email",
+        "label_el": "Email",
+        "value_en": "hello@spade.gr",
+        "value_el": "hello@spade.gr"
+      },
+      {
+        "label_en": "Hours",
+        "label_el": "Ωραριο",
+        "value_en": "Mon–Sat · 09:00–21:00\nSunday · Closed",
+        "value_el": "Δευ–Σαβ · 09:00–21:00\nΚυριακή · Κλειστά"
+      }
+    ]
   },
   "testimonials": {
-    "eyebrow_en": "Voices",
-    "eyebrow_el": "Φωνές",
-    "title_en": "What regulars say.",
-    "title_el": "Τι λένε οι τακτικοί πελάτες.",
+    "eyebrow_en": "From the chair",
+    "eyebrow_el": "Απο την καρεκλα",
+    "title_en": "What our regulars say.",
+    "title_el": "Τι λένε όσοι κάθονται στην καρέκλα μας.",
     "items": [
       {
-        "quote_en": "The tagliatelle al ragù is the best plate of pasta I've had in Milan. Period.",
-        "quote_el": "Το tagliatelle al ragù είναι το καλύτερο πιάτο ζυμαρικών που έφαγα στο Μιλάνο. Τελεία.",
-        "author": "La Cucina Italiana",
-        "meta_en": "2024 review",
-        "meta_el": "Κριτική 2024"
+        "quote_en": "Best skin fade in Loutraki, easily. Andreas takes his time and the finish is razor sharp.",
+        "quote_el": "Το καλύτερο skin fade στο Λουτράκι, χωρίς αντίρρηση. Ο Ανδρέας παίρνει το χρόνο του και η λεπτομέρεια είναι κοφτερή.",
+        "name": "Giorgos M.",
+        "role_en": "Regular since 2021",
+        "role_el": "Σταθερός πελάτης από το 2021"
       },
       {
-        "quote_en": "A room that feels like going home for Sunday lunch — except the ragù is twice as good.",
-        "quote_el": "Ένας χώρος που μοιάζει με το σπίτι της γιαγιάς την Κυριακή — αλλά με ραγού δύο φορές καλύτερο.",
-        "author": "Isabella Marini",
-        "meta_en": "Regular since 1998",
-        "meta_el": "Τακτική από το 1998"
+        "quote_en": "Hot towel shave was a religious experience. Walked out a different man.",
+        "quote_el": "Το ξύρισμα με ζεστή πετσέτα ήταν εμπειρία ζωής. Βγήκα άλλος άνθρωπος.",
+        "name": "Stefan K.",
+        "role_en": "Visitor from Athens",
+        "role_el": "Επισκέπτης από Αθήνα"
       },
       {
-        "quote_en": "Bianca's cellar is a love letter to Piedmontese Nebbiolo. She'll find you a Barolo you cannot forget.",
-        "quote_el": "Το κελάρι της Bianca είναι ερωτικό γράμμα στο Nebbiolo του Πιεμόντε.",
-        "author": "Gambero Rosso",
-        "meta_en": "2023 guide",
-        "meta_el": "Οδηγός 2023"
+        "quote_en": "Booking online is dead simple. Show up, sit down, leave looking sharp.",
+        "quote_el": "Η online κράτηση είναι παιχνιδάκι. Έρχεσαι, κάθεσαι, φεύγεις κοφτερός.",
+        "name": "Dimitris L.",
+        "role_en": "Regular since 2019",
+        "role_el": "Σταθερός πελάτης από το 2019"
       }
     ]
   },
   "cta": {
-    "eyebrow_en": "Reserve a table",
-    "eyebrow_el": "Κρατήστε τραπέζι",
-    "title_en": "Tonight, or in six weeks.",
-    "title_el": "Απόψε, ή σε έξι βδομάδες.",
-    "subtitle_en": "We hold a handful of tables for same-day walk-ins. Everything else books weeks ahead. The online calendar has live availability.",
-    "subtitle_el": "Κρατάμε λίγα τραπέζια για την ίδια μέρα. Τα υπόλοιπα κλείνονται βδομάδες πριν.",
-    "bgImage": "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=1920&q=85&auto=format&fit=crop"
+    "eyebrow_en": "Take a seat",
+    "eyebrow_el": "Παρε θεση",
+    "title_en": "The next chair has your name on it.",
+    "title_el": "Η επόμενη καρέκλα γράφει τ’ όνομά σου.",
+    "subtitle_en": "Book in under a minute. Choose your service, your barber, and the time that works.",
+    "subtitle_el": "Κλείνεις σε ένα λεπτό. Διαλέγεις υπηρεσία, κουρέα και ώρα — εμείς αναλαμβάνουμε τα υπόλοιπα.",
+    "bgImage": "https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=2000&q=80&auto=format&fit=crop"
+  },
+  "page_services": {
+    "eyebrow_en": "The menu",
+    "eyebrow_el": "Οι υπηρεσιες",
+    "title_en": "Cuts, beards, and the full ritual.",
+    "title_el": "Κουρέματα, γένια, και η πλήρης διαδικασία.",
+    "sub_en": "Honest pricing, real time slots. Add a beard or hot shave to any cut at the chair.",
+    "sub_el": "Καθαρές τιμές, αληθινά διαθέσιμα ραντεβού. Πρόσθεσε γένια ή ξύρισμα στο κούρεμα όταν κάθεσαι στην καρέκλα."
+  },
+  "page_gallery": {
+    "eyebrow_en": "Gallery",
+    "eyebrow_el": "Φωτογραφιες",
+    "title_en": "Inside the shop. On the chair.",
+    "title_el": "Μέσα στο μαγαζί. Πάνω στην καρέκλα.",
+    "sub_en": "A look at the room, the team, and the work that walks out the door.",
+    "sub_el": "Μια ματιά στον χώρο, στην ομάδα, και στα κουρέματα που βγαίνουν από την πόρτα."
+  },
+  "page_team": {
+    "eyebrow_en": "Our team",
+    "eyebrow_el": "Η ομαδα μας",
+    "title_en": "Three barbers. One standard.",
+    "title_el": "Τρεις κουρείς. Ένα στάνταρ.",
+    "sub_en": "The chairs at Spade are run by three barbers who care about the work and the people in front of them.",
+    "sub_el": "Στις τρεις καρέκλες του Spade δουλεύουν τρεις κουρείς που νοιάζονται για τη δουλειά και για όποιον κάθεται μπροστά τους."
+  },
+  "page_contact": {
+    "eyebrow_en": "Contact",
+    "eyebrow_el": "Επικοινωνια",
+    "title_en": "Find us in Loutraki.",
+    "title_el": "Θα μας βρεις στο Λουτράκι.",
+    "sub_en": "Two blocks from the seafront. Free parking on the side street, espresso bar across the road.",
+    "sub_el": "Δύο τετράγωνα από την παραλία. Δωρεάν πάρκινγκ στον κάθετο δρόμο, καφές απέναντι."
+  },
+  "page_book": {
+    "eyebrow_en": "Booking",
+    "eyebrow_el": "Κρατηση",
+    "title_en": "Pick a chair, pick a time.",
+    "title_el": "Διάλεξε καρέκλα, διάλεξε ώρα.",
+    "sub_en": "Takes about a minute. You'll get an email confirmation and a reminder 8 hours before your appointment.",
+    "sub_el": "Σου παίρνει ένα λεπτό. Θα λάβεις επιβεβαίωση στο email και υπενθύμιση 8 ώρες πριν το ραντεβού σου."
   },
   "footer": {
-    "about_en": "Verde Cucina · Milan · A family kitchen since 1962. Slow food, honest pasta, a long afternoon.",
-    "about_el": "Verde Cucina · Μιλάνο · Οικογενειακή κουζίνα από το 1962. Αργή μαγειρική, τίμια ζυμαρικά, ένα μακρύ απόγευμα."
+    "lede_en": "Classic cuts, modern fades, and the kind of hot-towel shave you book the day before. Walk-ins welcome when the chairs are open.",
+    "lede_el": "Κλασικά κουρέματα, μοντέρνα fades, και το ξύρισμα με ζεστή πετσέτα που θες να κλείσεις από την προηγούμενη. Walk-in δεκτό όταν υπάρχει ελεύθερη καρέκλα.",
+    "cta_en": "Take a seat.",
+    "cta_el": "Πάρε θέση.",
+    "copy_en": "© 2026 Spade Barber Shop · Loutraki, GR",
+    "copy_el": "© 2026 Spade Barber Shop · Λουτράκι, GR",
+    "tagline_en": "Sharp since 2018.",
+    "tagline_el": "Κοφτεροί από το 2018."
   }
 }

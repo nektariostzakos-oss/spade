@@ -1,66 +1,83 @@
 # Atelier · Next.js Template System
 
-**© Mindscrollers LLC · Proprietary. All rights reserved.**
+**© Mindscrollers LLC.** Premium multi-industry website template engine with a first-install wizard. Built and maintained by Mindscrollers LLC.
 
-Premium multi-industry Next.js template system with a first-install wizard.
-Designed, built, and maintained by **Mindscrollers LLC**.
-Ships downloadable ZIPs at the repo root, kept fresh on every push:
+---
 
-| File | When to use |
+## What ships at the repo root
+
+| File | Use case |
 |---|---|
-| **`spade-nextjs-clean.zip`** | First-time customer install — triggers the Atelier setup wizard on first visit. |
-| **`spade-nextjs.zip`** | Demo / preview variant — seeded with full Spade Barber content. |
-| `spade-nextjs-clean.tar.gz` / `spade-nextjs.tar.gz` | Same payloads, gzip tarballs for SCP workflows. |
+| `spade-nextjs-clean.zip` | **First-time install** — boots the Atelier wizard |
+| `spade-nextjs.zip` | **Demo preview** — pre-seeded with full Spade Barber content |
+| `*.tar.gz` siblings | Same payloads for SCP / Linux servers |
 
-## Local development
+CI rebuilds all four on every push that touches `demo/` or `build-zip.py` — see [`.github/workflows/build-zip.yml`](.github/workflows/build-zip.yml).
+
+---
+
+## Templates included
+
+| ID | Brand | Industry | Booking | Palette |
+|---|---|---|---|---|
+| `barber` | Spade | Barber shop | Appointment | Dark gold-on-black |
+| `restaurant` | Verde Cucina | Italian restaurant | Reservation | Premium dark trattoria |
+
+Adding a third: see [`demos/README.md`](demo/demos/README.md).
+
+---
+
+## Local dev
 
 ```bash
 cd demo
 npm install
-npm run dev
-# open http://localhost:3000
+npm run dev          # http://localhost:3000
 ```
 
-## Rebuild the deploy ZIPs
+Two side-by-side instances? Duplicate `demo/` → `demo-barber/`, swap `data/`, `npx next dev -p 3001`.
+
+---
+
+## Deploy to Hostinger
+
+Walkthrough: [`demo/DEPLOY.md`](demo/DEPLOY.md). Short version — unzip into `public_html/`, hPanel → Node.js (v22 LTS), `npm install && npm run build`, Start.
+
+---
+
+## Rebuild ZIPs
 
 ```bash
-# from the repo root
-python build-zip.py
-# or, from inside demo/
-npm run zip
+python build-zip.py        # from repo root
+npm --prefix demo run zip  # or via npm
 ```
 
-Artifacts land at the repo root — the four files above.
+Outputs: `spade-nextjs.zip`, `spade-nextjs-clean.zip`, plus tarballs.
 
-## Auto-rebuild on push
-
-`.github/workflows/build-zip.yml` runs on every push to `main` that touches
-`demo/`, `build-zip.py`, or the workflow itself. It regenerates the four
-artifacts and commits them back with message `ci: rebuild deployment ZIPs`,
-so the downloadable files at the repo root are always in sync with the
-source.
-
-## Deploying to Hostinger
-
-See [`demo/DEPLOY.md`](demo/DEPLOY.md) for the full hPanel + Node.js walkthrough.
-Short version: unzip into `public_html/`, create a Node.js app (Node 20+),
-run `npm install && npm run build`, start the app.
+---
 
 ## Repo layout
 
 ```
 code/
-├── build-zip.py                  # Reproducible ZIP builder
-├── spade-nextjs.zip              # Auto-generated (do not hand-edit)
-├── spade-nextjs-clean.zip        # Auto-generated
-├── spade-nextjs.tar.gz           # Auto-generated
-├── spade-nextjs-clean.tar.gz     # Auto-generated
-├── demo/                         # The actual Next.js app
-│   ├── src/                      # App router, libs, components, APIs
-│   ├── public/                   # Static assets (uploads excluded from zip)
-│   ├── data/                     # JSON-file storage (bookings, products…)
-│   ├── demos/barber/             # Template bundle used by the installer
-│   ├── package.json
-│   └── DEPLOY.md
-└── .github/workflows/build-zip.yml
+├── README.md                       you are here
+├── build-zip.py                    reproducible bundle builder
+├── spade-nextjs{,-clean}.{zip,tar.gz}    auto-generated (CI)
+├── .github/workflows/build-zip.yml CI
+├── demo/                           Next.js 16 app (App Router)
+│   ├── DEPLOY.md                   Hostinger guide
+│   ├── data/                       runtime JSON storage
+│   ├── demos/<id>/                 template bundles (barber, restaurant)
+│   ├── public/brand/               per-template logo + favicon SVGs
+│   ├── public/{products,menu,blog,restaurant-blog}/   themed icon SVGs
+│   └── src/{app,lib}/              routes, components, API, libs
+└── docker/                         optional Apache + PHP-WP host (legacy)
 ```
+
+---
+
+## Stack
+
+Next.js 16 · App Router · React 19 · TypeScript strict · Tailwind v4 · Framer Motion · Sharp · Nodemailer · `@anthropic-ai/sdk` (optional copy generator only)
+
+JSON-file storage (no DB), signed-cookie sessions (PBKDF2), CSP headers, rate-limited APIs, WCAG 2.2 AA.

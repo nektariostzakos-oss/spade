@@ -1,36 +1,104 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Atelier app — `demo/`
 
-## Getting Started
+The Next.js 16 application that powers every Atelier template. Owned by Mindscrollers LLC.
 
-First, run the development server:
+> 📦 Repo overview & ZIP downloads → [`../README.md`](../README.md)
+> 🚀 Hostinger deploy → [`DEPLOY.md`](DEPLOY.md)
+> 🧱 Add a new template → [`demos/README.md`](demos/README.md)
+
+---
+
+## Quickstart
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+First visit hits `/setup` (Atelier installer wizard) when `data/settings.json.onboarded` is `false`. Pick a template, fill business info, install — you're live.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Already onboarded? Sign in at `/admin/login` (default seed: `admin@spade.gr` / `spade2026` if `users.json` is empty on boot).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Scripts
 
-To learn more about Next.js, take a look at the following resources:
+| Command | What it does |
+|---|---|
+| `npm run dev` | Turbopack dev on `:3000` |
+| `npm run build` | Production build |
+| `npm run start` | Serve `.next/` on `${PORT:-3000}` |
+| `npm run lint` | ESLint (advisory) |
+| `npm run zip` | Rebuild deploy ZIPs at repo root |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Folder map
 
-## Deploy on Vercel
+```
+src/
+├── app/                            Next.js App Router
+│   ├── page.tsx                    home — switches by industryId
+│   ├── admin/, setup/              private surfaces (no Nav/Footer)
+│   ├── menu/, experiences/         restaurant aliases for /shop, /services
+│   ├── api/                        REST endpoints (install, templates, products…)
+│   └── components/
+│       ├── Nav, Footer, Hero, ...  base components (theme-aware via CSS vars)
+│       └── restaurant/             industry-specific section variants
+├── lib/                            data access + helpers
+│   ├── settings.ts                 type defs + load* helpers
+│   ├── bookings, orders, products, ...   JSON-store CRUD
+│   └── industryPresets.ts          legacy preset list
+└── proxy.ts                        Next middleware: /setup gate + preview cookie
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+data/                               runtime storage (gitignored selectively)
+demos/<id>/                         template bundles (meta.json + data/)
+public/
+├── brand/                          per-template logos + favicons
+├── products/, menu/, blog/, restaurant-blog/   themed icon SVGs
+├── demos/<id>/cover.svg            template card art for the wizard
+└── uploads/                        user-uploaded images (never committed)
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## Data files (`data/*.json`)
+
+| File | Holds | Cleared on clean install |
+|---|---|---|
+| `bookings.json` | Appointments / reservations | ✓ |
+| `orders.json` | Shop orders | ✓ |
+| `clients.json` | Derived client list | ✓ |
+| `views.json`, `audit.json` | Telemetry | ✓ |
+| `waitlist.json`, `reviews.json` | Operational | ✓ |
+| `emails.log.json` | Sent-mail log | ✓ |
+| `users.json` | Admin/staff accounts | ✓ (re-seeds on first boot) |
+| `settings.json` | Site config (theme, nav, branding, business) | overwritten by template meta |
+| `content.json` | Editable copy (hero, gallery, team, FAQ…) | copied from template |
+| `products.json` | Catalog | copied from template |
+| `pages.json`, `blog-categories.json` | Blog | copied from template |
+| `services.json`, `staff.json` | Service-businesses | copied from template if present |
+| `secret.json` | Session HMAC secret | auto-generated, **never commit** |
+
+---
+
+## Theme system
+
+CSS custom properties live in `:root` (10 tokens — see `globals.css`). `data/settings.json.theme` overrides at runtime via inlined `<style>` in `layout.tsx`. Light templates auto-apply `data-theme="light"` on `<html>`, which scopes `globals.css` overrides that remap `text-white/X`, `bg-white/X`, `border-white/X` Tailwind utilities to `var(--foreground)`-based equivalents — no per-component refactor required.
+
+Logos: `branding.logoUrl` (cream text, default) + `branding.logoUrlDark` (dark text, used when light theme is active). Nav swaps automatically.
+
+---
+
+## Booking modes
+
+- `appointment` → `<BookingFlow>` — service → barber → date → slot → guest
+- `reservation` → `<ReservationFlow>` — party size → date → time → guest
+
+Set per-template in `meta.json.bookingMode`. Read at runtime by `loadBookingMode()` in `src/app/book/page.tsx`.
+
+---
+
+## Industry switching
+
+`src/app/page.tsx` branches on `loadIndustryId()`. Each industry can supply its own `<IndustryHome>` composite of section components in `src/app/components/<id>/`. Default falls through to the generic Hero/InfoStrip/ServicesPreview/ShopPreview/Testimonials/CTA chain.

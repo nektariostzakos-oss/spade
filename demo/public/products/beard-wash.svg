@@ -13,7 +13,4 @@
   <rect x="370" y="208" width="60" height="6" fill="#8a6f33"/>
   <!-- label -->
   <rect x="344" y="310" width="112" height="110" fill="#0a0806" stroke="#c9a961" opacity="0.9"/>
-  <text x="400" y="345" text-anchor="middle" font-family="Georgia, serif" font-size="14" fill="#c9a961" letter-spacing="5">SPADE</text>
-  <text x="400" y="375" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="#c9a961" letter-spacing="3">BEARD</text>
-  <text x="400" y="398" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="#c9a961" letter-spacing="3">WASH</text>
-</svg>
+  </svg>

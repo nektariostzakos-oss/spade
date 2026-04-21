@@ -64,7 +64,7 @@ export default function Nav() {
           {branding.logoUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
-              src={branding.logoUrl}
+              src={theme === "light" && branding.logoUrlDark ? branding.logoUrlDark : branding.logoUrl}
               alt={branding.wordmark || "Logo"}
               className="h-9 w-auto object-contain"
             />

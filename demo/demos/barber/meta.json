@@ -22,10 +22,15 @@
     "headingFont": "playfair",
     "bodyFont": "geist"
   },
+  "bookingMode": "appointment",
+  "industryId": "barber",
   "branding": {
     "wordmark": "SPADE",
     "tagline_en": "Barber · Loutraki",
-    "tagline_el": "Barber · Λουτράκι"
+    "tagline_el": "Barber · Λουτράκι",
+    "logoUrl": "/brand/spade-logo-light.svg",
+    "logoUrlDark": "/brand/spade-logo-dark.svg",
+    "faviconUrl": "/brand/spade-favicon.svg"
   },
   "nav": {
     "links": [
