@@ -3,6 +3,9 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { findPage, listPages } from "../../../lib/pages";
+import { loadBranding, loadBusiness } from "../../../lib/settings";
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://spade.gr";
 
 export async function generateMetadata({
   params,
@@ -12,15 +15,28 @@ export async function generateMetadata({
   const { slug } = await params;
   const p = await findPage(slug);
   if (!p) return { title: "Not found" };
+  const canonical = `${SITE_URL}/blog/${p.slug}`;
   return {
     title: p.title_en,
     description: p.excerpt_en,
+    alternates: { canonical, languages: { "en-US": canonical, "el-GR": canonical } },
+    keywords: p.tags?.length ? p.tags : undefined,
     openGraph: {
       title: p.title_en,
       description: p.excerpt_en,
       images: p.image ? [{ url: p.image }] : [],
       type: "article",
       publishedTime: p.publishedAt,
+      modifiedTime: p.updatedAt,
+      tags: p.tags,
+      section: p.category || undefined,
+      url: canonical,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: p.title_en,
+      description: p.excerpt_en,
+      images: p.image ? [p.image] : undefined,
     },
   };
 }
@@ -38,8 +54,32 @@ export default async function BlogPostPage({
     .filter((p) => p.published && p.id !== post.id && p.category === post.category)
     .slice(0, 3);
 
+  const [branding, business] = await Promise.all([loadBranding(), loadBusiness()]);
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.title_en,
+    description: post.excerpt_en,
+    image: post.image || undefined,
+    datePublished: post.publishedAt,
+    dateModified: post.updatedAt || post.publishedAt,
+    author: { "@type": "Organization", name: branding.wordmark || business.name || "Spade" },
+    publisher: {
+      "@type": "Organization",
+      name: branding.wordmark || business.name || "Spade",
+      logo: branding.logoUrl ? { "@type": "ImageObject", url: branding.logoUrl } : undefined,
+    },
+    mainEntityOfPage: { "@type": "WebPage", "@id": `${SITE_URL}/blog/${post.slug}` },
+    articleSection: post.category || undefined,
+    keywords: post.tags?.join(", ") || undefined,
+  };
+
   return (
     <article className="px-6 py-24">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
       <div className="mx-auto max-w-3xl">
         <Link href="/blog" className="text-[10px] uppercase tracking-widest text-white/50 hover:text-[#c9a961]">
           ← Blog

@@ -60,8 +60,8 @@ export default function Footer() {
           label: `${business.city}${business.postalCode ? " " + business.postalCode : ""}`,
           href: mapHref(business),
         },
-        ...hoursLines.map((line) => ({ label: line, href: "#" })),
-      ].filter(Boolean) as { label: string; href: string }[],
+        ...hoursLines.map((line) => ({ label: line, href: "", static: true })),
+      ].filter(Boolean) as { label: string; href: string; static?: boolean }[],
     },
     {
       title: t("footer.contact"),
@@ -71,11 +71,11 @@ export default function Footer() {
           href: `tel:${business.phone.replace(/\s+/g, "")}`,
         },
         business.email && { label: business.email, href: `mailto:${business.email}` },
-        business.social.instagram && { label: "Instagram", href: business.social.instagram },
-        business.social.facebook && { label: "Facebook", href: business.social.facebook },
-        business.social.whatsapp && { label: "WhatsApp", href: business.social.whatsapp },
-        business.social.tiktok && { label: "TikTok", href: business.social.tiktok },
-      ].filter(Boolean) as { label: string; href: string }[],
+        business.social.instagram && { label: "Instagram", href: business.social.instagram, external: true },
+        business.social.facebook && { label: "Facebook", href: business.social.facebook, external: true },
+        business.social.whatsapp && { label: "WhatsApp", href: business.social.whatsapp, external: true },
+        business.social.tiktok && { label: "TikTok", href: business.social.tiktok, external: true },
+      ].filter(Boolean) as { label: string; href: string; external?: boolean }[],
     },
   ];
 
@@ -153,17 +153,32 @@ export default function Footer() {
               {col.title}
             </p>
             <ul className="space-y-3">
-              {col.items.map((it) => (
-                <li key={it.label}>
-                  <Link
-                    href={it.href}
-                    className="text-sm transition-colors"
-                    style={{ color: "var(--muted)" }}
-                  >
-                    {it.label}
-                  </Link>
-                </li>
-              ))}
+              {col.items.map((it) => {
+                const item = it as { label: string; href: string; external?: boolean; static?: boolean };
+                if (item.static || !item.href) {
+                  return (
+                    <li key={item.label}>
+                      <span className="text-sm" style={{ color: "var(--muted)" }}>
+                        {item.label}
+                      </span>
+                    </li>
+                  );
+                }
+                const external = item.external || /^https?:/.test(item.href);
+                return (
+                  <li key={item.label}>
+                    <Link
+                      href={item.href}
+                      target={external ? "_blank" : undefined}
+                      rel={external ? "noopener noreferrer" : undefined}
+                      className="text-sm transition-colors"
+                      style={{ color: "var(--muted)" }}
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           </div>
         ))}

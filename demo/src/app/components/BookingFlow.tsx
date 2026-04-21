@@ -196,6 +196,9 @@ export default function BookingFlow() {
           <p className="mt-2 text-xs uppercase tracking-widest text-white/40">
             {t("book.success.ref")} · {done.ref}
           </p>
+          <p className="mx-auto mt-4 max-w-md text-sm text-white/60">
+            {t("book.success.email_sent")}
+          </p>
           <a
             href="/"
             className="mt-10 inline-block rounded-full bg-white px-6 py-3 text-sm font-medium text-black"
@@ -405,33 +408,48 @@ export default function BookingFlow() {
                 <h3 className="mb-6 font-serif text-2xl">{t("book.step.details")}</h3>
                 <div className="grid gap-4 sm:grid-cols-2">
                   <Field
+                    id="booking-name"
                     label={t("book.fld.name")}
                     value={name}
                     onChange={setName}
                     placeholder=""
+                    type="text"
+                    autoComplete="name"
+                    required
                   />
                   <Field
+                    id="booking-phone"
                     label={t("book.fld.phone")}
                     value={phone}
                     onChange={setPhone}
                     placeholder="+30 6900 000 000"
+                    type="tel"
+                    autoComplete="tel"
+                    inputMode="tel"
+                    required
                   />
                   <Field
+                    id="booking-email"
                     label={t("book.fld.email")}
                     value={email}
                     onChange={setEmail}
                     placeholder="you@example.com"
+                    type="email"
+                    autoComplete="email"
+                    inputMode="email"
                   />
                 </div>
                 <div className="mt-4">
-                  <label className="mb-2 block text-xs uppercase tracking-widest text-white/40">
+                  <label htmlFor="booking-notes" className="mb-2 block text-xs uppercase tracking-widest text-white/40">
                     {t("book.fld.notes")}
                   </label>
                   <textarea
+                    id="booking-notes"
                     rows={3}
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
                     placeholder={t("book.notes.ph")}
+                    maxLength={1000}
                     className="w-full resize-none rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/30 outline-none transition-colors focus:border-white/40"
                   />
                 </div>
@@ -446,7 +464,7 @@ export default function BookingFlow() {
                     padding: 0,
                     margin: -1,
                     overflow: "hidden",
-                    clip: "rect(0,0,0,0)",
+                    clipPath: "inset(50%)",
                     whiteSpace: "nowrap",
                     border: 0,
                   }}
@@ -591,22 +609,41 @@ function Stepper({ step }: { step: Step }) {
 }
 
 function Field({
+  id,
   label,
   value,
   onChange,
   placeholder,
+  type = "text",
+  autoComplete,
+  inputMode,
+  required,
+  maxLength = 200,
 }: {
+  id?: string;
   label: string;
   value: string;
   onChange: (v: string) => void;
   placeholder?: string;
+  type?: "text" | "email" | "tel";
+  autoComplete?: string;
+  inputMode?: "text" | "email" | "tel" | "numeric";
+  required?: boolean;
+  maxLength?: number;
 }) {
   return (
     <div>
-      <label className="mb-2 block text-xs uppercase tracking-widest text-white/40">
-        {label}
+      <label htmlFor={id} className="mb-2 block text-xs uppercase tracking-widest text-white/40">
+        {label}{required ? " *" : ""}
       </label>
       <input
+        id={id}
+        type={type}
+        autoComplete={autoComplete}
+        inputMode={inputMode}
+        required={required}
+        aria-required={required || undefined}
+        maxLength={maxLength}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}

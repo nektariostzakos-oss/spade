@@ -192,6 +192,7 @@ const STRINGS: Record<Lang, Strings> = {
     "book.success.title": "See you soon.",
     "book.success.line": "Booking confirmed for {date} at {time} with {barber}.",
     "book.success.ref": "Reference",
+    "book.success.email_sent": "A confirmation email is on its way — check your inbox (and spam folder).",
     "book.success.back": "Back to home",
     "book.sum.service": "Service",
     "book.sum.duration": "Duration",
@@ -404,6 +405,7 @@ const STRINGS: Record<Lang, Strings> = {
     "book.success.line":
       "Η κράτηση καταχωρήθηκε για {date} στις {time} με τον/την {barber}.",
     "book.success.ref": "Κωδικός",
+    "book.success.email_sent": "Ένα email επιβεβαίωσης είναι στον δρόμο — δες τα εισερχόμενα (και τα ανεπιθύμητα).",
     "book.success.back": "Επιστροφή στην αρχική",
     "book.sum.service": "Υπηρεσία",
     "book.sum.duration": "Διάρκεια",

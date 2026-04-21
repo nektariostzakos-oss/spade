@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { listProducts } from "../lib/products";
+import { listPages } from "../lib/pages";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://spade.gr";
 
@@ -14,6 +15,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/contact",
     "/book",
     "/cart",
+    "/blog",
   ].map((path) => ({
     url: `${SITE_URL}${path}`,
     lastModified: now,
@@ -34,5 +36,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // products file may be empty on first deploy; skip
   }
 
-  return [...staticPages, ...products];
+  let posts: MetadataRoute.Sitemap = [];
+  try {
+    const list = await listPages("post");
+    posts = list
+      .filter((p) => p.published)
+      .map((p) => ({
+        url: `${SITE_URL}/blog/${p.slug}`,
+        lastModified: p.updatedAt ? new Date(p.updatedAt) : now,
+        changeFrequency: "monthly" as const,
+        priority: 0.6,
+      }));
+  } catch {
+    // pages file may be empty on first deploy; skip
+  }
+
+  return [...staticPages, ...products, ...posts];
 }
