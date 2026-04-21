@@ -347,10 +347,9 @@ export default function ChatWidget() {
         transition={{ delay: 0.9, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         whileHover={{ scale: 1.06 }}
         whileTap={{ scale: 0.94 }}
-        className="fixed z-40 inline-flex h-14 w-14 items-center justify-center rounded-full"
+        className="fixed z-40 inline-flex h-14 w-14 items-center justify-center rounded-full bottom-[calc(5rem+env(safe-area-inset-bottom,0px))] sm:bottom-[calc(1.25rem+env(safe-area-inset-bottom,0px))]"
         style={{
           right: "1.25rem",
-          bottom: "calc(1.25rem + env(safe-area-inset-bottom, 0px))",
           background: "var(--gold)",
           color: "var(--background)",
           boxShadow: "0 18px 40px -10px color-mix(in srgb, var(--gold) 55%, transparent), 0 4px 12px rgba(0,0,0,0.25)",
@@ -389,10 +388,9 @@ export default function ChatWidget() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 12, scale: 0.98 }}
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed z-40 flex flex-col"
+            className="fixed z-40 flex flex-col bottom-[calc(9.25rem+env(safe-area-inset-bottom,0px))] sm:bottom-[calc(5.5rem+env(safe-area-inset-bottom,0px))]"
             style={{
               right: "1.25rem",
-              bottom: "calc(5.5rem + env(safe-area-inset-bottom, 0px))",
               width: "min(380px, calc(100vw - 2.5rem))",
               maxHeight: "min(580px, calc(100vh - 8rem))",
               background: "var(--background)",
