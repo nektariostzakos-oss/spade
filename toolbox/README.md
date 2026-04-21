@@ -3,8 +3,9 @@
 TikTok-style vertical video for the trades. Three-sided marketplace: pros post
 work, homeowners book jobs, apprentices discover careers.
 
-> **Status:** Phase 0 · Foundation. See [`CLAUDE_BRIEF.md`](./CLAUDE_BRIEF.md)
-> for the phased delivery plan.
+> **Status:** Phases 0–7 scaffolded. See [`CLAUDE_BRIEF.md`](./CLAUDE_BRIEF.md)
+> for the phased delivery plan and [`docs/RUNBOOK.md`](./docs/RUNBOOK.md)
+> for deploy + incident ops.
 
 ## Stack
 
@@ -101,3 +102,32 @@ Every env var is documented in `.env.example`. `turbo.json` declares the full
 
 See [`CLAUDE_BRIEF.md §6`](./CLAUDE_BRIEF.md). Work stops at the end of each
 phase for review before the next starts.
+
+- [x] **Phase 0** — Foundation (monorepo, TS strict, Prisma, tokens, Docker)
+- [x] **Phase 1** — Auth + pro onboarding + verification queue
+- [x] **Phase 2** — Mux upload + webhook + playback
+- [x] **Phase 3** — Vertical feed + likes + saves
+- [x] **Phase 4** — Jobs, AI lead matching, Stripe Connect fees
+- [x] **Phase 5** — Reviews, pro analytics, saved library, public profiles
+- [x] **Phase 6** — Mux Live + apprentice mode
+- [x] **Phase 7** — Rate limiting, CSP, Playwright E2E, k6, Sentry, RUNBOOK
+
+## Load testing
+
+```bash
+k6 run infra/k6/feed.js -e API_URL=https://api.toolbox.dev
+k6 run infra/k6/lead-routing.js -e API_URL=https://api.toolbox.dev -e CLERK_JWT=...
+```
+
+Targets: feed p95 < 200ms at 500 RPS sustained; lead-routing p95 < 800ms at 50
+concurrent VUs.
+
+## E2E tests
+
+```bash
+pnpm --filter @toolbox/web test:e2e:install
+pnpm --filter @toolbox/web test:e2e
+```
+
+Playwright runs the five critical mobile-first flows across iPhone Safari,
+Pixel Chrome, and Desktop Chrome profiles.

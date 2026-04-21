@@ -11,6 +11,7 @@ import {
 } from 'fastify-type-provider-zod';
 import { authPlugin } from './plugins/auth';
 import { errorPlugin } from './plugins/error';
+import { observabilityPlugin } from './plugins/observability';
 import { registerRoutes } from './routes';
 
 export async function buildServer(): Promise<FastifyInstance> {
@@ -24,7 +25,21 @@ export async function buildServer(): Promise<FastifyInstance> {
   app.setValidatorCompiler(validatorCompiler);
   app.setSerializerCompiler(serializerCompiler);
 
-  await app.register(helmet, { contentSecurityPolicy: false });
+  await app.register(observabilityPlugin);
+  await app.register(helmet, {
+    contentSecurityPolicy: {
+      useDefaults: true,
+      directives: {
+        'default-src': ["'self'"],
+        'img-src': ["'self'", 'data:', 'https:'],
+        'media-src': ["'self'", 'https://stream.mux.com', 'https://*.mux.com'],
+        'connect-src': ["'self'", 'https://*.mux.com', 'https://api.stripe.com'],
+        'frame-src': ['https://js.stripe.com'],
+      },
+    },
+    crossOriginResourcePolicy: { policy: 'cross-origin' },
+    crossOriginEmbedderPolicy: false,
+  });
   await app.register(cors, {
     origin: (process.env.CORS_ORIGINS ?? '*').split(','),
     credentials: true,
@@ -33,6 +48,7 @@ export async function buildServer(): Promise<FastifyInstance> {
   await app.register(rateLimit, {
     max: Number(process.env.RATE_LIMIT_MAX ?? 600),
     timeWindow: '1 minute',
+    allowList: ['127.0.0.1'],
   });
   await app.register(errorPlugin);
   await app.register(authPlugin);

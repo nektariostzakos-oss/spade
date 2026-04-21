@@ -8,7 +8,9 @@
     "start": "next start --port 3000",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "clean": "rm -rf .next .turbo *.tsbuildinfo"
+    "test:e2e": "playwright test",
+    "test:e2e:install": "playwright install --with-deps chromium webkit",
+    "clean": "rm -rf .next .turbo playwright-report test-results *.tsbuildinfo"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.4.0",
@@ -26,6 +28,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@playwright/test": "^1.49.0",
     "@tailwindcss/postcss": "^4.0.0-beta.4",
     "@toolbox/config": "workspace:*",
     "@types/node": "^22.9.0",
