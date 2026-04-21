@@ -131,7 +131,12 @@ export async function POST(req: NextRequest) {
 
     const booking = await createBooking(body);
     if (booking.email) {
-      sendBookingConfirmation(booking).catch(() => {});
+      sendBookingConfirmation(booking).catch((err) => {
+        console.error("[bookings] confirmation email failed", {
+          bookingId: booking.id,
+          error: err instanceof Error ? err.message : String(err),
+        });
+      });
     }
     return NextResponse.json({ booking }, { status: 201 });
   } catch (e) {

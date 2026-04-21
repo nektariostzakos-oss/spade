@@ -2,6 +2,7 @@ import LoginForm from "../../components/LoginForm";
 
 export const metadata = {
   title: "Sign in — Spade Admin",
+  robots: { index: false, follow: false, nocache: true },
 };
 
 export default function LoginPage() {

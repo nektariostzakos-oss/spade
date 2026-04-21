@@ -3,6 +3,8 @@ import CartView from "../components/CartView";
 
 export const metadata = {
   title: "Cart — Spade Barber",
+  alternates: { canonical: "/cart" },
+  robots: { index: false, follow: true },
 };
 
 export default function CartPage() {

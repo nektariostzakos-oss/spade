@@ -5,6 +5,7 @@ import InstallWizard from "../components/InstallWizard";
 export const metadata = {
   title: "Atelier · Install",
   description: "Pick a template, set up your business, and launch in under two minutes.",
+  robots: { index: false, follow: false, nocache: true },
 };
 
 export default async function SetupPage({
