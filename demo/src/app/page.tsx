@@ -12,8 +12,10 @@ import { getTakenSlots } from "../lib/bookings";
 import { getDailySlots } from "../lib/services";
 import { loadBusiness } from "../lib/settings";
 
-// Fresh slot data on every request — matches the AvailabilitySnapshot logic.
-export const dynamic = "force-dynamic";
+// Revalidate the home page every 60s. Fresh enough for the "next slot" badge
+// (slots move in 30-min increments), and avoids full SSR every request —
+// important on memory/CPU-constrained Hostinger shared plans.
+export const revalidate = 60;
 
 const DAY_KEYS = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"] as const;
 const DAY_EN = { sun: "Sun", mon: "Mon", tue: "Tue", wed: "Wed", thu: "Thu", fri: "Fri", sat: "Sat" } as const;
