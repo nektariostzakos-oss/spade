@@ -512,7 +512,7 @@ Generate every field in the output_config schema. Make the content feel like it 
   const response = await stream.finalMessage();
 
   if (response.stop_reason === "refusal") {
-    throw new Error("Claude refused to generate content for safety reasons.");
+    throw new Error("The copy generator declined this request.");
   }
   const textBlock = response.content.find((b) => b.type === "text");
   if (!textBlock || textBlock.type !== "text") {

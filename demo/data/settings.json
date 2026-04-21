@@ -8,22 +8,22 @@
     "secure": "tls"
   },
   "branding": {
-    "logoUrl": "",
-    "faviconUrl": "",
-    "wordmark": "BARBER",
-    "tagline_en": "Classic grooming",
-    "tagline_el": "Κλασική περιποίηση"
+    "logoUrl": "/brand/default-logo.svg",
+    "faviconUrl": "/favicon.ico",
+    "wordmark": "SPADE",
+    "tagline_en": "Barber · Loutraki",
+    "tagline_el": "Barber · Λουτράκι"
   },
   "business": {
-    "name": "Spade Barber",
-    "streetAddress": "El. Venizelou 37",
-    "city": "Loutraki",
-    "postalCode": "20300",
-    "country": "GR",
-    "phone": "",
-    "email": "",
-    "latitude": 37.977,
-    "longitude": 22.974,
+    "name": "MINDCROLLERS LLC",
+    "streetAddress": "30 N GOULD ST STE R",
+    "city": "SHERIDAN",
+    "postalCode": "82801",
+    "country": "United States",
+    "phone": "+306931151063",
+    "email": "hello@mindcrollersllc.com",
+    "latitude": null,
+    "longitude": null,
     "hours": [
       {
         "day": "mon",
@@ -63,8 +63,8 @@
       },
       {
         "day": "sun",
-        "open": "09:00",
-        "close": "21:00",
+        "open": "00:00",
+        "close": "00:00",
         "closed": true
       }
     ],
@@ -151,7 +151,7 @@
     "gtm": "",
     "metaPixel": ""
   },
-  "onboarded": false,
+  "onboarded": true,
   "theme": {
     "background": "#0a0806",
     "foreground": "#f5efe6",

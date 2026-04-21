@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="45%" r="80%"><stop offset="0%" stop-color="#f9f0df"/><stop offset="100%" stop-color="#d7c5a4"/></radialGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#e8e0c8"/></linearGradient>
+    <linearGradient id="wine" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#6a1c1c"/><stop offset="100%" stop-color="#3a0c0c"/></linearGradient>
+    <linearGradient id="bottle" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2a3a28"/><stop offset="100%" stop-color="#0c1808"/></linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <rect x="0" y="510" width="800" height="90" fill="#c7a87a" opacity="0.22"/>
+  <!-- bottle left -->
+  <g transform="translate(260 520)">
+    <rect x="-44" y="-300" width="88" height="280" rx="6" fill="url(#bottle)"/>
+    <path d="M-44 -300 Q-44 -340 -16 -350 L16 -350 Q44 -340 44 -300 Z" fill="url(#bottle)"/>
+    <rect x="-14" y="-372" width="28" height="26" fill="#6a1c1c"/>
+    <rect x="-14" y="-372" width="28" height="6" fill="#3a0c0c"/>
+    <!-- label -->
+    <rect x="-40" y="-210" width="80" height="110" fill="#f4e8cf" stroke="#c9b88f"/>
+    <text x="0" y="-175" text-anchor="middle" font-family="Georgia, serif" font-size="10" fill="#6a1c1c" letter-spacing="2">VERDE</text>
+    <line x1="-28" y1="-162" x2="28" y2="-162" stroke="#c9b88f"/>
+    <text x="0" y="-140" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="#3a0c0c" letter-spacing="1" font-style="italic">Chianti</text>
+    <text x="0" y="-118" text-anchor="middle" font-family="Georgia, serif" font-size="7" fill="#6a4a2a" letter-spacing="2">DOCG · 2019</text>
+  </g>
+  <!-- wine glass right -->
+  <g transform="translate(540 520)">
+    <!-- base -->
+    <ellipse cx="0" cy="0" rx="60" ry="8" fill="#c9b88f" opacity="0.6"/>
+    <!-- stem -->
+    <rect x="-3" y="-160" width="6" height="160" fill="url(#glass)"/>
+    <!-- bowl -->
+    <path d="M-85 -330 Q-85 -180 0 -160 Q85 -180 85 -330 Z" fill="url(#glass)" stroke="#c9b88f" stroke-width="1" opacity="0.85"/>
+    <!-- wine fill -->
+    <path d="M-75 -260 Q-78 -180 0 -168 Q78 -180 75 -260 Z" fill="url(#wine)" opacity="0.9"/>
+    <!-- highlight -->
+    <ellipse cx="-40" cy="-280" rx="16" ry="28" fill="#ffffff" opacity="0.15" transform="rotate(-20 -40 -280)"/>
+  </g>
+  <text x="400" y="90" text-anchor="middle" font-family="Georgia, serif" font-size="14" fill="#2b2419" letter-spacing="8">VINI · WINE LIST</text>
+</svg>

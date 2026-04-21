@@ -541,22 +541,22 @@ export default function SettingsPanel() {
     {tab === "business" && (
     <>
     <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur">
-      <h2 className="mb-1 font-serif text-xl">AI content generator</h2>
+      <h2 className="mb-1 font-serif text-xl">Copy generator</h2>
       <p className="mb-4 text-sm text-white/55">
         Regenerate hero, services, FAQ, CTA, about, footer, and per-page SEO in
-        both languages. Based on your business info + description + tone. Claude
-        writes unique copy tailored to your brand.
+        both languages — tailored to your business info, description, and tone.
+        Optional. Requires a provider key.
       </p>
 
       <label className="block">
         <span className="mb-2 block text-xs uppercase tracking-widest text-white/40">
-          Anthropic API key (starts with sk-ant-)
+          Provider key
         </span>
         <input
           type="password"
           value={aiApiKey}
           onChange={(e) => setAiApiKey(e.target.value)}
-          placeholder="sk-ant-api03-..."
+          placeholder="API key"
           className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-white/30 outline-none focus:border-white/40"
         />
       </label>

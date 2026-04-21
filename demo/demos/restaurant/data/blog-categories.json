@@ -1,0 +1,8 @@
+[
+  { "id": "cat_recipes", "name": "Recipes", "slug": "recipes", "order": 0 },
+  { "id": "cat_wine", "name": "Wine notes", "slug": "wine-notes", "order": 1 },
+  { "id": "cat_kitchen", "name": "Kitchen stories", "slug": "kitchen-stories", "order": 2 },
+  { "id": "cat_seasonal", "name": "Seasonal", "slug": "seasonal", "order": 3 },
+  { "id": "cat_events", "name": "Events", "slug": "events", "order": 4 },
+  { "id": "cat_news", "name": "News", "slug": "news", "order": 5 }
+]

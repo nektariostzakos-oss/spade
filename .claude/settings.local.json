@@ -49,7 +49,21 @@
       "Bash(git -C \"C:/Users/nekta/Desktop/coworker/code\" remote -v)",
       "Bash(grep -E \"secret|MEMORY|CLAUDE\\\\.md$|\\\\.env\")",
       "Bash(xargs grep *)",
-      "Bash(git commit *)"
+      "Bash(git commit *)",
+      "Bash(git remote *)",
+      "Bash(git push *)",
+      "Bash(git pull *)",
+      "Bash(git checkout *)",
+      "Bash(git -C \"C:/Users/nekta/Desktop/coworker/code\" add spade-nextjs.zip)",
+      "Bash(git -C \"C:/Users/nekta/Desktop/coworker/code\" commit --no-edit)",
+      "Bash(python -c \"import zipfile; z=zipfile.ZipFile\\('C:/Users/nekta/Desktop/coworker/code/spade-nextjs.zip'\\); names=z.namelist\\(\\); print\\([n for n in names if 'demos/' in n or 'menu/' in n or 'restaurant' in n][:25]\\)\")",
+      "Bash(python -c \"import json,sys; d=json.load\\(sys.stdin\\); [print\\(f\\\\\"{t['id']:12s} {t['name']:20s} {t['industry']}\\\\\"\\) for t in d['templates']]\")",
+      "Bash(git -C C:/Users/nekta/Desktop/coworker/code commit -m 'feat: whitelabel to Mindscrollers LLC + add Verde Cucina restaurant template *)",
+      "Bash(git -C \"C:/Users/nekta/Desktop/coworker/code\" push)",
+      "Bash(git -C \"C:/Users/nekta/Desktop/coworker/code\" add spade-nextjs.zip spade-nextjs-clean.zip spade-nextjs.tar.gz spade-nextjs-clean.tar.gz)",
+      "Bash(git -C \"C:/Users/nekta/Desktop/coworker/code\" rebase --continue)",
+      "Bash(git -C \"C:/Users/nekta/Desktop/coworker/code\" -c core.editor=true rebase --continue)",
+      "Bash(git -C \"C:/Users/nekta/Desktop/coworker/code\" push origin HEAD:main)"
     ]
   }
 }

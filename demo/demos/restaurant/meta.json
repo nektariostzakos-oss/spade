@@ -1,0 +1,44 @@
+{
+  "id": "restaurant",
+  "name": "Verde Cucina",
+  "industry": "Italian restaurant",
+  "tagline": "Slow food · family table · since 1962.",
+  "description": "A warm, paper-cream Italian restaurant template. Menu across antipasti, primi, secondi, dolci, and a full wine list. Reservation-ready, bilingual, with a recipe-driven blog and seasonal storytelling.",
+  "cover": "/demos/restaurant/cover.svg",
+  "accentColor": "#6b7a42",
+  "theme": {
+    "background": "#f5ede0",
+    "foreground": "#2b2419",
+    "primary": "#6b7a42",
+    "primaryAccent": "#8a9a5a",
+    "surface": "rgba(0, 0, 0, 0.03)",
+    "surfaceStrong": "rgba(0, 0, 0, 0.07)",
+    "border": "rgba(0, 0, 0, 0.1)",
+    "borderStrong": "rgba(0, 0, 0, 0.2)",
+    "muted": "rgba(43, 36, 25, 0.7)",
+    "muted2": "rgba(43, 36, 25, 0.5)"
+  },
+  "typography": {
+    "headingFont": "fraunces",
+    "bodyFont": "manrope"
+  },
+  "branding": {
+    "wordmark": "VERDE",
+    "tagline_en": "Cucina italiana · since 1962",
+    "tagline_el": "Ιταλική κουζίνα · από το 1962"
+  },
+  "features": [
+    "Course-based menu (5 sections, 15 dishes)",
+    "Full wine list with regional pairings",
+    "Reservations + party bookings",
+    "Bilingual EN/EL",
+    "6 blog posts across recipes, wine, kitchen stories",
+    "Warm cream-on-olive palette"
+  ],
+  "stats": {
+    "services": 0,
+    "products": 15,
+    "posts": 6,
+    "categories": 6
+  }
+}

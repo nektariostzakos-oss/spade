@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="45%" r="80%"><stop offset="0%" stop-color="#f9f0df"/><stop offset="100%" stop-color="#d7c5a4"/></radialGradient>
+    <linearGradient id="plate" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#e3d6bc"/></linearGradient>
+    <linearGradient id="pasta" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f0d080"/><stop offset="100%" stop-color="#d4a040"/></linearGradient>
+    <linearGradient id="sauce" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#d97644"/><stop offset="100%" stop-color="#a03820"/></linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <rect x="0" y="480" width="800" height="120" fill="#c7a87a" opacity="0.18"/>
+  <ellipse cx="400" cy="350" rx="260" ry="180" fill="url(#plate)" stroke="#c9b88f" stroke-width="1.5"/>
+  <ellipse cx="400" cy="342" rx="210" ry="145" fill="none" stroke="#d9c9a2" stroke-width="0.8"/>
+  <!-- nest of pasta -->
+  <g transform="translate(400 340)">
+    <ellipse cx="0" cy="0" rx="180" ry="80" fill="url(#sauce)" opacity="0.9"/>
+    <g stroke="url(#pasta)" stroke-width="5" fill="none" stroke-linecap="round">
+      <path d="M-150 -30 Q-100 10 -20 -20 Q40 -40 100 -10 Q150 20 170 -20"/>
+      <path d="M-160 -10 Q-110 30 -30 0 Q30 -20 90 10 Q140 30 160 0"/>
+      <path d="M-150 20 Q-100 50 -20 30 Q40 10 100 40 Q150 60 170 30"/>
+      <path d="M-140 40 Q-90 70 -10 50 Q50 30 110 60 Q150 75 160 50"/>
+      <path d="M-130 -50 Q-80 -10 0 -40 Q60 -55 120 -30"/>
+    </g>
+    <!-- parmesan flakes -->
+    <polygon points="-60,-60 -40,-55 -50,-42" fill="#f5e5a8"/>
+    <polygon points="70,-55 90,-48 80,-35" fill="#f5e5a8"/>
+    <polygon points="20,70 40,75 30,88" fill="#f5e5a8"/>
+    <!-- basil -->
+    <ellipse cx="0" cy="-50" rx="18" ry="6" fill="#6b7a42" transform="rotate(-10 0 -50)"/>
+  </g>
+  <!-- fork -->
+  <g transform="translate(620 240) rotate(30)">
+    <rect x="-3" y="-60" width="6" height="120" fill="#c9b88f"/>
+    <rect x="-12" y="-80" width="4" height="30" fill="#c9b88f"/>
+    <rect x="-4" y="-80" width="4" height="30" fill="#c9b88f"/>
+    <rect x="4" y="-80" width="4" height="30" fill="#c9b88f"/>
+    <rect x="12" y="-80" width="4" height="30" fill="#c9b88f" style="transform:translateX(-4px)"/>
+  </g>
+  <text x="400" y="90" text-anchor="middle" font-family="Georgia, serif" font-size="14" fill="#2b2419" letter-spacing="8">PRIMI · FIRST COURSE</text>
+</svg>

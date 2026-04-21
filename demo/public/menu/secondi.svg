@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="45%" r="80%"><stop offset="0%" stop-color="#f9f0df"/><stop offset="100%" stop-color="#d7c5a4"/></radialGradient>
+    <linearGradient id="plate" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#e3d6bc"/></linearGradient>
+    <radialGradient id="meat" cx="40%" cy="35%" r="70%"><stop offset="0%" stop-color="#9c4428"/><stop offset="60%" stop-color="#6e2a14"/><stop offset="100%" stop-color="#3a1508"/></radialGradient>
+    <linearGradient id="char" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3a1508"/><stop offset="100%" stop-color="#1a0802"/></linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <rect x="0" y="480" width="800" height="120" fill="#c7a87a" opacity="0.18"/>
+  <ellipse cx="400" cy="350" rx="280" ry="190" fill="url(#plate)" stroke="#c9b88f" stroke-width="1.5"/>
+  <ellipse cx="400" cy="342" rx="230" ry="155" fill="none" stroke="#d9c9a2" stroke-width="0.8"/>
+  <!-- tagliata slices: 5 angled rectangles with seared edges -->
+  <g transform="translate(400 350)">
+    <g transform="rotate(-8)">
+      <rect x="-160" y="-40" width="320" height="80" rx="6" fill="url(#meat)"/>
+      <rect x="-160" y="-42" width="320" height="6" fill="url(#char)"/>
+      <rect x="-160" y="36" width="320" height="6" fill="url(#char)"/>
+      <!-- sear marks between slices -->
+      <line x1="-96" y1="-40" x2="-96" y2="40" stroke="#1a0802" stroke-width="3"/>
+      <line x1="-32" y1="-40" x2="-32" y2="40" stroke="#1a0802" stroke-width="3"/>
+      <line x1="32" y1="-40" x2="32" y2="40" stroke="#1a0802" stroke-width="3"/>
+      <line x1="96" y1="-40" x2="96" y2="40" stroke="#1a0802" stroke-width="3"/>
+      <!-- rosemary sprig -->
+      <path d="M-50 -60 Q-20 -80 30 -70" stroke="#4a5630" stroke-width="2" fill="none"/>
+      <g fill="#6b7a42">
+        <ellipse cx="-45" cy="-62" rx="4" ry="1.5" transform="rotate(70 -45 -62)"/>
+        <ellipse cx="-30" cy="-68" rx="4" ry="1.5" transform="rotate(70 -30 -68)"/>
+        <ellipse cx="-10" cy="-73" rx="4" ry="1.5" transform="rotate(70 -10 -73)"/>
+        <ellipse cx="10" cy="-74" rx="4" ry="1.5" transform="rotate(70 10 -74)"/>
+      </g>
+    </g>
+    <!-- flake of salt -->
+    <circle cx="-20" cy="-50" r="2.5" fill="#ffffff"/>
+    <circle cx="40" cy="-45" r="2.2" fill="#ffffff"/>
+  </g>
+  <text x="400" y="90" text-anchor="middle" font-family="Georgia, serif" font-size="14" fill="#2b2419" letter-spacing="8">SECONDI · MAIN</text>
+</svg>

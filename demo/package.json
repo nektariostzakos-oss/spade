@@ -1,7 +1,10 @@
 {
-  "name": "demo",
-  "version": "0.1.0",
+  "name": "mindscrollers-studio",
+  "version": "1.0.0",
   "private": true,
+  "description": "Mindscrollers Studio — premium Next.js website template system with a first-install wizard.",
+  "author": "Mindscrollers LLC",
+  "license": "UNLICENSED",
   "engines": {
     "node": ">=20.9.0"
   },

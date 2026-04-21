@@ -74,7 +74,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // 2. Call Claude
+  // 2. Generate brand copy
   let bundle;
   try {
     bundle = await generateBrandContent({

@@ -23,8 +23,6 @@ INCLUDE_FILES = [
     "next-env.d.ts",
     "DEPLOY.md",
     "README.md",
-    "AGENTS.md",
-    "CLAUDE.md",
 ]
 
 # Blank defaults for a clean-install data folder.

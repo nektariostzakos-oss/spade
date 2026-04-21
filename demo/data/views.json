@@ -1,1 +1,11 @@
-[]
+[
+  {
+    "path": "/",
+    "ref": "http://localhost:3000/admin",
+    "lang": "el",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo7zsfws_7bzi",
+    "createdAt": "2026-04-21T02:16:02.956Z"
+  }
+]

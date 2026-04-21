@@ -1,7 +1,10 @@
-# Atelier · Next.js template installer
+# Atelier · Next.js Template System
+
+**© Mindscrollers LLC · Proprietary. All rights reserved.**
 
 Premium multi-industry Next.js template system with a first-install wizard.
-Ships two downloadable ZIPs at the repo root, kept fresh on every push:
+Designed, built, and maintained by **Mindscrollers LLC**.
+Ships downloadable ZIPs at the repo root, kept fresh on every push:
 
 | File | When to use |
 |---|---|
