@@ -1,0 +1,86 @@
+import { promises as fs } from "fs";
+import path from "path";
+import { SERVICES, type LocalizedService } from "./services";
+
+const FILE = path.join(process.cwd(), "data", "services.json");
+
+export type CustomService = {
+  id: string;
+  tkey: string;
+  name: string;
+  name_el?: string;
+  desc: string;
+  desc_el?: string;
+  duration: number;
+  price: number;
+  category?: string;
+  enabled: boolean;
+  order: number;
+};
+
+async function readAll(): Promise<CustomService[] | null> {
+  try {
+    const parsed = JSON.parse(await fs.readFile(FILE, "utf-8"));
+    return Array.isArray(parsed) ? (parsed as CustomService[]) : null;
+  } catch {
+    return null;
+  }
+}
+async function writeAll(items: CustomService[]) {
+  await fs.mkdir(path.dirname(FILE), { recursive: true });
+  await fs.writeFile(FILE, JSON.stringify(items, null, 2), "utf-8");
+}
+
+export async function getActiveServices(): Promise<LocalizedService[]> {
+  const custom = await readAll();
+  if (custom && custom.length > 0) {
+    return custom
+      .filter((s) => s.enabled)
+      .sort((a, b) => a.order - b.order)
+      .map((s) => ({
+        id: s.id,
+        tkey: s.tkey || `svc.${s.id}`,
+        name: s.name,
+        duration: s.duration,
+        price: s.price,
+        desc: s.desc,
+      }));
+  }
+  return SERVICES;
+}
+
+export async function listAdminServices(): Promise<CustomService[]> {
+  const custom = await readAll();
+  if (custom) return custom.sort((a, b) => a.order - b.order);
+  return SERVICES.map((s, i) => ({
+    id: s.id,
+    tkey: s.tkey,
+    name: s.name,
+    desc: s.desc,
+    duration: s.duration,
+    price: s.price,
+    enabled: true,
+    order: i,
+  }));
+}
+
+export async function saveServices(items: CustomService[]): Promise<CustomService[]> {
+  await writeAll(items);
+  return items;
+}
+
+export async function upsertService(item: CustomService): Promise<CustomService> {
+  const all = await listAdminServices();
+  const idx = all.findIndex((s) => s.id === item.id);
+  if (idx >= 0) all[idx] = item;
+  else all.push(item);
+  await writeAll(all);
+  return item;
+}
+
+export async function deleteService(id: string): Promise<boolean> {
+  const all = await listAdminServices();
+  const next = all.filter((s) => s.id !== id);
+  await writeAll(next);
+  return true;
+}

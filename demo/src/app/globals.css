@@ -1,0 +1,259 @@
+@import "tailwindcss";
+
+/* === Theme tokens === */
+:root {
+  /* Dark (default) */
+  --background: #0a0806;
+  --foreground: #f5efe6;
+  --gold: #c9a961;
+  --gold-2: #d4b878;
+  --surface: rgba(255, 255, 255, 0.03);
+  --surface-strong: rgba(255, 255, 255, 0.06);
+  --border: rgba(255, 255, 255, 0.1);
+  --border-strong: rgba(255, 255, 255, 0.18);
+  --muted: rgba(245, 239, 230, 0.65);
+  --muted-2: rgba(245, 239, 230, 0.45);
+  --nav-bg: rgba(10, 8, 6, 0.85);
+  --hero-overlay-from: rgba(10, 8, 6, 0.25);
+  --hero-overlay-mid: rgba(10, 8, 6, 0.35);
+  --hero-overlay-to: #0a0806;
+  --shadow: rgba(0, 0, 0, 0.4);
+}
+
+html.light {
+  --background: #f7f3ec;
+  --foreground: #1a1410;
+  --gold: #8a6f2e;
+  --gold-2: #a98741;
+  --surface: rgba(0, 0, 0, 0.03);
+  --surface-strong: rgba(0, 0, 0, 0.06);
+  --border: rgba(0, 0, 0, 0.1);
+  --border-strong: rgba(0, 0, 0, 0.18);
+  --muted: rgba(26, 20, 16, 0.65);
+  --muted-2: rgba(26, 20, 16, 0.45);
+  --nav-bg: rgba(247, 243, 236, 0.85);
+  --hero-overlay-from: rgba(247, 243, 236, 0.6);
+  --hero-overlay-mid: rgba(247, 243, 236, 0.4);
+  --hero-overlay-to: #f7f3ec;
+  --shadow: rgba(0, 0, 0, 0.12);
+  color-scheme: light;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-gold: var(--gold);
+  --color-gold-2: var(--gold-2);
+  --color-spade-bg: var(--background);
+  --color-spade-fg: var(--foreground);
+  --color-spade-gold: var(--gold);
+  --color-spade-surface: var(--surface);
+  --color-spade-border: var(--border);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+  background: var(--background);
+  transition: background-color 0.25s ease;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+select option {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+::selection {
+  background: rgba(201, 169, 97, 0.4);
+  color: white;
+}
+/* === Inline edit pencil + side panel === */
+.spade-edit-pencil {
+  position: absolute;
+  top: 80px;
+  right: 16px;
+  z-index: 30;
+  background: var(--gold);
+  color: #000;
+  border: 0;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 8px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  box-shadow: 0 8px 24px var(--shadow);
+}
+section:hover > .spade-edit-pencil,
+.spade-editable:hover > .spade-edit-pencil {
+  opacity: 1;
+  transform: translateY(0);
+}
+.spade-edit-pencil:hover {
+  background: var(--gold-2);
+}
+
+.spade-editor-panel {
+  position: fixed;
+  top: 0; right: 0; bottom: 0;
+  width: 420px; max-width: 100vw;
+  z-index: 100;
+  background: var(--background);
+  border-left: 1px solid var(--border);
+  display: flex; flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  box-shadow: -8px 0 32px var(--shadow);
+}
+.spade-editor-panel.is-open { transform: translateX(0); }
+.spade-editor-panel__head {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.spade-editor-panel__title {
+  font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--gold); margin: 0;
+}
+.spade-editor-panel__body {
+  flex: 1; overflow-y: auto; padding: 20px;
+}
+.spade-editor-panel__foot {
+  padding: 14px 20px;
+  border-top: 1px solid var(--border);
+  display: flex; gap: 8px; justify-content: flex-end;
+}
+
+html.light ::selection {
+  background: rgba(138, 111, 46, 0.25);
+  color: var(--foreground);
+}
+
+/* === Light-mode overrides for hard-coded utility colors used across the app ===
+   The components were originally written for a dark-only design with classes
+   like text-white/70, bg-white/5, border-white/10, and hex literals like
+   bg-[#0a0806] / text-[#c9a961]. Rather than rewriting every single component,
+   we flip those tokens here when .light is on <html>. */
+html.light .text-white { color: #1a1410 !important; }
+html.light .text-white\/95 { color: rgba(26,20,16,0.95) !important; }
+html.light .text-white\/90 { color: rgba(26,20,16,0.9) !important; }
+html.light .text-white\/85 { color: rgba(26,20,16,0.85) !important; }
+html.light .text-white\/80 { color: rgba(26,20,16,0.8) !important; }
+html.light .text-white\/70 { color: rgba(26,20,16,0.7) !important; }
+html.light .text-white\/65 { color: rgba(26,20,16,0.7) !important; }
+html.light .text-white\/60 { color: rgba(26,20,16,0.65) !important; }
+html.light .text-white\/55 { color: rgba(26,20,16,0.65) !important; }
+html.light .text-white\/50 { color: rgba(26,20,16,0.55) !important; }
+html.light .text-white\/45 { color: rgba(26,20,16,0.55) !important; }
+html.light .text-white\/40 { color: rgba(26,20,16,0.5) !important; }
+html.light .text-white\/30 { color: rgba(26,20,16,0.4) !important; }
+html.light .text-white\/25 { color: rgba(26,20,16,0.35) !important; }
+
+html.light .placeholder-white\/30::placeholder { color: rgba(26,20,16,0.4) !important; }
+
+html.light .bg-white { background-color: #ffffff !important; }
+html.light .bg-white\/10 { background-color: rgba(0,0,0,0.06) !important; }
+html.light .bg-white\/5 { background-color: rgba(0,0,0,0.04) !important; }
+html.light .bg-white\/\[0\.06\] { background-color: rgba(0,0,0,0.06) !important; }
+html.light .bg-white\/\[0\.04\] { background-color: rgba(0,0,0,0.04) !important; }
+html.light .bg-white\/\[0\.03\] { background-color: rgba(0,0,0,0.04) !important; }
+html.light .bg-white\/\[0\.02\] { background-color: rgba(0,0,0,0.025) !important; }
+html.light .bg-white\/\[0\.01\] { background-color: rgba(0,0,0,0.015) !important; }
+
+html.light .border-white { border-color: rgba(0,0,0,0.5) !important; }
+html.light .border-white\/30 { border-color: rgba(0,0,0,0.18) !important; }
+html.light .border-white\/20 { border-color: rgba(0,0,0,0.14) !important; }
+html.light .border-white\/15 { border-color: rgba(0,0,0,0.12) !important; }
+html.light .border-white\/10 { border-color: rgba(0,0,0,0.1) !important; }
+html.light .border-white\/5 { border-color: rgba(0,0,0,0.06) !important; }
+
+html.light .divide-white\/10 > * + * { border-color: rgba(0,0,0,0.1) !important; }
+
+html.light .from-\[\#0a0806\] { --tw-gradient-from: #f7f3ec !important; }
+html.light .via-\[\#0a0806\]\/70 { --tw-gradient-via: rgba(247,243,236,0.7) !important; }
+html.light .via-\[\#0a0806\]\/30 { --tw-gradient-via: rgba(247,243,236,0.3) !important; }
+html.light .to-\[\#0a0806\] { --tw-gradient-to: #f7f3ec !important; }
+html.light .from-\[\#0a0806\]\/90 { --tw-gradient-from: rgba(247,243,236,0.9) !important; }
+html.light .via-\[\#0a0806\]\/20 { --tw-gradient-via: rgba(247,243,236,0.2) !important; }
+html.light .from-\[\#0a0806\]\/95 { --tw-gradient-from: rgba(247,243,236,0.95) !important; }
+html.light .from-black\/80 { --tw-gradient-from: rgba(0,0,0,0.4) !important; }
+html.light .from-black\/60 { --tw-gradient-from: rgba(0,0,0,0.3) !important; }
+html.light .from-black\/40 { --tw-gradient-from: rgba(0,0,0,0.2) !important; }
+
+html.light .bg-\[\#0a0806\] { background-color: #f7f3ec !important; }
+html.light .bg-\[\#0a0806\]\/95 { background-color: rgba(247,243,236,0.95) !important; }
+html.light .bg-\[\#0a0806\]\/90 { background-color: rgba(247,243,236,0.9) !important; }
+html.light .bg-\[\#0a0806\]\/85 { background-color: rgba(247,243,236,0.85) !important; }
+html.light .bg-\[\#0a0806\]\/70 { background-color: rgba(247,243,236,0.85) !important; }
+html.light .text-\[\#f5efe6\] { color: #1a1410 !important; }
+
+/* Gold links / accents stay gold but slightly darker for contrast */
+html.light .text-\[\#c9a961\] { color: #8a6f2e !important; }
+html.light .bg-\[\#c9a961\] { background-color: #8a6f2e !important; }
+html.light .bg-\[\#c9a961\]\/10 { background-color: rgba(138,111,46,0.1) !important; }
+html.light .bg-\[\#c9a961\]\/5 { background-color: rgba(138,111,46,0.06) !important; }
+html.light .border-\[\#c9a961\] { border-color: #8a6f2e !important; }
+html.light .border-\[\#c9a961\]\/40 { border-color: rgba(138,111,46,0.4) !important; }
+html.light .border-\[\#c9a961\]\/30 { border-color: rgba(138,111,46,0.3) !important; }
+html.light .border-\[\#c9a961\]\/20 { border-color: rgba(138,111,46,0.2) !important; }
+html.light .hover\:bg-\[\#d4b878\]:hover { background-color: #a98741 !important; }
+html.light .hover\:text-\[\#d4b878\]:hover { color: #a98741 !important; }
+
+/* Indigo / fuchsia decorative blurs in page headers — soften in light */
+html.light .bg-indigo-600\/20 { background-color: rgba(99,102,241,0.1) !important; }
+html.light .bg-fuchsia-600\/15 { background-color: rgba(217,70,239,0.08) !important; }
+html.light .bg-indigo-600\/15 { background-color: rgba(99,102,241,0.08) !important; }
+html.light .bg-cyan-500\/15 { background-color: rgba(6,182,212,0.08) !important; }
+
+/* Headlines stay solid black in light mode (override gradient text + bg-clip) */
+html.light h1,
+html.light h2,
+html.light h3,
+html.light h4,
+html.light .font-serif {
+  color: #1a1410;
+}
+html.light .bg-clip-text.text-transparent {
+  -webkit-background-clip: initial !important;
+  background-clip: initial !important;
+  -webkit-text-fill-color: #1a1410 !important;
+  color: #1a1410 !important;
+  background-image: none !important;
+}
+/* Gold accent words inside Hero h1 should stay gold, not go black */
+html.light h1 .text-\[\#c9a961\],
+html.light h1 [style*="color: var(--gold)"],
+html.light .font-serif .text-\[\#c9a961\] {
+  color: #8a6f2e !important;
+}
+
+/* Booking widget surfaces */
+html.light .bg-\[\#c9a961\]\/10 { background-color: rgba(138,111,46,0.08) !important; }
+html.light .text-emerald-300 { color: #047857 !important; }
+html.light .text-emerald-200 { color: #065f46 !important; }
+html.light .text-amber-300 { color: #b45309 !important; }
+html.light .text-amber-200 { color: #78350f !important; }
+html.light .text-amber-300\/80 { color: #b45309 !important; }
+html.light .text-fuchsia-400 { color: #a21caf !important; }
+html.light .text-red-300 { color: #b91c1c !important; }
+html.light .text-fca5a5 { color: #b91c1c !important; }
+html.light .bg-emerald-500\/10 { background-color: rgba(16,185,129,0.12) !important; }
+html.light .bg-amber-500\/10 { background-color: rgba(245,158,11,0.12) !important; }
+html.light .bg-red-500\/10 { background-color: rgba(239,68,68,0.1) !important; }
+html.light .border-emerald-400\/40 { border-color: rgba(16,185,129,0.5) !important; }
+html.light .border-amber-400\/40 { border-color: rgba(245,158,11,0.5) !important; }
+html.light .border-red-400\/40 { border-color: rgba(239,68,68,0.5) !important; }

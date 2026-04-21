@@ -1,0 +1,32 @@
+# Node / Next.js
+demo/node_modules/
+demo/.next/
+demo/.turbo/
+demo/out/
+demo/tsconfig.tsbuildinfo
+demo/next-env.d.ts
+
+# Logs / OS junk
+*.log
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Staging folders used by build-zip.py
+.zip-stage-demo/
+.zip-stage-clean/
+
+# Uploaded media (per-deployment, not source-controlled)
+demo/public/uploads/
+
+# Runtime data (keep seeded demo data; ignore obvious local overrides)
+demo/data/secret.json
+
+# Old artefacts
+spade-theme/
+spade-theme.zip
+spade-preview.html
+TEMPLATE_PROMPT.md

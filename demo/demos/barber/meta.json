@@ -1,0 +1,44 @@
+{
+  "id": "barber",
+  "name": "Spade Barber",
+  "industry": "Barber shop",
+  "tagline": "Classic grooming, modern rhythm.",
+  "description": "A premium barber shop template with hair services, beard care, a grooming product shop, gallery, gift vouchers and a bilingual blog. Dark gold-on-black aesthetic, tuned for conversion.",
+  "cover": "/demos/barber/cover.svg?v=2",
+  "accentColor": "#c9a961",
+  "theme": {
+    "background": "#0a0806",
+    "foreground": "#f5efe6",
+    "primary": "#c9a961",
+    "primaryAccent": "#d4b878",
+    "surface": "rgba(255, 255, 255, 0.03)",
+    "surfaceStrong": "rgba(255, 255, 255, 0.06)",
+    "border": "rgba(255, 255, 255, 0.1)",
+    "borderStrong": "rgba(255, 255, 255, 0.18)",
+    "muted": "rgba(245, 239, 230, 0.65)",
+    "muted2": "rgba(245, 239, 230, 0.45)"
+  },
+  "typography": {
+    "headingFont": "playfair",
+    "bodyFont": "geist"
+  },
+  "branding": {
+    "wordmark": "SPADE",
+    "tagline_en": "Barber · Loutraki",
+    "tagline_el": "Barber · Λουτράκι"
+  },
+  "features": [
+    "Online booking with slot conflicts",
+    "Products shop · 5 categories, 15 items",
+    "Gift vouchers (€30 / €50 / €100)",
+    "Bilingual EN/EL",
+    "6 demo blog posts across 6 categories",
+    "Dark gold-on-black theme"
+  ],
+  "stats": {
+    "services": 8,
+    "products": 15,
+    "posts": 6,
+    "categories": 6
+  }
+}
