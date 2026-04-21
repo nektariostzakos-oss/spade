@@ -143,27 +143,18 @@ export default function ChatWidget() {
     } catch {}
   }, [messages, voiceOn, ttsSupported, lang, voices]);
 
-  async function startListening() {
+  function startListening() {
     if (!recogSupported || listening) return;
     // Require secure context (HTTPS or localhost) — mic is blocked otherwise
     if (typeof window !== "undefined" && !window.isSecureContext) {
       setErr(lang === "el"
-        ? "Η φωνητική εισαγωγή απαιτεί ασφαλή σύνδεση (HTTPS)."
-        : "Voice input requires a secure connection (HTTPS).");
+        ? "Η φωνητική εισαγωγή απαιτεί ασφαλή σύνδεση (HTTPS). Ανοίξτε το site με https:// (ή localhost)."
+        : "Voice input requires a secure connection (HTTPS). Open the site via https:// (or localhost).");
       return;
     }
-    // Proactively request mic permission so we get a clear error if denied
-    try {
-      if (navigator?.mediaDevices?.getUserMedia) {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        stream.getTracks().forEach((t) => t.stop());
-      }
-    } catch {
-      setErr(lang === "el"
-        ? "Δώστε άδεια μικροφώνου στο πρόγραμμα περιήγησης."
-        : "Please allow microphone access in your browser.");
-      return;
-    }
+    // Do NOT pre-call getUserMedia — awaiting it on mobile kills the user gesture
+    // and the native permission prompt never appears. Let SpeechRecognition.start()
+    // trigger the prompt directly. Errors surface in rec.onerror below.
     try {
       const w = window as unknown as { SpeechRecognition?: new () => unknown; webkitSpeechRecognition?: new () => unknown };
       const Ctor = (w.SpeechRecognition || w.webkitSpeechRecognition) as new () => {
