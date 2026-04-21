@@ -2,7 +2,9 @@ import type { FastifyInstance } from 'fastify';
 import { adminRoutes } from './admin';
 import { authRoutes } from './auth';
 import { healthRoutes } from './health';
+import { muxRoutes } from './mux';
 import { proRoutes } from './pros';
+import { videoRoutes } from './videos';
 
 export async function registerRoutes(app: FastifyInstance): Promise<void> {
   await app.register(
@@ -10,8 +12,10 @@ export async function registerRoutes(app: FastifyInstance): Promise<void> {
       await healthRoutes(v1);
       await authRoutes(v1);
       await proRoutes(v1);
+      await videoRoutes(v1);
       await adminRoutes(v1);
     },
     { prefix: '/v1' },
   );
+  await app.register(muxRoutes, { prefix: '/webhooks' });
 }
