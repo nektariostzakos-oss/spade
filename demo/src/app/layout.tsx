@@ -68,7 +68,7 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://spade.gr";
 export async function generateMetadata(): Promise<Metadata> {
   const branding = await loadBranding();
   const business = await loadBusiness();
-  const favicon = branding.faviconUrl || "/favicon.ico";
+  const favicon = branding.faviconUrl; // undefined → Next uses /icon + /apple-icon generators
   const content = (await loadContent()) as Record<
     string,
     Partial<{ title_en: string; description_en: string; ogImage: string }>
@@ -77,7 +77,8 @@ export async function generateMetadata(): Promise<Metadata> {
   const computed = seoDefaults("seo_home", business);
   const homeTitle = stored.title_en || computed.title_en;
   const homeDesc = stored.description_en || computed.description_en;
-  const homeOg = stored.ogImage || "/og.jpg";
+  // When no custom OG image is set, omit it and Next falls back to /opengraph-image generator
+  const homeOg = stored.ogImage || undefined;
   return {
     metadataBase: new URL(SITE_URL),
     title: {
@@ -114,20 +115,19 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: "Spade Barber Loutraki",
       title: homeTitle,
       description: homeDesc,
-      images: [
-        {
-          url: homeOg,
-          width: 1200,
-          height: 630,
-          alt: "Spade Barber Shop Loutraki",
-        },
-      ],
+      ...(homeOg
+        ? {
+            images: [
+              { url: homeOg, width: 1200, height: 630, alt: "Spade Barber Shop Loutraki" },
+            ],
+          }
+        : {}),
     },
     twitter: {
       card: "summary_large_image",
       title: homeTitle,
       description: homeDesc,
-      images: [homeOg],
+      ...(homeOg ? { images: [homeOg] } : {}),
     },
     robots: {
       index: true,
@@ -140,10 +140,7 @@ export async function generateMetadata(): Promise<Metadata> {
         "max-video-preview": -1,
       },
     },
-    icons: {
-      icon: favicon,
-      apple: favicon,
-    },
+    ...(favicon ? { icons: { icon: favicon, apple: favicon } } : {}),
     formatDetection: {
       telephone: true,
       address: true,
