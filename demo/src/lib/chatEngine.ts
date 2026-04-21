@@ -170,6 +170,25 @@ const INTENTS: Intent[] = [
       ],
     }),
   },
+  // Help me choose / recommend / suggest
+  {
+    id: "recommend",
+    match: (t) => includesAny(t, [
+      "suggest", "recommend", "advice", "which cut", "which haircut", "what cut", "what haircut",
+      "help me choose", "best cut", "which style", "what style", "suits me", "what should",
+      "προτειν", "συμβουλη", "τι κουρεμα", "ποιο κουρεμα", "ταιριαζει", "βοηθεια"
+    ]),
+    respond: (_ctx, lang) => ({
+      intent: "recommend",
+      text: lang === "el"
+        ? "Για να βρούμε μαζί το σωστό κούρεμα, μερικές κορυφαίες επιλογές:\n\n· **Crew cut** — κλασικό, ταιριάζει παντού, χαμηλή συντήρηση.\n· **Textured crop** — κοντή φράντζα μπροστά, ατημέλητο κυρίλ.\n· **Skin fade + top** — μοντέρνο, κοφτή αντίθεση, θέλει 2-3 βδομάδες φρεσκάρισμα.\n· **Buzz cut** — το πιο εύκολο, ιδανικό αν το μαλλί αραιώνει.\n\nΚλείστε ένα ραντεβού και τα συζητάμε στο μαγαζί — σχήμα προσώπου, τύπος μαλλιού, ύφος δουλειάς."
+        : "To find the right cut together, here are four tried-and-true options:\n\n· **Crew cut** — the classic. Works everywhere, low maintenance.\n· **Textured crop** — short forward fringe, messy-polished look. Great if your hairline is receding.\n· **Skin fade with length on top** — modern, sharp contrast, needs a refresh every 2–3 weeks.\n· **Buzz cut (#2 or #3)** — the most effortless; ideal if hair is thinning.\n\nBook a chair and we'll work it out in person — we'll factor in face shape, hair type, and what your work dress code allows.",
+      actions: [
+        { label: lang === "el" ? "Κλείστε ραντεβού" : "Book a consultation", href: "/book" },
+        { label: lang === "el" ? "Όλες οι υπηρεσίες" : "See all services", href: "/services" },
+      ],
+    }),
+  },
   // Haircut-specific
   {
     id: "haircut",
