@@ -7,7 +7,14 @@ import { useLang } from "../../lib/i18n";
 import { useSection } from "../../lib/editorClient";
 import EditPencil from "./EditPencil";
 
-export default function Hero() {
+export type NextSlotInfo = {
+  time: string;          // "14:30" or ""
+  label_en: string;      // "Today", "Tomorrow", "Mon", or "Closed today"
+  label_el: string;
+  booked: boolean;       // true if no slot available
+} | null;
+
+export default function Hero({ nextSlot }: { nextSlot?: NextSlotInfo }) {
   const { t, lang } = useLang();
   const c = useSection("hero", {
     pill_en: t("hero.pill"),
@@ -239,9 +246,15 @@ export default function Hero() {
             }}
           >
             <p className="text-xs uppercase tracking-widest text-[#c9a961]">
-              Next slot
+              {nextSlot?.booked
+                ? (lang === "el" ? "Σήμερα γεμάτο" : "Fully booked today")
+                : (lang === "el" ? "Επόμενη θέση" : "Next slot")}
             </p>
-            <p className="mt-1 font-serif text-xl">Today · 14:30</p>
+            <p className="mt-1 font-serif text-xl">
+              {nextSlot && nextSlot.time
+                ? `${pick(nextSlot.label_en, nextSlot.label_el)} · ${nextSlot.time}`
+                : (lang === "el" ? "Δείτε το ημερολόγιο" : "See the calendar")}
+            </p>
           </motion.div>
         </motion.div>
       </div>
