@@ -440,27 +440,66 @@ export default function BookingFlow() {
                       </p>
                     );
                   }
+                  // Group slots into sessions separated by any gap > 30 min.
+                  // This makes the midday break on split-session days visible.
+                  const sessions: string[][] = [];
+                  let current: string[] = [];
+                  let lastMin = -Infinity;
+                  for (const s of freeSlots) {
+                    const [h, m] = s.split(":").map(Number);
+                    const min = h * 60 + m;
+                    if (current.length && min - lastMin > 30) {
+                      sessions.push(current);
+                      current = [];
+                    }
+                    current.push(s);
+                    lastMin = min;
+                  }
+                  if (current.length) sessions.push(current);
+
+                  const sessionLabel = (range: string[]): string => {
+                    if (sessions.length < 2) return "";
+                    const first = range[0];
+                    const hour = parseInt(first.split(":")[0], 10);
+                    if (hour < 12)
+                      return lang === "el" ? "Πρωί" : "Morning";
+                    if (hour < 17)
+                      return lang === "el" ? "Μεσημέρι" : "Midday";
+                    return lang === "el" ? "Απόγευμα" : "Afternoon";
+                  };
+
                   return (
-                    <div className="mt-8 grid grid-cols-3 gap-2 sm:grid-cols-5 lg:grid-cols-6">
-                      {freeSlots.map((slot) => {
-                        const active = time === slot;
-                        return (
-                          <button
-                            key={slot}
-                            onClick={() => {
-                              setTime(slot);
-                              setStep(4);
-                            }}
-                            className={`rounded-lg border py-2.5 text-sm transition-colors ${
-                              active
-                                ? "border-[#c9a961] bg-[#c9a961] text-black"
-                                : "border-white/10 bg-white/[0.02] text-white/85 hover:border-white/40"
-                            }`}
-                          >
-                            {slot}
-                          </button>
-                        );
-                      })}
+                    <div className="mt-8 space-y-6">
+                      {sessions.map((range, si) => (
+                        <div key={si}>
+                          {sessions.length > 1 && (
+                            <p className="mb-3 text-[10px] uppercase tracking-[0.3em] text-white/40">
+                              {sessionLabel(range)} · {range[0]}–{range[range.length - 1]}
+                            </p>
+                          )}
+                          <div className="grid grid-cols-3 gap-2 sm:grid-cols-5 lg:grid-cols-6">
+                            {range.map((slot) => {
+                              const active = time === slot;
+                              return (
+                                <button
+                                  key={slot}
+                                  onClick={() => {
+                                    setTime(slot);
+                                    setStep(4);
+                                  }}
+                                  className={`rounded-lg border py-2.5 text-sm transition-colors ${
+                                    active
+                                      ? "border-[#c9a961] bg-[#c9a961] text-black"
+                                      : "border-white/10 bg-white/[0.02] text-white/85 hover:border-white/40"
+                                  }`}
+                                >
+                                  {slot}
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   );
                 })()}
