@@ -17,7 +17,7 @@ import EditorPanel from "./components/EditorPanel";
 import JsonLd from "./JsonLd";
 import PageTracker from "./components/PageTracker";
 import StickyBookBar from "./components/StickyBookBar";
-import ChatWidget from "./components/ChatWidget";
+import ChatWidgetLazy from "./components/ChatWidgetLazy";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -257,7 +257,7 @@ export default async function RootLayout({
                       <EditorPanel />
                       <PageTracker />
                       <StickyBookBar />
-                      <ChatWidget />
+                      <ChatWidgetLazy />
                     </CartProvider>
                   </EditorProvider>
                 </NavProvider>
