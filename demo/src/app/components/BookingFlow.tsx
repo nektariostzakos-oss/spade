@@ -199,6 +199,56 @@ export default function BookingFlow() {
           <p className="mx-auto mt-4 max-w-md text-sm text-white/60">
             {t("book.success.email_sent")}
           </p>
+
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            {(() => {
+              const startDt = new Date(`${date}T${time}:00`);
+              const endDt = new Date(startDt.getTime() + (service?.duration ?? 30) * 60_000);
+              const fmt = (d: Date) => d.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+              const title = `${pickName(service!)} · ${lang === "el" ? "Spade" : "Spade"}`;
+              const details = [
+                `${t("book.sum.service")}: ${pickName(service!)}`,
+                barber?.name ? `${t("book.sum.barber")}: ${barber.name}` : "",
+                `${t("book.success.ref")}: ${done.ref}`,
+              ].filter(Boolean).join("\n");
+              const gcal = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${fmt(startDt)}/${fmt(endDt)}&details=${encodeURIComponent(details)}`;
+              const icsLines = [
+                "BEGIN:VCALENDAR",
+                "VERSION:2.0",
+                "PRODID:-//Spade//Booking//EN",
+                "BEGIN:VEVENT",
+                `UID:${done.ref}@spade.gr`,
+                `DTSTAMP:${fmt(new Date())}`,
+                `DTSTART:${fmt(startDt)}`,
+                `DTEND:${fmt(endDt)}`,
+                `SUMMARY:${title}`,
+                `DESCRIPTION:${details.replace(/\n/g, "\\n")}`,
+                "END:VEVENT",
+                "END:VCALENDAR",
+              ].join("\r\n");
+              const ics = `data:text/calendar;charset=utf-8,${encodeURIComponent(icsLines)}`;
+              return (
+                <>
+                  <a
+                    href={gcal}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 rounded-full border border-white/20 px-5 py-2.5 text-xs font-semibold uppercase tracking-widest text-white hover:border-white/40"
+                  >
+                    {lang === "el" ? "Google Ημερολόγιο" : "Google Calendar"}
+                  </a>
+                  <a
+                    href={ics}
+                    download={`spade-${done.ref}.ics`}
+                    className="inline-flex items-center gap-2 rounded-full border border-white/20 px-5 py-2.5 text-xs font-semibold uppercase tracking-widest text-white hover:border-white/40"
+                  >
+                    {lang === "el" ? "Apple / Outlook (.ics)" : "Apple / Outlook (.ics)"}
+                  </a>
+                </>
+              );
+            })()}
+          </div>
+
           <a
             href="/"
             className="mt-10 inline-block rounded-full bg-white px-6 py-3 text-sm font-medium text-black"
