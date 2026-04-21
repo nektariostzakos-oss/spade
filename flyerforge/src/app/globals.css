@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --primary: 28 88% 58%;
+    --primary-foreground: 240 5.9% 10%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 28 88% 58%;
+    --radius: 0.625rem;
+  }
+
+  .dark {
+    --background: 240 12% 5%;
+    --foreground: 40 30% 96%;
+    --card: 240 10% 9%;
+    --card-foreground: 40 30% 96%;
+    --primary: 28 92% 60%;
+    --primary-foreground: 240 12% 5%;
+    --secondary: 240 6% 14%;
+    --secondary-foreground: 40 30% 96%;
+    --muted: 240 6% 14%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 6% 14%;
+    --accent-foreground: 40 30% 96%;
+    --destructive: 0 62.8% 45%;
+    --destructive-foreground: 40 30% 96%;
+    --border: 240 6% 17%;
+    --input: 240 6% 17%;
+    --ring: 28 92% 60%;
+  }
+}
+
+@layer base {
+  * { @apply border-border; }
+  body {
+    @apply bg-background text-foreground antialiased;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -10%, hsl(28 92% 60% / 0.12), transparent),
+      radial-gradient(ellipse 60% 50% at 80% 110%, hsl(260 60% 50% / 0.10), transparent);
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
+}

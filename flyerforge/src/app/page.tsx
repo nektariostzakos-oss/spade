@@ -1,0 +1,598 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import { saveAs } from "file-saver";
+import {
+  AlertCircle,
+  CheckCircle2,
+  Loader2,
+  RotateCcw,
+  Sparkles,
+  Wand2,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { UploadZone } from "@/components/UploadZone";
+import { LogoUpload } from "@/components/LogoUpload";
+import { ColorPicker } from "@/components/ColorPicker";
+import { LivePreview } from "@/components/LivePreview";
+import {
+  EventForm,
+  EMPTY_FORM,
+  type EventFormData,
+} from "@/components/EventForm";
+import { AxisPicker } from "@/components/AxisPicker";
+import { PreviewGrid } from "@/components/PreviewGrid";
+import { DEFAULT_DESIGN, type Design } from "@/lib/design/axes";
+import { curate, explainDesign, shuffleDesign } from "@/lib/design/curator";
+import { slugify } from "@/lib/utils";
+import { SIZES } from "@/lib/sizes";
+
+type Status =
+  | { kind: "idle" }
+  | { kind: "working"; message: string }
+  | { kind: "success"; filename: string; warning?: string }
+  | { kind: "error"; message: string };
+
+export default function Page() {
+  const [photoBase64, setPhotoBase64] = useState<string | null>(null);
+  const [logoBase64, setLogoBase64] = useState<string | null>(null);
+  const [form, setForm] = useState<EventFormData>(EMPTY_FORM);
+  const [design, setDesign] = useState<Design>(DEFAULT_DESIGN);
+  const [autoCurate, setAutoCurate] = useState(true);
+  const [accentColor, setAccentColor] = useState<string>("#7A1E1E");
+  const [tagline, setTagline] = useState<string>("");
+  const [removeBg, setRemoveBg] = useState(false);
+  const [status, setStatus] = useState<Status>({ kind: "idle" });
+  const [aiBusy, setAiBusy] = useState<null | "copy" | "recommend" | "image">(
+    null,
+  );
+  const [aiPrompt, setAiPrompt] = useState("");
+  const [aiNote, setAiNote] = useState<
+    null | { kind: "info" | "error"; text: string }
+  >(null);
+  const topRef = useRef<HTMLElement | null>(null);
+
+  // Scroll back to the top when we land on the success screen so the CTA
+  // isn't hidden below the fold on mobile.
+  useEffect(() => {
+    if (status.kind === "success" && topRef.current) {
+      topRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [status.kind]);
+
+  // Auto-curate: re-run the curator whenever the inputs change (debounced).
+  // Disable by flipping the Auto switch, which lets manual AxisPicker edits
+  // stick without being overwritten.
+  useEffect(() => {
+    if (!autoCurate) return;
+    const t = window.setTimeout(() => {
+      const next = curate({
+        eventName: form.eventName,
+        venueName: form.venueName,
+        artistName: form.artistName,
+        tagline,
+        hasPhoto: Boolean(photoBase64),
+      });
+      setDesign(next);
+    }, 400);
+    return () => window.clearTimeout(t);
+  }, [autoCurate, form.eventName, form.venueName, form.artistName, tagline, photoBase64]);
+
+  function onDesignOverride(next: Design) {
+    // User touched an axis — pin the design and stop auto-curating.
+    setAutoCurate(false);
+    setDesign(next);
+  }
+
+  function shuffleCurrent() {
+    setAutoCurate(false);
+    const next = shuffleDesign(design);
+    setDesign(next);
+  }
+
+  function reset() {
+    setPhotoBase64(null);
+    setLogoBase64(null);
+    setForm(EMPTY_FORM);
+    setDesign(DEFAULT_DESIGN);
+    setAutoCurate(true);
+    setAccentColor("#7A1E1E");
+    setTagline("");
+    setRemoveBg(false);
+    setAiPrompt("");
+    setAiNote(null);
+    setStatus({ kind: "idle" });
+  }
+
+  function validate(): string | null {
+    if (!form.eventName.trim()) return "Event name is required.";
+    if (!form.date) return "Event date is required.";
+    if (!form.venueName.trim()) return "Venue name is required.";
+    if (design.treatment !== "none" && !photoBase64)
+      return "Upload a photo or switch to the Typographic treatment.";
+    return null;
+  }
+
+  async function onSuggestCopy() {
+    if (aiBusy) return;
+    setAiBusy("copy");
+    setAiNote(null);
+    try {
+      const res = await fetch("/api/ai/copy", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          eventName: form.eventName,
+          venueName: form.venueName,
+          date: form.date,
+          artistName: form.artistName,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error ?? `HTTP ${res.status}`);
+      if (data.headline && !form.eventName.trim()) {
+        setForm((f) => ({ ...f, eventName: data.headline }));
+      }
+      if (data.tagline) setTagline(data.tagline);
+      setAiNote({ kind: "info", text: `AI: ${data.headline} — ${data.tagline}` });
+    } catch (e) {
+      setAiNote({
+        kind: "error",
+        text: e instanceof Error ? `Copy AI: ${e.message}` : "Copy AI failed.",
+      });
+    } finally {
+      setAiBusy(null);
+    }
+  }
+
+  async function onSuggestDesign() {
+    if (aiBusy) return;
+    setAiBusy("recommend");
+    setAiNote(null);
+    try {
+      const res = await fetch("/api/ai/recommend", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          eventName: form.eventName,
+          venueName: form.venueName,
+          hasPhoto: Boolean(photoBase64),
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error ?? `HTTP ${res.status}`);
+      setAutoCurate(false);
+      setDesign(data.design);
+      setAiNote({
+        kind: "info",
+        text: `AI picked: ${data.design.layout} + ${data.design.palette} — ${data.reason ?? ""}`,
+      });
+    } catch (e) {
+      setAiNote({
+        kind: "error",
+        text:
+          e instanceof Error ? `Design AI: ${e.message}` : "Design AI failed.",
+      });
+    } finally {
+      setAiBusy(null);
+    }
+  }
+
+  async function onGenerateBackground() {
+    if (aiBusy) return;
+    if (!aiPrompt.trim()) {
+      setAiNote({
+        kind: "error",
+        text: "Describe what you want in the background first.",
+      });
+      return;
+    }
+    setAiBusy("image");
+    setAiNote({
+      kind: "info",
+      text: "Generating background image (this takes ~15s)…",
+    });
+    try {
+      const res = await fetch("/api/ai/image", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt: aiPrompt, aspect: "portrait" }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error ?? `HTTP ${res.status}`);
+      setPhotoBase64(data.photoBase64);
+      setAiNote({
+        kind: "info",
+        text: "AI background loaded into the photo slot.",
+      });
+    } catch (e) {
+      setAiNote({
+        kind: "error",
+        text: e instanceof Error ? `Image AI: ${e.message}` : "Image AI failed.",
+      });
+    } finally {
+      setAiBusy(null);
+    }
+  }
+
+  async function onGenerate() {
+    const err = validate();
+    if (err) {
+      setStatus({ kind: "error", message: err });
+      return;
+    }
+
+    try {
+      if (removeBg) {
+        setStatus({ kind: "working", message: "Removing background..." });
+      } else {
+        setStatus({ kind: "working", message: "Preparing assets..." });
+      }
+
+      const stepMessages = [
+        ...(removeBg ? ["Removing background..."] : []),
+        ...SIZES.map((s) => `Generating ${s.label}...`),
+        "Zipping assets...",
+      ];
+      let cursor = 0;
+      const interval = window.setInterval(() => {
+        cursor = Math.min(cursor + 1, stepMessages.length - 1);
+        setStatus({ kind: "working", message: stepMessages[cursor] });
+      }, 700);
+
+      const res = await fetch("/api/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          design,
+          formData: form,
+          photoBase64: photoBase64 ?? "",
+          logoBase64,
+          accentColor,
+          tagline,
+          removeBg,
+        }),
+      });
+
+      window.clearInterval(interval);
+
+      if (!res.ok) {
+        const text = await res.text();
+        throw new Error(text || `Server error (${res.status})`);
+      }
+
+      const warning = res.headers.get("X-FlyerForge-Warning") ?? undefined;
+      const blob = await res.blob();
+      const filename = `flyerforge-${slugify(form.eventName)}-${form.date}.zip`;
+      saveAs(blob, filename);
+
+      setStatus({ kind: "success", filename, warning: warning ?? undefined });
+    } catch (e) {
+      setStatus({
+        kind: "error",
+        message: e instanceof Error ? e.message : "Something went wrong.",
+      });
+    }
+  }
+
+  const working = status.kind === "working";
+
+  // Only show the curator-explanation hint when Auto is on and user has typed
+  // enough to make the explanation actually meaningful.
+  const showCuratorHint =
+    autoCurate && (form.eventName.trim().length > 0 || form.venueName.trim().length > 0);
+  const curatorHint = showCuratorHint
+    ? explainDesign(
+        {
+          eventName: form.eventName,
+          venueName: form.venueName,
+          artistName: form.artistName,
+          tagline,
+          hasPhoto: Boolean(photoBase64),
+        },
+        design,
+      )
+    : null;
+
+  return (
+    <main
+      ref={topRef}
+      className="relative mx-auto w-full max-w-[960px] px-4 py-8 sm:py-12"
+    >
+      <header className="mb-10 space-y-3 text-center">
+        <div className="inline-flex items-center gap-2 rounded-full border border-border bg-card/50 px-3 py-1 text-xs text-muted-foreground">
+          <Sparkles className="h-3 w-3 text-primary" /> AI-powered flyer studio
+        </div>
+        <h1 className="bg-gradient-to-br from-foreground via-foreground to-primary bg-clip-text text-4xl font-bold tracking-tight text-transparent sm:text-5xl">
+          FlyerForge
+        </h1>
+        <p className="mx-auto max-w-[560px] text-sm text-muted-foreground sm:text-base">
+          One photo in. Six sized flyer assets out.
+          Pick a template, let AI write the copy, download a ZIP.
+        </p>
+      </header>
+
+      {status.kind === "success" ? (
+        <Card className="border-primary/40 bg-gradient-to-br from-primary/10 via-card to-card">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-3">
+              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/20">
+                <CheckCircle2 className="h-6 w-6 text-primary" />
+              </span>
+              <span>All six assets ready.</span>
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <p className="text-sm text-muted-foreground">
+              Downloaded{" "}
+              <span className="font-mono text-foreground">{status.filename}</span>.
+              Check your Downloads folder.
+            </p>
+            {status.warning ? (
+              <p className="flex items-start gap-2 rounded-md border border-yellow-500/40 bg-yellow-500/10 p-3 text-xs text-yellow-200">
+                <AlertCircle className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+                {status.warning}
+              </p>
+            ) : null}
+            <Button onClick={reset}>
+              <RotateCcw className="mr-2 h-4 w-4" /> Generate another
+            </Button>
+          </CardContent>
+        </Card>
+      ) : (
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_320px]">
+          <div className="order-last space-y-6 lg:order-none">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-3">
+                  <StepBadge n={1} /> Photo
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <UploadZone
+                  photoBase64={photoBase64}
+                  onPhotoChange={setPhotoBase64}
+                />
+                <div className="rounded-lg border border-border bg-card/50 p-3">
+                  <Label htmlFor="ai-image-prompt" className="text-xs">
+                    Or describe a background for AI
+                  </Label>
+                  <div className="mt-2 flex flex-col gap-2 sm:flex-row">
+                    <Input
+                      id="ai-image-prompt"
+                      value={aiPrompt}
+                      onChange={(e) => setAiPrompt(e.target.value)}
+                      placeholder="dreamy neon skyline at midnight, photographic"
+                      disabled={aiBusy !== null}
+                    />
+                    <Button
+                      type="button"
+                      variant="secondary"
+                      onClick={onGenerateBackground}
+                      disabled={aiBusy !== null}
+                    >
+                      {aiBusy === "image" ? (
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      ) : (
+                        <Wand2 className="mr-2 h-4 w-4" />
+                      )}
+                      {aiBusy === "image" ? "Generating…" : "Generate"}
+                    </Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-3">
+                  <StepBadge n={2} /> Brand
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-5">
+                <LogoUpload
+                  logoBase64={logoBase64}
+                  onLogoChange={setLogoBase64}
+                />
+                <div className="space-y-2">
+                  <Label className="text-xs">Accent color</Label>
+                  <ColorPicker
+                    value={accentColor}
+                    onChange={setAccentColor}
+                  />
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center justify-between">
+                  <span className="flex items-center gap-3">
+                    <StepBadge n={3} /> Event details
+                  </span>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={onSuggestCopy}
+                    disabled={aiBusy !== null}
+                  >
+                    {aiBusy === "copy" ? (
+                      <Loader2 className="mr-2 h-3.5 w-3.5 animate-spin" />
+                    ) : (
+                      <Sparkles className="mr-2 h-3.5 w-3.5" />
+                    )}
+                    {aiBusy === "copy" ? "Thinking…" : "Suggest copy"}
+                  </Button>
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <EventForm value={form} onChange={setForm} />
+                <div className="space-y-1.5">
+                  <Label htmlFor="tagline">Tagline (optional)</Label>
+                  <Input
+                    id="tagline"
+                    value={tagline}
+                    onChange={(e) => setTagline(e.target.value)}
+                    placeholder="ONE NIGHT ONLY"
+                  />
+                </div>
+                {aiNote ? (
+                  <p
+                    className={
+                      aiNote.kind === "error"
+                        ? "flex items-start gap-2 rounded-md border border-destructive/40 bg-destructive/10 p-2 text-xs text-destructive-foreground"
+                        : "flex items-start gap-2 rounded-md border border-primary/30 bg-primary/10 p-2 text-xs text-foreground"
+                    }
+                  >
+                    {aiNote.kind === "error" ? (
+                      <AlertCircle className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+                    ) : (
+                      <Sparkles className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary" />
+                    )}
+                    <span>{aiNote.text}</span>
+                  </p>
+                ) : null}
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center justify-between">
+                  <span className="flex items-center gap-3">
+                    <StepBadge n={4} /> Design
+                  </span>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={onSuggestDesign}
+                    disabled={aiBusy !== null}
+                  >
+                    {aiBusy === "recommend" ? (
+                      <Loader2 className="mr-2 h-3.5 w-3.5 animate-spin" />
+                    ) : (
+                      <Sparkles className="mr-2 h-3.5 w-3.5" />
+                    )}
+                    {aiBusy === "recommend" ? "Thinking…" : "Suggest design"}
+                  </Button>
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex items-center justify-between rounded-md border border-border bg-card/50 p-3">
+                  <div className="flex flex-col">
+                    <Label htmlFor="auto-curate-switch">Auto</Label>
+                    <span className="text-xs text-muted-foreground">
+                      Re-picks the design from your event name &amp; venue.
+                    </span>
+                  </div>
+                  <Switch
+                    id="auto-curate-switch"
+                    checked={autoCurate}
+                    onCheckedChange={setAutoCurate}
+                  />
+                </div>
+
+                {curatorHint ? (
+                  <p className="rounded-md border border-primary/20 bg-primary/5 p-2 text-xs text-muted-foreground">
+                    {curatorHint}
+                  </p>
+                ) : null}
+
+                <AxisPicker
+                  value={design}
+                  onChange={onDesignOverride}
+                  onRandomize={shuffleCurrent}
+                />
+              </CardContent>
+            </Card>
+
+            <Card className="border-primary/40 bg-gradient-to-br from-primary/10 via-card to-card shadow-lg shadow-primary/10">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-3 text-xl">
+                  <StepBadge n={5} highlight /> Generate
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-5">
+                <div className="flex items-center justify-between rounded-md border border-border bg-card/50 p-3">
+                  <div className="flex flex-col">
+                    <Label htmlFor="remove-bg-switch">
+                      Remove photo background
+                    </Label>
+                    <span className="text-xs text-muted-foreground">
+                      Uses Remove.bg. Requires REMOVE_BG_API_KEY.
+                    </span>
+                  </div>
+                  <Switch
+                    id="remove-bg-switch"
+                    checked={removeBg}
+                    onCheckedChange={setRemoveBg}
+                  />
+                </div>
+
+                <PreviewGrid />
+
+                <Button
+                  size="lg"
+                  className="w-full"
+                  onClick={onGenerate}
+                  disabled={working}
+                >
+                  {working ? (
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  ) : null}
+                  {working ? status.message : "Generate 6 Assets"}
+                </Button>
+
+                {status.kind === "error" ? (
+                  <p className="flex items-start gap-2 rounded-md border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive-foreground">
+                    <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
+                    <span>{status.message}</span>
+                  </p>
+                ) : null}
+              </CardContent>
+            </Card>
+          </div>
+
+          <aside className="order-first lg:sticky lg:top-8 lg:order-none lg:self-start">
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-sm">Live preview</CardTitle>
+              </CardHeader>
+              <CardContent className="flex justify-center">
+                <LivePreview
+                  design={design}
+                  formData={form}
+                  photoBase64={photoBase64}
+                  logoBase64={logoBase64}
+                  accentColor={accentColor}
+                  tagline={tagline}
+                  onShuffleDesign={shuffleCurrent}
+                />
+              </CardContent>
+            </Card>
+          </aside>
+        </div>
+      )}
+    </main>
+  );
+}
+
+function StepBadge({ n, highlight }: { n: number; highlight?: boolean }) {
+  return (
+    <span
+      className={
+        highlight
+          ? "flex h-8 w-8 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground"
+          : "flex h-7 w-7 items-center justify-center rounded-full border border-border bg-background text-xs font-bold text-muted-foreground"
+      }
+      aria-hidden
+    >
+      {n}
+    </span>
+  );
+}
