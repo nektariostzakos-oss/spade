@@ -66,6 +66,11 @@ export default function Nav() {
             <img
               src={theme === "light" && branding.logoUrlDark ? branding.logoUrlDark : branding.logoUrl}
               alt={branding.wordmark || "Logo"}
+              width={144}
+              height={36}
+              loading="eager"
+              fetchPriority="high"
+              decoding="async"
               className="h-9 w-auto object-contain"
             />
           ) : (
