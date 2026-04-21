@@ -1,11 +1,13 @@
 import type { FastifyInstance } from 'fastify';
 import { adminRoutes } from './admin';
 import { analyticsRoutes } from './analytics';
+import { apprenticeshipRoutes } from './apprenticeships';
 import { authRoutes } from './auth';
 import { feedRoutes } from './feed';
 import { healthRoutes } from './health';
 import { jobsRoutes } from './jobs';
 import { leadsRoutes } from './leads';
+import { liveRoutes } from './live';
 import { muxRoutes } from './mux';
 import { proRoutes } from './pros';
 import { reviewRoutes } from './reviews';
@@ -26,6 +28,8 @@ export async function registerRoutes(app: FastifyInstance): Promise<void> {
       await leadsRoutes(v1);
       await reviewRoutes(v1);
       await analyticsRoutes(v1);
+      await liveRoutes(v1);
+      await apprenticeshipRoutes(v1);
       await adminRoutes(v1);
     },
     { prefix: '/v1' },
