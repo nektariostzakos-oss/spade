@@ -9,7 +9,7 @@ import CTA from "./components/CTA";
 import AvailabilitySnapshot from "./components/AvailabilitySnapshot";
 import TransformationsStrip from "./components/TransformationsStrip";
 import { getTakenSlots } from "../lib/bookings";
-import { getDailySlots } from "../lib/services";
+import { getSlotsForDay } from "../lib/services";
 import { loadBusiness } from "../lib/settings";
 import { todayIsoInTz, nowMinutesInTz, dayOfWeekInTz, dateAtOffsetInTz } from "../lib/tz";
 
@@ -31,15 +31,16 @@ async function computeNextSlot(): Promise<NextSlotInfo> {
   try {
     const business = await loadBusiness();
     const tz = business.timezone || "Europe/Athens";
-    const todayDow = DAY_KEYS[dayOfWeekInTz(tz)];
+    const todayIdx = dayOfWeekInTz(tz);
+    const todayDow = DAY_KEYS[todayIdx];
     const todayHours = business.hours?.find((h) => h.day === todayDow);
     const cutoff = nowMinutesInTz(tz) + 45;
-    const allSlots = getDailySlots();
 
     // Today's free slots (if open)
     if (!todayHours?.closed) {
       const taken = await getTakenSlots(todayIsoInTz(tz), "any");
-      const free = allSlots
+      const todaySlots = getSlotsForDay(todayIdx, business.hours);
+      const free = todaySlots
         .filter((s) => !taken.includes(s) && slotMinutes(s) >= cutoff)
         .slice(0, 1);
       if (free.length > 0) {
@@ -54,7 +55,8 @@ async function computeNextSlot(): Promise<NextSlotInfo> {
       const dh = business.hours?.find((h) => h.day === dkey);
       if (dh?.closed) continue;
       const taken = await getTakenSlots(future.iso, "any");
-      const free = allSlots.filter((s) => !taken.includes(s)).slice(0, 1);
+      const daySlots = getSlotsForDay(future.dayOfWeek, business.hours);
+      const free = daySlots.filter((s) => !taken.includes(s)).slice(0, 1);
       if (free.length > 0) {
         const label_en = offset === 1 ? "Tomorrow" : DAY_EN[dkey];
         const label_el = offset === 1 ? "Αύριο" : DAY_EL[dkey];

@@ -6,11 +6,13 @@ import { useSearchParams } from "next/navigation";
 import {
   BARBERS,
   HOURS,
+  getSlotsForDay,
   SERVICES,
   getDailySlots,
 } from "../../lib/services";
 import { useLang } from "../../lib/i18n";
 import { useSection } from "../../lib/editorClient";
+import { useBusiness } from "../../lib/businessClient";
 
 type LiveService = {
   id: string;
@@ -50,6 +52,7 @@ function dateRange(days: number, locale: string) {
 
 export default function BookingFlow() {
   const { t, lang } = useLang();
+  const { business } = useBusiness();
   const params = useSearchParams();
   const initialServiceId = params.get("service") ?? "";
   const initialBarberId = params.get("barber") ?? "";
@@ -90,7 +93,18 @@ export default function BookingFlow() {
     [services, serviceId]
   );
   const barber = BARBERS.find((b) => b.id === barberId);
-  const slots = useMemo(() => getDailySlots(), []);
+  // Slots for the currently-selected date, based on that weekday's business
+  // hours (handles days with a midday break via open2/close2).
+  const slots = useMemo(() => {
+    if (!date) return [];
+    // Parse the ISO date as a local date (YYYY-MM-DD has no timezone → treated
+    // as local midnight, which for weekday purposes is stable).
+    const [y, m, d] = date.split("-").map(Number);
+    const localDate = new Date(y, (m || 1) - 1, d || 1);
+    const perDay = getSlotsForDay(localDate.getDay(), business.hours);
+    // Fall back to the fixed daily grid if the business has no hours configured.
+    return perDay.length > 0 ? perDay : getDailySlots();
+  }, [date, business.hours]);
   const days = useMemo(
     () => dateRange(14, lang === "el" ? "el-GR" : "en-GB"),
     [lang]
@@ -110,8 +124,14 @@ export default function BookingFlow() {
   }, [date, barberId]);
 
   const dayClosed = (iso: string) => {
-    const d = new Date(iso);
-    return HOURS.closedDays.includes(d.getDay());
+    const [y, m, d] = iso.split("-").map(Number);
+    const localDate = new Date(y, (m || 1) - 1, d || 1);
+    const DAY_KEYS = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"] as const;
+    const key = DAY_KEYS[localDate.getDay()];
+    const h = business.hours?.find((x) => x.day === key);
+    // Prefer the real per-day setting; fall back to legacy HOURS.closedDays.
+    if (h) return h.closed;
+    return HOURS.closedDays.includes(localDate.getDay());
   };
 
   // If the current date lands on a closed day (e.g. booking page opened on a Sunday),

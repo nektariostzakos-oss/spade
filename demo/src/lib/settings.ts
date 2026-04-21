@@ -26,6 +26,10 @@ export type BusinessHours = {
   open: string;
   close: string;
   closed: boolean;
+  // Optional second session for days with a midday break (e.g. 10:00-14:00 + 17:00-21:00).
+  // If omitted, the day has a single continuous open-close window.
+  open2?: string;
+  close2?: string;
 };
 
 export type BusinessSettings = {
@@ -231,12 +235,12 @@ export const DEFAULT_BUSINESS: BusinessSettings = {
   latitude: 37.977,
   longitude: 22.974,
   hours: [
-    { day: "mon", open: "09:00", close: "21:00", closed: false },
-    { day: "tue", open: "09:00", close: "21:00", closed: false },
-    { day: "wed", open: "09:00", close: "21:00", closed: false },
-    { day: "thu", open: "09:00", close: "21:00", closed: false },
-    { day: "fri", open: "09:00", close: "21:00", closed: false },
-    { day: "sat", open: "09:00", close: "21:00", closed: false },
+    { day: "mon", open: "10:00", close: "17:00", closed: false },
+    { day: "tue", open: "10:00", close: "14:00", closed: false, open2: "17:00", close2: "21:00" },
+    { day: "wed", open: "10:00", close: "17:00", closed: false },
+    { day: "thu", open: "10:00", close: "14:00", closed: false, open2: "17:00", close2: "21:00" },
+    { day: "fri", open: "10:00", close: "21:00", closed: false },
+    { day: "sat", open: "10:00", close: "21:00", closed: false },
     { day: "sun", open: "00:00", close: "00:00", closed: true },
   ],
   social: {

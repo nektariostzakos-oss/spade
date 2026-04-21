@@ -37,12 +37,26 @@ export default async function JsonLd() {
 
   const openingHours = b.hours
     .filter((h) => !h.closed)
-    .map((h) => ({
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: DAY_NAME[h.day],
-      opens: h.open,
-      closes: h.close,
-    }));
+    .flatMap((h) => {
+      const primary = {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: DAY_NAME[h.day],
+        opens: h.open,
+        closes: h.close,
+      };
+      if (h.open2 && h.close2) {
+        return [
+          primary,
+          {
+            "@type": "OpeningHoursSpecification",
+            dayOfWeek: DAY_NAME[h.day],
+            opens: h.open2,
+            closes: h.close2,
+          },
+        ];
+      }
+      return [primary];
+    });
 
   const sameAs = [
     b.social.instagram,

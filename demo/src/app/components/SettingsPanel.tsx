@@ -719,54 +719,103 @@ export default function SettingsPanel() {
       <h3 className="mt-8 mb-3 text-xs uppercase tracking-widest text-white/40">
         Opening hours
       </h3>
+      <p className="mb-2 text-xs text-white/40">
+        Leave the second session empty for a continuous day, or fill both for a midday break.
+      </p>
       <div className="space-y-2">
-        {business.hours.map((h, i) => (
-          <div
-            key={h.day}
-            className="grid grid-cols-[90px_1fr_1fr_auto] items-center gap-3 rounded-lg border border-white/10 bg-white/[0.02] px-3 py-2"
-          >
-            <span className="text-sm text-white/80">
-              {DAYS.find((d) => d.key === h.day)?.label}
-            </span>
-            <input
-              type="time"
-              value={h.open}
-              disabled={h.closed}
-              onChange={(e) => {
-                const next = business.hours.slice();
-                next[i] = { ...h, open: e.target.value };
-                setBusinessLocal({ ...business, hours: next });
-              }}
-              style={{ colorScheme: "dark" }}
-              className="rounded-md border border-white/10 bg-white/5 px-2 py-1.5 text-sm text-white disabled:opacity-40"
-            />
-            <input
-              type="time"
-              value={h.close}
-              disabled={h.closed}
-              onChange={(e) => {
-                const next = business.hours.slice();
-                next[i] = { ...h, close: e.target.value };
-                setBusinessLocal({ ...business, hours: next });
-              }}
-              style={{ colorScheme: "dark" }}
-              className="rounded-md border border-white/10 bg-white/5 px-2 py-1.5 text-sm text-white disabled:opacity-40"
-            />
-            <label className="flex items-center gap-2 text-xs uppercase tracking-widest text-white/50">
-              <input
-                type="checkbox"
-                checked={h.closed}
-                onChange={(e) => {
-                  const next = business.hours.slice();
-                  next[i] = { ...h, closed: e.target.checked };
-                  setBusinessLocal({ ...business, hours: next });
-                }}
-                style={{ accentColor: "#c9a961" }}
-              />
-              Closed
-            </label>
-          </div>
-        ))}
+        {business.hours.map((h, i) => {
+          const hasSplit = !!(h.open2 && h.close2);
+          return (
+            <div
+              key={h.day}
+              className="rounded-lg border border-white/10 bg-white/[0.02] px-3 py-2"
+            >
+              <div className="grid grid-cols-[90px_1fr_1fr_auto] items-center gap-3">
+                <span className="text-sm text-white/80">
+                  {DAYS.find((d) => d.key === h.day)?.label}
+                </span>
+                <input
+                  type="time"
+                  value={h.open}
+                  disabled={h.closed}
+                  onChange={(e) => {
+                    const next = business.hours.slice();
+                    next[i] = { ...h, open: e.target.value };
+                    setBusinessLocal({ ...business, hours: next });
+                  }}
+                  style={{ colorScheme: "dark" }}
+                  className="rounded-md border border-white/10 bg-white/5 px-2 py-1.5 text-sm text-white disabled:opacity-40"
+                />
+                <input
+                  type="time"
+                  value={h.close}
+                  disabled={h.closed}
+                  onChange={(e) => {
+                    const next = business.hours.slice();
+                    next[i] = { ...h, close: e.target.value };
+                    setBusinessLocal({ ...business, hours: next });
+                  }}
+                  style={{ colorScheme: "dark" }}
+                  className="rounded-md border border-white/10 bg-white/5 px-2 py-1.5 text-sm text-white disabled:opacity-40"
+                />
+                <label className="flex items-center gap-2 text-xs uppercase tracking-widest text-white/50">
+                  <input
+                    type="checkbox"
+                    checked={h.closed}
+                    onChange={(e) => {
+                      const next = business.hours.slice();
+                      next[i] = { ...h, closed: e.target.checked };
+                      setBusinessLocal({ ...business, hours: next });
+                    }}
+                    style={{ accentColor: "#c9a961" }}
+                  />
+                  Closed
+                </label>
+              </div>
+              {!h.closed && (
+                <div className="mt-2 grid grid-cols-[90px_1fr_1fr_auto] items-center gap-3">
+                  <span className="text-[10px] uppercase tracking-widest text-white/40">
+                    2nd session
+                  </span>
+                  <input
+                    type="time"
+                    value={h.open2 ?? ""}
+                    onChange={(e) => {
+                      const next = business.hours.slice();
+                      next[i] = { ...h, open2: e.target.value || undefined };
+                      setBusinessLocal({ ...business, hours: next });
+                    }}
+                    style={{ colorScheme: "dark" }}
+                    className="rounded-md border border-white/10 bg-white/5 px-2 py-1.5 text-sm text-white"
+                  />
+                  <input
+                    type="time"
+                    value={h.close2 ?? ""}
+                    onChange={(e) => {
+                      const next = business.hours.slice();
+                      next[i] = { ...h, close2: e.target.value || undefined };
+                      setBusinessLocal({ ...business, hours: next });
+                    }}
+                    style={{ colorScheme: "dark" }}
+                    className="rounded-md border border-white/10 bg-white/5 px-2 py-1.5 text-sm text-white"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const next = business.hours.slice();
+                      next[i] = { ...h, open2: undefined, close2: undefined };
+                      setBusinessLocal({ ...business, hours: next });
+                    }}
+                    disabled={!hasSplit}
+                    className="text-[10px] uppercase tracking-widest text-white/40 hover:text-white disabled:opacity-40"
+                  >
+                    Clear
+                  </button>
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
 
       <h3 className="mt-8 mb-3 text-xs uppercase tracking-widest text-white/40">

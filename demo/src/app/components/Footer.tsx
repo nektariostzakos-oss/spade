@@ -218,12 +218,23 @@ export default function Footer() {
   );
 }
 
-type Hours = { day: string; open: string; close: string; closed: boolean };
+type Hours = {
+  day: string;
+  open: string;
+  close: string;
+  closed: boolean;
+  open2?: string;
+  close2?: string;
+};
 
 function compactHours(hours: Hours[], dayLabel: (d: string) => string): string[] {
   const groups: { days: string[]; range: string }[] = [];
   for (const h of hours) {
-    const key = h.closed ? "closed" : `${h.open}–${h.close}`;
+    const key = h.closed
+      ? "closed"
+      : h.open2 && h.close2
+        ? `${h.open}–${h.close}, ${h.open2}–${h.close2}`
+        : `${h.open}–${h.close}`;
     const last = groups[groups.length - 1];
     if (last && last.range === key) last.days.push(h.day);
     else groups.push({ days: [h.day], range: key });

@@ -60,7 +60,12 @@ export async function GET() {
   lines.push("## Opening hours");
   for (const h of b.hours) {
     const name = DAY_NAME[h.day] ?? h.day;
-    lines.push(`- ${name}: ${h.closed ? "Closed" : `${h.open}–${h.close}`}`);
+    const range = h.closed
+      ? "Closed"
+      : h.open2 && h.close2
+        ? `${h.open}–${h.close}, ${h.open2}–${h.close2}`
+        : `${h.open}–${h.close}`;
+    lines.push(`- ${name}: ${range}`);
   }
   lines.push("");
 

@@ -327,15 +327,19 @@ function formatHours(b: BusinessSettings, lang: Lang): string {
   // Use business timezone so "today" matches shop's wall clock, not the server's UTC.
   const today = ORDER[(dayOfWeekInTz(b.timezone) + 6) % 7]; // convert Sun=0 to Mon=0
   const open = b.hours?.find((h) => h.day === today);
+  const fmtRange = (h: { open: string; close: string; open2?: string; close2?: string }) =>
+    h.open2 && h.close2
+      ? `${h.open}–${h.close}, ${h.open2}–${h.close2}`
+      : `${h.open}–${h.close}`;
   const header = open?.closed
     ? (lang === "el" ? "**Σήμερα είμαστε κλειστά.**\n\n" : "**We're closed today.**\n\n")
     : open
-      ? (lang === "el" ? `**Σήμερα ανοιχτά ${open.open}–${open.close}.**\n\n` : `**Today open ${open.open}–${open.close}.**\n\n`)
+      ? (lang === "el" ? `**Σήμερα ανοιχτά ${fmtRange(open)}.**\n\n` : `**Today open ${fmtRange(open)}.**\n\n`)
       : "";
   const lines = (b.hours ?? [])
     .slice()
     .sort((a, b) => ORDER.indexOf(a.day) - ORDER.indexOf(b.day))
-    .map((h) => `· ${LABELS[h.day]?.[lang] ?? h.day}: ${h.closed ? (lang === "el" ? "κλειστά" : "closed") : `${h.open}–${h.close}`}`)
+    .map((h) => `· ${LABELS[h.day]?.[lang] ?? h.day}: ${h.closed ? (lang === "el" ? "κλειστά" : "closed") : fmtRange(h)}`)
     .join("\n");
   return header + lines;
 }

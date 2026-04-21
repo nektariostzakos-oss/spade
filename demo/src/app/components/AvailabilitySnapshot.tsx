@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { cookies } from "next/headers";
 import { getTakenSlots } from "../../lib/bookings";
-import { getDailySlots } from "../../lib/services";
+import { getSlotsForDay } from "../../lib/services";
 import { loadBookingMode, loadBusiness } from "../../lib/settings";
 import { todayIsoInTz, nowMinutesInTz, dayOfWeekInTz } from "../../lib/tz";
 
@@ -43,13 +43,13 @@ export default async function AvailabilitySnapshot() {
   const taken = await getTakenSlots(today, "any");
   const cutoff = nowMinutesInTz(tz) + 45; // need at least 45 min lead time
 
-  const allSlots = mode === "reservation" ? RESERVATION_SLOTS : getDailySlots();
+  const dayIdx = dayOfWeekInTz(tz);
+  const dow = lang === "el" ? DAY_NAMES_EL[dayIdx] : DAY_NAMES_EN[dayIdx];
+
+  const allSlots = mode === "reservation" ? RESERVATION_SLOTS : getSlotsForDay(dayIdx, business.hours);
   const allFreeToday = allSlots.filter((s) => !taken.includes(s) && slotMinutes(s) >= cutoff);
   const free = allFreeToday.slice(0, 3);
   const totalFree = allFreeToday.length;
-
-  const dayIdx = dayOfWeekInTz(tz);
-  const dow = lang === "el" ? DAY_NAMES_EL[dayIdx] : DAY_NAMES_EN[dayIdx];
 
   const closedToday = business.hours?.find((h) => {
     const d = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"][dayIdx];
