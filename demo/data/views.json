@@ -1492,5 +1492,347 @@
     "sid": "tp9rshpwpdmo7u6z97",
     "id": "v_mo85lifx_gald",
     "createdAt": "2026-04-21T04:58:37.341Z"
+  },
+  {
+    "path": "/book",
+    "ref": "http://localhost:3000/",
+    "lang": "el",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo85ma0m_tmh7",
+    "createdAt": "2026-04-21T04:59:13.078Z"
+  },
+  {
+    "path": "/book",
+    "ref": "http://localhost:3000/book",
+    "lang": "el",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo85sl31_7jch",
+    "createdAt": "2026-04-21T05:04:07.357Z"
+  },
+  {
+    "path": "/",
+    "ref": "http://localhost:3000/book",
+    "lang": "el",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo85tyub_3qku",
+    "createdAt": "2026-04-21T05:05:11.843Z"
+  },
+  {
+    "path": "/",
+    "ref": "http://localhost:3000/book",
+    "lang": "el",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo85u3i7_f57o",
+    "createdAt": "2026-04-21T05:05:17.887Z"
+  },
+  {
+    "path": "/services",
+    "ref": "http://localhost:3000/book",
+    "lang": "el",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo85vq1d_0kd6",
+    "createdAt": "2026-04-21T05:06:33.745Z"
+  },
+  {
+    "path": "/book",
+    "ref": "http://localhost:3000/book",
+    "lang": "el",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo85vsw2_mjqg",
+    "createdAt": "2026-04-21T05:06:37.442Z"
+  },
+  {
+    "path": "/",
+    "ref": "http://localhost:3000/book",
+    "lang": "el",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo85vyiu_k3ty",
+    "createdAt": "2026-04-21T05:06:44.742Z"
+  },
+  {
+    "path": "/services",
+    "ref": "http://localhost:3000/book",
+    "lang": "el",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo85vzss_ei7m",
+    "createdAt": "2026-04-21T05:06:46.396Z"
+  },
+  {
+    "path": "/shop",
+    "ref": "http://localhost:3000/book",
+    "lang": "el",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo85w172_vxlt",
+    "createdAt": "2026-04-21T05:06:48.206Z"
+  },
+  {
+    "path": "/gallery",
+    "ref": "http://localhost:3000/book",
+    "lang": "el",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo85w22v_mzvp",
+    "createdAt": "2026-04-21T05:06:49.351Z"
+  },
+  {
+    "path": "/about",
+    "ref": "http://localhost:3000/book",
+    "lang": "el",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo85w38u_yh5x",
+    "createdAt": "2026-04-21T05:06:50.862Z"
+  },
+  {
+    "path": "/contact",
+    "ref": "http://localhost:3000/book",
+    "lang": "el",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo85w3wm_u01a",
+    "createdAt": "2026-04-21T05:06:51.718Z"
+  },
+  {
+    "path": "/blog",
+    "ref": "http://localhost:3000/book",
+    "lang": "el",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo85w4gf_pu3v",
+    "createdAt": "2026-04-21T05:06:52.431Z"
+  },
+  {
+    "path": "/",
+    "ref": "http://localhost:3000/book",
+    "lang": "el",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo85w5js_tqjm",
+    "createdAt": "2026-04-21T05:06:53.848Z"
+  },
+  {
+    "path": "/services",
+    "ref": "http://localhost:3000/book",
+    "lang": "el",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo85w623_gc2v",
+    "createdAt": "2026-04-21T05:06:54.507Z"
+  },
+  {
+    "path": "/services",
+    "ref": "http://localhost:3000/services",
+    "lang": "el",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo85wm3n_el6c",
+    "createdAt": "2026-04-21T05:07:15.299Z"
+  },
+  {
+    "path": "/shop",
+    "ref": "http://localhost:3000/services",
+    "lang": "el",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo8600an_a6v0",
+    "createdAt": "2026-04-21T05:09:53.663Z"
+  },
+  {
+    "path": "/gallery",
+    "ref": "http://localhost:3000/services",
+    "lang": "el",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo8605w1_ocmf",
+    "createdAt": "2026-04-21T05:10:00.913Z"
+  },
+  {
+    "path": "/services",
+    "ref": "http://localhost:3000/services",
+    "lang": "el",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo8608hr_t9s3",
+    "createdAt": "2026-04-21T05:10:04.287Z"
+  },
+  {
+    "path": "/book",
+    "ref": "http://localhost:3000/services",
+    "lang": "el",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo860a0j_37q9",
+    "createdAt": "2026-04-21T05:10:06.259Z"
+  },
+  {
+    "path": "/",
+    "ref": "http://localhost:3000/services",
+    "lang": "el",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo860nj4_knma",
+    "createdAt": "2026-04-21T05:10:23.776Z"
+  },
+  {
+    "path": "/services",
+    "ref": "http://localhost:3000/services",
+    "lang": "el",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo863qez_aaug",
+    "createdAt": "2026-04-21T05:12:47.483Z"
+  },
+  {
+    "path": "/contact",
+    "ref": "http://localhost:3000/services",
+    "lang": "el",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo864rmv_fbhx",
+    "createdAt": "2026-04-21T05:13:35.719Z"
+  },
+  {
+    "path": "/book",
+    "ref": "http://localhost:3000/services",
+    "lang": "el",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo864sjr_60yv",
+    "createdAt": "2026-04-21T05:13:36.903Z"
+  },
+  {
+    "path": "/about",
+    "ref": "http://localhost:3000/services",
+    "lang": "el",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo866wc3_x1fs",
+    "createdAt": "2026-04-21T05:15:15.123Z"
+  },
+  {
+    "path": "/blog",
+    "ref": "http://localhost:3000/services",
+    "lang": "el",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo866zvg_hyap",
+    "createdAt": "2026-04-21T05:15:19.708Z"
+  },
+  {
+    "path": "/",
+    "ref": "http://localhost:3000/services",
+    "lang": "el",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo86950i_qzgv",
+    "createdAt": "2026-04-21T05:16:59.682Z"
+  },
+  {
+    "path": "/",
+    "ref": "http://localhost:3000/services",
+    "lang": "el",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo86chli_59ye",
+    "createdAt": "2026-04-21T05:19:35.958Z"
+  },
+  {
+    "path": "/blog",
+    "ref": "http://localhost:3000/services",
+    "lang": "el",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo86gq1g_lyrt",
+    "createdAt": "2026-04-21T05:22:53.524Z"
+  },
+  {
+    "path": "/blog/how-to-get-the-perfect-fade",
+    "ref": "http://localhost:3000/services",
+    "lang": "el",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo86so6z_0weu",
+    "createdAt": "2026-04-21T05:32:11.003Z"
+  },
+  {
+    "path": "/",
+    "ref": "http://localhost:3000/services",
+    "lang": "el",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo86tff7_jgz0",
+    "createdAt": "2026-04-21T05:32:46.291Z"
+  },
+  {
+    "path": "/",
+    "ref": "http://localhost:3000/services",
+    "lang": "el",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo86tgyo_86sa",
+    "createdAt": "2026-04-21T05:32:48.288Z"
+  },
+  {
+    "path": "/services",
+    "ref": "http://localhost:3000/services",
+    "lang": "el",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo86wqfz_knq2",
+    "createdAt": "2026-04-21T05:35:20.543Z"
+  },
+  {
+    "path": "/shop",
+    "ref": "http://localhost:3000/services",
+    "lang": "el",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo873sb1_ifea",
+    "createdAt": "2026-04-21T05:40:49.549Z"
+  },
+  {
+    "path": "/",
+    "ref": "http://localhost:3000/services",
+    "lang": "el",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo874g2a_o76p",
+    "createdAt": "2026-04-21T05:41:20.338Z"
+  },
+  {
+    "path": "/",
+    "ref": "http://localhost:3000/services",
+    "lang": "el",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo874ihe_tyyh",
+    "createdAt": "2026-04-21T05:41:23.474Z"
+  },
+  {
+    "path": "/",
+    "ref": "http://localhost:3000/services",
+    "lang": "el",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo8798ly_ha2q",
+    "createdAt": "2026-04-21T05:45:03.958Z"
+  },
+  {
+    "path": "/",
+    "ref": "http://localhost:3000/services",
+    "lang": "el",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo87gm69_lxtx",
+    "createdAt": "2026-04-21T05:50:48.129Z"
   }
 ]

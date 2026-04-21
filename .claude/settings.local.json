@@ -90,7 +90,8 @@
       "Bash(PORT=3001 npx next dev -p 3001)",
       "Bash(rm -f data/services.json data/staff.json)",
       "Bash(git -C C:/Users/nekta/Desktop/coworker/code commit -m 'feat\\(ui\\): WhatsApp button + sticky mobile CTA + availability widget + before-after slider *)",
-      "Bash(git -C \"C:/Users/nekta/Desktop/coworker/code\" pull --rebase)"
+      "Bash(git -C \"C:/Users/nekta/Desktop/coworker/code\" pull --rebase)",
+      "Bash(git -C C:/Users/nekta/Desktop/coworker/code commit -m 'feat\\(chat\\): local AI concierge with barber knowledge base + voice I/O *)"
     ]
   }
 }

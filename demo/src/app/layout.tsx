@@ -16,8 +16,8 @@ import { NavProvider } from "../lib/navClient";
 import EditorPanel from "./components/EditorPanel";
 import JsonLd from "./JsonLd";
 import PageTracker from "./components/PageTracker";
-import WhatsAppButton from "./components/WhatsAppButton";
 import StickyBookBar from "./components/StickyBookBar";
+import ChatWidget from "./components/ChatWidget";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -258,8 +258,8 @@ export default async function RootLayout({
                       <Footer />
                       <EditorPanel />
                       <PageTracker />
-                      <WhatsAppButton />
                       <StickyBookBar />
+                      <ChatWidget />
                     </CartProvider>
                   </EditorProvider>
                 </NavProvider>
