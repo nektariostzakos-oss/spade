@@ -1,0 +1,420 @@
+// Toolbox database schema
+// See CLAUDE_BRIEF.md §7 for source-of-truth model list.
+//
+// Conventions:
+//   * IDs: cuid2 (generated in application via @paralleldrive/cuid2 when needed,
+//     Prisma default cuid() otherwise -- we keep Prisma default on ID columns
+//     for simplicity; do not rely on lexical sort).
+//   * Money: *_cents (Int). No Decimal.
+//   * Timestamps: createdAt / updatedAt on every mutable row.
+//   * Vectors: Unsupported("vector(1536)") + pgvector extension via raw SQL in
+//     the initial migration.
+//   * Indexes: added on every FK and any column used in WHERE / ORDER BY.
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions", "fullTextSearchPostgres"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [pgvector(map: "vector")]
+}
+
+// ---------------------------------------------------------------------------
+// Enums
+// ---------------------------------------------------------------------------
+
+enum UserRole {
+  HOMEOWNER
+  PRO
+  APPRENTICE
+  ADMIN
+}
+
+enum VerificationStatus {
+  PENDING
+  VERIFIED
+  REJECTED
+}
+
+enum SubscriptionTier {
+  FREE
+  STANDARD
+  PRO
+}
+
+enum VideoStatus {
+  PROCESSING
+  READY
+  FAILED
+  REMOVED
+}
+
+enum VideoVisibility {
+  PUBLIC
+  UNLISTED
+  PRIVATE
+}
+
+enum Urgency {
+  LOW
+  MED
+  HIGH
+  EMERGENCY
+}
+
+enum JobStatus {
+  OPEN
+  MATCHING
+  QUOTED
+  BOOKED
+  COMPLETED
+  CANCELLED
+}
+
+enum LeadStatus {
+  SENT
+  VIEWED
+  ACCEPTED
+  DECLINED
+  EXPIRED
+  WON
+  LOST
+}
+
+enum LeadFeeStatus {
+  PENDING
+  CHARGED
+  REFUNDED
+}
+
+enum BookingStatus {
+  SCHEDULED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+  DISPUTED
+}
+
+enum Trade {
+  PLUMBING
+  ELECTRICAL
+  HVAC
+  CARPENTRY
+  ROOFING
+  PAINTING
+  LANDSCAPING
+  HANDYMAN
+  MASONRY
+  FLOORING
+  TILE
+  APPLIANCE_REPAIR
+  LOCKSMITH
+  PEST_CONTROL
+  WINDOW_DOOR
+  GARAGE_DOOR
+  CLEANING
+  OTHER
+}
+
+// ---------------------------------------------------------------------------
+// Identity
+// ---------------------------------------------------------------------------
+
+model User {
+  id           String   @id @default(cuid())
+  clerkId      String   @unique
+  role         UserRole @default(HOMEOWNER)
+  email        String?  @unique
+  phone        String?  @unique
+  displayName  String
+  avatarUrl    String?
+  bio          String?
+  locationLat  Float?
+  locationLng  Float?
+  city         String?
+  country      String?
+  languages    String[] @default([])
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  proProfile      ProProfile?
+  videos          Video[]
+  jobsAsHomeowner Job[]             @relation("HomeownerJobs")
+  bookingsAsPro   Booking[]         @relation("ProBookings")
+  bookingsAsHome  Booking[]         @relation("HomeownerBookings")
+  reviewsGiven    Review[]          @relation("ReviewsGiven")
+  reviewsReceived Review[]          @relation("ReviewsReceived")
+  following       Follow[]          @relation("Following")
+  followers       Follow[]          @relation("Followers")
+  likes           Like[]
+  comments        Comment[]
+  savedVideos     SavedVideo[]
+
+  @@index([role])
+  @@index([city])
+  @@index([country])
+  @@index([locationLat, locationLng])
+}
+
+model ProProfile {
+  id                  String             @id @default(cuid())
+  userId              String             @unique
+  businessName        String
+  trades              Trade[]            @default([])
+  serviceRadiusKm     Int                @default(25)
+  licenseNumber       String?
+  licenseState        String?
+  licenseDocumentUrl  String?
+  insuranceDocumentUrl String?
+  licenseStatus       VerificationStatus @default(PENDING)
+  insuranceStatus     VerificationStatus @default(PENDING)
+  stripeAccountId     String?            @unique
+  subscriptionTier    SubscriptionTier   @default(FREE)
+  responseRateP30     Float              @default(0)
+  avgResponseMinutes  Int                @default(0)
+  completedJobs       Int                @default(0)
+  ratingAvg           Float              @default(0)
+  ratingCount         Int                @default(0)
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
+
+  /// Embedding of (businessName + bio + trades) for matching.
+  embedding Unsupported("vector(1536)")?
+
+  user  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  leads Lead[]
+
+  @@index([licenseStatus])
+  @@index([insuranceStatus])
+  @@index([subscriptionTier])
+  @@index([trades], type: Gin)
+}
+
+// ---------------------------------------------------------------------------
+// Content
+// ---------------------------------------------------------------------------
+
+model Video {
+  id            String          @id @default(cuid())
+  creatorId     String
+  caption       String?
+  muxAssetId    String?         @unique
+  muxPlaybackId String?         @unique
+  thumbnailUrl  String?
+  durationSec   Int?
+  status        VideoStatus     @default(PROCESSING)
+  visibility    VideoVisibility @default(PUBLIC)
+  viewCount     Int             @default(0)
+  likeCount     Int             @default(0)
+  commentCount  Int             @default(0)
+  shareCount    Int             @default(0)
+  hashtags      String[]        @default([])
+  trade         Trade?
+  locationLat   Float?
+  locationLng   Float?
+  city          String?
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+
+  /// Embedding of (caption + hashtags + trade) for feed ranking.
+  embedding Unsupported("vector(1536)")?
+
+  creator  User         @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  likes    Like[]
+  comments Comment[]
+  saves    SavedVideo[]
+
+  @@index([creatorId])
+  @@index([status])
+  @@index([visibility])
+  @@index([trade])
+  @@index([city])
+  @@index([createdAt])
+  @@index([hashtags], type: Gin)
+}
+
+// ---------------------------------------------------------------------------
+// Marketplace
+// ---------------------------------------------------------------------------
+
+model Job {
+  id             String    @id @default(cuid())
+  homeownerId    String
+  description    String
+  photos         String[]  @default([])
+  trade          Trade?
+  urgency        Urgency   @default(MED)
+  budgetMinCents Int?
+  budgetMaxCents Int?
+  locationLat    Float
+  locationLng    Float
+  address        String?
+  status         JobStatus @default(OPEN)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  /// Embedding of the free-text description for pro matching.
+  embedding Unsupported("vector(1536)")?
+
+  homeowner User      @relation("HomeownerJobs", fields: [homeownerId], references: [id], onDelete: Cascade)
+  leads     Lead[]
+  booking   Booking?
+
+  @@index([homeownerId])
+  @@index([status])
+  @@index([trade])
+  @@index([createdAt])
+  @@index([locationLat, locationLng])
+}
+
+model Lead {
+  id             String        @id @default(cuid())
+  jobId          String
+  proId          String
+  status         LeadStatus    @default(SENT)
+  feeAmountCents Int           @default(5000)
+  feeStatus      LeadFeeStatus @default(PENDING)
+  matchScore     Float         @default(0)
+  distanceKm     Float         @default(0)
+  sentAt         DateTime      @default(now())
+  respondedAt    DateTime?
+  expiresAt      DateTime
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  job Job        @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  pro ProProfile @relation(fields: [proId], references: [id], onDelete: Cascade)
+
+  @@unique([jobId, proId])
+  @@index([jobId])
+  @@index([proId])
+  @@index([status])
+  @@index([expiresAt])
+}
+
+model Booking {
+  id                    String        @id @default(cuid())
+  jobId                 String        @unique
+  proId                 String
+  homeownerId           String
+  scheduledAt           DateTime
+  completedAt           DateTime?
+  amountCents           Int
+  platformFeeCents      Int
+  status                BookingStatus @default(SCHEDULED)
+  stripePaymentIntentId String?       @unique
+  createdAt             DateTime      @default(now())
+  updatedAt             DateTime      @updatedAt
+
+  job       Job     @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  pro       User    @relation("ProBookings", fields: [proId], references: [id], onDelete: Cascade)
+  homeowner User    @relation("HomeownerBookings", fields: [homeownerId], references: [id], onDelete: Cascade)
+  review    Review?
+
+  @@index([proId])
+  @@index([homeownerId])
+  @@index([status])
+  @@index([scheduledAt])
+}
+
+// ---------------------------------------------------------------------------
+// Social
+// ---------------------------------------------------------------------------
+
+model Review {
+  id         String   @id @default(cuid())
+  bookingId  String   @unique
+  raterId    String
+  rateeId    String
+  stars      Int
+  text       String?
+  photos     String[] @default([])
+  createdAt  DateTime @default(now())
+
+  booking Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  rater   User    @relation("ReviewsGiven", fields: [raterId], references: [id], onDelete: Cascade)
+  ratee   User    @relation("ReviewsReceived", fields: [rateeId], references: [id], onDelete: Cascade)
+
+  @@index([rateeId])
+  @@index([raterId])
+}
+
+model Follow {
+  followerId  String
+  followingId String
+  createdAt   DateTime @default(now())
+
+  follower  User @relation("Following", fields: [followerId], references: [id], onDelete: Cascade)
+  following User @relation("Followers", fields: [followingId], references: [id], onDelete: Cascade)
+
+  @@id([followerId, followingId])
+  @@index([followingId])
+}
+
+model Like {
+  userId    String
+  videoId   String
+  createdAt DateTime @default(now())
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  video Video @relation(fields: [videoId], references: [id], onDelete: Cascade)
+
+  @@id([userId, videoId])
+  @@index([videoId])
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  videoId   String
+  userId    String
+  parentId  String?
+  text      String
+  createdAt DateTime @default(now())
+
+  video   Video     @relation(fields: [videoId], references: [id], onDelete: Cascade)
+  user    User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  parent  Comment?  @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies Comment[] @relation("CommentReplies")
+
+  @@index([videoId])
+  @@index([userId])
+  @@index([parentId])
+}
+
+model SavedVideo {
+  userId    String
+  videoId   String
+  createdAt DateTime @default(now())
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  video Video @relation(fields: [videoId], references: [id], onDelete: Cascade)
+
+  @@id([userId, videoId])
+  @@index([videoId])
+}
+
+// ---------------------------------------------------------------------------
+// Apprenticeships (Phase 6)
+// ---------------------------------------------------------------------------
+
+model Apprenticeship {
+  id              String   @id @default(cuid())
+  schoolId        String?
+  title           String
+  trade           Trade
+  locationCity    String?
+  locationState   String?
+  paid            Boolean  @default(false)
+  durationMonths  Int?
+  applicationUrl  String?
+  description     String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([trade])
+  @@index([locationState])
+  @@index([paid])
+}
