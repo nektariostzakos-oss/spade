@@ -7,7 +7,7 @@ import {
   type NewBooking,
 } from "../../../lib/bookings";
 import { getSlotsForDay } from "../../../lib/services";
-import { isStaff } from "../../../lib/auth";
+import { currentUser, isStaff } from "../../../lib/auth";
 import { sendBookingConfirmation } from "../../../lib/email";
 import { allowAction, clientIp } from "../../../lib/rateLimit";
 import { loadBusiness } from "../../../lib/settings";
@@ -57,11 +57,16 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ taken: Array.from(new Set(unavailable)) });
   }
 
-  if (!(await isStaff())) {
+  const me = await currentUser();
+  if (!me) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   const all = await listBookings();
-  return NextResponse.json({ bookings: all });
+  const bookings =
+    me.role === "admin"
+      ? all
+      : all.filter((b) => b.barberId === me.barberId || b.barberId === "any");
+  return NextResponse.json({ bookings });
 }
 
 export async function POST(req: NextRequest) {

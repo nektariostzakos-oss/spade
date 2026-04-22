@@ -14,7 +14,13 @@ export const metadata = {
 export default async function AdminPage() {
   const user = await currentUser();
   if (!user) redirect("/admin/login");
-  const bookings = await listBookings();
+  // Barber role sees only their own bookings (stylists shouldn't see
+  // colleagues' clients). Admins see everything.
+  const all = await listBookings();
+  const bookings =
+    user.role === "admin"
+      ? all
+      : all.filter((b) => b.barberId === user.barberId || b.barberId === "any");
   const smtp = await isSmtpConfigured();
   const settings = await loadSettings();
   const checklist = await getLaunchChecklist();
