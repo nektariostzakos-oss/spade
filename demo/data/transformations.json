@@ -1,29 +1,29 @@
 [
   {
-    "id": "fade-1",
-    "title_en": "Skin fade + classic taper",
-    "title_el": "Skin fade + κλασικό taper",
-    "caption_en": "Three weeks between · Andreas",
-    "caption_el": "Τρεις βδομάδες · Ανδρέας",
-    "before": "https://images.unsplash.com/photo-1622287162716-f311baa1a2b8?w=1200&q=88&auto=format&fit=crop",
-    "after": "https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=1200&q=88&auto=format&fit=crop"
+    "id": "acne-clear",
+    "title_en": "Acne bootcamp · 12 weeks",
+    "title_el": "Acne bootcamp · 12 εβδομάδες",
+    "caption_en": "Face Reality protocol",
+    "caption_el": "Πρωτόκολλο Face Reality",
+    "before": "/demos/aesthetics/blog-1.jpg",
+    "after": "/demos/aesthetics/blog-2.jpg"
   },
   {
-    "id": "beard-sculpt",
-    "title_en": "Beard line-up + scissor blend",
-    "title_el": "Γραμμή μουσιού + ψαλίδι",
-    "caption_en": "45 minutes · Nikos",
-    "caption_el": "45 λεπτά · Νίκος",
-    "before": "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=1200&q=88&auto=format&fit=crop",
-    "after": "https://images.unsplash.com/photo-1617096200347-cb04ae810b1d?w=1200&q=88&auto=format&fit=crop"
+    "id": "glow-hydrafacial",
+    "title_en": "Ultimate Hydrafacial · same-day glow",
+    "title_el": "Ultimate Hydrafacial · λάμψη αυθημερόν",
+    "caption_en": "90 minutes with boosters",
+    "caption_el": "90 λεπτά με boosters",
+    "before": "/demos/aesthetics/blog-3.jpg",
+    "after": "/demos/aesthetics/blog-4.jpg"
   },
   {
-    "id": "full-refresh",
-    "title_en": "Full grooming · cut + beard + hot towel",
-    "title_el": "Πλήρες grooming · κούρεμα + μούσι + πετσέτα",
-    "caption_en": "60 minutes · Petros",
-    "caption_el": "60 λεπτά · Πέτρος",
-    "before": "https://images.unsplash.com/photo-1593702275687-f8b402bf1fb5?w=1200&q=88&auto=format&fit=crop",
-    "after": "https://images.unsplash.com/photo-1610552050890-fe99536c2615?w=1200&q=88&auto=format&fit=crop"
+    "id": "sculpt-tone",
+    "title_en": "Sculpt Artisté · tone + lift",
+    "title_el": "Sculpt Artisté · ανόρθωση",
+    "caption_en": "Four sessions over eight weeks",
+    "caption_el": "Τέσσερις συνεδρίες σε οκτώ εβδομάδες",
+    "before": "/demos/aesthetics/gallery-3.jpg",
+    "after": "/demos/aesthetics/gallery-4.jpg"
   }
 ]

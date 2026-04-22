@@ -1,9 +1,10 @@
 [
   {
-    "id": "u_mo7z9lpp",
-    "email": "admin@oakline.studio",
+    "id": "u_aesth_seed",
+    "email": "admin@theskinartiste.local",
     "role": "admin",
-    "passwordHash": "0a9151bd0aaae98ac3aeaa92c770fc7d:fc9183a30d24b97d9b98f165d59ff3b2f8f49684aa8168e63d08f6b646f905ee",
-    "createdAt": "2026-04-21T02:01:24.024Z"
+    "passwordHash": "4608a8dbc1bf710251f9f9e2d3ba177c:08edc1ea30d2c8f4a6e3dec8398443902dabcd8c9faffadcb9d259264da619bd",
+    "createdAt": "2026-04-22T00:00:00.000Z",
+    "mustChangePassword": true
   }
 ]

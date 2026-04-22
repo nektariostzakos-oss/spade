@@ -8,7 +8,7 @@ import { ThemeProvider, themeBootScript } from "../lib/theme";
 import { EditorProvider } from "../lib/editorClient";
 import { CartProvider } from "../lib/cartClient";
 import { loadContent } from "../lib/content";
-import { loadBranding, loadBusiness, loadNav, loadAnalytics, loadTheme, loadTypography, FONT_VAR } from "../lib/settings";
+import { loadBranding, loadBusiness, loadNav, loadAnalytics, loadTheme, loadTypography, loadIndustryId, FONT_VAR } from "../lib/settings";
 import { seoDefaults } from "../lib/seoDefaults";
 import { BrandingProvider } from "../lib/brandingClient";
 import { BusinessProvider } from "../lib/businessClient";
@@ -66,6 +66,19 @@ function isLightColor(bg: string): boolean {
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
+// Per-industry SEO keyword lists. Defaults fall back to the barber set if a
+// template ships with an unknown industryId.
+async function keywordsForIndustry(city: string): Promise<string[]> {
+  const id = await loadIndustryId();
+  const base = {
+    barber: ["hair salon", "haircut", "barber", "beauty studio"],
+    aesthetics: ["aesthetics", "facial", "hydrafacial", "dermaplaning", "microneedling", "acne treatment", "skincare studio"],
+    hair: ["hair salon", "haircut", "colour", "balayage"],
+    beauty: ["beauty studio", "facial", "manicure", "wax"],
+  }[id] || ["hair salon", "haircut", "barber", "beauty studio"];
+  return [...base, city];
+}
+
 export async function generateMetadata(): Promise<Metadata> {
   const branding = await loadBranding();
   const business = await loadBusiness();
@@ -75,7 +88,8 @@ export async function generateMetadata(): Promise<Metadata> {
     Partial<{ title_en: string; description_en: string; ogImage: string }>
   >;
   const stored = content.seo_home ?? {};
-  const computed = seoDefaults("seo_home", business);
+  const industryId = await loadIndustryId();
+  const computed = seoDefaults("seo_home", business, industryId);
   const homeTitle = stored.title_en || computed.title_en;
   const homeDesc = stored.description_en || computed.description_en;
   // When no custom OG image is set, omit it and Next falls back to /opengraph-image generator
@@ -87,13 +101,7 @@ export async function generateMetadata(): Promise<Metadata> {
       template: `%s · ${business.name || "Your Salon"}`,
     },
     description: homeDesc,
-    keywords: [
-      "hair salon",
-      "haircut",
-      "barber",
-      "beauty studio",
-      business.city || "",
-    ].filter(Boolean),
+    keywords: (await keywordsForIndustry(business.city || "")).filter(Boolean),
     applicationName: business.name || "Your Salon",
     authors: [{ name: business.name || "Your Salon" }],
     creator: business.name || "Your Salon",

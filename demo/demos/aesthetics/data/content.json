@@ -19,13 +19,31 @@
     "bgImage": "/demos/aesthetics/hero.jpg",
     "bgVideo": "",
     "bgVideoPoster": "",
-    "sideImage": "/demos/aesthetics/hero-side.jpg"
+    "sideImage": "/demos/aesthetics/hero-side.jpg",
+    "sideName": "Vicki Tasiopoulos",
+    "sideRole_en": "Master Aesthetician · Founder",
+    "sideRole_el": "Master Aesthetician · Founder"
   },
   "info": {
     "items": [
-      { "title_en": "Award-winning spa", "title_el": "Βραβευμένο spa", "desc_en": "Serving the Main Line and Philadelphia since 2018.", "desc_el": "Main Line & Philadelphia από το 2018." },
-      { "title_en": "Clinical skincare only", "title_el": "Κλινικά προϊόντα μόνο", "desc_en": "SkinBetter Science, Face Reality, Skinscript — curated for results.", "desc_el": "SkinBetter Science, Face Reality, Skinscript — επιλεγμένα για αποτέλεσμα." },
-      { "title_en": "Restorative by design", "title_el": "Χαλαρωτικό εξ αρχής", "desc_en": "Advanced technique paired with intentional touch. You leave glowing.", "desc_el": "Προηγμένη τεχνική με φροντίδα. Φεύγεις να λάμπεις." }
+      {
+        "title_en": "Award-winning spa",
+        "title_el": "Βραβευμένο spa",
+        "desc_en": "Serving the Main Line and Philadelphia since 2018.",
+        "desc_el": "Main Line & Philadelphia από το 2018."
+      },
+      {
+        "title_en": "Clinical skincare only",
+        "title_el": "Κλινικά προϊόντα μόνο",
+        "desc_en": "SkinBetter Science, Face Reality, Skinscript — curated for results.",
+        "desc_el": "SkinBetter Science, Face Reality, Skinscript — επιλεγμένα για αποτέλεσμα."
+      },
+      {
+        "title_en": "Restorative by design",
+        "title_el": "Χαλαρωτικό εξ αρχής",
+        "desc_en": "Advanced technique paired with intentional touch. You leave glowing.",
+        "desc_el": "Προηγμένη τεχνική με φροντίδα. Φεύγεις να λάμπεις."
+      }
     ]
   },
   "services": {
@@ -33,7 +51,62 @@
     "eyebrow_el": "Κατάλογος θεραπειών",
     "title_en": "Facials built around your skin, not a trend.",
     "title_el": "Θεραπείες φτιαγμένες για το δικό σου δέρμα.",
-    "items": []
+    "items": [
+      {
+        "id": "svc-1",
+        "name_en": "The Dream Facial",
+        "name_el": "Dream Facial",
+        "price": 199,
+        "duration": 60,
+        "desc_en": "Signature 60-minute facial — cleanse, exfoliation, extractions, mask, massage.",
+        "desc_el": "Θεραπεία 60 λεπτών — καθαρισμός, απολέπιση, μάσκα, massage."
+      },
+      {
+        "id": "svc-2",
+        "name_en": "Ultimate Hydrafacial",
+        "name_el": "Ultimate Hydrafacial",
+        "price": 359,
+        "duration": 90,
+        "desc_en": "Premium Hydrafacial with boosters, LED and lymphatic drainage.",
+        "desc_el": "Premium Hydrafacial με boosters, LED και λεμφική αποσυμφόρηση."
+      },
+      {
+        "id": "svc-3",
+        "name_en": "The Sculpt Artisté",
+        "name_el": "The Sculpt Artisté",
+        "price": 350,
+        "duration": 90,
+        "desc_en": "Signature sculpting facial — manual lifting, lymphatic work, depuffing.",
+        "desc_el": "Signature sculpting — χειροποίητη ανόρθωση, αποσυμφόρηση."
+      },
+      {
+        "id": "svc-4",
+        "name_en": "Ultimate Glo2Facial",
+        "name_el": "Ultimate Glo2Facial",
+        "price": 329,
+        "duration": 90,
+        "desc_en": "Oxygen capsule exfoliation with ultrasound and LED therapy.",
+        "desc_el": "Απολέπιση με κάψουλα οξυγόνου, ultrasound και LED."
+      },
+      {
+        "id": "svc-5",
+        "name_en": "New Client Assessment",
+        "name_el": "Νέος πελάτης · Assessment",
+        "price": 225,
+        "duration": 90,
+        "desc_en": "First-visit skin mapping, home-care plan, targeted facial.",
+        "desc_el": "Πρώτη επίσκεψη — ανάλυση δέρματος και πρόγραμμα."
+      },
+      {
+        "id": "svc-6",
+        "name_en": "Lash Lift & Tint",
+        "name_el": "Lash Lift & Tint",
+        "price": 180,
+        "duration": 60,
+        "desc_en": "Keratin lash lift with tint — 6–8 week eye-opening result.",
+        "desc_el": "Keratin lash lift με βαφή — διάρκεια 6–8 εβδομάδες."
+      }
+    ]
   },
   "gallery_strip": {
     "eyebrow_en": "Before · after · in the chair",
@@ -41,14 +114,110 @@
     "title_en": "Real skin, real results.",
     "title_el": "Πραγματικό δέρμα, πραγματικά αποτελέσματα.",
     "images": [
-      "/demos/aesthetics/gallery-1.jpg",
-      "/demos/aesthetics/gallery-2.jpg",
-      "/demos/aesthetics/gallery-3.jpg",
-      "/demos/aesthetics/gallery-4.jpg"
+      {
+        "src": "/demos/aesthetics/gallery-1.jpg"
+      },
+      {
+        "src": "/demos/aesthetics/gallery-2.jpg"
+      },
+      {
+        "src": "/demos/aesthetics/gallery-3.jpg"
+      },
+      {
+        "src": "/demos/aesthetics/gallery-4.jpg"
+      }
     ]
   },
   "gallery": {
-    "items": []
+    "items": [
+      {
+        "src": "/demos/aesthetics/hero.jpg",
+        "tag": "Studio",
+        "big": true
+      },
+      {
+        "src": "/demos/aesthetics/gallery-1.jpg",
+        "tag": "Treatments",
+        "big": false
+      },
+      {
+        "src": "/demos/aesthetics/gallery-2.jpg",
+        "tag": "Treatments",
+        "big": false
+      },
+      {
+        "src": "/demos/aesthetics/gallery-3.jpg",
+        "tag": "Facials",
+        "big": false
+      },
+      {
+        "src": "/demos/aesthetics/gallery-4.jpg",
+        "tag": "Facials",
+        "big": false
+      },
+      {
+        "src": "/demos/aesthetics/studio.jpg",
+        "tag": "Studio",
+        "big": false
+      },
+      {
+        "src": "/demos/aesthetics/hero-side.jpg",
+        "tag": "Facials",
+        "big": false
+      },
+      {
+        "src": "/demos/aesthetics/vicki.jpg",
+        "tag": "Studio",
+        "big": false
+      },
+      {
+        "src": "/demos/aesthetics/blog-1.jpg",
+        "tag": "Results",
+        "big": false
+      },
+      {
+        "src": "/demos/aesthetics/blog-2.jpg",
+        "tag": "Results",
+        "big": false
+      },
+      {
+        "src": "/demos/aesthetics/blog-3.jpg",
+        "tag": "Results",
+        "big": false
+      },
+      {
+        "src": "/demos/aesthetics/blog-4.jpg",
+        "tag": "Results",
+        "big": false
+      }
+    ],
+    "tags": [
+      {
+        "id": "All",
+        "label_en": "All",
+        "label_el": "Όλα"
+      },
+      {
+        "id": "Facials",
+        "label_en": "Facials",
+        "label_el": "Facials"
+      },
+      {
+        "id": "Treatments",
+        "label_en": "Treatments",
+        "label_el": "Θεραπείες"
+      },
+      {
+        "id": "Studio",
+        "label_en": "Studio",
+        "label_el": "Στούντιο"
+      },
+      {
+        "id": "Results",
+        "label_en": "Results",
+        "label_el": "Αποτελέσματα"
+      }
+    ]
   },
   "about": {
     "eyebrow_en": "About",
@@ -65,7 +234,18 @@
     "eyebrow_el": "Η ομάδα",
     "title_en": "One set of hands. A decade of training.",
     "title_el": "Ένα ζευγάρι χέρια. Μια δεκαετία εκπαίδευση.",
-    "members": []
+    "members": [
+      {
+        "slug": "vicki",
+        "name_en": "Vicki Tasiopoulos",
+        "name_el": "Vicki Tasiopoulos",
+        "role_en": "Master Aesthetician · Founder",
+        "role_el": "Master Aesthetician · Founder",
+        "bio_en": "Advanced facial treatments on the Main Line since 2018.",
+        "bio_el": "Προηγμένες θεραπείες προσώπου στο Main Line από το 2018.",
+        "image": "/demos/aesthetics/vicki.jpg"
+      }
+    ]
   },
   "faq": {
     "eyebrow_en": "Before you book",
@@ -73,17 +253,47 @@
     "title_en": "Common questions.",
     "title_el": "Συχνές ερωτήσεις.",
     "items": [
-      { "q_en": "Do I need a consultation first?", "q_el": "Χρειάζομαι consultation πρώτα;", "a_en": "Every new client starts with the New Client Assessment Facial so we can map your skin properly before any aggressive treatment.", "a_el": "Κάθε νέος πελάτης ξεκινά με το New Client Assessment Facial για να δούμε καλά το δέρμα σου πριν από έντονες θεραπείες." },
-      { "q_en": "What's your cancellation policy?", "q_el": "Ακύρωση;", "a_en": "Cancellations within 24 hours of your appointment are charged 50% of the service. Please reschedule by the morning of the day before.", "a_el": "Ακύρωση μέσα σε 24 ώρες χρεώνεται 50%. Άλλαξε ραντεβού μέχρι το πρωί της προηγούμενης μέρας." },
-      { "q_en": "Can I add Dermaplaning to any facial?", "q_el": "Προσθήκη Dermaplaning;", "a_en": "Yes — add $50 for a glass-finish base on most signature facials.", "a_el": "Ναι — +$50 σε περισσότερες θεραπείες signature για τέλειο φινίρισμα." }
+      {
+        "q_en": "Do I need a consultation first?",
+        "q_el": "Χρειάζομαι consultation πρώτα;",
+        "a_en": "Every new client starts with the New Client Assessment Facial so we can map your skin properly before any aggressive treatment.",
+        "a_el": "Κάθε νέος πελάτης ξεκινά με το New Client Assessment Facial για να δούμε καλά το δέρμα σου πριν από έντονες θεραπείες."
+      },
+      {
+        "q_en": "What's your cancellation policy?",
+        "q_el": "Ακύρωση;",
+        "a_en": "Cancellations within 24 hours of your appointment are charged 50% of the service. Please reschedule by the morning of the day before.",
+        "a_el": "Ακύρωση μέσα σε 24 ώρες χρεώνεται 50%. Άλλαξε ραντεβού μέχρι το πρωί της προηγούμενης μέρας."
+      },
+      {
+        "q_en": "Can I add Dermaplaning to any facial?",
+        "q_el": "Προσθήκη Dermaplaning;",
+        "a_en": "Yes — add $50 for a glass-finish base on most signature facials.",
+        "a_el": "Ναι — +$50 σε περισσότερες θεραπείες signature για τέλειο φινίρισμα."
+      }
     ]
   },
   "contact": {
     "image": "/demos/aesthetics/studio.jpg",
     "blocks": [
-      { "label_en": "Visit", "label_el": "Επισκέψου", "value_en": "40 E Montgomery Ave\nArdmore, PA 19003", "value_el": "40 E Montgomery Ave\nArdmore, PA 19003" },
-      { "label_en": "Email", "label_el": "Email", "value_en": "info@theskinartiste.com", "value_el": "info@theskinartiste.com" },
-      { "label_en": "Instagram", "label_el": "Instagram", "value_en": "@theskinartiste", "value_el": "@theskinartiste" }
+      {
+        "label_en": "Visit",
+        "label_el": "Επισκέψου",
+        "value_en": "40 E Montgomery Ave\nArdmore, PA 19003",
+        "value_el": "40 E Montgomery Ave\nArdmore, PA 19003"
+      },
+      {
+        "label_en": "Email",
+        "label_el": "Email",
+        "value_en": "info@theskinartiste.com",
+        "value_el": "info@theskinartiste.com"
+      },
+      {
+        "label_en": "Instagram",
+        "label_el": "Instagram",
+        "value_en": "@theskinartiste",
+        "value_el": "@theskinartiste"
+      }
     ]
   },
   "testimonials": {
@@ -92,8 +302,18 @@
     "title_en": "Loved by the Main Line.",
     "title_el": "Αγαπημένο στο Main Line.",
     "items": [
-      { "quote_en": "Not only is her studio beautiful — you leave glowing and feeling so relaxed.", "quote_el": "Όμορφο στούντιο — φεύγεις να λάμπεις και χαλαρωμένη.", "author_en": "Main Line client", "author_el": "Πελάτισσα Main Line" },
-      { "quote_en": "She's taken steps to seek out continuing education and certifications — and it shows on your skin.", "quote_el": "Συνεχίζει εκπαίδευση και πιστοποιήσεις — φαίνεται στο δέρμα.", "author_en": "Long-time client", "author_el": "Πελάτισσα ετών" }
+      {
+        "quote_en": "Not only is her studio beautiful — you leave glowing and feeling so relaxed.",
+        "quote_el": "Όμορφο στούντιο — φεύγεις να λάμπεις και χαλαρωμένη.",
+        "author_en": "Main Line client",
+        "author_el": "Πελάτισσα Main Line"
+      },
+      {
+        "quote_en": "She's taken steps to seek out continuing education and certifications — and it shows on your skin.",
+        "quote_el": "Συνεχίζει εκπαίδευση και πιστοποιήσεις — φαίνεται στο δέρμα.",
+        "author_en": "Long-time client",
+        "author_el": "Πελάτισσα ετών"
+      }
     ]
   },
   "cta": {

@@ -7,7 +7,7 @@ import { useLang } from "../../lib/i18n";
 import { useSection } from "../../lib/editorClient";
 import EditPencil from "./EditPencil";
 
-const tags = [
+const DEFAULT_TAGS = [
   { id: "All", key: "filter.all" },
   { id: "Cuts", key: "filter.cuts" },
   { id: "Beards", key: "filter.beards" },
@@ -15,6 +15,7 @@ const tags = [
 ];
 
 type Cell = { src: string; tag: string; big: boolean | string };
+type TagOption = { id: string; label_en?: string; label_el?: string; key?: string };
 
 const DEFAULT: Cell[] = [
   { src: "https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=1600&q=80&auto=format&fit=crop", tag: "Cuts", big: true },
@@ -23,10 +24,18 @@ const DEFAULT: Cell[] = [
 ];
 
 export default function GalleryGrid() {
-  const { t } = useLang();
-  const c = useSection("gallery", { items: DEFAULT });
+  const { t, lang } = useLang();
+  const c = useSection("gallery", { items: DEFAULT, tags: [] as TagOption[] });
   const all: Cell[] = (c.items as Cell[]) ?? DEFAULT;
-  const [active, setActive] = useState("All");
+  // If content supplies a `tags` array use it verbatim (aesthetics / other
+  // industries); otherwise fall back to the barber template's i18n filters.
+  const storedTags = ((c.tags as TagOption[]) || []).filter((x) => x && x.id);
+  const tags = storedTags.length > 0 ? storedTags : DEFAULT_TAGS;
+  const pickLabel = (tag: TagOption) => {
+    if (tag.key) return t(tag.key);
+    return (lang === "el" ? tag.label_el || tag.label_en : tag.label_en) || tag.id;
+  };
+  const [active, setActive] = useState(tags[0]?.id ?? "All");
   const filtered = active === "All" ? all : all.filter((s) => s.tag === active);
 
   return (
@@ -52,10 +61,10 @@ export default function GalleryGrid() {
                 <motion.span
                   layoutId="filter-pill"
                   transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                  className="absolute inset-0 -z-10 rounded-full bg-[#c9a961]"
+                  className="absolute inset-0 -z-10 rounded-full bg-[var(--gold)]"
                 />
               )}
-              {t(tag.key)}
+              {pickLabel(tag)}
             </button>
           ))}
         </motion.div>

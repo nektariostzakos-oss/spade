@@ -12,7 +12,112 @@ function clip(s: string, max: number): string {
   return s.slice(0, max - 1).replace(/\s+\S*$/, "") + "…";
 }
 
-export function seoDefaults(page: string, b: BusinessSettings): SeoBlock {
+export function seoDefaults(page: string, b: BusinessSettings, industryId: string = "barber"): SeoBlock {
+  if (industryId === "aesthetics") return aestheticsSeo(page, b);
+  return barberSeo(page, b);
+}
+
+function aestheticsSeo(page: string, b: BusinessSettings): SeoBlock {
+  const name = b.name || "Your Studio";
+  const city = b.city || "Your City";
+  const phone = b.phone || "";
+  const addr = [b.streetAddress, b.city].filter(Boolean).join(", ");
+
+  const base: Record<string, SeoBlock> = {
+    seo_home: {
+      title_en: clip(`${name} — Aesthetics Studio in ${city}`, 60),
+      title_el: clip(`${name} — Aesthetics στο ${city}`, 60),
+      description_en: clip(
+        `${name} in ${city}: personalised facials, Hydrafacial, microneedling, dermaplaning, and acne clearing. Book online in under a minute. Call ${phone}.`,
+        158
+      ),
+      description_el: clip(
+        `${name} στο ${city}: εξατομικευμένα facials, Hydrafacial, microneedling, dermaplaning, και προγράμματα για ακμή. Online ραντεβού σε ένα λεπτό.`,
+        158
+      ),
+    },
+    seo_services: {
+      title_en: clip(`Facial & Treatment Menu | ${name} ${city}`, 60),
+      title_el: clip(`Υπηρεσίες & Τιμές | ${name} ${city}`, 60),
+      description_en: clip(
+        `Full treatment menu at ${name}, ${city}. Signature facials, Hydrafacial, microneedling, dermaplaning, chemical peels, bridal prep.`,
+        158
+      ),
+      description_el: clip(
+        `Πλήρης κατάλογος υπηρεσιών στο ${name}, ${city}. Signature facials, Hydrafacial, microneedling, dermaplaning, peels, νυφικά πακέτα.`,
+        158
+      ),
+    },
+    seo_shop: {
+      title_en: clip(`Clinical Skincare — ${name} Shop`, 60),
+      title_el: clip(`Clinical Skincare — ${name}`, 60),
+      description_en: clip(
+        `SkinBetter Science, Face Reality, Vivant and other clinical-grade skincare from ${name} in ${city}. The shelves we actually use in treatments.`,
+        158
+      ),
+      description_el: clip(
+        `SkinBetter Science, Face Reality, Vivant — τα προϊόντα που χρησιμοποιούμε στο ${name} στο ${city}.`,
+        158
+      ),
+    },
+    seo_gallery: {
+      title_en: clip(`Results Gallery — Facials & Treatments | ${name}`, 60),
+      title_el: clip(`Αποτελέσματα — Facials & Θεραπείες | ${name}`, 60),
+      description_en: clip(
+        `Real client results from ${name}, ${city}. Before-and-after acne clearing, Hydrafacial, sculpting facials, and bridal prep.`,
+        158
+      ),
+      description_el: clip(
+        `Αποτελέσματα πελατών στο ${name}, ${city}. Πριν/μετά ακμή, Hydrafacial, sculpting, νυφικό.`,
+        158
+      ),
+    },
+    seo_about: {
+      title_en: clip(`Meet the Team — ${name}, ${city}`, 60),
+      title_el: clip(`Η Ομάδα — ${name}, ${city}`, 60),
+      description_en: clip(
+        `The aestheticians behind ${name} in ${city}. Continuing education, clinical expertise, and a restorative spa experience.`,
+        158
+      ),
+      description_el: clip(
+        `Οι aestheticians πίσω από το ${name} στο ${city}. Συνεχής εκπαίδευση, κλινική γνώση, χαλαρωτική εμπειρία.`,
+        158
+      ),
+    },
+    seo_contact: {
+      title_en: clip(`Contact & Directions — ${name}, ${city}`, 60),
+      title_el: clip(`Επικοινωνία & Πρόσβαση — ${name}, ${city}`, 60),
+      description_en: clip(
+        `Visit ${name} at ${addr}. Call ${phone} or email ${b.email}. Opening hours, directions, and online booking on one page.`,
+        158
+      ),
+      description_el: clip(
+        `Επισκεφθείτε το ${name} στο ${addr}. Καλέστε ${phone} ή email ${b.email}. Ωράριο, χάρτης και online ραντεβού.`,
+        158
+      ),
+    },
+    seo_book: {
+      title_en: clip(`Book a Treatment — ${name} ${city}`, 60),
+      title_el: clip(`Online Ραντεβού — ${name} ${city}`, 60),
+      description_en: clip(
+        `Book a treatment at ${name} in ${city} in under a minute. Pick your service, your aesthetician, and your time. Email confirmation + reminder included.`,
+        158
+      ),
+      description_el: clip(
+        `Κλείστε θεραπεία στο ${name}, ${city}, σε λιγότερο από ένα λεπτό. Email επιβεβαίωσης και υπενθύμιση.`,
+        158
+      ),
+    },
+  };
+  return base[page] ?? {
+    title_en: name,
+    title_el: name,
+    description_en: `${name} in ${city}.`,
+    description_el: `${name} στο ${city}.`,
+  };
+}
+
+function barberSeo(page: string, b: BusinessSettings): SeoBlock {
   const name = b.name || "Your Salon";
   const city = b.city || "Your City";
   const phone = b.phone || "";

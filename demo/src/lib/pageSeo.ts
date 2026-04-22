@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { loadContent } from "./content";
-import { loadBusiness } from "./settings";
+import { loadBusiness, loadIndustryId } from "./settings";
 import { seoDefaults } from "./seoDefaults";
 
 type StoredSeo = Partial<{
@@ -17,9 +17,9 @@ export async function buildPageMetadata(
   section: string,
   fallback: { path: string }
 ): Promise<Metadata> {
-  const [all, business] = await Promise.all([loadContent(), loadBusiness()]);
+  const [all, business, industryId] = await Promise.all([loadContent(), loadBusiness(), loadIndustryId()]);
   const stored = ((all as Record<string, StoredSeo>)[section] ?? {}) as StoredSeo;
-  const computed = seoDefaults(section, business);
+  const computed = seoDefaults(section, business, industryId);
 
   const title = stored.title_en || computed.title_en;
   const title_el = stored.title_el || computed.title_el;

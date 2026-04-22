@@ -1,127 +1,86 @@
 [
   {
-    "id": "pg_demo_1",
-    "slug": "how-to-get-the-perfect-fade",
-    "title_en": "How to Get the Perfect Fade — And Keep It",
-    "title_el": "Πώς πετυχαίνεις το τέλειο fade — και πώς το κρατάς",
-    "excerpt_en": "A clean fade is half about the cut and half about the routine. Here's what we ask of every client who wants one to last.",
-    "excerpt_el": "Ένα καθαρό fade είναι μισό δουλειά του μπαρμπέρη και μισό ρουτίνα στο σπίτι. Να τι ζητάμε από κάθε πελάτη που θέλει να κρατήσει.",
-    "body_en": "<p>The perfect fade starts with a conversation. Before any clipper touches the head, we talk about bone structure, hair density, and lifestyle. A skin fade on a desk worker looks different from one on a stonemason, and we build for both.</p><h2>The cut itself</h2><p>We work from a 0.5 up to a number 3, blending in half-guard increments. The key is not the numbers — it's the transitions. Good fades disappear between steps.</p><h2>What to do at home</h2><ul><li>Book the follow-up before you leave. Two to three weeks is the window.</li><li>Use a light tonic, not a heavy pomade, around the temples. Heavy product collects in the short hair and breaks the blend.</li><li>Brush dry, never wet. Wet brushing lifts the cuticle and blurs the line.</li></ul><p>Come in every three weeks for a clean-up. The cut will tell you when it's ready.</p>",
-    "body_el": "<p>Το τέλειο fade ξεκινά με μια κουβέντα. Πριν πιάσουμε ψαλίδι, μιλάμε για το σχήμα του κρανίου, την πυκνότητα του μαλλιού και τη ζωή του πελάτη.</p><h2>Η κοπή</h2><p>Δουλεύουμε από 0.5 μέχρι νούμερο 3, σπάζοντας με μισά βήματα. Το μυστικό δεν είναι τα νούμερα — είναι οι μεταβάσεις.</p><h2>Τι κάνεις στο σπίτι</h2><ul><li>Κλείσε το επόμενο ραντεβού πριν φύγεις.</li><li>Χρησιμοποίησε ελαφρύ tonic, όχι βαριά πομάδα, στους κροτάφους.</li><li>Βούρτσισε σε στεγνό μαλλί, ποτέ σε βρεγμένο.</li></ul>",
-    "image": "/blog/scissors.svg",
+    "id": "pg_first_facial",
+    "slug": "what-to-expect-first-facial",
+    "title_en": "What to expect at your first Assessment Facial",
+    "title_el": "Τι να περιμένεις στο πρώτο Assessment Facial",
+    "excerpt_en": "A 90-minute session that maps your skin, sets your home-care plan, and opens the door to every other treatment on the menu.",
+    "excerpt_el": "Συνεδρία 90 λεπτών που χαρτογραφεί το δέρμα σου και καθορίζει τη σωστή πορεία.",
+    "body_en": "<p>The first appointment is about getting the right starting line, not the quickest facial. We review medical and skincare history, examine skin under magnification, and build a 90-day plan that combines the right in-studio treatments with the right products at home.</p><h2>What's included</h2><p>Consultation, double-cleanse, enzyme or gentle acid exfoliation, extractions where indicated, and a customised mask + finishing serums. You leave with a written plan and a timeline.</p><h2>Why the Assessment is non-negotiable</h2><p>Advanced treatments — microneedling, deeper peels, Hydrafacial boosters — need an informed starting point. Jumping in without it risks over-treating and setting you back weeks.</p>",
+    "body_el": "<p>Το πρώτο ραντεβού είναι για σωστή αφετηρία, όχι για γρήγορο αποτέλεσμα. Βλέπουμε ιατρικό ιστορικό, εξετάζουμε το δέρμα, και φτιάχνουμε πρόγραμμα 90 ημερών.</p>",
+    "image": "/demos/aesthetics/blog-1.jpg",
     "tags": [
-      "fade",
-      "haircut",
-      "technique"
+      "facial",
+      "consultation",
+      "first-visit"
     ],
-    "category": "Styling guides",
+    "category": "treatments",
     "kind": "post",
     "published": true,
-    "publishedAt": "2026-04-15T09:00:00.000Z",
-    "updatedAt": "2026-04-15T09:00:00.000Z"
+    "publishedAt": "2026-03-18T10:00:00.000Z",
+    "updatedAt": "2026-03-18T10:00:00.000Z"
   },
   {
-    "id": "pg_demo_2",
-    "slug": "the-five-minute-morning-routine",
-    "title_en": "The Five-Minute Morning Routine for a Sharper Look",
-    "title_el": "Η πρωινή ρουτίνα των πέντε λεπτών",
-    "excerpt_en": "You don't need twelve products to look put-together. Here's the short version — cleanser, tonic, comb, pomade, done.",
-    "excerpt_el": "Δεν χρειάζεσαι δώδεκα προϊόντα. Τέσσερα, σωστά, σε βγάζουν έξω κάθε πρωί σε πέντε λεπτά.",
-    "body_en": "<p>Most men we see have one of two problems: they use too much product, or they skip the basics. The routine below takes five minutes and covers both.</p><h2>1 — Cleanse, don't strip</h2><p>Sulfate-free shampoo every other day, warm water. Daily washing dries the scalp and triggers more oil.</p><h2>2 — Tonic while damp</h2><p>A light tonic on damp hair sets the base. It refreshes the scalp and gives pomade something to grip.</p><h2>3 — Comb, then hands</h2><p>Comb the shape, then break it up with your fingers for a natural finish. A comb alone reads too formal.</p><h2>4 — Pomade sparingly</h2><p>Pea-sized amount, warm it in your palms first. Work from the back forward — never from the front down.</p>",
-    "body_el": "<p>Οι περισσότεροι άντρες έχουν ένα από δύο προβλήματα: πολύ προϊόν ή μηδέν βάση. Η ρουτίνα από κάτω λύνει και τα δύο.</p>",
-    "image": "/blog/grooming.svg",
+    "id": "pg_acne_bootcamp",
+    "slug": "face-reality-acne-bootcamp",
+    "title_en": "The Face Reality Acne Bootcamp — how the 90-day programme works",
+    "title_el": "Face Reality Acne Bootcamp — πώς δουλεύει σε 90 μέρες",
+    "excerpt_en": "Structured acne clearing for adults. Consultation, home routine, bi-weekly progress facials, and written accountability.",
+    "excerpt_el": "Πρόγραμμα για ακμή ενηλίκων. Consultation, πρωτόκολλο σπιτιού, θεραπείες ανά δύο εβδομάδες, γραπτή υπευθυνότητα.",
+    "body_en": "<p>Acne isn't just a surface problem — hormonal, dietary and product triggers all feed it. Face Reality is the protocol we use for consistent clearing in adults who want their skin calm, not camouflaged.</p><h2>Phase 1 — weeks 1–4</h2><p>Product acclimation. We introduce the home routine in three steps and monitor for irritation. Early breakouts are expected and part of the clearing curve.</p><h2>Phase 2 — weeks 5–10</h2><p>Escalation. Concentrations are adjusted, actives are layered, and bi-weekly in-studio facials accelerate turnover.</p>",
+    "body_el": "<p>Η ακμή δεν είναι μόνο επιφανειακή — ορμονικά, διατροφή και προϊόντα παίζουν ρόλο.</p>",
+    "image": "/demos/aesthetics/blog-2.jpg",
     "tags": [
+      "acne",
+      "face-reality",
+      "protocol"
+    ],
+    "category": "acne",
+    "kind": "post",
+    "published": true,
+    "publishedAt": "2026-03-10T10:00:00.000Z",
+    "updatedAt": "2026-03-10T10:00:00.000Z"
+  },
+  {
+    "id": "pg_bridal",
+    "slug": "bridal-skin-six-months",
+    "title_en": "Bridal skin plan — where to start six months out",
+    "title_el": "Πρόγραμμα νυφικού δέρματος — 6 μήνες πριν τον γάμο",
+    "excerpt_en": "The single biggest mistake is doing something aggressive two weeks before the wedding. Here's the timeline that actually works.",
+    "excerpt_el": "Το πιο συχνό λάθος είναι μια επιθετική θεραπεία 2 εβδομάδες πριν.",
+    "body_en": "<p>A glowing wedding-day face is never the result of a single last-minute treatment. Six months of consistent, compounding work is.</p><h2>Month 6 — map the skin</h2><p>Assessment Facial, baseline photos, home routine adjusted. Any concerns on the table now.</p><h2>Months 5–3 — do the work</h2><p>Monthly Hydrafacial or signature facial. If microneedling suits, run a series of three, six weeks apart.</p><h2>Month 1 — refine, don't reinvent</h2><p>Nothing new this month. Gentle maintenance facial 10–14 days before the wedding. No new products.</p>",
+    "body_el": "<p>Λαμπερό δέρμα τη μέρα του γάμου δε βγαίνει από μία θεραπεία της τελευταίας στιγμής.</p>",
+    "image": "/demos/aesthetics/blog-3.jpg",
+    "tags": [
+      "bridal",
+      "planning",
+      "long-game"
+    ],
+    "category": "bridal",
+    "kind": "post",
+    "published": true,
+    "publishedAt": "2026-02-20T10:00:00.000Z",
+    "updatedAt": "2026-02-20T10:00:00.000Z"
+  },
+  {
+    "id": "pg_home_routine",
+    "slug": "minimalist-home-routine",
+    "title_en": "The 4-step routine that does 90% of the work",
+    "title_el": "Η 4-step ρουτίνα που κάνει το 90% της δουλειάς",
+    "excerpt_en": "Cleanse, actives, moisturiser, SPF. Everything else is optional — here is how to pick the right version of each.",
+    "excerpt_el": "Καθάρισμα, ενεργά, ενυδάτωση, αντηλιακό. Τα υπόλοιπα είναι προαιρετικά.",
+    "body_en": "<p>Most people over-complicate skincare. The four steps below — executed consistently — outperform any 10-step routine you see on social media.</p><h2>1. Cleanse</h2><p>Morning: water-only or gentle gel. Night: oil or balm first, then gel.</p><h2>2. Actives</h2><p>Vitamin C in the morning, retinoid at night. Start slow, layer hydration on either side.</p><h2>3. Moisturiser</h2><p>Match it to the season, not to the bottle's marketing.</p><h2>4. SPF</h2><p>Broad-spectrum SPF 30+, every single morning.</p>",
+    "body_el": "<p>Οι περισσότεροι περιπλέκουμε τη ρουτίνα.</p>",
+    "image": "/demos/aesthetics/blog-4.jpg",
+    "tags": [
+      "home-care",
       "routine",
-      "daily",
-      "styling"
+      "skincare"
     ],
-    "category": "Grooming tips",
+    "category": "skincare",
     "kind": "post",
     "published": true,
-    "publishedAt": "2026-04-10T09:00:00.000Z",
-    "updatedAt": "2026-04-10T09:00:00.000Z"
-  },
-  {
-    "id": "pg_demo_3",
-    "slug": "beard-oil-vs-balm",
-    "title_en": "Beard Oil or Balm? Here's the Honest Answer",
-    "title_el": "Λάδι ή balm για το μούσι; Η ειλικρινής απάντηση",
-    "excerpt_en": "They do different jobs. Most men need both — and most men use neither. A three-minute read to fix that.",
-    "excerpt_el": "Κάνουν διαφορετική δουλειά. Οι περισσότεροι άντρες χρειάζονται και τα δύο — και δεν χρησιμοποιούν κανένα.",
-    "body_en": "<p>The short answer: oil for the skin underneath, balm for the hair on top.</p><h2>Beard oil</h2><p>Argan and jojoba feed the skin and stop the itchy-week that kills most beard attempts around day five. Three drops in the palm, rub, press into the skin under the beard. Not on top of the hair.</p><h2>Beard balm</h2><p>Shea butter and beeswax. This is your styling tool — it tames wild hairs, gives a light hold, and protects against wind and cold.</p><h2>The order</h2><p>Oil first, on clean damp skin. Let it settle for a minute. Then balm on dry hair. If you want to add anything, it's a wide-tooth comb.</p><h2>How much?</h2><p>Less than you think. A beard past your collar still only needs a pea-sized amount of balm. Overdoing it looks wet, feels greasy, and attracts dust.</p>",
-    "body_el": "<p>Σύντομη απάντηση: το λάδι για το δέρμα από κάτω, το balm για την τρίχα από πάνω.</p>",
-    "image": "/blog/beard.svg",
-    "tags": [
-      "beard",
-      "oil",
-      "balm"
-    ],
-    "category": "Beard care",
-    "kind": "post",
-    "published": true,
-    "publishedAt": "2026-04-05T09:00:00.000Z",
-    "updatedAt": "2026-04-05T09:00:00.000Z"
-  },
-  {
-    "id": "pg_demo_4",
-    "slug": "how-often-should-you-wash-your-hair",
-    "title_en": "How Often Should You Actually Wash Your Hair?",
-    "title_el": "Πόσο συχνά πρέπει να λούζεσαι;",
-    "excerpt_en": "Not every day. Not once a week. The answer depends on your hair type — and what you're putting in it.",
-    "excerpt_el": "Ούτε κάθε μέρα, ούτε μία φορά τη βδομάδα. Η απάντηση εξαρτάται από τον τύπο του μαλλιού σου.",
-    "body_en": "<p>Daily shampoo is the single most common reason we see dull, brittle hair. The scalp needs its natural oils — strip them every day and it fights back by producing more.</p><h2>Fine, straight hair</h2><p>Every 2 days. Use a sulfate-free formula and alternate with water-only rinses.</p><h2>Thick or wavy</h2><p>Every 3 days is plenty. Conditioner only on the mid-lengths and ends — never on the scalp.</p><h2>Heavy product users</h2><p>If you use pomade or clay, you need to clarify once a week with a stronger wash. Water alone won't break waxes down.</p><h2>Water temperature matters</h2><p>Warm to open the cuticle, cold at the end to close it. Thirty seconds of cold makes a visible difference in shine.</p>",
-    "body_el": "<p>Το καθημερινό λούσιμο είναι ο πρώτος λόγος που βλέπουμε μπερδεμένα, άτονα μαλλιά. Το τριχωτό χρειάζεται τα φυσικά του έλαια.</p>",
-    "image": "/blog/hair.svg",
-    "tags": [
-      "hair",
-      "shampoo",
-      "routine"
-    ],
-    "category": "Hair care",
-    "kind": "post",
-    "published": true,
-    "publishedAt": "2026-04-02T09:00:00.000Z",
-    "updatedAt": "2026-04-02T09:00:00.000Z"
-  },
-  {
-    "id": "pg_demo_5",
-    "slug": "behind-the-chair-andreas",
-    "title_en": "Behind the Chair — A Morning with Andreas",
-    "title_el": "Στην καρέκλα — ένα πρωινό με τον Ανδρέα",
-    "excerpt_en": "Fifteen years, three chairs, one straight razor. A short interview with our master barber about the craft.",
-    "excerpt_el": "Δεκαπέντε χρόνια, τρεις καρέκλες, ένα ξυράφι. Μια κουβέντα με τον master barber μας.",
-    "body_en": "<p>We caught up with Andreas between appointments. He started cutting at seventeen, apprenticed in Athens, and has been at Oakline since day one.</p><h2>On the straight razor</h2><p>\"The razor is honest. It tells you if your technique is good — there's no second chance. That's why I still use it every day, even when clippers would be faster.\"</p><h2>On regulars</h2><p>\"You learn a person's hair over time. After the third or fourth visit, you know before they sit down what they want. That relationship is the whole job, really. The cut is almost a side effect.\"</p><h2>On what's changed</h2><p>\"Men care more now. Fifteen years ago, a haircut was a chore. Now it's something guys look forward to. That change is the best thing that's happened to the industry.\"</p>",
-    "body_el": "<p>Μιλήσαμε με τον Ανδρέα ανάμεσα στα ραντεβού. Κουρεύει από τα δεκαεφτά του και είναι στο Oakline από την πρώτη μέρα.</p>",
-    "image": "/blog/chair.svg",
-    "tags": [
-      "interview",
-      "team",
-      "craft"
-    ],
-    "category": "Behind the chair",
-    "kind": "post",
-    "published": true,
-    "publishedAt": "2026-03-28T09:00:00.000Z",
-    "updatedAt": "2026-03-28T09:00:00.000Z"
-  },
-  {
-    "id": "pg_demo_6",
-    "slug": "new-hours-extended-saturdays",
-    "title_en": "New Hours — We're Open Later on Saturdays",
-    "title_el": "Νέες ώρες — Ανοιχτά αργότερα το Σάββατο",
-    "excerpt_en": "Starting next month, Saturday service runs until 8pm. Same barbers, same booking flow, more slots.",
-    "excerpt_el": "Από τον επόμενο μήνα, το Σάββατο μένουμε ανοιχτοί μέχρι τις 8 το βράδυ. Ίδιοι μπαρμπέρηδες, περισσότερα διαθέσιμα ραντεβού.",
-    "body_en": "<p>Saturday has been our most-requested day for extended hours, and we listened. From May 1st, we're open until 20:00 on Saturdays, across all three chairs.</p><p>The online booking calendar already reflects the new hours — anything from 18:00 onwards on Saturday is now bookable. Walk-ins welcome too, though we'd recommend booking ahead during peak slots.</p><h2>Other days</h2><p>Tuesday through Friday stays at 09:00–21:00 as before. Sunday remains closed — some things are sacred.</p>",
-    "body_el": "<p>Από την 1η Μαΐου, ανοιχτά μέχρι τις 20:00 κάθε Σάββατο. Οι νέες ώρες φαίνονται ήδη στο online ημερολόγιο.</p>",
-    "image": "/blog/news.svg",
-    "tags": [
-      "hours",
-      "announcement"
-    ],
-    "category": "News",
-    "kind": "post",
-    "published": true,
-    "publishedAt": "2026-04-18T09:00:00.000Z",
-    "updatedAt": "2026-04-18T09:00:00.000Z"
+    "publishedAt": "2026-02-05T10:00:00.000Z",
+    "updatedAt": "2026-02-05T10:00:00.000Z"
   }
 ]

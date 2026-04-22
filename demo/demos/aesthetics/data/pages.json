@@ -1,66 +1,86 @@
 [
   {
-    "id": "post_first_facial",
-    "type": "post",
+    "id": "pg_first_facial",
     "slug": "what-to-expect-first-facial",
-    "category": "treatments",
     "title_en": "What to expect at your first Assessment Facial",
     "title_el": "Τι να περιμένεις στο πρώτο Assessment Facial",
     "excerpt_en": "A 90-minute session that maps your skin, sets your home-care plan, and opens the door to every other treatment on the menu.",
     "excerpt_el": "Συνεδρία 90 λεπτών που χαρτογραφεί το δέρμα σου και καθορίζει τη σωστή πορεία.",
     "body_en": "<p>The first appointment is about getting the right starting line, not the quickest facial. We review medical and skincare history, examine skin under magnification, and build a 90-day plan that combines the right in-studio treatments with the right products at home.</p><h2>What's included</h2><p>Consultation, double-cleanse, enzyme or gentle acid exfoliation, extractions where indicated, and a customised mask + finishing serums. You leave with a written plan and a timeline.</p><h2>Why the Assessment is non-negotiable</h2><p>Advanced treatments — microneedling, deeper peels, Hydrafacial boosters — need an informed starting point. Jumping in without it risks over-treating and setting you back weeks.</p>",
     "body_el": "<p>Το πρώτο ραντεβού είναι για σωστή αφετηρία, όχι για γρήγορο αποτέλεσμα. Βλέπουμε ιατρικό ιστορικό, εξετάζουμε το δέρμα, και φτιάχνουμε πρόγραμμα 90 ημερών.</p>",
-    "coverImage": "/demos/aesthetics/blog-1.jpg",
-    "publishedAt": "2026-03-18T10:00:00Z",
-    "readingMinutes": 4,
-    "enabled": true
+    "image": "/demos/aesthetics/blog-1.jpg",
+    "tags": [
+      "facial",
+      "consultation",
+      "first-visit"
+    ],
+    "category": "treatments",
+    "kind": "post",
+    "published": true,
+    "publishedAt": "2026-03-18T10:00:00.000Z",
+    "updatedAt": "2026-03-18T10:00:00.000Z"
   },
   {
-    "id": "post_acne_bootcamp",
-    "type": "post",
+    "id": "pg_acne_bootcamp",
     "slug": "face-reality-acne-bootcamp",
-    "category": "acne",
     "title_en": "The Face Reality Acne Bootcamp — how the 90-day programme works",
     "title_el": "Face Reality Acne Bootcamp — πώς δουλεύει σε 90 μέρες",
     "excerpt_en": "Structured acne clearing for adults. Consultation, home routine, bi-weekly progress facials, and written accountability.",
     "excerpt_el": "Πρόγραμμα για ακμή ενηλίκων. Consultation, πρωτόκολλο σπιτιού, θεραπείες ανά δύο εβδομάδες, γραπτή υπευθυνότητα.",
     "body_en": "<p>Acne isn't just a surface problem — hormonal, dietary and product triggers all feed it. Face Reality is the protocol we use for consistent clearing in adults who want their skin calm, not camouflaged.</p><h2>Phase 1 — weeks 1–4</h2><p>Product acclimation. We introduce the home routine in three steps and monitor for irritation. Early breakouts are expected and part of the clearing curve.</p><h2>Phase 2 — weeks 5–10</h2><p>Escalation. Concentrations are adjusted, actives are layered, and bi-weekly in-studio facials accelerate turnover.</p>",
-    "body_el": "<p>Η ακμή δεν είναι μόνο επιφανειακή — ορμονικά, διατροφή και προϊόντα παίζουν ρόλο. Το Face Reality είναι το πρωτόκολλο που χρησιμοποιούμε για σταθερή εκκαθάριση.</p>",
-    "coverImage": "/demos/aesthetics/blog-2.jpg",
-    "publishedAt": "2026-03-10T10:00:00Z",
-    "readingMinutes": 5,
-    "enabled": true
+    "body_el": "<p>Η ακμή δεν είναι μόνο επιφανειακή — ορμονικά, διατροφή και προϊόντα παίζουν ρόλο.</p>",
+    "image": "/demos/aesthetics/blog-2.jpg",
+    "tags": [
+      "acne",
+      "face-reality",
+      "protocol"
+    ],
+    "category": "acne",
+    "kind": "post",
+    "published": true,
+    "publishedAt": "2026-03-10T10:00:00.000Z",
+    "updatedAt": "2026-03-10T10:00:00.000Z"
   },
   {
-    "id": "post_bridal",
-    "type": "post",
+    "id": "pg_bridal",
     "slug": "bridal-skin-six-months",
-    "category": "bridal",
     "title_en": "Bridal skin plan — where to start six months out",
     "title_el": "Πρόγραμμα νυφικού δέρματος — 6 μήνες πριν τον γάμο",
     "excerpt_en": "The single biggest mistake is doing something aggressive two weeks before the wedding. Here's the timeline that actually works.",
-    "excerpt_el": "Το πιο συχνό λάθος είναι μια επιθετική θεραπεία 2 εβδομάδες πριν. Εδώ το σωστό χρονοδιάγραμμα.",
+    "excerpt_el": "Το πιο συχνό λάθος είναι μια επιθετική θεραπεία 2 εβδομάδες πριν.",
     "body_en": "<p>A glowing wedding-day face is never the result of a single last-minute treatment. Six months of consistent, compounding work is.</p><h2>Month 6 — map the skin</h2><p>Assessment Facial, baseline photos, home routine adjusted. Any concerns on the table now.</p><h2>Months 5–3 — do the work</h2><p>Monthly Hydrafacial or signature facial. If microneedling suits, run a series of three, six weeks apart.</p><h2>Month 1 — refine, don't reinvent</h2><p>Nothing new this month. Gentle maintenance facial 10–14 days before the wedding. No new products.</p>",
-    "body_el": "<p>Λαμπερό δέρμα τη μέρα του γάμου δε βγαίνει από μία θεραπεία της τελευταίας στιγμής. Βγαίνει από 6 μήνες συνέπεια.</p>",
-    "coverImage": "/demos/aesthetics/blog-3.jpg",
-    "publishedAt": "2026-02-20T10:00:00Z",
-    "readingMinutes": 6,
-    "enabled": true
+    "body_el": "<p>Λαμπερό δέρμα τη μέρα του γάμου δε βγαίνει από μία θεραπεία της τελευταίας στιγμής.</p>",
+    "image": "/demos/aesthetics/blog-3.jpg",
+    "tags": [
+      "bridal",
+      "planning",
+      "long-game"
+    ],
+    "category": "bridal",
+    "kind": "post",
+    "published": true,
+    "publishedAt": "2026-02-20T10:00:00.000Z",
+    "updatedAt": "2026-02-20T10:00:00.000Z"
   },
   {
-    "id": "post_home_routine",
-    "type": "post",
+    "id": "pg_home_routine",
     "slug": "minimalist-home-routine",
-    "category": "skincare",
     "title_en": "The 4-step routine that does 90% of the work",
     "title_el": "Η 4-step ρουτίνα που κάνει το 90% της δουλειάς",
     "excerpt_en": "Cleanse, actives, moisturiser, SPF. Everything else is optional — here is how to pick the right version of each.",
     "excerpt_el": "Καθάρισμα, ενεργά, ενυδάτωση, αντηλιακό. Τα υπόλοιπα είναι προαιρετικά.",
-    "body_en": "<p>Most people over-complicate skincare. The four steps below — executed consistently — outperform any 10-step routine you see on social media.</p><h2>1. Cleanse</h2><p>Morning: water-only or gentle gel. Night: oil or balm first, then gel.</p><h2>2. Actives</h2><p>Vitamin C in the morning, retinoid at night. Start slow, layer hydration on either side.</p><h2>3. Moisturiser</h2><p>Match it to the season, not to the bottle's marketing.</p><h2>4. SPF</h2><p>Broad-spectrum SPF 30+, every single morning — yes, even on overcast days, yes, even indoors by a window.</p>",
-    "body_el": "<p>Οι περισσότεροι περιπλέκουμε τη ρουτίνα. Τα τέσσερα βήματα παρακάτω κάνουν τη δουλειά αν εφαρμοστούν με συνέπεια.</p>",
-    "coverImage": "/demos/aesthetics/blog-4.jpg",
-    "publishedAt": "2026-02-05T10:00:00Z",
-    "readingMinutes": 5,
-    "enabled": true
+    "body_en": "<p>Most people over-complicate skincare. The four steps below — executed consistently — outperform any 10-step routine you see on social media.</p><h2>1. Cleanse</h2><p>Morning: water-only or gentle gel. Night: oil or balm first, then gel.</p><h2>2. Actives</h2><p>Vitamin C in the morning, retinoid at night. Start slow, layer hydration on either side.</p><h2>3. Moisturiser</h2><p>Match it to the season, not to the bottle's marketing.</p><h2>4. SPF</h2><p>Broad-spectrum SPF 30+, every single morning.</p>",
+    "body_el": "<p>Οι περισσότεροι περιπλέκουμε τη ρουτίνα.</p>",
+    "image": "/demos/aesthetics/blog-4.jpg",
+    "tags": [
+      "home-care",
+      "routine",
+      "skincare"
+    ],
+    "category": "skincare",
+    "kind": "post",
+    "published": true,
+    "publishedAt": "2026-02-05T10:00:00.000Z",
+    "updatedAt": "2026-02-05T10:00:00.000Z"
   }
 ]

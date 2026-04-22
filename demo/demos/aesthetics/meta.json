@@ -5,22 +5,22 @@
   "tagline": "Your skin is your canvas.",
   "description": "Premium aesthetics studio template: facials, microneedling, dermaplaning, chemical peels, memberships, bridal packages, skincare shop, and bilingual blog. Warm cream-and-bronze palette, tuned for Main-Line and medi-spa conversion.",
   "cover": "/demos/aesthetics/cover.svg?v=1",
-  "accentColor": "#b88957",
+  "accentColor": "#b8877e",
   "theme": {
-    "background": "#faf6f0",
-    "foreground": "#2b1c14",
-    "primary": "#b88957",
-    "primaryAccent": "#d8a977",
-    "surface": "rgba(43, 28, 20, 0.04)",
-    "surfaceStrong": "rgba(43, 28, 20, 0.08)",
-    "border": "rgba(43, 28, 20, 0.12)",
-    "borderStrong": "rgba(43, 28, 20, 0.22)",
-    "muted": "rgba(43, 28, 20, 0.65)",
-    "muted2": "rgba(43, 28, 20, 0.45)"
+    "background": "#f6f7f9",
+    "foreground": "#1c2530",
+    "primary": "#b8877e",
+    "primaryAccent": "#d3b2ab",
+    "surface": "rgba(28, 37, 48, 0.04)",
+    "surfaceStrong": "rgba(28, 37, 48, 0.08)",
+    "border": "rgba(28, 37, 48, 0.12)",
+    "borderStrong": "rgba(28, 37, 48, 0.22)",
+    "muted": "rgba(28, 37, 48, 0.60)",
+    "muted2": "rgba(28, 37, 48, 0.40)"
   },
   "typography": {
-    "headingFont": "cormorant",
-    "bodyFont": "inter"
+    "headingFont": "fraunces",
+    "bodyFont": "manrope"
   },
   "bookingMode": "appointment",
   "industryId": "aesthetics",
@@ -34,14 +34,55 @@
   },
   "nav": {
     "links": [
-      { "id": "home", "label_en": "Home", "label_el": "Αρχική", "href": "/", "enabled": true },
-      { "id": "services", "label_en": "Services", "label_el": "Υπηρεσίες", "href": "/services", "enabled": true },
-      { "id": "memberships", "label_en": "Memberships", "label_el": "Συνδρομές", "href": "/memberships", "enabled": true },
-      { "id": "shop", "label_en": "Shop", "label_el": "Κατάστημα", "href": "/shop", "enabled": true },
-      { "id": "gallery", "label_en": "Gallery", "label_el": "Γκαλερί", "href": "/gallery", "enabled": true },
-      { "id": "about", "label_en": "About", "label_el": "Σχετικά", "href": "/about", "enabled": true },
-      { "id": "contact", "label_en": "Contact", "label_el": "Επικοινωνία", "href": "/contact", "enabled": true },
-      { "id": "blog", "label_en": "Journal", "label_el": "Blog", "href": "/blog", "enabled": true }
+      {
+        "id": "home",
+        "label_en": "Home",
+        "label_el": "Αρχική",
+        "href": "/",
+        "enabled": true
+      },
+      {
+        "id": "services",
+        "label_en": "Services",
+        "label_el": "Υπηρεσίες",
+        "href": "/services",
+        "enabled": true
+      },
+      {
+        "id": "shop",
+        "label_en": "Shop",
+        "label_el": "Κατάστημα",
+        "href": "/shop",
+        "enabled": true
+      },
+      {
+        "id": "gallery",
+        "label_en": "Gallery",
+        "label_el": "Γκαλερί",
+        "href": "/gallery",
+        "enabled": true
+      },
+      {
+        "id": "about",
+        "label_en": "About",
+        "label_el": "Σχετικά",
+        "href": "/about",
+        "enabled": true
+      },
+      {
+        "id": "contact",
+        "label_en": "Contact",
+        "label_el": "Επικοινωνία",
+        "href": "/contact",
+        "enabled": true
+      },
+      {
+        "id": "blog",
+        "label_en": "Journal",
+        "label_el": "Blog",
+        "href": "/blog",
+        "enabled": true
+      }
     ],
     "bookLabel_en": "Book a treatment",
     "bookLabel_el": "Κλείσε ραντεβού",
