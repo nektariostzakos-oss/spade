@@ -55,7 +55,9 @@ type Input = {
   teammates?: string[];
 };
 
-// Files whose content is BUSINESS DATA and should be cleared in "clean" mode
+// Runtime data — per-install records. Always empty on fresh install unless
+// the buyer explicitly picked "demo" mode (then we carry the showcase samples
+// so they can see how it feels populated).
 const OPERATIONAL = new Set([
   "bookings.json",
   "orders.json",
@@ -67,13 +69,18 @@ const OPERATIONAL = new Set([
   "emails.log.json",
 ]);
 
-// Files that represent TEMPLATE CONTENT (always copy from bundle)
-const TEMPLATE_FILES = new Set([
+// Catalogue data — services, staff, products, pages, blog taxonomy, site
+// copy. In demo mode we copy the template's showcase content. In clean mode
+// the buyer starts with a genuinely empty catalogue and builds it themselves
+// — otherwise "clean" is just a re-skinned demo.
+const TEMPLATE_ARRAYS = new Set([
   "products.json",
   "pages.json",
   "blog-categories.json",
   "services.json",
   "staff.json",
+]);
+const TEMPLATE_OBJECTS = new Set([
   "content.json",
 ]);
 
@@ -89,6 +96,10 @@ async function copyIfExists(src: string, dst: string) {
 
 async function writeEmptyArray(dst: string) {
   await fs.writeFile(dst, "[]\n", "utf-8");
+}
+
+async function writeEmptyObject(dst: string) {
+  await fs.writeFile(dst, "{}\n", "utf-8");
 }
 
 export async function POST(req: NextRequest) {
@@ -137,23 +148,37 @@ export async function POST(req: NextRequest) {
 
   await fs.mkdir(DATA_DIR, { recursive: true });
 
-  // 1. Copy template content files
   const templateDataDir = path.join(templateDir, "data");
-  let templateFiles: string[] = [];
-  try {
-    templateFiles = await fs.readdir(templateDataDir);
-  } catch {}
-  for (const f of templateFiles) {
-    if (!TEMPLATE_FILES.has(f)) continue;
-    await copyIfExists(path.join(templateDataDir, f), path.join(DATA_DIR, f));
-  }
 
-  // 2. Operational data: either empty or carry demo samples
-  for (const f of OPERATIONAL) {
-    const bundlePath = path.join(templateDataDir, f);
+  // 1. Catalogue data (services / staff / products / pages / blog / content).
+  // Demo mode copies the showcase; clean mode writes empty defaults so the
+  // buyer actually starts from a blank site.
+  for (const f of TEMPLATE_ARRAYS) {
     const dst = path.join(DATA_DIR, f);
     if (body.mode === "demo") {
-      const copied = await copyIfExists(bundlePath, dst);
+      const copied = await copyIfExists(path.join(templateDataDir, f), dst);
+      if (!copied) await writeEmptyArray(dst);
+    } else {
+      await writeEmptyArray(dst);
+    }
+  }
+  for (const f of TEMPLATE_OBJECTS) {
+    const dst = path.join(DATA_DIR, f);
+    if (body.mode === "demo") {
+      const copied = await copyIfExists(path.join(templateDataDir, f), dst);
+      if (!copied) await writeEmptyObject(dst);
+    } else {
+      await writeEmptyObject(dst);
+    }
+  }
+
+  // 2. Operational data (bookings / orders / views / clients / audit / etc).
+  // Demo mode carries sample records if the bundle has any; clean mode is
+  // always empty.
+  for (const f of OPERATIONAL) {
+    const dst = path.join(DATA_DIR, f);
+    if (body.mode === "demo") {
+      const copied = await copyIfExists(path.join(templateDataDir, f), dst);
       if (!copied) await writeEmptyArray(dst);
     } else {
       await writeEmptyArray(dst);
