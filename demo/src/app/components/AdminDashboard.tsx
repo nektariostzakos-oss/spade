@@ -190,6 +190,13 @@ export default function AdminDashboard({
               </>
             )}
             <a
+              href="/admin/schedule"
+              className="rounded-full border border-white/15 px-3 py-1.5 text-[10px] uppercase tracking-widest text-white/70 transition-colors hover:bg-white/10 sm:px-4 sm:py-2 sm:text-xs"
+            >
+              <span className="hidden sm:inline">Schedule</span>
+              <span className="sm:hidden">Day</span>
+            </a>
+            <a
               href="/"
               className="rounded-full border border-white/15 px-3 py-1.5 text-[10px] uppercase tracking-widest text-white/70 transition-colors hover:bg-white/10 sm:px-4 sm:py-2 sm:text-xs"
             >

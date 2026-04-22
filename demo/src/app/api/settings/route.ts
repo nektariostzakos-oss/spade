@@ -14,6 +14,12 @@ export async function GET() {
   if (settings.ai) {
     settings.ai = { ...settings.ai, apiKey: settings.ai.apiKey ? "********" : "" };
   }
+  if (settings.payments) {
+    settings.payments = {
+      ...settings.payments,
+      stripeSecretKey: settings.payments.stripeSecretKey ? "********" : "",
+    };
+  }
   return NextResponse.json({ settings });
 }
 
@@ -30,6 +36,9 @@ export async function PATCH(req: NextRequest) {
   }
   if (body.ai?.apiKey === "********") {
     body.ai.apiKey = current.ai?.apiKey ?? "";
+  }
+  if (body.payments?.stripeSecretKey === "********") {
+    body.payments.stripeSecretKey = current.payments?.stripeSecretKey ?? "";
   }
 
   await saveSettings(body);

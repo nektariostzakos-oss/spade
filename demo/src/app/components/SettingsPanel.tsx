@@ -237,8 +237,15 @@ export default function SettingsPanel() {
   const [savingTpl, setSavingTpl] = useState(false);
   const [tplSavedAt, setTplSavedAt] = useState<string | null>(null);
   const [tab, setTab] = useState<
-    "business" | "brand" | "nav" | "email" | "seo" | "analytics"
+    "business" | "brand" | "nav" | "email" | "seo" | "analytics" | "payments"
   >("business");
+  const [payments, setPayments] = useState<{
+    stripeSecretKey: string;
+    stripePublishableKey: string;
+    currency: string;
+  }>({ stripeSecretKey: "", stripePublishableKey: "", currency: "GBP" });
+  const [savingPay, setSavingPay] = useState(false);
+  const [paySavedAt, setPaySavedAt] = useState<string | null>(null);
   const [analytics, setAnalytics] = useState<AnalyticsSettings>({
     ga4: "",
     gtm: "",
@@ -325,10 +332,27 @@ export default function SettingsPanel() {
             metaPixel: "",
             ...d.settings.analytics,
           });
+        if (d.settings?.payments)
+          setPayments({
+            stripeSecretKey: d.settings.payments.stripeSecretKey || "",
+            stripePublishableKey: d.settings.payments.stripePublishableKey || "",
+            currency: d.settings.payments.currency || "GBP",
+          });
         if (d.settings?.ai?.apiKey) setAiApiKey(d.settings.ai.apiKey);
         setLoading(false);
       });
   }, []);
+
+  async function savePayments() {
+    setSavingPay(true);
+    await fetch("/api/settings", {
+      method: "PATCH",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ payments }),
+    });
+    setSavingPay(false);
+    setPaySavedAt(new Date().toLocaleTimeString());
+  }
 
   async function saveAnalytics() {
     setSavingAn(true);
@@ -512,6 +536,7 @@ export default function SettingsPanel() {
     { id: "nav", label: "Navigation" },
     { id: "email", label: "Email" },
     { id: "seo", label: "SEO" },
+    { id: "payments", label: "Payments" },
     { id: "analytics", label: "Analytics" },
   ];
 
@@ -1590,6 +1615,57 @@ export default function SettingsPanel() {
           </ul>
         </div>
       </div>
+    </div>
+    )}
+
+    {tab === "payments" && (
+    <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-8 backdrop-blur">
+      <h2 className="mb-1 font-serif text-2xl">9. Payments (Stripe)</h2>
+      <p className="mb-6 text-sm text-white/55">
+        Paste your Stripe keys to accept card payments on shop orders. Leave
+        blank to use the manual &ldquo;we&rsquo;ll contact you about
+        payment&rdquo; flow. Your keys never leave the server.
+      </p>
+      <div className="grid gap-4 md:grid-cols-[2fr_1fr]">
+        <Field
+          label="Stripe secret key"
+          value={payments.stripeSecretKey}
+          onChange={(v) => setPayments({ ...payments, stripeSecretKey: v })}
+          placeholder="sk_live_… or sk_test_…"
+        />
+        <Field
+          label="Currency (3-letter)"
+          value={payments.currency}
+          onChange={(v) => setPayments({ ...payments, currency: v.toUpperCase().slice(0, 3) })}
+          placeholder="GBP"
+        />
+      </div>
+      <div className="mt-4">
+        <Field
+          label="Stripe publishable key (optional, for future on-site Checkout)"
+          value={payments.stripePublishableKey}
+          onChange={(v) => setPayments({ ...payments, stripePublishableKey: v })}
+          placeholder="pk_live_… or pk_test_…"
+        />
+      </div>
+      <div className="mt-6 flex flex-wrap items-center gap-3">
+        <button
+          onClick={savePayments}
+          disabled={savingPay}
+          className="rounded-full bg-[#c9a961] px-7 py-3 text-xs font-semibold uppercase tracking-widest text-black disabled:opacity-50"
+        >
+          {savingPay ? "Saving…" : "Save payments"}
+        </button>
+        {paySavedAt && (
+          <span className="text-xs text-emerald-300">Saved at {paySavedAt}</span>
+        )}
+      </div>
+      <p className="mt-6 rounded-lg border border-white/10 bg-white/[0.02] p-3 text-xs text-white/50">
+        Use a <strong className="text-white/70">test key</strong> while you try it,
+        then swap to the live key when you&rsquo;re ready. Test card:{" "}
+        <code className="rounded bg-black/40 px-1.5 py-0.5">4242 4242 4242 4242</code>,
+        any future expiry, any CVC.
+      </p>
     </div>
     )}
 
