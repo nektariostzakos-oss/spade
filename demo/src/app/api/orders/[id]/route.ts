@@ -16,7 +16,15 @@ export async function PATCH(
   if (!allowed.includes(status)) {
     return NextResponse.json({ error: "Bad status" }, { status: 400 });
   }
-  const o = await updateOrderStatus(id, status as OrderStatus);
+  let o;
+  try {
+    o = await updateOrderStatus(id, status as OrderStatus);
+  } catch (e) {
+    return NextResponse.json(
+      { error: e instanceof Error ? e.message : "Update failed" },
+      { status: 409 }
+    );
+  }
   if (!o) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
   // Cancelling an order that issued gift cards should invalidate those

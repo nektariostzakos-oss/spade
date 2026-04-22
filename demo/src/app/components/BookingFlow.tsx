@@ -397,11 +397,16 @@ export default function BookingFlow() {
                       <div className="flex items-start justify-between gap-4">
                         <p className="font-serif text-lg">{pickName(s)}</p>
                         <p className="font-serif text-lg text-[#c9a961]">
-                          £{s.price}
+                          {s.fromPrice ? (lang === "el" ? "από £" : "from £") : "£"}{s.price}
                         </p>
                       </div>
                       <p className="mt-1 text-xs uppercase tracking-widest text-white/40">
                         {s.duration} {t("minutes")}
+                        {s.requiresPatchTest && (
+                          <span className="ml-2 rounded-full bg-amber-500/20 px-2 py-0.5 text-[9px] text-amber-200">
+                            {lang === "el" ? "Patch test" : "Patch test"}
+                          </span>
+                        )}
                       </p>
                       <p className="mt-2 text-sm text-white/55">{pickDesc(s)}</p>
                     </button>

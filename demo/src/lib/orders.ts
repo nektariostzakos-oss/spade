@@ -74,6 +74,12 @@ export async function updateOrderStatus(
     const all = await readAll();
     const idx = all.findIndex((o) => o.id === id);
     if (idx === -1) return null;
+    const current = all[idx].status;
+    // Terminal states: cancelled / completed. No resurrection.
+    const TERMINAL: OrderStatus[] = ["cancelled", "completed"];
+    if (TERMINAL.includes(current) && status !== current) {
+      throw new Error(`Cannot change order from ${current} to ${status}.`);
+    }
     all[idx].status = status;
     await writeAll(all);
     return all[idx];

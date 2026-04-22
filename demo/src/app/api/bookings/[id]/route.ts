@@ -38,7 +38,15 @@ export async function PATCH(
   const allowed = ["pending", "confirmed", "completed", "cancelled"];
   if (!allowed.includes(status))
     return NextResponse.json({ error: "Bad status" }, { status: 400 });
-  const updated = await updateStatus(id, status);
+  let updated;
+  try {
+    updated = await updateStatus(id, status);
+  } catch (e) {
+    return NextResponse.json(
+      { error: e instanceof Error ? e.message : "Update failed" },
+      { status: 409 }
+    );
+  }
   if (!updated)
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   await auditLog({ userId: me.id, userEmail: me.email, action: `booking.${status}`, target: id });
