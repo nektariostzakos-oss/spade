@@ -53,7 +53,7 @@ type Business = {
   email: string;
 };
 
-type Admin = { email: string; password: string; confirm: string; licenseCode?: string };
+type Admin = { email: string; password: string; confirm: string };
 
 const STEPS = [
   { id: 0, label: "Welcome" },
@@ -210,24 +210,11 @@ export default function InstallWizard() {
       }),
     });
     await narration;
+    setInstalling(false);
     if (r.ok) {
-      // Install succeeded — session cookie is now set. If the buyer pasted a
-      // licence code, activate it while we're still authenticated. A bad code
-      // is non-fatal: the install still finishes and we surface the message.
-      if (admin.licenseCode && admin.licenseCode.trim()) {
-        try {
-          await fetch("/api/license", {
-            method: "POST",
-            headers: { "content-type": "application/json" },
-            body: JSON.stringify({ code: admin.licenseCode.trim() }),
-          });
-        } catch {}
-      }
-      setInstalling(false);
       setDone(true);
       try { localStorage.removeItem(DRAFT_KEY); } catch {}
     } else {
-      setInstalling(false);
       const d = await r.json().catch(() => ({ error: "Install failed" }));
       setError(d.error || "Install failed");
     }
@@ -570,7 +557,7 @@ function Welcome({ onStart }: { onStart: () => void }) {
         <p className="text-[11px] text-white/40 sm:text-right">
           Under 2 minutes · No credit card · Works offline
           <br />
-          <span className="text-white/60">Licence code optional — you keep the site either way.</span>
+          <span className="text-white/60">Everything editable from the admin dashboard.</span>
         </p>
       </div>
     </div>
@@ -1430,26 +1417,6 @@ function AdminStep({
         )}
       </div>
 
-      {/* Licence activation (optional) — the hook for the auto-issuance flow.
-          Buyer can paste their signed code now, or skip and add it later from
-          Admin → Settings → Licence. Either way, nothing stops the install. */}
-      <div className="mt-6 rounded-2xl border border-white/10 bg-white/[0.02] p-5">
-        <div className="mb-2 flex items-center justify-between">
-          <p className="text-[10px] uppercase tracking-[0.3em] text-[#c9a961]">Activation code (optional)</p>
-          <p className="text-[10px] text-white/40">Skip if you don't have one</p>
-        </div>
-        <p className="text-xs text-white/55">
-          If you bought Atelier, paste the code from your receipt email. The
-          code is offline-verified — we never phone home. You can always add
-          it later from <code className="text-white/75">Admin → Settings → Licence</code>.
-        </p>
-        <input
-          value={value.licenseCode || ""}
-          onChange={(e) => onChange({ ...value, licenseCode: e.target.value })}
-          placeholder="atl_xxxxxxxx.yyyyyyyy"
-          className="mt-3 w-full rounded-xl border border-white/15 bg-white/[0.04] px-4 py-2.5 text-sm text-white placeholder-white/30 outline-none focus:border-[#c9a961]/60 font-mono"
-        />
-      </div>
     </div>
   );
 }
