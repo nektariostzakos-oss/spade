@@ -292,6 +292,18 @@ export default function BookingFlow() {
             {t("book.success.email_sent")}
           </p>
 
+          {appliedCoupon && (
+            <p className="mt-2 text-xs uppercase tracking-widest" style={{ color: "#c9a961" }}>
+              {lang === "el" ? "Εφαρμόστηκε έκπτωση" : "Discount applied"} · {appliedCoupon.code} · −£{appliedCoupon.discount.toFixed(2)}
+            </p>
+          )}
+
+          <p className="mx-auto mt-2 max-w-md text-xs text-white/40">
+            {lang === "el"
+              ? `Ακύρωση δωρεάν έως ${business.bookingRules?.cancellationWindowHours ?? 4} ώρες πριν.`
+              : `Free cancellation up to ${business.bookingRules?.cancellationWindowHours ?? 4}h before.`}
+          </p>
+
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             {(() => {
               const startDt = new Date(`${date}T${time}:00`);

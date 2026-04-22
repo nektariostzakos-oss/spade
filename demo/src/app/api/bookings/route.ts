@@ -27,9 +27,8 @@ export async function GET(req: NextRequest) {
   const barber = url.searchParams.get("barber");
 
   if (date && barber) {
-    // `taken` = all slots blocked by existing bookings + their service
-    // buffers (not just the exact start time). Plus slots outside the
-    // selected staff's own working hours / lunch break.
+    // `taken` = slots blocked by existing bookings (buffer-aware) plus slots
+    // outside the chosen stylist's working hours / lunch break for that day.
     const services = await listAdminServices();
     const bufferById = new Map(
       services.map((s) => [s.id, Math.max(0, Number(s.bufferMinutes) || 0)])
@@ -40,21 +39,29 @@ export async function GET(req: NextRequest) {
       (sid) => bufferById.get(sid) ?? 0
     );
 
-    let unavailable: string[] = occupied;
+    const blocked = new Set<string>(occupied);
+
+    // If a specific stylist is chosen and they don't work that day (or the
+    // requested slot is during their break), mark the whole daily grid as
+    // blocked so the UI shows "no times available". We derive the daily
+    // grid from getSlotsForDay against business hours.
     if (barber !== "any") {
       const staff = (await listAdminStaff()).find((s) => s.id === barber);
       if (staff) {
         const [y, m, d] = date.split("-").map(Number);
         const dow = new Date(Date.UTC(y, (m || 1) - 1, d || 1)).getUTCDay();
         const filter = slotFilterForStaff(staff, dow);
+        const business = await loadBusiness();
+        const grid = getSlotsForDay(dow, business.hours);
         if (filter === null) {
-          // Staff doesn't work this day at all — return empty-availability.
-          // We can't easily tell the client "everything blocked" without the slot grid,
-          // so we rely on the client filtering via its own slot source.
+          for (const s of grid) blocked.add(s);
+        } else {
+          for (const s of grid) if (!filter(s)) blocked.add(s);
         }
       }
     }
-    return NextResponse.json({ taken: Array.from(new Set(unavailable)) });
+
+    return NextResponse.json({ taken: Array.from(blocked) });
   }
 
   const me = await currentUser();
