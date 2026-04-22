@@ -1,9 +1,9 @@
 {
   "smtp": { "host": "", "port": 587, "user": "", "pass": "", "from": "", "secure": "tls" },
   "branding": {
-    "logoUrl": "",
-    "logoUrlDark": "",
-    "faviconUrl": "",
+    "logoUrl": "/brand/oakline-logo-light.svg",
+    "logoUrlDark": "/brand/oakline-logo-dark.svg",
+    "faviconUrl": "/brand/oakline-favicon.svg",
     "wordmark": "OAKLINE",
     "tagline_en": "Scissors · London",
     "tagline_el": "Ψαλίδι · Λονδίνο"
