@@ -7,7 +7,7 @@ Atelier ships as a standard Node.js Next.js app. Works on any Hostinger plan tha
 | ZIP | When |
 |---|---|
 | `spade-nextjs-clean.zip` | New customer — first visit triggers the Atelier installer wizard at `/setup` |
-| `spade-nextjs.zip` | Demo / preview — pre-seeded with Spade Barber content, ready at `/` |
+| `spade-nextjs.zip` | Demo / preview — pre-seeded with Oakline Scissors content, ready at `/` |
 
 Both are at the repo root, kept fresh by CI.
 
@@ -42,8 +42,8 @@ Click **Restart Application**. Site is live.
 
 ## 5. First-time setup
 
-- **Clean variant:** visit your URL → the **Atelier wizard** opens. Pick a template (Spade Barber, Verde Cucina), choose demo data or clean install, fill business info, create admin account, install. ~2 minutes.
-- **Demo variant:** visit `/admin/login` — default seed `admin@spade.gr` / `spade2026`. Change the password immediately in **Settings → Users**.
+- **Clean variant:** visit your URL → the **Atelier wizard** opens. Pick a template, choose demo data or clean install, fill business info, create admin account, install. ~2 minutes.
+- **Demo variant:** visit `/admin/login` — default seed `admin@yoursalon.local` / `change-me`. The first login forces a password change before the dashboard opens.
 
 ## 6. Wire up email + analytics (optional)
 
