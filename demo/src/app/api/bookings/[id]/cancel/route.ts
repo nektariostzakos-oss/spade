@@ -44,14 +44,15 @@ export async function POST(
     );
   }
 
-  // Enforce the 4h cancellation window (mirror of the admin self-service page).
+  // Enforce the cancellation window from business settings (default 4h).
   const business = await loadBusiness();
   const tz = business.timezone || "Europe/Athens";
   const slotTs = wallClockInTzToUtc(booking.date, booking.time, tz);
   const hoursUntil = (slotTs - Date.now()) / 3_600_000;
-  if (hoursUntil <= 4) {
+  const windowH = business.bookingRules?.cancellationWindowHours ?? 4;
+  if (hoursUntil <= windowH) {
     return NextResponse.json(
-      { error: "Less than 4 hours before the appointment. Please call us instead." },
+      { error: `Less than ${windowH} hours before the appointment. Please call us instead.` },
       { status: 400 }
     );
   }

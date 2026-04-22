@@ -45,7 +45,8 @@ export default async function AvailabilitySnapshot() {
   const tz = business.timezone || "Europe/Athens";
   const today = todayIsoInTz(tz);
   const taken = await getTakenSlots(today, "any");
-  const cutoff = nowMinutesInTz(tz) + 45;
+  const leadTime = business.bookingRules?.leadTimeMinutes ?? 45;
+  const cutoff = nowMinutesInTz(tz) + leadTime;
 
   const dayIdx = dayOfWeekInTz(tz);
   const dowEn = DAY_NAMES_EN[dayIdx];

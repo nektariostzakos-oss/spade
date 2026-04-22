@@ -54,6 +54,18 @@ export type BusinessSettings = {
   /** Target link for the post-visit review email. Defaults to a Google
    * search for the business name + city if not set. */
   reviewUrl?: string;
+  /** Booking operational rules. Defaults applied where unset. */
+  bookingRules?: {
+    /** Minimum minutes from now before a slot can be booked. Default 45. */
+    leadTimeMinutes?: number;
+    /** Free cancellation window, in hours. Default 4. */
+    cancellationWindowHours?: number;
+    /** Optional deposit percent (0–100). 0 = no deposit. Rendered as a note;
+     * payment collection is out-of-scope for the template. */
+    depositPercent?: number;
+    /** No-show / late-cancel fee percent (0–100). Default 50. */
+    noShowFeePercent?: number;
+  };
 };
 
 export type NavLink = {

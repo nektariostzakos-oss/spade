@@ -34,7 +34,8 @@ async function computeNextSlot(): Promise<NextSlotInfo> {
     const todayIdx = dayOfWeekInTz(tz);
     const todayDow = DAY_KEYS[todayIdx];
     const todayHours = business.hours?.find((h) => h.day === todayDow);
-    const cutoff = nowMinutesInTz(tz) + 45;
+    const leadTime = business.bookingRules?.leadTimeMinutes ?? 45;
+    const cutoff = nowMinutesInTz(tz) + leadTime;
 
     // Today's free slots (if open)
     if (!todayHours?.closed) {

@@ -36,7 +36,8 @@ export default async function ClientBookingPage({
   const now = Date.now();
   const hoursUntil = (slotTs - now) / 3_600_000;
   const isPast = hoursUntil < 0;
-  const cancelAllowed = !isPast && hoursUntil > 4 && booking.status !== "cancelled" && booking.status !== "completed";
+  const windowH = business.bookingRules?.cancellationWindowHours ?? 4;
+  const cancelAllowed = !isPast && hoursUntil > windowH && booking.status !== "cancelled" && booking.status !== "completed";
   const isCancelled = booking.status === "cancelled";
   const lang = booking.lang === "el" ? "el" : "en";
 
@@ -92,8 +93,8 @@ export default async function ClientBookingPage({
         ) : (
           <p className="mt-8 rounded-lg border px-4 py-3 text-xs"
             style={{ borderColor: "color-mix(in srgb, var(--gold) 30%, transparent)", background: "color-mix(in srgb, var(--gold) 8%, transparent)", color: "var(--foreground)" }}>
-            {L("Free cancellation window has closed (4 hours before). Please call or WhatsApp us if you need to change this.",
-               "Το περιθώριο δωρεάν ακύρωσης έκλεισε (4 ώρες πριν). Πάρε μας τηλέφωνο ή WhatsApp αν χρειάζεσαι αλλαγή.")}
+            {L(`Free cancellation window has closed (${windowH}h before). Please call or WhatsApp us if you need to change this.`,
+               `Το περιθώριο δωρεάν ακύρωσης έκλεισε (${windowH} ώρες πριν). Πάρε μας τηλέφωνο ή WhatsApp αν χρειάζεσαι αλλαγή.`)}
           </p>
         )}
 

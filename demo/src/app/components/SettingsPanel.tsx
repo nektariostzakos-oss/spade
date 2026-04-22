@@ -722,6 +722,64 @@ export default function SettingsPanel() {
       </div>
 
       <h3 className="mt-8 mb-3 text-xs uppercase tracking-widest text-white/40">
+        Booking rules
+      </h3>
+      <div className="grid gap-4 md:grid-cols-4">
+        <Field
+          label="Lead time (min)"
+          value={String(business.bookingRules?.leadTimeMinutes ?? 45)}
+          onChange={(v) =>
+            setBusinessLocal({
+              ...business,
+              bookingRules: {
+                ...(business.bookingRules ?? {}),
+                leadTimeMinutes: Math.max(0, Number(v) || 0),
+              },
+            })
+          }
+        />
+        <Field
+          label="Cancellation window (h)"
+          value={String(business.bookingRules?.cancellationWindowHours ?? 4)}
+          onChange={(v) =>
+            setBusinessLocal({
+              ...business,
+              bookingRules: {
+                ...(business.bookingRules ?? {}),
+                cancellationWindowHours: Math.max(0, Number(v) || 0),
+              },
+            })
+          }
+        />
+        <Field
+          label="Deposit %"
+          value={String(business.bookingRules?.depositPercent ?? 0)}
+          onChange={(v) =>
+            setBusinessLocal({
+              ...business,
+              bookingRules: {
+                ...(business.bookingRules ?? {}),
+                depositPercent: Math.min(100, Math.max(0, Number(v) || 0)),
+              },
+            })
+          }
+        />
+        <Field
+          label="No-show fee %"
+          value={String(business.bookingRules?.noShowFeePercent ?? 50)}
+          onChange={(v) =>
+            setBusinessLocal({
+              ...business,
+              bookingRules: {
+                ...(business.bookingRules ?? {}),
+                noShowFeePercent: Math.min(100, Math.max(0, Number(v) || 0)),
+              },
+            })
+          }
+        />
+      </div>
+
+      <h3 className="mt-8 mb-3 text-xs uppercase tracking-widest text-white/40">
         Opening hours
       </h3>
       <p className="mb-2 text-xs text-white/40">
