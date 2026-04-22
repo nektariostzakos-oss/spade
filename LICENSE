@@ -1,0 +1,75 @@
+Atelier — Commercial Template License
+=====================================
+
+Copyright © Mindscrollers LLC. All rights reserved.
+
+This software (the "Template") is distributed under a commercial
+end-user license. By downloading, installing, or deploying the
+Template, you agree to the terms below.
+
+1.  GRANT OF LICENSE
+    Each purchase of the Template grants the buyer ("Licensee") a
+    non-exclusive, non-transferable license to install the Template
+    on ONE production website per license purchased. Staging,
+    preview, and local development copies of that same website are
+    unlimited.
+
+2.  PERMITTED USES
+    Licensee may:
+    (a) modify the Template's source code for the licensed website;
+    (b) replace branding, content, and images with the end client's;
+    (c) deploy to any hosting provider the Licensee controls;
+    (d) retain customisations under the Licensee's own copyright,
+        provided the underlying Template remains subject to this
+        license.
+
+3.  PROHIBITED USES
+    Licensee may NOT:
+    (a) resell, sublicense, lease, or redistribute the Template or
+        any substantial portion of it to third parties, whether
+        modified or not;
+    (b) include the Template in any other template marketplace,
+        starter kit, or collection offered for sale or download;
+    (c) remove or alter the "Designed by Mindscrollers LLC"
+        attribution in the Footer unless an "Extended" license has
+        been purchased separately;
+    (d) use the Template to build a SaaS product that resells the
+        Template's functionality without a separate SaaS license.
+
+4.  MULTIPLE SITES
+    A single-site license covers one production deployment. For
+    multiple clients, purchase a license per site, or contact
+    Mindscrollers LLC for a multi-site / agency license.
+
+5.  OWNERSHIP
+    Mindscrollers LLC retains all intellectual property rights in
+    the Template. Nothing in this license transfers ownership.
+
+6.  THIRD-PARTY COMPONENTS
+    The Template includes open-source dependencies listed in
+    package.json, each governed by its own license (MIT / ISC /
+    Apache 2.0). Nothing in this license overrides those.
+
+7.  WARRANTY DISCLAIMER
+    The Template is provided "AS IS" without warranty of any kind.
+    Mindscrollers LLC disclaims all warranties, express or implied,
+    including fitness for a particular purpose and non-infringement.
+
+8.  LIMITATION OF LIABILITY
+    In no event shall Mindscrollers LLC be liable for any indirect,
+    incidental, special, or consequential damages arising out of
+    the use of the Template, even if advised of the possibility of
+    such damages. The total aggregate liability is capped at the
+    amount actually paid by the Licensee for the license.
+
+9.  TERMINATION
+    This license terminates automatically if Licensee breaches any
+    term. On termination, Licensee must cease all use and destroy
+    all copies.
+
+10. GOVERNING LAW
+    This license is governed by the laws of Greece. Disputes go to
+    the courts of Athens, unless a different jurisdiction is agreed
+    in writing.
+
+For licensing questions: hello@mindscrollers.com
