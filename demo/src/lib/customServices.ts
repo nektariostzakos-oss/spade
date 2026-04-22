@@ -20,6 +20,12 @@ export type CustomService = {
   /** Show as "From £X" rather than a fixed price (useful for colour services
    * where length / thickness changes the final bill). */
   fromPrice?: boolean;
+  /** When true, new clients need a 48h patch test before their first booking.
+   * Booking flow will show a warning and the admin profile will flag it. */
+  requiresPatchTest?: boolean;
+  /** Optional: tie this service to a category of add-ons (e.g. colour can add
+   * bond treatment). Stored as service IDs the booking flow offers as extras. */
+  addOnIds?: string[];
   category?: string;
   enabled: boolean;
   order: number;

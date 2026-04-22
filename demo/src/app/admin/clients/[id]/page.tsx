@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { currentUser } from "../../../../lib/auth";
 import { getClientDetail } from "../../../../lib/clients";
+import { referralCodeForClient } from "../../../../lib/referralCodes";
 import ClientProfileActions from "./ClientProfileActions";
 
 export const metadata = {
@@ -24,6 +25,7 @@ export default async function ClientProfilePage({
 
   const recentBookings = client.bookings.slice(0, 10);
   const completed = client.bookings.filter((b) => b.status === "completed").length;
+  const referralCode = await referralCodeForClient(client.id);
 
   return (
     <div className="min-h-screen bg-[#0a0806] px-6 py-10 text-white">
@@ -64,6 +66,18 @@ export default async function ClientProfilePage({
             ))}
           </div>
         )}
+
+        <div className="mt-6 rounded-xl border border-white/10 bg-white/[0.02] p-5">
+          <p className="text-[10px] uppercase tracking-[0.3em] text-[#c9a961]">Referral code</p>
+          <div className="mt-2 flex flex-wrap items-center gap-3">
+            <code className="rounded-md bg-black/40 px-3 py-2 font-mono text-lg text-[#c9a961]">
+              {referralCode}
+            </code>
+            <span className="text-xs text-white/50">
+              Share with friends — 10% off for them when they use it at checkout.
+            </span>
+          </div>
+        </div>
 
         <ClientProfileActions client={client} />
 

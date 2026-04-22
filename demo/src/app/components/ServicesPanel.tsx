@@ -13,6 +13,7 @@ type Svc = {
   price: number;
   bufferMinutes?: number;
   fromPrice?: boolean;
+  requiresPatchTest?: boolean;
   category?: string;
   enabled: boolean;
   order: number;
@@ -71,6 +72,10 @@ export default function ServicesPanel() {
           <label className="flex items-center gap-2">
             <input type="checkbox" checked={!!draft.fromPrice} onChange={(e) => setDraft({ ...draft, fromPrice: e.target.checked })} />
             <span className="text-sm">Price is variable — show as "From £X"</span>
+          </label>
+          <label className="flex items-center gap-2">
+            <input type="checkbox" checked={!!draft.requiresPatchTest} onChange={(e) => setDraft({ ...draft, requiresPatchTest: e.target.checked })} />
+            <span className="text-sm">Requires patch test (48h before, for new clients)</span>
           </label>
           <F label="Description (EN)" value={draft.desc} onChange={(v) => setDraft({ ...draft, desc: v })} textarea />
           <F label="Description (EL)" value={draft.desc_el || ""} onChange={(v) => setDraft({ ...draft, desc_el: v })} textarea />

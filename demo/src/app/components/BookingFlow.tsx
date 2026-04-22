@@ -23,6 +23,8 @@ type LiveService = {
   desc_en: string;
   desc_el: string;
   tkey?: string;
+  fromPrice?: boolean;
+  requiresPatchTest?: boolean;
 };
 
 type Step = 1 | 2 | 3 | 4 | 5;
@@ -83,7 +85,30 @@ export default function BookingFlow() {
       desc_el: t(`${s.tkey}.desc`),
     })) as LiveService[],
   });
-  const services: LiveService[] = (live.items as LiveService[]) ?? [];
+  // Prefer the admin-managed services.json (includes fromPrice /
+  // requiresPatchTest / bufferMinutes); fall back to the editable
+  // content section if the API isn't there.
+  const [liveOverride, setLiveOverride] = useState<LiveService[] | null>(null);
+  useEffect(() => {
+    fetch("/api/services")
+      .then((r) => r.ok ? r.json() : null)
+      .then((d) => {
+        if (!d?.services?.length) return;
+        setLiveOverride(d.services.map((s: { id: string; name: string; desc: string; price: number; duration: number; fromPrice?: boolean; requiresPatchTest?: boolean }) => ({
+          id: s.id,
+          name_en: s.name,
+          name_el: s.name,
+          desc_en: s.desc,
+          desc_el: s.desc,
+          price: s.price,
+          duration: s.duration,
+          fromPrice: s.fromPrice,
+          requiresPatchTest: s.requiresPatchTest,
+        })));
+      })
+      .catch(() => {});
+  }, []);
+  const services: LiveService[] = liveOverride ?? ((live.items as LiveService[]) ?? []);
   const pickName = (s: LiveService) =>
     lang === "el" ? s.name_el || s.name_en : s.name_en;
   const pickDesc = (s: LiveService) =>
@@ -609,8 +634,16 @@ export default function BookingFlow() {
                 transition={{ duration: 0.3 }}
               >
                 <h3 className="mb-6 font-serif text-2xl">{t("book.step.confirm")}</h3>
+                {service.requiresPatchTest && (
+                  <div className="mb-5 rounded-lg border px-4 py-3 text-sm"
+                    style={{ borderColor: "color-mix(in srgb, #f59e0b 40%, transparent)", background: "color-mix(in srgb, #f59e0b 10%, transparent)", color: "#fcd34d" }}>
+                    {lang === "el"
+                      ? "Για πρώτη βαφή χρειάζεται patch test 48 ώρες πριν. Θα επικοινωνήσουμε μαζί σου για να το κανονίσουμε δωρεάν."
+                      : "First-time colour clients need a free 48h patch test. We'll be in touch to arrange it before this appointment."}
+                  </div>
+                )}
                 <dl className="divide-y divide-white/10 border-y border-white/10">
-                  <Row label={t("book.sum.service")} value={`${pickName(service)} · £${service.price}`} />
+                  <Row label={t("book.sum.service")} value={`${service.fromPrice ? (lang === "el" ? "από £" : "from £") : "£"}${service.price} · ${pickName(service)}`} />
                   <Row label={t("book.sum.duration")} value={`${service.duration} ${t("minutes")}`} />
                   <Row label={t("book.sum.barber")} value={barber.name} />
                   <Row label={t("book.sum.date")} value={date} />
