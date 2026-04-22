@@ -8,7 +8,8 @@ const ALLOWED = new Set([
   "bookings.json", "orders.json", "products.json", "users.json", "content.json",
   "settings.json", "clients.json", "coupons.json", "reviews.json", "pages.json",
   "waitlist.json", "views.json", "services.json", "staff.json", "holidays.json",
-  "audit.json",
+  "audit.json", "gift-cards.json", "blog-categories.json", "transformations.json",
+  "install-stats.json", "emails.log.json", "barber-knowledge.json",
 ]);
 
 export async function GET() {

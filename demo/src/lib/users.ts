@@ -15,6 +15,10 @@ export type User = {
   barberId?: string;
   passwordHash: string;
   createdAt: string;
+  /** Set on the factory-seeded admin account. Forces a password change
+   * before the owner can use any admin feature. Cleared the moment a
+   * new password is set via PATCH /api/users/[id]. */
+  mustChangePassword?: boolean;
 };
 
 export type PublicUser = Omit<User, "passwordHash">;
@@ -100,6 +104,8 @@ export async function ensureSeedAdmin(): Promise<void> {
     role: "admin",
     passwordHash: hashPassword("oakline2026"),
     createdAt: new Date().toISOString(),
+    // Fresh installs MUST change this before using anything.
+    mustChangePassword: true,
   };
   await writeAll([seed]);
 }
@@ -154,6 +160,8 @@ export async function updatePassword(
   const idx = all.findIndex((u) => u.id === id);
   if (idx === -1) return false;
   all[idx].passwordHash = hashPassword(newPassword);
+  // Clear the forced-change flag the moment someone actually sets a new password.
+  all[idx].mustChangePassword = false;
   await writeAll(all);
   return true;
 }

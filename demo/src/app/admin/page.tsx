@@ -35,6 +35,7 @@ export default async function AdminPage() {
         email: user.email,
         role: user.role,
         barberId: user.barberId,
+        mustChangePassword: !!user.mustChangePassword,
       }}
     />
   );

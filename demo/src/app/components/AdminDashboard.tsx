@@ -17,12 +17,14 @@ import BookingsCalendar from "./BookingsCalendar";
 import SettingsHub from "./SettingsHub";
 import LaunchChecklist from "./LaunchChecklist";
 import WalkInBookingModal from "./WalkInBookingModal";
+import ForcePasswordChange from "./ForcePasswordChange";
 
 type Me = {
   id: string;
   email: string;
   role: "admin" | "barber";
   barberId?: string;
+  mustChangePassword?: boolean;
 };
 
 const STATUSES: { id: "all" | BookingStatus; label: string }[] = [
@@ -482,6 +484,14 @@ export default function AdminDashboard({
         <WalkInBookingModal
           onClose={() => setWalkInOpen(false)}
           onCreated={() => router.refresh()}
+        />
+      )}
+
+      {me.mustChangePassword && (
+        <ForcePasswordChange
+          userId={me.id}
+          email={me.email}
+          onDone={() => router.refresh()}
         />
       )}
     </div>
