@@ -2,6 +2,7 @@ import nodemailer from "nodemailer";
 import { promises as fs } from "fs";
 import path from "path";
 import type { Booking } from "./bookings";
+import { signBookingId } from "./bookingToken";
 import {
   loadSmtp,
   smtpReady,
@@ -9,6 +10,8 @@ import {
   loadBusiness,
   type EmailTemplate,
 } from "./settings";
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://oakline.studio";
 
 const LOG_FILE = path.join(process.cwd(), "data", "emails.log.json");
 
@@ -205,6 +208,7 @@ export const EMAIL_PLACEHOLDERS = [
   "{business}",
   "{address}",
   "{city}",
+  "{manage_url}",
 ] as const;
 
 async function renderTemplate(
@@ -214,7 +218,19 @@ async function renderTemplate(
 ): Promise<{ subject: string; body: string }> {
   const biz = await loadBusiness();
   const subject = lang === "el" ? tpl.subject_el : tpl.subject_en;
-  const body = lang === "el" ? tpl.body_el : tpl.body_en;
+  let body = lang === "el" ? tpl.body_el : tpl.body_en;
+  const token = await signBookingId(b.id);
+  const manageUrl = `${SITE_URL}/b/${encodeURIComponent(b.id)}?t=${token}`;
+
+  // Auto-append the manage-booking line when the template doesn't include
+  // {manage_url} (so older installs with stored templates still benefit).
+  if (!body.includes("{manage_url}")) {
+    const trailer = lang === "el"
+      ? `\n\nΑκύρωση ή αλλαγή: {manage_url}`
+      : `\n\nCancel or reschedule: {manage_url}`;
+    body = body + trailer;
+  }
+
   const vars: Record<string, string> = {
     "{name}": b.name,
     "{service}": b.serviceName,
@@ -227,6 +243,7 @@ async function renderTemplate(
     "{business}": biz.name,
     "{address}": biz.streetAddress,
     "{city}": biz.city,
+    "{manage_url}": manageUrl,
   };
   const apply = (s: string) =>
     Object.entries(vars).reduce(
@@ -234,6 +251,15 @@ async function renderTemplate(
       s
     );
   return { subject: apply(subject), body: apply(body) };
+}
+
+/**
+ * Public helper — used by the booking flow success screen when it wants to
+ * show the client the "your self-service link" URL without opening the email.
+ */
+export async function manageBookingUrl(id: string): Promise<string> {
+  const token = await signBookingId(id);
+  return `${SITE_URL}/b/${encodeURIComponent(id)}?t=${token}`;
 }
 
 export async function sendBookingConfirmation(b: Booking) {

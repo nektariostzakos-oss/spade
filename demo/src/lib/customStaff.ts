@@ -12,11 +12,39 @@ export type StaffMember = {
   photo: string;
   specialties: string[];
   enabled: boolean;
+  /** 0 = Sunday … 6 = Saturday. Days the staff member is in. */
   workDays: number[];
   startTime: string;
   endTime: string;
+  /** Optional lunch/break window during which this staff isn't bookable. */
+  breakStart?: string;
+  breakEnd?: string;
   order: number;
 };
+
+function toMinutes(hhmm: string): number {
+  const [h, m] = hhmm.split(":").map(Number);
+  return h * 60 + (m || 0);
+}
+
+/**
+ * Given a staff member and a 0–6 day-of-week index, return the slot filter
+ * predicate (keeps slot strings that fall inside this staff's working hours
+ * and outside their lunch break). Returns null if the staff isn't in that day.
+ */
+export function slotFilterForStaff(staff: StaffMember, dayOfWeek: number): ((slot: string) => boolean) | null {
+  if (!staff.workDays?.includes(dayOfWeek)) return null;
+  const dayStart = toMinutes(staff.startTime || "00:00");
+  const dayEnd = toMinutes(staff.endTime || "23:59");
+  const brkStart = staff.breakStart ? toMinutes(staff.breakStart) : null;
+  const brkEnd = staff.breakEnd ? toMinutes(staff.breakEnd) : null;
+  return (slot: string) => {
+    const m = toMinutes(slot);
+    if (m < dayStart || m >= dayEnd) return false;
+    if (brkStart != null && brkEnd != null && m >= brkStart && m < brkEnd) return false;
+    return true;
+  };
+}
 
 async function readAll(): Promise<StaffMember[] | null> {
   try {
@@ -54,7 +82,7 @@ export async function listAdminStaff(): Promise<StaffMember[]> {
     specialties: [],
     enabled: true,
     workDays: [1, 2, 3, 4, 5, 6],
-    startTime: "09:00",
+    startTime: "10:00",
     endTime: "21:00",
     order: i,
   }));

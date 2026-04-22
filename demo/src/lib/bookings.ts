@@ -65,6 +65,39 @@ export async function getTakenSlots(
     .map((b) => b.time);
 }
 
+/**
+ * Block out a window based on existing bookings' duration + optional buffer
+ * time. Returns an array of slot times (HH:MM) that cannot be booked on
+ * the given date for the given staff member because an existing booking
+ * is already running during that slot (or its clean-up buffer).
+ *
+ * `step` is the slot grid granularity in minutes (default 30).
+ */
+export async function getOccupiedSlots(
+  date: string,
+  barberId: string,
+  getBufferForService: (serviceId: string) => number = () => 0,
+  step = 30
+): Promise<string[]> {
+  const all = await readAll();
+  const blocked = new Set<string>();
+  for (const b of all) {
+    if (b.date !== date) continue;
+    if (b.status === "cancelled") continue;
+    if (barberId !== "any" && b.barberId !== barberId && b.barberId !== "any") continue;
+    const [h, m] = b.time.split(":").map(Number);
+    const start = h * 60 + (m || 0);
+    const buffer = getBufferForService(b.serviceId);
+    const end = start + (b.duration || step) + buffer;
+    for (let t = start; t < end; t += step) {
+      const hh = Math.floor(t / 60).toString().padStart(2, "0");
+      const mm = (t % 60).toString().padStart(2, "0");
+      blocked.add(`${hh}:${mm}`);
+    }
+  }
+  return Array.from(blocked);
+}
+
 export async function createBooking(input: NewBooking): Promise<Booking> {
   const all = await readAll();
   const conflict = all.find(

@@ -69,7 +69,7 @@ export default function BookingFlow() {
   const [notes, setNotes] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [done, setDone] = useState<{ ref: string } | null>(null);
+  const [done, setDone] = useState<{ ref: string; manageToken?: string } | null>(null);
   const [honeypot, setHoneypot] = useState("");
 
   const live = useSection("services", {
@@ -175,7 +175,7 @@ export default function BookingFlow() {
       });
       const d = await res.json();
       if (!res.ok) throw new Error(d.error || t("book.error.network"));
-      setDone({ ref: d.booking.id });
+      setDone({ ref: d.booking.id, manageToken: d.manageToken });
     } catch (e) {
       setError(e instanceof Error ? e.message : t("book.error.network"));
     } finally {
@@ -263,6 +263,17 @@ export default function BookingFlow() {
               );
             })()}
           </div>
+
+          {done.manageToken && (
+            <div className="mt-6">
+              <a
+                href={`/b/${encodeURIComponent(done.ref)}?t=${done.manageToken}`}
+                className="text-xs uppercase tracking-widest text-white/60 hover:text-white"
+              >
+                {lang === "el" ? "Διαχείριση ραντεβού →" : "Manage booking →"}
+              </a>
+            </div>
+          )}
 
           <a
             href="/"

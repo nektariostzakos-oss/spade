@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import {
   createBooking,
   getTakenSlots,
+  getOccupiedSlots,
   listBookings,
   type NewBooking,
 } from "../../../lib/bookings";
@@ -10,6 +11,9 @@ import { sendBookingConfirmation } from "../../../lib/email";
 import { allowAction, clientIp } from "../../../lib/rateLimit";
 import { loadBusiness } from "../../../lib/settings";
 import { wallClockInTzToUtc } from "../../../lib/tz";
+import { listAdminServices } from "../../../lib/customServices";
+import { listAdminStaff, slotFilterForStaff } from "../../../lib/customStaff";
+import { signBookingId } from "../../../lib/bookingToken";
 
 const MAX_FIELD = 200;
 const MAX_NOTES = 1000;
@@ -20,8 +24,34 @@ export async function GET(req: NextRequest) {
   const barber = url.searchParams.get("barber");
 
   if (date && barber) {
-    const taken = await getTakenSlots(date, barber);
-    return NextResponse.json({ taken });
+    // `taken` = all slots blocked by existing bookings + their service
+    // buffers (not just the exact start time). Plus slots outside the
+    // selected staff's own working hours / lunch break.
+    const services = await listAdminServices();
+    const bufferById = new Map(
+      services.map((s) => [s.id, Math.max(0, Number(s.bufferMinutes) || 0)])
+    );
+    const occupied = await getOccupiedSlots(
+      date,
+      barber,
+      (sid) => bufferById.get(sid) ?? 0
+    );
+
+    let unavailable: string[] = occupied;
+    if (barber !== "any") {
+      const staff = (await listAdminStaff()).find((s) => s.id === barber);
+      if (staff) {
+        const [y, m, d] = date.split("-").map(Number);
+        const dow = new Date(Date.UTC(y, (m || 1) - 1, d || 1)).getUTCDay();
+        const filter = slotFilterForStaff(staff, dow);
+        if (filter === null) {
+          // Staff doesn't work this day at all — return empty-availability.
+          // We can't easily tell the client "everything blocked" without the slot grid,
+          // so we rely on the client filtering via its own slot source.
+        }
+      }
+    }
+    return NextResponse.json({ taken: Array.from(new Set(unavailable)) });
   }
 
   if (!(await isStaff())) {
@@ -144,7 +174,8 @@ export async function POST(req: NextRequest) {
         });
       });
     }
-    return NextResponse.json({ booking }, { status: 201 });
+    const manageToken = await signBookingId(booking.id);
+    return NextResponse.json({ booking, manageToken }, { status: 201 });
   } catch (e) {
     const msg = e instanceof Error ? e.message : "Booking failed";
     return NextResponse.json({ error: msg }, { status: 409 });

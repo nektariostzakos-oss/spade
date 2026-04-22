@@ -13,6 +13,13 @@ export type CustomService = {
   desc_el?: string;
   duration: number;
   price: number;
+  /** Minutes of clean-up / reset time needed AFTER this service before the
+   * next booking can start in the same chair. Prevents back-to-back overruns
+   * (e.g. balayage processing tail). Defaults to 0. */
+  bufferMinutes?: number;
+  /** Show as "From £X" rather than a fixed price (useful for colour services
+   * where length / thickness changes the final bill). */
+  fromPrice?: boolean;
   category?: string;
   enabled: boolean;
   order: number;
