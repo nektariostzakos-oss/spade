@@ -41,6 +41,7 @@ type Template = {
   branding: { wordmark: string; tagline_en: string; tagline_el: string };
 };
 
+// Retained so old drafts that stored `mode` still deserialise; unused now.
 type Mode = "demo" | "clean";
 
 type Business = {
@@ -55,20 +56,22 @@ type Business = {
 
 type Admin = { email: string; password: string; confirm: string };
 
+// 5-step flow. Data-mode picker was dropped — every install is a clean
+// start; the buyer builds their catalogue from scratch in the admin.
 const STEPS = [
   { id: 0, label: "Welcome" },
   { id: 1, label: "Template" },
-  { id: 2, label: "Data" },
-  { id: 3, label: "Business" },
-  { id: 4, label: "Admin" },
-  { id: 5, label: "Review" },
+  { id: 2, label: "Business" },
+  { id: 3, label: "Admin" },
+  { id: 4, label: "Review" },
 ];
 
 export default function InstallWizard() {
   const [step, setStep] = useState(0);
   const [templates, setTemplates] = useState<Template[]>([]);
   const [selected, setSelected] = useState<Template | null>(null);
-  const [mode, setMode] = useState<Mode>("demo");
+  // Retained for draft compatibility; always "clean" at submit time.
+  const [mode, setMode] = useState<Mode>("clean");
   const [business, setBusiness] = useState<Business>({
     name: "", streetAddress: "", city: "", postalCode: "",
     country: "GR", phone: "", email: "",
@@ -167,14 +170,13 @@ export default function InstallWizard() {
 
   const canNext = useMemo(() => {
     if (step === 1) return !!selected;
-    if (step === 2) return !!mode;
-    if (step === 3) return business.name.trim().length > 0 && business.city.trim().length > 0;
-    if (step === 4) {
+    if (step === 2) return business.name.trim().length > 0 && business.city.trim().length > 0;
+    if (step === 3) {
       const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(admin.email);
       return emailOk && admin.password.length >= 8 && admin.password === admin.confirm;
     }
     return true;
-  }, [step, selected, mode, business, admin]);
+  }, [step, selected, business, admin]);
 
   async function install() {
     if (!selected) return;
@@ -186,7 +188,6 @@ export default function InstallWizard() {
     const narrate = async () => {
       const lines = [
         `Unpacking ${selected.name} bundle`,
-        `Seeding ${mode === "demo" ? "demo" : "clean"} content stores`,
         `Applying theme ${selected.theme.background} · typography`,
         `Creating admin account (${admin.email})`,
         `Signing you in`,
@@ -203,7 +204,7 @@ export default function InstallWizard() {
       headers: { "content-type": "application/json" },
       body: JSON.stringify({
         templateId: selected.id,
-        mode,
+        mode: "clean",
         business,
         admin: { email: admin.email, password: admin.password },
         teammates,
@@ -226,9 +227,9 @@ export default function InstallWizard() {
       if (done) return;
       const active = document.activeElement;
       const inForm = active && (active.tagName === "INPUT" || active.tagName === "TEXTAREA");
-      if (e.key === "Enter" && !e.shiftKey && !inForm && canNext && step < 5) {
+      if (e.key === "Enter" && !e.shiftKey && !inForm && canNext && step < 4) {
         setStep((s) => s + 1);
-      } else if (e.key === "Enter" && e.shiftKey && step > 0 && step <= 5) {
+      } else if (e.key === "Enter" && e.shiftKey && step > 0 && step <= 4) {
         e.preventDefault();
         setStep((s) => Math.max(0, s - 1));
       }
@@ -273,7 +274,7 @@ export default function InstallWizard() {
         <div className="mt-10 min-h-[500px]">
           <AnimatePresence mode="wait">
             {done ? (
-              <DoneStep key="done" business={business} mode={mode} template={selected} />
+              <DoneStep key="done" business={business} template={selected} />
             ) : (
               <motion.div
                 key={step}
@@ -290,13 +291,11 @@ export default function InstallWizard() {
                     onSelect={setSelected}
                   />
                 )}
-                {step === 2 && <ModeStep mode={mode} onChange={setMode} templateStats={selected?.stats} />}
-                {step === 3 && <BusinessStep value={business} onChange={setBusiness} />}
-                {step === 4 && <AdminStep value={admin} onChange={setAdmin} teammates={teammates} onTeammatesChange={setTeammates} />}
-                {step === 5 && (
+                {step === 2 && <BusinessStep value={business} onChange={setBusiness} />}
+                {step === 3 && <AdminStep value={admin} onChange={setAdmin} teammates={teammates} onTeammatesChange={setTeammates} />}
+                {step === 4 && (
                   <ReviewStep
                     template={selected!}
-                    mode={mode}
                     business={business}
                     admin={admin}
                     teammates={teammates}
@@ -311,7 +310,7 @@ export default function InstallWizard() {
           </AnimatePresence>
         </div>
 
-        {!done && step > 0 && step < 5 && (
+        {!done && step > 0 && step < 4 && (
           <div className="mt-10 flex items-center justify-between">
             <button
               onClick={() => setStep((s) => Math.max(0, s - 1))}
@@ -330,10 +329,10 @@ export default function InstallWizard() {
           </div>
         )}
 
-        {!done && step === 5 && (
+        {!done && step === 4 && (
           <div className="mt-10 flex items-center justify-between">
             <button
-              onClick={() => setStep(4)}
+              onClick={() => setStep(3)}
               disabled={installing}
               className="rounded-full border border-white/20 px-5 py-2 text-xs uppercase tracking-widest text-white/80 hover:bg-white/10 disabled:opacity-40"
             >
@@ -628,7 +627,7 @@ function TemplateStep({ templates, selected, onSelect }: { templates: Template[]
   }
   return (
     <div>
-      <p className="text-[10px] uppercase tracking-[0.4em] text-[#c9a961]">Step 1 of 5</p>
+      <p className="text-[10px] uppercase tracking-[0.4em] text-[#c9a961]">Step 1 of 4</p>
       <h2 className="mt-2 font-serif text-3xl">Pick a template</h2>
       <p className="mt-2 text-sm text-white/55">More templates coming — pick any to preview the look and feel.</p>
 
@@ -991,79 +990,6 @@ function Tag({ children }: { children: React.ReactNode }) {
   );
 }
 
-function ModeStep({ mode, onChange, templateStats }: { mode: Mode; onChange: (m: Mode) => void; templateStats?: Template["stats"] }) {
-  return (
-    <div>
-      <p className="text-[10px] uppercase tracking-[0.4em] text-[#c9a961]">Step 2 of 5</p>
-      <h2 className="mt-2 font-serif text-3xl">Start with demo data, or clean?</h2>
-      <p className="mt-2 text-sm text-white/55">You can delete anything later from the admin dashboard.</p>
-
-      <div className="mt-8 grid gap-4 sm:grid-cols-2">
-        <ModeCard
-          active={mode === "demo"}
-          onClick={() => onChange("demo")}
-          title="With demo data"
-          tag="Recommended for first-time users"
-          description="Full sample content: products, blog posts, categories, services. Best for seeing how the site will look before you replace with your own content."
-          bullets={[
-            `${templateStats?.products ?? 15} products across ${templateStats?.categories ?? 5} categories`,
-            `${templateStats?.posts ?? 6} demo blog posts`,
-            `${templateStats?.services ?? 8} service items`,
-            "Zero bookings / orders",
-          ]}
-        />
-        <ModeCard
-          active={mode === "clean"}
-          onClick={() => onChange("clean")}
-          title="Clean install"
-          tag="Recommended for production"
-          description="Template structure + theme, but empty content stores. Fastest path to adding your own real services, staff, and products."
-          bullets={[
-            "Theme, typography, nav configured",
-            "Empty products / posts / services",
-            "No demo bookings / orders",
-            "Start adding your real data immediately",
-          ]}
-        />
-      </div>
-    </div>
-  );
-}
-
-function ModeCard({
-  active, onClick, title, tag, description, bullets,
-}: {
-  active: boolean;
-  onClick: () => void;
-  title: string;
-  tag: string;
-  description: string;
-  bullets: string[];
-}) {
-  return (
-    <button
-      onClick={onClick}
-      className={`rounded-2xl border p-6 text-left transition-all ${
-        active
-          ? "border-[#c9a961] bg-[#c9a961]/10 shadow-[0_0_0_4px_rgba(201,169,97,0.15)]"
-          : "border-white/10 bg-white/[0.02] hover:border-white/30"
-      }`}
-    >
-      <p className="text-[10px] uppercase tracking-[0.3em] text-[#c9a961]">{tag}</p>
-      <h3 className="mt-2 font-serif text-2xl">{title}</h3>
-      <p className="mt-3 text-sm text-white/70">{description}</p>
-      <ul className="mt-4 space-y-1.5 text-xs text-white/60">
-        {bullets.map((b) => (
-          <li key={b} className="flex items-start gap-2">
-            <span className="text-[#c9a961]">✓</span>
-            <span>{b}</span>
-          </li>
-        ))}
-      </ul>
-    </button>
-  );
-}
-
 type ImportRow = {
   label: string;
   field: keyof Business | "description" | "favicon" | "ogImage";
@@ -1149,7 +1075,7 @@ function BusinessStep({ value, onChange }: { value: Business; onChange: (v: Busi
 
   return (
     <div>
-      <p className="text-[10px] uppercase tracking-[0.4em] text-[#c9a961]">Step 3 of 5</p>
+      <p className="text-[10px] uppercase tracking-[0.4em] text-[#c9a961]">Step 2 of 4</p>
       <h2 className="mt-2 font-serif text-3xl">Your business</h2>
       <p className="mt-2 text-sm text-white/55">This fills the contact page, JSON-LD schema, email templates, and footer. You can change any of it later.</p>
 
@@ -1323,7 +1249,7 @@ function AdminStep({
 
   return (
     <div>
-      <p className="text-[10px] uppercase tracking-[0.4em] text-[#c9a961]">Step 4 of 5</p>
+      <p className="text-[10px] uppercase tracking-[0.4em] text-[#c9a961]">Step 3 of 4</p>
       <h2 className="mt-2 font-serif text-3xl">Admin account</h2>
       <p className="mt-2 text-sm text-white/55">You'll use this to sign in at <code className="text-white/80">/admin</code> and manage everything.</p>
 
@@ -1430,10 +1356,9 @@ function Check({ ok, label }: { ok: boolean; label: string }) {
 }
 
 function ReviewStep({
-  template, mode, business, admin, teammates, installing, progress, error, onInstall,
+  template, business, admin, teammates, installing, progress, error, onInstall,
 }: {
   template: Template;
-  mode: Mode;
   business: Business;
   admin: Admin;
   teammates: string[];
@@ -1444,7 +1369,7 @@ function ReviewStep({
 }) {
   return (
     <div>
-      <p className="text-[10px] uppercase tracking-[0.4em] text-[#c9a961]">Step 5 of 5</p>
+      <p className="text-[10px] uppercase tracking-[0.4em] text-[#c9a961]">Step 4 of 4</p>
       <h2 className="mt-2 font-serif text-3xl">Review and install</h2>
       <p className="mt-2 text-sm text-white/55">Double-check, then we'll provision everything.</p>
 
@@ -1457,14 +1382,6 @@ function ReviewStep({
               <p className="text-xs text-white/50">{template.industry}</p>
             </div>
           </div>
-        </ReviewCard>
-        <ReviewCard title="Data mode">
-          <p className="font-serif text-lg">{mode === "demo" ? "With demo data" : "Clean install"}</p>
-          <p className="mt-1 text-xs text-white/50">
-            {mode === "demo"
-              ? "Pre-filled products, posts, services"
-              : "Empty content stores — add your own"}
-          </p>
         </ReviewCard>
         <ReviewCard title="Business">
           <p className="font-serif text-lg">{business.name}</p>
@@ -1541,7 +1458,7 @@ function ReviewCard({ title, children }: { title: string; children: React.ReactN
   );
 }
 
-function DoneStep({ business, mode, template }: { business: Business; mode: Mode; template: Template | null }) {
+function DoneStep({ business, template }: { business: Business; template: Template | null }) {
   const [qrSvg, setQrSvg] = useState<string>("");
   useEffect(() => {
     try {
@@ -1563,7 +1480,7 @@ function DoneStep({ business, mode, template }: { business: Business; mode: Mode
         <p className="mt-6 text-[10px] uppercase tracking-[0.4em] text-emerald-300">Atelier · Install complete</p>
         <h2 className="mt-2 font-serif text-4xl">You're live.</h2>
         <p className="mt-3 text-base text-white/70">
-          {business.name} is running on the <strong>{template?.name}</strong> template ({mode === "demo" ? "with demo data" : "clean install"}).
+          {business.name} is running on the <strong>{template?.name}</strong> template, clean install. Add your services, staff, products and posts from the admin.
         </p>
 
         <div className="mx-auto mt-8 grid max-w-2xl gap-6 sm:grid-cols-[1fr_auto] sm:items-center">
