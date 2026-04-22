@@ -126,7 +126,7 @@ def build_tgz(stage: Path, out: Path):
             tf.add(child, arcname=child.name, filter=_filter)
 
 
-# Demo variant — full Spade content + data
+# Demo variant — full Oakline showcase content + seeded data
 demo_stage = ROOT / ".zip-stage-demo"
 reset(demo_stage)
 copy_code(demo_stage)
@@ -134,8 +134,8 @@ copy_demo_data(demo_stage)
 build_zip(demo_stage, DEMO_ZIP)
 build_tgz(demo_stage, DEMO_TGZ)
 shutil.rmtree(demo_stage)
-print(f"Built: {DEMO_ZIP.name}  {DEMO_ZIP.stat().st_size:>8} bytes  (Spade demo)")
-print(f"Built: {DEMO_TGZ.name}  {DEMO_TGZ.stat().st_size:>8} bytes  (Spade demo)")
+print(f"Built: {DEMO_ZIP.name}  {DEMO_ZIP.stat().st_size:>8} bytes  (Oakline demo)")
+print(f"Built: {DEMO_TGZ.name}  {DEMO_TGZ.stat().st_size:>8} bytes  (Oakline demo)")
 
 # Clean variant — same code, blank data → wizard runs on first /admin login
 clean_stage = ROOT / ".zip-stage-clean"
