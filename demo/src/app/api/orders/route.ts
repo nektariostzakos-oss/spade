@@ -30,6 +30,18 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Spam detected" }, { status: 400 });
     }
 
+    // Per-email throttle — one buyer shouldn't generate a storm of
+    // order-confirmation emails to the same address (or to a victim's).
+    if (typeof body.email === "string" && body.email.trim().length > 0) {
+      const emailKey = body.email.trim().toLowerCase();
+      if (!allowAction(`order:email:${emailKey}`, 5, 60 * 60_000)) {
+        return NextResponse.json(
+          { error: "Too many recent orders for this email. Try again later." },
+          { status: 429 }
+        );
+      }
+    }
+
     if (!Array.isArray(body.items) || body.items.length === 0) {
       return NextResponse.json({ error: "Cart is empty." }, { status: 400 });
     }

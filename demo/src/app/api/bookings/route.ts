@@ -108,6 +108,19 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Spam detected" }, { status: 400 });
     }
 
+    // Per-email throttle — closes the email-bombing vector where an
+    // attacker uses a rotating IP to send many booking-confirmation
+    // emails to a victim's address. Exempts staff callers.
+    if (!actor && typeof body.email === "string" && body.email.trim().length > 0) {
+      const emailKey = body.email.trim().toLowerCase();
+      if (!allowAction(`book:email:${emailKey}`, 3, 60 * 60_000)) {
+        return NextResponse.json(
+          { error: "Too many recent bookings for this email. Try again later or contact us." },
+          { status: 429 }
+        );
+      }
+    }
+
     const required: (keyof NewBooking)[] = [
       "serviceId",
       "serviceName",
