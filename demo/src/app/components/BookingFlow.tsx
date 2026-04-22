@@ -71,6 +71,37 @@ export default function BookingFlow() {
   const [email, setEmail] = useState("");
   const [notes, setNotes] = useState("");
   const [addOnIds, setAddOnIds] = useState<string[]>([]);
+
+  // Restore any in-progress draft once, on mount. Browser refresh / tab
+  // switch shouldn't force the user to re-type everything.
+  useEffect(() => {
+    try {
+      const raw = window.localStorage.getItem("oakline_book_draft_v1");
+      if (!raw) return;
+      const d = JSON.parse(raw) as Partial<Record<string, string | string[] | number>>;
+      if (typeof d.serviceId === "string" && !initialServiceId && d.serviceId) setServiceId(d.serviceId);
+      if (typeof d.barberId === "string" && !initialBarberId && d.barberId) setBarberId(d.barberId);
+      if (typeof d.date === "string" && d.date) setDate(d.date);
+      if (typeof d.time === "string" && d.time) setTime(d.time);
+      if (typeof d.name === "string") setName(d.name);
+      if (typeof d.phone === "string") setPhone(d.phone);
+      if (typeof d.email === "string") setEmail(d.email);
+      if (typeof d.notes === "string") setNotes(d.notes);
+      if (Array.isArray(d.addOnIds)) setAddOnIds(d.addOnIds as string[]);
+    } catch { /* bad draft — ignore */ }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Persist every change. Skip while we're on the final success screen.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      window.localStorage.setItem(
+        "oakline_book_draft_v1",
+        JSON.stringify({ serviceId, barberId, date, time, name, phone, email, notes, addOnIds })
+      );
+    } catch {}
+  }, [serviceId, barberId, date, time, name, phone, email, notes, addOnIds]);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [done, setDone] = useState<{ ref: string; manageToken?: string } | null>(null);
@@ -218,6 +249,7 @@ export default function BookingFlow() {
       const d = await res.json();
       if (!res.ok) throw new Error(d.error || t("book.error.network"));
       setDone({ ref: d.booking.id, manageToken: d.manageToken });
+      try { window.localStorage.removeItem("oakline_book_draft_v1"); } catch {}
     } catch (e) {
       setError(e instanceof Error ? e.message : t("book.error.network"));
     } finally {

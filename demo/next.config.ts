@@ -71,6 +71,16 @@ const nextConfig: NextConfig = {
         headers: securityHeaders,
       },
       {
+        // Admin / setup / API responses must never sit in browser or
+        // proxy caches — prevents back-button access after logout and
+        // stale auth-gated JSON.
+        source: "/:path(admin|admin/.*|setup|api/.*)",
+        headers: [
+          { key: "Cache-Control", value: "no-store, no-cache, must-revalidate, private" },
+          { key: "Pragma", value: "no-cache" },
+        ],
+      },
+      {
         source: "/uploads/:path*",
         headers: [
           {

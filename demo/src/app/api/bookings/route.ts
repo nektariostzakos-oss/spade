@@ -15,6 +15,7 @@ import { wallClockInTzToUtc } from "../../../lib/tz";
 import { listAdminServices } from "../../../lib/customServices";
 import { listAdminStaff, slotFilterForStaff } from "../../../lib/customStaff";
 import { signBookingId } from "../../../lib/bookingToken";
+import { redeemCoupon, validateCoupon } from "../../../lib/coupons";
 
 const MAX_FIELD = 200;
 const MAX_NOTES = 1000;
@@ -86,6 +87,7 @@ export async function POST(req: NextRequest) {
 
     const body = (await req.json()) as NewBooking & {
       website?: string; // honeypot
+      couponCode?: string;
     };
 
     // Honeypot — real users never fill this hidden field. Skip for staff.
@@ -231,6 +233,22 @@ export async function POST(req: NextRequest) {
       body.walkIn = false;
     }
 
+    // Coupon handling for bookings. Server-side; same semantics as orders.
+    let appliedCoupon: { code: string; discount: number } | null = null;
+    if (typeof body.couponCode === "string" && body.couponCode.trim().length > 0) {
+      const gross = Number(body.price) || 0;
+      const res = await validateCoupon(body.couponCode.trim(), gross, "bookings");
+      if (!res.ok) {
+        return NextResponse.json({ error: res.error }, { status: 400 });
+      }
+      appliedCoupon = { code: res.coupon!.code, discount: res.discount ?? 0 };
+      body.price = Math.max(0, Number((gross - (res.discount ?? 0)).toFixed(2)));
+      body.notes = [body.notes, `Coupon: ${res.coupon!.code} (-£${(res.discount ?? 0).toFixed(2)})`]
+        .filter(Boolean)
+        .join(" · ");
+      await redeemCoupon(res.coupon!.id);
+    }
+
     const booking = await createBooking(body);
     if (booking.email) {
       sendBookingConfirmation(booking).catch((err) => {
@@ -241,7 +259,7 @@ export async function POST(req: NextRequest) {
       });
     }
     const manageToken = await signBookingId(booking.id);
-    return NextResponse.json({ booking, manageToken }, { status: 201 });
+    return NextResponse.json({ booking, manageToken, appliedCoupon }, { status: 201 });
   } catch (e) {
     const msg = e instanceof Error ? e.message : "Booking failed";
     return NextResponse.json({ error: msg }, { status: 409 });

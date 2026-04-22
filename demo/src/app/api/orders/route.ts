@@ -4,6 +4,7 @@ import { isStaff } from "../../../lib/auth";
 import { listProducts, releaseStock, reserveStock } from "../../../lib/products";
 import { allowAction, clientIp } from "../../../lib/rateLimit";
 import { createGiftCard } from "../../../lib/giftCards";
+import { redeemCoupon, validateCoupon } from "../../../lib/coupons";
 
 export async function GET() {
   if (!(await isStaff())) {
@@ -90,7 +91,22 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: reserve.error }, { status: 409 });
     }
 
-    const subtotal = normalized.reduce((s, it) => s + it.price * it.qty, 0);
+    const grossSubtotal = normalized.reduce((s, it) => s + it.price * it.qty, 0);
+
+    // Coupon handling — server-side, authoritative. Accepts couponCode,
+    // validates it, deducts discount from grossSubtotal, redeems on success.
+    let subtotal = grossSubtotal;
+    let appliedCoupon: { code: string; discount: number } | null = null;
+    if (typeof body.couponCode === "string" && body.couponCode.trim().length > 0) {
+      const res = await validateCoupon(body.couponCode.trim(), grossSubtotal, "products");
+      if (!res.ok) {
+        await releaseStock(normalized.map((it) => ({ id: it.id, qty: it.qty })));
+        return NextResponse.json({ error: res.error }, { status: 400 });
+      }
+      subtotal = Math.max(0, Number((grossSubtotal - (res.discount ?? 0)).toFixed(2)));
+      appliedCoupon = { code: res.coupon!.code, discount: res.discount ?? 0 };
+      await redeemCoupon(res.coupon!.id);
+    }
 
     let order;
     try {
@@ -130,7 +146,7 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    return NextResponse.json({ order, gifts }, { status: 201 });
+    return NextResponse.json({ order, gifts, appliedCoupon }, { status: 201 });
   } catch (e) {
     return NextResponse.json(
       { error: e instanceof Error ? e.message : "Order failed" },
