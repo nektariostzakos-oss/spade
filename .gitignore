@@ -14,6 +14,12 @@ demo-barber/
 # Per-deployment data
 demo/public/uploads/
 demo/data/secret.json
+demo/data/license.json
+demo/data/license-denylist.json
+
+# Licence issuance — private key must NEVER leave the seller's machine
+licences/private.pem
+licences/ledger.jsonl
 
 # OS / editor / logs
 *.log

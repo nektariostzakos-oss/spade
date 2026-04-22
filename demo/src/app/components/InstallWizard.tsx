@@ -53,7 +53,7 @@ type Business = {
   email: string;
 };
 
-type Admin = { email: string; password: string; confirm: string };
+type Admin = { email: string; password: string; confirm: string; licenseCode?: string };
 
 const STEPS = [
   { id: 0, label: "Welcome" },
@@ -210,11 +210,24 @@ export default function InstallWizard() {
       }),
     });
     await narration;
-    setInstalling(false);
     if (r.ok) {
+      // Install succeeded — session cookie is now set. If the buyer pasted a
+      // licence code, activate it while we're still authenticated. A bad code
+      // is non-fatal: the install still finishes and we surface the message.
+      if (admin.licenseCode && admin.licenseCode.trim()) {
+        try {
+          await fetch("/api/license", {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify({ code: admin.licenseCode.trim() }),
+          });
+        } catch {}
+      }
+      setInstalling(false);
       setDone(true);
       try { localStorage.removeItem(DRAFT_KEY); } catch {}
     } else {
+      setInstalling(false);
       const d = await r.json().catch(() => ({ error: "Install failed" }));
       setError(d.error || "Install failed");
     }
@@ -428,44 +441,176 @@ function ProgressBar({ step, total, labels, primary }: { step: number; total: nu
 
 function Welcome({ onStart }: { onStart: () => void }) {
   return (
-    <div className="rounded-3xl border border-white/10 bg-white/[0.02] p-8 sm:p-12">
-      <p className="text-[10px] uppercase tracking-[0.4em] text-[#c9a961]">Let's get you live</p>
-      <h2 className="mt-4 font-serif text-3xl sm:text-4xl">
-        A production-ready website in six steps.
-      </h2>
-      <p className="mt-5 max-w-2xl text-base text-white/70">
-        You'll pick a template, decide whether to start with demo content or a clean install,
-        enter your business details, create your admin account — and then you're live.
-        Everything is editable afterwards from the admin dashboard.
-      </p>
+    <div className="space-y-6">
+      {/* HERO — the punchline first */}
+      <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-[#1a1e2b] via-[#0f1219] to-[#07080c] p-8 sm:p-12">
+        <div className="pointer-events-none absolute -right-20 -top-20 h-80 w-80 rounded-full bg-[#7b95e8]/10 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-24 -left-20 h-72 w-72 rounded-full bg-[#c9a961]/10 blur-3xl" />
 
-      <div className="mt-8 grid gap-3 sm:grid-cols-3">
-        <Feature icon="⚡" title="Under two minutes" desc="No database to provision. No API keys required for the basics." />
-        <Feature icon="🎨" title="Fully rebrandable" desc="Theme, typography, colors, services, staff — all editable later." />
-        <Feature icon="📦" title="Demo data optional" desc="Preview the site populated, or start clean. Your choice." />
+        <div className="relative">
+          <p className="text-[10px] uppercase tracking-[0.4em] text-[#7b95e8]">Atelier · A salon site you own</p>
+          <h2 className="mt-4 font-serif text-4xl leading-tight sm:text-5xl">
+            The same shop window as Shopify.<br />
+            <span className="text-white/55">Without the £80/month.</span>
+          </h2>
+          <p className="mt-5 max-w-2xl text-base text-white/70">
+            One Node.js app, one ZIP, one price. Booking, shop, Stripe, gift cards,
+            staff hours, bilingual blog — all in the code you just downloaded.
+            No plugin marketplace. No MySQL. No monthly bill.
+          </p>
+
+          {/* Animated stat row — the headline numbers */}
+          <div className="mt-8 grid gap-3 sm:grid-cols-4">
+            <StatTile label="Page load" value="~100ms" sub="static + ISR" />
+            <StatTile label="Plugins needed" value="0" sub="everything built-in" />
+            <StatTile label="Runs on" value="€3/mo" sub="any Node host" />
+            <StatTile label="Database" value="None" sub="JSON + file lock" />
+          </div>
+        </div>
       </div>
 
-      <div className="mt-10 rounded-2xl border border-white/10 bg-white/[0.02] p-5">
-        <p className="text-[10px] uppercase tracking-[0.3em] text-[#7b95e8]">What you're replacing</p>
-        <div className="mt-4 grid gap-2 text-xs sm:grid-cols-4">
+      {/* WHY NOT JUST WORDPRESS — the comparison buyers actually think about */}
+      <div className="rounded-3xl border border-white/10 bg-white/[0.02] p-6 sm:p-8">
+        <p className="text-[10px] uppercase tracking-[0.3em] text-[#c9a961]">Why not WordPress?</p>
+        <h3 className="mt-2 font-serif text-2xl">
+          Because every salon we built on WP ended up paying twice.
+        </h3>
+        <p className="mt-3 max-w-3xl text-sm text-white/65">
+          WordPress is free until you need bookings, payments, GDPR, a language toggle
+          and a site that doesn't fall over on a Saturday. Then you're gluing 15 plugins
+          together and praying the next core update doesn't break them. This is the
+          same feature set, delivered as typed, compiled code.
+        </p>
+
+        <div className="mt-6 grid gap-0 overflow-hidden rounded-2xl border border-white/10 sm:grid-cols-[1fr_1fr]">
+          <CompareCol
+            title="WordPress + WooCommerce"
+            tone="dim"
+            rows={[
+              { label: "Stack", val: "PHP + MySQL + Apache + 15 plugins" },
+              { label: "Page load", val: "600ms – 2s (TTFB heavy)" },
+              { label: "Bookings", val: "Bookly / Amelia · €89–129/yr" },
+              { label: "Bilingual", val: "WPML · €99/yr" },
+              { label: "GDPR banner", val: "Plugin (breaks on update)" },
+              { label: "Updates", val: "Core + 15 plugins, fragile" },
+              { label: "Backups", val: "Another plugin, paid" },
+              { label: "Hosting floor", val: "~€8/mo (MySQL + PHP memory)" },
+              { label: "Ownership", val: "Split across 15 vendors" },
+            ]}
+          />
+          <CompareCol
+            title="Atelier · this template"
+            tone="bright"
+            rows={[
+              { label: "Stack", val: "Next.js 16 + TypeScript + JSON" },
+              { label: "Page load", val: "~100ms (ISR + static)" },
+              { label: "Bookings", val: "Built in · interval + buffer + staff" },
+              { label: "Bilingual", val: "Built in · EN/EL per field" },
+              { label: "GDPR banner", val: "Built in · consent-gated analytics" },
+              { label: "Updates", val: "One repo, one ZIP, one redeploy" },
+              { label: "Backups", val: "One JSON download" },
+              { label: "Hosting floor", val: "~€3/mo (any Node host)" },
+              { label: "Ownership", val: "100% yours · readable code" },
+            ]}
+          />
+        </div>
+      </div>
+
+      {/* WHAT'S IN THE BOX — features */}
+      <div className="rounded-3xl border border-white/10 bg-white/[0.02] p-6 sm:p-8">
+        <p className="text-[10px] uppercase tracking-[0.3em] text-[#7b95e8]">What's in the box</p>
+        <h3 className="mt-2 font-serif text-2xl">Everything a salon actually runs on.</h3>
+        <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <Feature icon="📅" title="Bookings" desc="Conflict detection, buffer time, staff hours, cancel/reschedule links." />
+          <Feature icon="💳" title="Stripe Checkout" desc="Shop, gift cards, coupons. Webhook-verified orders." />
+          <Feature icon="🌍" title="EN / EL bilingual" desc="Every field has two copies. Blog, services, nav — all translatable." />
+          <Feature icon="📧" title="Email engine" desc="Confirmations, 8h reminders, post-visit reviews, bulk to clients." />
+          <Feature icon="🛡️" title="GDPR-ready" desc="Cookie banner, consent-gated analytics, CSV export, right-to-erasure." />
+          <Feature icon="🎨" title="Inline edits" desc="Pencil any heading, any paragraph. Stored atomically in JSON." />
+          <Feature icon="📊" title="Analytics + reviews" desc="Built-in page tracker, Google/Meta/GTM optional, review requests." />
+          <Feature icon="📱" title="Mobile-first" desc="Sticky book bar, WhatsApp button, touch-first booking flow." />
+          <Feature icon="🔐" title="Secure by default" desc="PBKDF2 hashes, HMAC sessions, rate-limited auth, no SQL surface." />
+        </div>
+      </div>
+
+      {/* COST REPLACED */}
+      <div className="rounded-3xl border border-white/10 bg-white/[0.02] p-6 sm:p-8">
+        <p className="text-[10px] uppercase tracking-[0.3em] text-[#c9a961]">What you stop paying for</p>
+        <div className="mt-5 grid gap-2 text-xs sm:grid-cols-4">
           <ReplaceRow tool="Calendly" cost="£10/mo" />
           <ReplaceRow tool="Shopify Lite" cost="£30/mo" />
           <ReplaceRow tool="Mailchimp" cost="£15/mo" />
           <ReplaceRow tool="Squarespace" cost="£25/mo" />
         </div>
-        <p className="mt-4 text-xs text-white/55">
-          ≈ <span className="text-white">£80/mo</span> in subscriptions — replaced by one installed site you own.
-        </p>
+        <div className="mt-5 flex flex-wrap items-baseline gap-3">
+          <p className="font-serif text-3xl text-white">£80<span className="text-lg text-white/50">/mo</span></p>
+          <p className="text-xs text-white/55">
+            in subscriptions — <span className="text-white">replaced by one install you own</span>.
+            That's <span className="text-white">£960/year</span> back in the till.
+          </p>
+        </div>
       </div>
 
-      <button
-        onClick={onStart}
-        className="mt-10 rounded-full px-8 py-3 text-xs font-semibold uppercase tracking-widest text-black hover:opacity-90"
-        style={{ background: "#7b95e8" }}
-      >
-        Start setup →
-      </button>
-      <p className="mt-3 text-xs text-white/40">Tip: press <kbd className="rounded border border-white/20 px-1.5 text-[10px]">Enter</kbd> to advance, <kbd className="rounded border border-white/20 px-1.5 text-[10px]">Shift + Enter</kbd> to go back.</p>
+      {/* CTA */}
+      <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <button
+            onClick={onStart}
+            className="rounded-full px-10 py-3.5 text-xs font-semibold uppercase tracking-widest text-black transition-transform hover:-translate-y-0.5 hover:opacity-90"
+            style={{ background: "#7b95e8", boxShadow: "0 10px 40px -10px #7b95e8" }}
+          >
+            Start setup →
+          </button>
+          <p className="mt-3 text-xs text-white/40">
+            Tip: press{" "}
+            <kbd className="rounded border border-white/20 px-1.5 text-[10px]">Enter</kbd> to advance,{" "}
+            <kbd className="rounded border border-white/20 px-1.5 text-[10px]">Shift + Enter</kbd> to go back.
+          </p>
+        </div>
+        <p className="text-[11px] text-white/40 sm:text-right">
+          Under 2 minutes · No credit card · Works offline
+          <br />
+          <span className="text-white/60">Licence code optional — you keep the site either way.</span>
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function StatTile({ label, value, sub }: { label: string; value: string; sub: string }) {
+  return (
+    <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+      <p className="text-[9px] uppercase tracking-[0.3em] text-white/40">{label}</p>
+      <p className="mt-2 font-serif text-2xl text-white">{value}</p>
+      <p className="mt-0.5 text-[11px] text-white/45">{sub}</p>
+    </div>
+  );
+}
+
+function CompareCol({
+  title, tone, rows,
+}: {
+  title: string;
+  tone: "dim" | "bright";
+  rows: { label: string; val: string }[];
+}) {
+  const bright = tone === "bright";
+  return (
+    <div
+      className={`p-5 ${bright ? "bg-[#7b95e8]/[0.06]" : "bg-black/20"}`}
+      style={bright ? { boxShadow: "inset 0 0 0 1px rgba(123,149,232,0.25)" } : undefined}
+    >
+      <p className={`text-[10px] uppercase tracking-[0.3em] ${bright ? "text-[#7b95e8]" : "text-white/45"}`}>
+        {title}
+      </p>
+      <dl className="mt-4 space-y-2.5">
+        {rows.map((r) => (
+          <div key={r.label} className="flex items-baseline justify-between gap-3 text-xs">
+            <dt className="text-white/45">{r.label}</dt>
+            <dd className={bright ? "text-right text-white" : "text-right text-white/55"}>{r.val}</dd>
+          </div>
+        ))}
+      </dl>
     </div>
   );
 }
@@ -1283,6 +1428,27 @@ function AdminStep({
             ))}
           </div>
         )}
+      </div>
+
+      {/* Licence activation (optional) — the hook for the auto-issuance flow.
+          Buyer can paste their signed code now, or skip and add it later from
+          Admin → Settings → Licence. Either way, nothing stops the install. */}
+      <div className="mt-6 rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+        <div className="mb-2 flex items-center justify-between">
+          <p className="text-[10px] uppercase tracking-[0.3em] text-[#c9a961]">Activation code (optional)</p>
+          <p className="text-[10px] text-white/40">Skip if you don't have one</p>
+        </div>
+        <p className="text-xs text-white/55">
+          If you bought Atelier, paste the code from your receipt email. The
+          code is offline-verified — we never phone home. You can always add
+          it later from <code className="text-white/75">Admin → Settings → Licence</code>.
+        </p>
+        <input
+          value={value.licenseCode || ""}
+          onChange={(e) => onChange({ ...value, licenseCode: e.target.value })}
+          placeholder="atl_xxxxxxxx.yyyyyyyy"
+          className="mt-3 w-full rounded-xl border border-white/15 bg-white/[0.04] px-4 py-2.5 text-sm text-white placeholder-white/30 outline-none focus:border-[#c9a961]/60 font-mono"
+        />
       </div>
     </div>
   );

@@ -11,6 +11,7 @@ import BlogPanel from "./BlogPanel";
 import UsersPanel from "./UsersPanel";
 import ToolsPanel from "./ToolsPanel";
 import GiftCardsPanel from "./GiftCardsPanel";
+import LicensePanel from "./LicensePanel";
 
 type Me = { id: string; email: string; role: "admin" | "barber"; barberId?: string };
 
@@ -23,6 +24,7 @@ type Section =
   | "gifts"
   | "blog"
   | "users"
+  | "licence"
   | "tools";
 
 // Order mirrors the launch checklist — setup first, staff + services next,
@@ -37,7 +39,8 @@ const SECTIONS: { id: Section; label: string; hint?: string }[] = [
   { id: "gifts", label: "6. Gift cards", hint: "Auto-issued codes, redeem at the till" },
   { id: "blog", label: "7. Blog", hint: "Journal articles and categories" },
   { id: "users", label: "8. Users", hint: "Invite admin / stylist accounts" },
-  { id: "tools", label: "9. Tools", hint: "Backup, import, GDPR export" },
+  { id: "licence", label: "9. Licence", hint: "Activation code, tier, expiry" },
+  { id: "tools", label: "10. Tools", hint: "Backup, import, GDPR export" },
 ];
 
 export default function SettingsHub({ me }: { me: Me }) {
@@ -84,6 +87,7 @@ export default function SettingsHub({ me }: { me: Me }) {
       {section === "gifts" && <GiftCardsPanel />}
       {section === "blog" && <BlogPanel />}
       {section === "users" && <UsersPanel me={me} />}
+      {section === "licence" && <LicensePanel />}
       {section === "tools" && <ToolsPanel />}
     </div>
   );
