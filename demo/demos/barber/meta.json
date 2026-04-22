@@ -1,9 +1,9 @@
 {
   "id": "barber",
-  "name": "Spade Barber",
+  "name": "Classic Barber",
   "industry": "Barber shop",
   "tagline": "Classic grooming, modern rhythm.",
-  "description": "A premium barber shop template with hair services, beard care, a grooming product shop, gallery, gift vouchers and a bilingual blog. Dark gold-on-black aesthetic, tuned for conversion.",
+  "description": "Premium barber shop template: hair services, beard care, grooming product shop, gallery, gift vouchers and a bilingual blog. Dark gold-on-black aesthetic, tuned for conversion.",
   "cover": "/demos/barber/cover.svg?v=2",
   "accentColor": "#c9a961",
   "theme": {
@@ -25,12 +25,12 @@
   "bookingMode": "appointment",
   "industryId": "barber",
   "branding": {
-    "wordmark": "SPADE",
-    "tagline_en": "Barber · Loutraki",
-    "tagline_el": "Barber · Λουτράκι",
-    "logoUrl": "/brand/spade-logo-light.svg",
-    "logoUrlDark": "/brand/spade-logo-dark.svg",
-    "faviconUrl": "/brand/spade-favicon.svg"
+    "wordmark": "",
+    "tagline_en": "",
+    "tagline_el": "",
+    "logoUrl": "",
+    "logoUrlDark": "",
+    "faviconUrl": ""
   },
   "nav": {
     "links": [
