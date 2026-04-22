@@ -271,13 +271,13 @@ export default function BookingFlow() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mx-auto max-w-2xl rounded-2xl border border-[#c9a961]/40 bg-[#c9a961]/5 p-12 text-center"
+          className="mx-auto max-w-2xl rounded-2xl border border-[var(--gold)]/40 bg-[var(--gold)]/5 p-12 text-center"
         >
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ type: "spring", stiffness: 300, damping: 14 }}
-            className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-[#c9a961] text-2xl text-black"
+            className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-[var(--gold)] text-2xl text-black"
           >
             ✓
           </motion.div>
@@ -293,7 +293,7 @@ export default function BookingFlow() {
           </p>
 
           {appliedCoupon && (
-            <p className="mt-2 text-xs uppercase tracking-widest" style={{ color: "#c9a961" }}>
+            <p className="mt-2 text-xs uppercase tracking-widest" style={{ color: "var(--gold)" }}>
               {lang === "el" ? "Εφαρμόστηκε έκπτωση" : "Discount applied"} · {appliedCoupon.code} · −£{appliedCoupon.discount.toFixed(2)}
             </p>
           )}
@@ -402,13 +402,13 @@ export default function BookingFlow() {
                       }}
                       className={`group rounded-xl border p-5 text-left transition-colors ${
                         serviceId === s.id
-                          ? "border-[#c9a961] bg-[#c9a961]/10"
+                          ? "border-[var(--gold)] bg-[var(--gold)]/10"
                           : "border-white/10 bg-white/[0.02] hover:border-white/30"
                       }`}
                     >
                       <div className="flex items-start justify-between gap-4">
                         <p className="font-serif text-lg">{pickName(s)}</p>
-                        <p className="font-serif text-lg text-[#c9a961]">
+                        <p className="font-serif text-lg text-[var(--gold)]">
                           {s.fromPrice ? (lang === "el" ? "από £" : "from £") : "£"}{s.price}
                         </p>
                       </div>
@@ -446,7 +446,7 @@ export default function BookingFlow() {
                       }}
                       className={`rounded-xl border p-5 text-left transition-colors ${
                         barberId === b.id
-                          ? "border-[#c9a961] bg-[#c9a961]/10"
+                          ? "border-[var(--gold)] bg-[var(--gold)]/10"
                           : "border-white/10 bg-white/[0.02] hover:border-white/30"
                       }`}
                     >
@@ -488,7 +488,7 @@ export default function BookingFlow() {
                             }}
                             className={`min-w-[5.5rem] rounded-xl border px-4 py-3 text-center transition-colors ${
                               active
-                                ? "border-[#c9a961] bg-[#c9a961]/10"
+                                ? "border-[var(--gold)] bg-[var(--gold)]/10"
                                 : "border-white/10 bg-white/[0.02] hover:border-white/30"
                             }`}
                           >
@@ -584,7 +584,7 @@ export default function BookingFlow() {
                                   }}
                                   className={`rounded-lg border py-2.5 text-sm transition-colors ${
                                     active
-                                      ? "border-[#c9a961] bg-[#c9a961] text-black"
+                                      ? "border-[var(--gold)] bg-[var(--gold)] text-black"
                                       : "border-white/10 bg-white/[0.02] text-white/85 hover:border-white/40"
                                   }`}
                                 >
@@ -613,7 +613,7 @@ export default function BookingFlow() {
 
                 {service && service.addOnIds && service.addOnIds.length > 0 && (
                   <div className="mb-6 rounded-xl border border-white/10 bg-white/[0.02] p-4">
-                    <p className="text-[10px] uppercase tracking-[0.3em] text-[#c9a961]">
+                    <p className="text-[10px] uppercase tracking-[0.3em] text-[var(--gold)]">
                       {lang === "el" ? "Πρόσθεσε" : "Add to your visit"}
                     </p>
                     <div className="mt-3 space-y-2">
@@ -622,7 +622,7 @@ export default function BookingFlow() {
                         if (!addOn) return null;
                         const checked = addOnIds.includes(addOnId);
                         return (
-                          <label key={addOnId} className={`flex cursor-pointer items-center justify-between rounded-lg border px-4 py-3 transition-colors ${checked ? "border-[#c9a961] bg-[#c9a961]/10" : "border-white/10 bg-white/[0.02] hover:border-white/25"}`}>
+                          <label key={addOnId} className={`flex cursor-pointer items-center justify-between rounded-lg border px-4 py-3 transition-colors ${checked ? "border-[var(--gold)] bg-[var(--gold)]/10" : "border-white/10 bg-white/[0.02] hover:border-white/25"}`}>
                             <div className="flex items-center gap-3">
                               <input
                                 type="checkbox"
@@ -632,14 +632,14 @@ export default function BookingFlow() {
                                     e.target.checked ? [...prev, addOnId] : prev.filter((x) => x !== addOnId)
                                   );
                                 }}
-                                style={{ accentColor: "#c9a961" }}
+                                style={{ accentColor: "var(--gold)" }}
                               />
                               <div>
                                 <div className="text-sm text-white">{pickName(addOn)}</div>
                                 <div className="text-xs text-white/50">{pickDesc(addOn)}</div>
                               </div>
                             </div>
-                            <div className="text-sm text-[#c9a961]">+£{addOn.price}</div>
+                            <div className="text-sm text-[var(--gold)]">+£{addOn.price}</div>
                           </label>
                         );
                       })}
@@ -725,7 +725,7 @@ export default function BookingFlow() {
                 <button
                   onClick={() => setStep(5)}
                   disabled={!name || !phone}
-                  className="mt-8 inline-flex items-center gap-2 rounded-full bg-[#c9a961] px-7 py-3 text-sm font-semibold uppercase tracking-widest text-black disabled:cursor-not-allowed disabled:opacity-40"
+                  className="mt-8 inline-flex items-center gap-2 rounded-full bg-[var(--gold)] px-7 py-3 text-sm font-semibold uppercase tracking-widest text-black disabled:cursor-not-allowed disabled:opacity-40"
                 >
                   {t("book.btn.review")}
                 </button>
@@ -763,7 +763,7 @@ export default function BookingFlow() {
 
                 {/* Coupon / promo code */}
                 <div className="mt-6 rounded-xl border border-white/10 bg-white/[0.02] p-4">
-                  <label className="mb-2 block text-[10px] uppercase tracking-[0.3em] text-[#c9a961]">
+                  <label className="mb-2 block text-[10px] uppercase tracking-[0.3em] text-[var(--gold)]">
                     {lang === "el" ? "Κωδικός έκπτωσης" : "Promo code"}
                   </label>
                   <div className="flex flex-wrap gap-2">
@@ -800,7 +800,7 @@ export default function BookingFlow() {
                   <button
                     onClick={submit}
                     disabled={submitting}
-                    className="inline-flex items-center gap-2 rounded-full bg-[#c9a961] px-7 py-3 text-sm font-semibold uppercase tracking-widest text-black disabled:opacity-50"
+                    className="inline-flex items-center gap-2 rounded-full bg-[var(--gold)] px-7 py-3 text-sm font-semibold uppercase tracking-widest text-black disabled:opacity-50"
                   >
                     {submitting ? t("book.btn.confirming") : t("book.btn.confirm")}
                   </button>
@@ -857,9 +857,9 @@ function Stepper({ step }: { step: Step }) {
             <div
               className={`flex h-8 w-8 items-center justify-center rounded-full border text-xs font-semibold ${
                 active
-                  ? "border-[#c9a961] bg-[#c9a961] text-black"
+                  ? "border-[var(--gold)] bg-[var(--gold)] text-black"
                   : done
-                    ? "border-[#c9a961] bg-transparent text-[#c9a961]"
+                    ? "border-[var(--gold)] bg-transparent text-[var(--gold)]"
                     : "border-white/15 bg-transparent text-white/40"
               }`}
             >
@@ -875,7 +875,7 @@ function Stepper({ step }: { step: Step }) {
             {i < labels.length - 1 && (
               <div
                 className={`hidden flex-1 h-px sm:block ${
-                  done ? "bg-[#c9a961]" : "bg-white/10"
+                  done ? "bg-[var(--gold)]" : "bg-white/10"
                 }`}
               />
             )}

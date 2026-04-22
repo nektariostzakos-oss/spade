@@ -83,9 +83,9 @@ export default function CartView() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mx-auto max-w-2xl rounded-2xl border border-[#c9a961]/40 bg-[#c9a961]/5 p-12 text-center"
+          className="mx-auto max-w-2xl rounded-2xl border border-[var(--gold)]/40 bg-[var(--gold)]/5 p-12 text-center"
         >
-          <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-[#c9a961] text-2xl text-black">
+          <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-[var(--gold)] text-2xl text-black">
             ✓
           </div>
           <h2 className="font-serif text-4xl font-semibold tracking-tight">
@@ -101,14 +101,14 @@ export default function CartView() {
           </p>
 
           {done.gifts && done.gifts.length > 0 && (
-            <div className="mx-auto mt-6 max-w-md rounded-xl border border-[#c9a961]/40 bg-black/40 p-4 text-left">
-              <p className="mb-2 text-[10px] uppercase tracking-[0.3em] text-[#c9a961]">
+            <div className="mx-auto mt-6 max-w-md rounded-xl border border-[var(--gold)]/40 bg-black/40 p-4 text-left">
+              <p className="mb-2 text-[10px] uppercase tracking-[0.3em] text-[var(--gold)]">
                 {lang === "el" ? "Κωδικοί δωροεπιταγής" : "Gift card codes"}
               </p>
               <ul className="space-y-1.5 text-sm">
                 {done.gifts.map((g, i) => (
                   <li key={i} className="flex items-center justify-between gap-3">
-                    <code className="rounded bg-white/5 px-2 py-1 font-mono text-[#c9a961]">{g.code}</code>
+                    <code className="rounded bg-white/5 px-2 py-1 font-mono text-[var(--gold)]">{g.code}</code>
                     <span className="text-white/70">£{g.amount}</span>
                   </li>
                 ))}
@@ -141,7 +141,7 @@ export default function CartView() {
         </p>
         <Link
           href="/shop"
-          className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#c9a961] px-7 py-3 text-sm font-semibold uppercase tracking-widest text-black"
+          className="mt-6 inline-flex items-center gap-2 rounded-full bg-[var(--gold)] px-7 py-3 text-sm font-semibold uppercase tracking-widest text-black"
         >
           {lang === "el" ? "Στο κατάστημα" : "Go to shop"} →
         </Link>
@@ -175,7 +175,7 @@ export default function CartView() {
                 <div>
                   <Link
                     href={`/shop/${it.slug}`}
-                    className="font-serif text-lg hover:text-[#c9a961]"
+                    className="font-serif text-lg hover:text-[var(--gold)]"
                   >
                     {pick(it.name_en, it.name_el)}
                   </Link>
@@ -203,7 +203,7 @@ export default function CartView() {
                     </button>
                   </div>
                 </div>
-                <p className="font-serif text-lg text-[#c9a961]">
+                <p className="font-serif text-lg text-[var(--gold)]">
                   £{(it.price * it.qty).toFixed(2)}
                 </p>
               </motion.div>
@@ -219,7 +219,7 @@ export default function CartView() {
             <span className="text-white/60">
               {lang === "el" ? "Υποσύνολο" : "Subtotal"}
             </span>
-            <span className="font-serif text-xl text-[#c9a961]">
+            <span className="font-serif text-xl text-[var(--gold)]">
               £{total.toFixed(2)}
             </span>
           </div>
@@ -273,7 +273,7 @@ export default function CartView() {
           <button
             onClick={checkout}
             disabled={submitting}
-            className="mt-6 w-full rounded-full bg-[#c9a961] py-3 text-sm font-semibold uppercase tracking-widest text-black disabled:opacity-50"
+            className="mt-6 w-full rounded-full bg-[var(--gold)] py-3 text-sm font-semibold uppercase tracking-widest text-black disabled:opacity-50"
           >
             {submitting
               ? lang === "el"

@@ -42,7 +42,7 @@ export default function Testimonials() {
           transition={{ duration: 0.7 }}
           className="mb-16 max-w-2xl"
         >
-          <p className="mb-3 text-xs uppercase tracking-[0.3em] text-[#c9a961]">
+          <p className="mb-3 text-xs uppercase tracking-[0.3em] text-[var(--gold)]">
             {pick(c.eyebrow_en, c.eyebrow_el)}
           </p>
           <h2 className="font-serif text-4xl font-semibold tracking-tight sm:text-5xl">
@@ -64,7 +64,7 @@ export default function Testimonials() {
               }}
               className="rounded-2xl border border-white/10 bg-white/[0.03] p-8"
             >
-              <p className="mb-4 text-[#c9a961]">★★★★★</p>
+              <p className="mb-4 text-[var(--gold)]">★★★★★</p>
               <blockquote className="font-serif text-lg leading-relaxed text-white/85">
                 &ldquo;{pick(it.quote_en, it.quote_el)}&rdquo;
               </blockquote>

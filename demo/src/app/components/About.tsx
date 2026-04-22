@@ -50,7 +50,7 @@ export default function About() {
           transition={{ duration: 0.8 }}
           className="flex flex-col justify-center"
         >
-          <p className="mb-3 text-xs uppercase tracking-[0.3em] text-[#c9a961]">
+          <p className="mb-3 text-xs uppercase tracking-[0.3em] text-[var(--gold)]">
             {pick(c.eyebrow_en, c.eyebrow_el)}
           </p>
           <h2 className="font-serif text-3xl font-semibold tracking-tight sm:text-4xl">

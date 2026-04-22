@@ -37,7 +37,7 @@ export default function ShopPreview() {
           className="mb-16 flex items-end justify-between gap-6"
         >
           <div>
-            <p className="mb-3 text-xs uppercase tracking-[0.3em] text-[#c9a961]">
+            <p className="mb-3 text-xs uppercase tracking-[0.3em] text-[var(--gold)]">
               {lang === "el" ? "Καταστημα" : "Shop"}
             </p>
             <h2 className="font-serif text-4xl font-semibold tracking-tight sm:text-5xl">
@@ -65,7 +65,7 @@ export default function ShopPreview() {
             >
               <Link
                 href={`/shop/${p.slug}`}
-                className="group block overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] transition-colors hover:border-[#c9a961]/40"
+                className="group block overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] transition-colors hover:border-[var(--gold)]/40"
               >
                 <div className="relative aspect-[4/3] overflow-hidden">
                   <Image
@@ -77,10 +77,10 @@ export default function ShopPreview() {
                   />
                 </div>
                 <div className="p-5">
-                  <h3 className="font-serif text-xl text-white transition-colors group-hover:text-[#c9a961]">
+                  <h3 className="font-serif text-xl text-white transition-colors group-hover:text-[var(--gold)]">
                     {pick(p.name_en, p.name_el)}
                   </h3>
-                  <p className="mt-3 font-serif text-2xl text-[#c9a961]">
+                  <p className="mt-3 font-serif text-2xl text-[var(--gold)]">
                     £{p.price}
                   </p>
                 </div>

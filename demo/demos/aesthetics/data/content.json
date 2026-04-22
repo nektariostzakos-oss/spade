@@ -227,7 +227,8 @@
     "p1_en": "Founded by award-winning esthetician Vicki Tasiopoulos, the studio is a destination for results-driven, personalised skincare. Vicki blends clinical expertise with a restorative spa experience — guided by education, integrity, and doing what is best for each client's skin.",
     "p1_el": "Με ιδρύτρια τη βραβευμένη aesthetician Vicki Tasiopoulos, το στούντιο είναι ένας προορισμός για εξατομικευμένη φροντίδα δέρματος με αποτέλεσμα. Συνδυάζει κλινική γνώση με χαλαρωτική εμπειρία spa.",
     "p2_en": "No facial is ever one-size-fits-all. Every treatment is customised in real time, supported by professional-grade brands we trust. Advanced techniques paired with intentional touch — results without sacrificing the relaxation.",
-    "p2_el": "Καμία θεραπεία δεν είναι τυποποιημένη. Προσαρμόζεται την ίδια στιγμή, με προϊόντα επαγγελματικού επιπέδου. Τεχνική με φροντίδα — αποτέλεσμα χωρίς να χάνεις τη χαλάρωση."
+    "p2_el": "Καμία θεραπεία δεν είναι τυποποιημένη. Προσαρμόζεται την ίδια στιγμή, με προϊόντα επαγγελματικού επιπέδου. Τεχνική με φροντίδα — αποτέλεσμα χωρίς να χάνεις τη χαλάρωση.",
+    "image": "/demos/aesthetics/vicki.jpg"
   },
   "team": {
     "eyebrow_en": "The team",
@@ -322,7 +323,8 @@
     "title_en": "Ready to let your skin work for you?",
     "title_el": "Έτοιμη να αφήσεις το δέρμα σου να δουλέψει για σένα;",
     "subtitle_en": "New clients start with an Assessment Facial — it maps your skin and locks in the right pathway.",
-    "subtitle_el": "Οι νέοι πελάτες ξεκινούν με Assessment Facial — βάζει τη σωστή πορεία."
+    "subtitle_el": "Οι νέοι πελάτες ξεκινούν με Assessment Facial — βάζει τη σωστή πορεία.",
+    "bgImage": "/demos/aesthetics/studio.jpg"
   },
   "page_services": {
     "eyebrow_en": "Treatment menu",
@@ -371,5 +373,13 @@
     "cta_el": "Κλείσε ραντεβού",
     "copy_en": "© {year} The Skin Artisté · Ardmore, PA",
     "copy_el": "© {year} The Skin Artisté · Ardmore, PA"
+  },
+  "page_shop": {
+    "eyebrow_en": "Clinical skincare",
+    "eyebrow_el": "Clinical skincare",
+    "title_en": "The shelves we actually use.",
+    "title_el": "Τα προϊόντα που χρησιμοποιούμε.",
+    "sub_en": "SkinBetter Science, Face Reality, Vivant — clinical-grade lines we fit to each client in-studio.",
+    "sub_el": "SkinBetter Science, Face Reality, Vivant — κλινικού επιπέδου brands που επιλέγουμε μαζί."
   }
 }

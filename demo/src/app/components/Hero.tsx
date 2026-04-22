@@ -121,9 +121,9 @@ export default function Hero({ nextSlot, minPrice }: { nextSlot?: NextSlotInfo; 
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
-            className="mb-8 inline-flex items-center gap-2 rounded-full border border-[#c9a961]/30 bg-[#c9a961]/10 px-4 py-1.5 text-xs uppercase tracking-[0.3em] text-[#c9a961]"
+            className="mb-8 inline-flex items-center gap-2 rounded-full border border-[var(--gold)]/30 bg-[var(--gold)]/10 px-4 py-1.5 text-xs uppercase tracking-[0.3em] text-[var(--gold)]"
           >
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#c9a961]" />
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[var(--gold)]" />
             {pick(c.pill_en, c.pill_el)}
           </motion.div>
 
@@ -154,7 +154,7 @@ export default function Hero({ nextSlot, minPrice }: { nextSlot?: NextSlotInfo; 
                   delay: 0.45 + i * 0.12,
                   ease: [0.22, 1, 0.36, 1],
                 }}
-                className="mr-3 inline-block italic text-[#c9a961]"
+                className="mr-3 inline-block italic text-[var(--gold)]"
               >
                 {w}
               </motion.span>
@@ -180,7 +180,7 @@ export default function Hero({ nextSlot, minPrice }: { nextSlot?: NextSlotInfo; 
             <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} className="flex flex-col items-start">
               <Link
                 href="/book"
-                className="inline-flex items-center gap-2 rounded-full bg-[#c9a961] px-8 py-4 text-sm font-semibold uppercase tracking-widest text-black"
+                className="inline-flex items-center gap-2 rounded-full bg-[var(--gold)] px-8 py-4 text-sm font-semibold uppercase tracking-widest text-black"
               >
                 {t("cta.book")}
               </Link>
@@ -226,7 +226,7 @@ export default function Hero({ nextSlot, minPrice }: { nextSlot?: NextSlotInfo; 
           transition={{ duration: 1, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="relative hidden lg:block"
         >
-          <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-[#c9a961]/20">
+          <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-[var(--gold)]/20">
             <Image
               src={c.sideImage}
               alt={c.sideName}
@@ -238,7 +238,7 @@ export default function Hero({ nextSlot, minPrice }: { nextSlot?: NextSlotInfo; 
               className="object-cover"
             />
             <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-6">
-              <p className="text-xs uppercase tracking-widest text-[#c9a961]">
+              <p className="text-xs uppercase tracking-widest text-[var(--gold)]">
                 {pick(c.sideRole_en, c.sideRole_el)}
               </p>
               <p className="mt-1 font-serif text-2xl">{c.sideName}</p>
@@ -253,7 +253,7 @@ export default function Hero({ nextSlot, minPrice }: { nextSlot?: NextSlotInfo; 
               background: "var(--nav-bg)",
             }}
           >
-            <p className="text-xs uppercase tracking-widest text-[#c9a961]">
+            <p className="text-xs uppercase tracking-widest text-[var(--gold)]">
               {nextSlot?.booked
                 ? (lang === "el" ? "Σήμερα γεμάτο" : "Fully booked today")
                 : (lang === "el" ? "Επόμενη θέση" : "Next slot")}

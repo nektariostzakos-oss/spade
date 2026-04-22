@@ -49,7 +49,7 @@ export default function ServicesPreview() {
           className="mb-16 flex items-end justify-between gap-6"
         >
           <div>
-            <p className="mb-3 text-xs uppercase tracking-[0.3em] text-[#c9a961]">
+            <p className="mb-3 text-xs uppercase tracking-[0.3em] text-[var(--gold)]">
               {pick(c.eyebrow_en, c.eyebrow_el)}
             </p>
             <h2 className="font-serif text-4xl font-semibold tracking-tight sm:text-5xl">
@@ -75,7 +75,7 @@ export default function ServicesPreview() {
               className="group grid grid-cols-[1fr_auto] items-center gap-6 py-8 transition-colors hover:bg-white/[0.02] sm:grid-cols-[1fr_auto_auto] sm:gap-12"
             >
               <div>
-                <h3 className="font-serif text-2xl text-white transition-colors group-hover:text-[#c9a961]">
+                <h3 className="font-serif text-2xl text-white transition-colors group-hover:text-[var(--gold)]">
                   {pick(s.name_en, s.name_el)}
                 </h3>
                 <p className="mt-1 max-w-md text-sm text-white/55">
@@ -85,7 +85,7 @@ export default function ServicesPreview() {
               <p className="hidden text-sm uppercase tracking-widest text-white/40 sm:block">
                 {s.duration} {t("minutes")}
               </p>
-              <p className="font-serif text-2xl text-[#c9a961]">£{s.price}</p>
+              <p className="font-serif text-2xl text-[var(--gold)]">£{s.price}</p>
             </motion.div>
           ))}
         </div>

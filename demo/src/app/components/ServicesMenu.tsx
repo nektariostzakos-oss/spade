@@ -51,7 +51,7 @@ export default function ServicesMenu() {
               className="group grid grid-cols-[1fr_auto] items-center gap-6 py-8 sm:grid-cols-[1fr_auto_auto_auto] sm:gap-12"
             >
               <div>
-                <h3 className="font-serif text-2xl text-white transition-colors group-hover:text-[#c9a961]">
+                <h3 className="font-serif text-2xl text-white transition-colors group-hover:text-[var(--gold)]">
                   {pick(s.name_en, s.name_el)}
                 </h3>
                 <p className="mt-1 max-w-md text-sm text-white/55">
@@ -61,7 +61,7 @@ export default function ServicesMenu() {
               <p className="hidden text-sm uppercase tracking-widest text-white/40 sm:block">
                 {s.duration} {t("minutes")}
               </p>
-              <p className="font-serif text-2xl text-[#c9a961]">
+              <p className="font-serif text-2xl text-[var(--gold)]">
                 {s.fromPrice ? (lang === "el" ? "από £" : "from £") : "£"}{s.price}
               </p>
               <Link

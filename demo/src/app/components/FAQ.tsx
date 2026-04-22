@@ -26,7 +26,7 @@ export default function FAQ() {
       <EditPencil section="faq" />
       <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[1fr_1.5fr]">
         <div>
-          <p className="mb-3 text-xs uppercase tracking-[0.3em] text-[#c9a961]">
+          <p className="mb-3 text-xs uppercase tracking-[0.3em] text-[var(--gold)]">
             {pick(c.eyebrow_en, c.eyebrow_el)}
           </p>
           <h2 className="font-serif text-4xl font-semibold tracking-tight sm:text-5xl">
@@ -48,7 +48,7 @@ export default function FAQ() {
                   </span>
                   <motion.span
                     animate={{ rotate: isOpen ? 45 : 0 }}
-                    className="text-2xl text-[#c9a961]"
+                    className="text-2xl text-[var(--gold)]"
                   >
                     +
                   </motion.span>

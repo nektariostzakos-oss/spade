@@ -38,7 +38,7 @@ export default function GalleryStrip() {
           transition={{ duration: 0.7 }}
           className="mb-16"
         >
-          <p className="mb-3 text-xs uppercase tracking-[0.3em] text-[#c9a961]">
+          <p className="mb-3 text-xs uppercase tracking-[0.3em] text-[var(--gold)]">
             {pick(c.eyebrow_en, c.eyebrow_el)}
           </p>
           <h2 className="font-serif text-4xl font-semibold tracking-tight sm:text-5xl">

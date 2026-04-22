@@ -29,7 +29,7 @@ export default function CTA() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        className="relative mx-auto max-w-5xl overflow-hidden rounded-3xl border border-[#c9a961]/30"
+        className="relative mx-auto max-w-5xl overflow-hidden rounded-3xl border border-[var(--gold)]/30"
       >
         <Image
           src={c.bgImage}
@@ -38,10 +38,10 @@ export default function CTA() {
           sizes="100vw"
           className="object-cover opacity-40"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0a0806] via-[#0a0806]/70 to-[#0a0806]/30" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[var(--background)] via-[var(--background)]/70 to-[var(--background)]/30" />
 
         <div className="relative px-8 py-20 sm:px-16 sm:py-24">
-          <p className="mb-3 text-xs uppercase tracking-[0.3em] text-[#c9a961]">
+          <p className="mb-3 text-xs uppercase tracking-[0.3em] text-[var(--gold)]">
             {pick(c.eyebrow_en, c.eyebrow_el)}
           </p>
           <h2 className="max-w-2xl font-serif text-4xl font-semibold leading-tight tracking-tight sm:text-6xl">
@@ -58,7 +58,7 @@ export default function CTA() {
           >
             <Link
               href="/book"
-              className="inline-flex items-center gap-2 rounded-full bg-[#c9a961] px-8 py-4 text-sm font-semibold uppercase tracking-widest text-black"
+              className="inline-flex items-center gap-2 rounded-full bg-[var(--gold)] px-8 py-4 text-sm font-semibold uppercase tracking-widest text-black"
             >
               {t("cta.book")}
             </Link>

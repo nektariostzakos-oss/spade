@@ -655,5 +655,86 @@
     "sid": "llpzqw1qpglmoaeemgd",
     "id": "v_moakkcyx_f1jd",
     "createdAt": "2026-04-22T21:33:10.185Z"
+  },
+  {
+    "path": "/",
+    "ref": "http://localhost:3002/",
+    "lang": "el-GR",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "llpzqw1qpglmoaeemgd",
+    "id": "v_moalkxps_h3g4",
+    "createdAt": "2026-04-22T22:01:36.688Z"
+  },
+  {
+    "path": "/",
+    "ref": "http://localhost:3002/",
+    "lang": "el-GR",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "llpzqw1qpglmoaeemgd",
+    "id": "v_moalkzke_qfij",
+    "createdAt": "2026-04-22T22:01:39.086Z"
+  },
+  {
+    "path": "/blog",
+    "ref": "http://localhost:3002/",
+    "lang": "en-US",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "llpzqw1qpglmoaeemgd",
+    "id": "v_moall3bm_vf1x",
+    "createdAt": "2026-04-22T22:01:43.954Z"
+  },
+  {
+    "path": "/blog/face-reality-acne-bootcamp",
+    "ref": "http://localhost:3002/",
+    "lang": "en-US",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "llpzqw1qpglmoaeemgd",
+    "id": "v_moall680_ywiv",
+    "createdAt": "2026-04-22T22:01:47.712Z"
+  },
+  {
+    "path": "/shop",
+    "ref": "http://localhost:3002/",
+    "lang": "en-US",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "llpzqw1qpglmoaeemgd",
+    "id": "v_moallb7q_1g8h",
+    "createdAt": "2026-04-22T22:01:54.182Z"
+  },
+  {
+    "path": "/services",
+    "ref": "http://localhost:3002/",
+    "lang": "en-US",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "llpzqw1qpglmoaeemgd",
+    "id": "v_moalld3d_uiyv",
+    "createdAt": "2026-04-22T22:01:56.617Z"
+  },
+  {
+    "path": "/",
+    "ref": "http://localhost:3002/",
+    "lang": "en-US",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "llpzqw1qpglmoaeemgd",
+    "id": "v_moalldta_tkhn",
+    "createdAt": "2026-04-22T22:01:57.550Z"
+  },
+  {
+    "path": "/",
+    "ref": "http://localhost:3002/",
+    "lang": "el-GR",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "llpzqw1qpglmoaeemgd",
+    "id": "v_moallfeq_yoic",
+    "createdAt": "2026-04-22T22:01:59.618Z"
+  },
+  {
+    "path": "/",
+    "ref": "http://localhost:3002/",
+    "lang": "el-GR",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "llpzqw1qpglmoaeemgd",
+    "id": "v_moalm8r5_eayq",
+    "createdAt": "2026-04-22T22:02:37.649Z"
   }
 ]

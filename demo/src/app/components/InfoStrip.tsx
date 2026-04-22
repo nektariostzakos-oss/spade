@@ -37,7 +37,7 @@ export default function InfoStrip() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: i * 0.08 }}
           >
-            <p className="text-xs uppercase tracking-widest text-[#c9a961]">
+            <p className="text-xs uppercase tracking-widest text-[var(--gold)]">
               {pick(it.label_en, it.label_el)}
             </p>
             <p className="mt-2 font-serif text-xl text-white">

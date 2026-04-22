@@ -94,7 +94,7 @@ export default function GalleryGrid() {
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                <span className="absolute bottom-4 left-4 rounded-full bg-[#0a0806]/70 px-3 py-1 text-[10px] uppercase tracking-widest text-[#c9a961] opacity-0 backdrop-blur transition-opacity duration-500 group-hover:opacity-100">
+                <span className="absolute bottom-4 left-4 rounded-full bg-[var(--background)]/70 px-3 py-1 text-[10px] uppercase tracking-widest text-[var(--gold)] opacity-0 backdrop-blur transition-opacity duration-500 group-hover:opacity-100">
                   {p.tag}
                 </span>
               </motion.div>

@@ -45,7 +45,7 @@ export default function ShopGrid({ products }: { products: Product[] }) {
               {active === cat && (
                 <motion.span
                   layoutId="shop-pill"
-                  className="absolute inset-0 -z-10 rounded-full bg-[#c9a961]"
+                  className="absolute inset-0 -z-10 rounded-full bg-[var(--gold)]"
                   transition={{ type: "spring", stiffness: 400, damping: 30 }}
                 />
               )}
@@ -66,7 +66,7 @@ export default function ShopGrid({ products }: { products: Product[] }) {
             >
               <Link
                 href={`/shop/${p.slug}`}
-                className="group block overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] transition-colors hover:border-[#c9a961]/40"
+                className="group block overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] transition-colors hover:border-[var(--gold)]/40"
               >
                 <div className="relative aspect-[4/3] overflow-hidden">
                   <Image
@@ -82,22 +82,22 @@ export default function ShopGrid({ products }: { products: Product[] }) {
                     </span>
                   )}
                   {p.featured && p.stock > 0 && (
-                    <span className="absolute left-3 top-3 rounded-full bg-[#c9a961] px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-black">
+                    <span className="absolute left-3 top-3 rounded-full bg-[var(--gold)] px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-black">
                       {lang === "el" ? "Προτεινόμενο" : "Featured"}
                     </span>
                   )}
                 </div>
                 <div className="p-5">
-                  <p className="text-[10px] uppercase tracking-widest text-[#c9a961]">
+                  <p className="text-[10px] uppercase tracking-widest text-[var(--gold)]">
                     {pick(p.category_en, p.category_el)}
                   </p>
-                  <h3 className="mt-1 font-serif text-xl text-white transition-colors group-hover:text-[#c9a961]">
+                  <h3 className="mt-1 font-serif text-xl text-white transition-colors group-hover:text-[var(--gold)]">
                     {pick(p.name_en, p.name_el)}
                   </h3>
                   <p className="mt-1 line-clamp-2 text-sm text-white/55">
                     {pick(p.shortDesc_en, p.shortDesc_el)}
                   </p>
-                  <p className="mt-4 font-serif text-2xl text-[#c9a961]">
+                  <p className="mt-4 font-serif text-2xl text-[var(--gold)]">
                     £{p.price}
                   </p>
                 </div>

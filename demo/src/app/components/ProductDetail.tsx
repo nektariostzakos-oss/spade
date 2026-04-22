@@ -52,7 +52,7 @@ export default function ProductDetail({ product }: { product: Product }) {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <p className="text-xs uppercase tracking-[0.3em] text-[#c9a961]">
+          <p className="text-xs uppercase tracking-[0.3em] text-[var(--gold)]">
             {pick(product.category_en, product.category_el)}
           </p>
           <h1 className="mt-3 font-serif text-4xl font-semibold tracking-tight sm:text-5xl">
@@ -61,7 +61,7 @@ export default function ProductDetail({ product }: { product: Product }) {
           <p className="mt-5 text-lg text-white/70">
             {pick(product.shortDesc_en, product.shortDesc_el)}
           </p>
-          <p className="mt-6 font-serif text-5xl text-[#c9a961]">
+          <p className="mt-6 font-serif text-5xl text-[var(--gold)]">
             £{product.price}
           </p>
 
@@ -87,7 +87,7 @@ export default function ProductDetail({ product }: { product: Product }) {
             <button
               onClick={addToCart}
               disabled={product.stock === 0}
-              className="inline-flex items-center gap-2 rounded-full bg-[#c9a961] px-8 py-3 text-sm font-semibold uppercase tracking-widest text-black disabled:opacity-40"
+              className="inline-flex items-center gap-2 rounded-full bg-[var(--gold)] px-8 py-3 text-sm font-semibold uppercase tracking-widest text-black disabled:opacity-40"
             >
               {added
                 ? lang === "el"

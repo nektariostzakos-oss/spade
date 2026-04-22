@@ -41,7 +41,7 @@ export default function Team() {
           transition={{ duration: 0.7 }}
           className="mb-16"
         >
-          <p className="mb-3 text-xs uppercase tracking-[0.3em] text-[#c9a961]">
+          <p className="mb-3 text-xs uppercase tracking-[0.3em] text-[var(--gold)]">
             {pick(c.eyebrow_en, c.eyebrow_el)}
           </p>
           <h2 className="font-serif text-4xl font-semibold tracking-tight sm:text-5xl">
@@ -70,9 +70,9 @@ export default function Team() {
                     sizes="(max-width: 640px) 100vw, 33vw"
                     className="object-cover grayscale transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0a0806] via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[var(--background)] via-transparent to-transparent" />
                   <div className="absolute inset-x-0 bottom-0 p-6">
-                    <p className="text-xs uppercase tracking-widest text-[#c9a961]">
+                    <p className="text-xs uppercase tracking-widest text-[var(--gold)]">
                       {pick(m.role_en, m.role_el)}
                     </p>
                     <p className="mt-1 font-serif text-2xl">{name}</p>

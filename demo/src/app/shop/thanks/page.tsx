@@ -15,7 +15,7 @@ export default async function ShopThanksPage({
     <main className="flex min-h-[70vh] items-center justify-center px-6 py-24">
       <div className="mx-auto max-w-lg rounded-2xl border p-10 text-center"
         style={{ borderColor: "color-mix(in srgb, var(--gold) 40%, transparent)", background: "color-mix(in srgb, var(--gold) 6%, transparent)" }}>
-        <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-[#c9a961] text-2xl text-black">
+        <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-[var(--gold)] text-2xl text-black">
           ✓
         </div>
         <h1 className="font-serif text-3xl" style={{ color: "var(--foreground)" }}>

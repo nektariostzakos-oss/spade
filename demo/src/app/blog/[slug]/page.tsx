@@ -95,10 +95,10 @@ export default async function BlogPostPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
       <div className="mx-auto max-w-3xl">
-        <Link href="/blog" className="text-[10px] uppercase tracking-widest text-white/50 hover:text-[#c9a961]">
+        <Link href="/blog" className="text-[10px] uppercase tracking-widest text-white/50 hover:text-[var(--gold)]">
           ← Blog
         </Link>
-        <p className="mt-6 text-[10px] uppercase tracking-[0.4em] text-[#c9a961]">
+        <p className="mt-6 text-[10px] uppercase tracking-[0.4em] text-[var(--gold)]">
           {post.category || "General"}
         </p>
         <h1 className="mt-2 font-serif text-4xl sm:text-5xl">{post.title_en}</h1>
@@ -141,13 +141,13 @@ export default async function BlogPostPage({
 
       {related.length > 0 && (
         <div className="mx-auto mt-16 max-w-6xl">
-          <p className="mb-6 text-[10px] uppercase tracking-[0.4em] text-[#c9a961]">Related</p>
+          <p className="mb-6 text-[10px] uppercase tracking-[0.4em] text-[var(--gold)]">Related</p>
           <div className="grid gap-6 sm:grid-cols-3">
             {related.map((r) => (
               <Link
                 key={r.id}
                 href={`/blog/${r.slug}`}
-                className="group block overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] transition-colors hover:border-[#c9a961]/40"
+                className="group block overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] transition-colors hover:border-[var(--gold)]/40"
               >
                 <div className="relative aspect-[4/3] overflow-hidden bg-[#14110d]">
                   {r.image && (
@@ -155,7 +155,7 @@ export default async function BlogPostPage({
                   )}
                 </div>
                 <div className="p-4">
-                  <p className="text-[10px] uppercase tracking-widest text-[#c9a961]">{r.category}</p>
+                  <p className="text-[10px] uppercase tracking-widest text-[var(--gold)]">{r.category}</p>
                   <h3 className="mt-1 font-serif text-lg text-white">{r.title_en}</h3>
                 </div>
               </Link>

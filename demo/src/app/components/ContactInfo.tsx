@@ -49,7 +49,7 @@ export default function ContactInfo() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.08 }}
             >
-              <p className="mb-2 text-xs uppercase tracking-[0.3em] text-[#c9a961]">
+              <p className="mb-2 text-xs uppercase tracking-[0.3em] text-[var(--gold)]">
                 {pick(b.label_en, b.label_el)}
               </p>
               <p className="whitespace-pre-line font-serif text-2xl text-white">

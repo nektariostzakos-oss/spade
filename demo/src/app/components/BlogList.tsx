@@ -36,7 +36,7 @@ export default function BlogList({ posts }: { posts: Post[] }) {
     <section className="px-6 py-24">
       <div className="mx-auto max-w-6xl">
         <div className="mb-10 text-center">
-          <p className="text-[10px] uppercase tracking-[0.4em] text-[#c9a961]">Journal</p>
+          <p className="text-[10px] uppercase tracking-[0.4em] text-[var(--gold)]">Journal</p>
           <h1 className="mt-2 font-serif text-4xl sm:text-5xl">
             {lang === "el" ? "Ιστορίες & Συμβουλές" : "Stories & Tips"}
           </h1>
@@ -58,7 +58,7 @@ export default function BlogList({ posts }: { posts: Post[] }) {
               {active === cat && (
                 <motion.span
                   layoutId="blog-pill"
-                  className="absolute inset-0 -z-10 rounded-full bg-[#c9a961]"
+                  className="absolute inset-0 -z-10 rounded-full bg-[var(--gold)]"
                   transition={{ type: "spring", stiffness: 400, damping: 30 }}
                 />
               )}
@@ -84,7 +84,7 @@ export default function BlogList({ posts }: { posts: Post[] }) {
               >
                 <Link
                   href={`/blog/${p.slug}`}
-                  className="group block overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] transition-colors hover:border-[#c9a961]/40"
+                  className="group block overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] transition-colors hover:border-[var(--gold)]/40"
                 >
                   <div className="relative aspect-[4/3] overflow-hidden bg-[#14110d]">
                     {p.image && (
@@ -98,10 +98,10 @@ export default function BlogList({ posts }: { posts: Post[] }) {
                     )}
                   </div>
                   <div className="p-5">
-                    <p className="text-[10px] uppercase tracking-widest text-[#c9a961]">
+                    <p className="text-[10px] uppercase tracking-widest text-[var(--gold)]">
                       {p.category || "General"}
                     </p>
-                    <h3 className="mt-2 font-serif text-xl text-white transition-colors group-hover:text-[#c9a961]">
+                    <h3 className="mt-2 font-serif text-xl text-white transition-colors group-hover:text-[var(--gold)]">
                       {pick(p.title_en, p.title_el)}
                     </h3>
                     <p className="mt-2 line-clamp-3 text-sm text-white/55">

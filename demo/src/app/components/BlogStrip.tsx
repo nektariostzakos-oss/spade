@@ -12,10 +12,10 @@ export default async function BlogStrip() {
       <div className="mx-auto max-w-7xl">
         <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
           <div>
-            <p className="text-[10px] uppercase tracking-[0.4em] text-[#c9a961]">Journal</p>
+            <p className="text-[10px] uppercase tracking-[0.4em] text-[var(--gold)]">Journal</p>
             <h2 className="mt-2 font-serif text-3xl sm:text-4xl">Stories from the chair</h2>
           </div>
-          <Link href="/blog" className="text-xs uppercase tracking-widest text-white/60 hover:text-[#c9a961]">
+          <Link href="/blog" className="text-xs uppercase tracking-widest text-white/60 hover:text-[var(--gold)]">
             All posts →
           </Link>
         </div>
@@ -25,7 +25,7 @@ export default async function BlogStrip() {
             <Link
               key={p.id}
               href={`/blog/${p.slug}`}
-              className="group block overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] transition-colors hover:border-[#c9a961]/40"
+              className="group block overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] transition-colors hover:border-[var(--gold)]/40"
             >
               <div className="relative aspect-[4/3] overflow-hidden bg-[#14110d]">
                 {p.image && (
@@ -39,10 +39,10 @@ export default async function BlogStrip() {
                 )}
               </div>
               <div className="p-5">
-                <p className="text-[10px] uppercase tracking-widest text-[#c9a961]">
+                <p className="text-[10px] uppercase tracking-widest text-[var(--gold)]">
                   {p.category || "General"}
                 </p>
-                <h3 className="mt-2 line-clamp-2 font-serif text-xl text-white transition-colors group-hover:text-[#c9a961]">
+                <h3 className="mt-2 line-clamp-2 font-serif text-xl text-white transition-colors group-hover:text-[var(--gold)]">
                   {p.title_en}
                 </h3>
                 <p className="mt-2 line-clamp-2 text-sm text-white/55">{p.excerpt_en}</p>
