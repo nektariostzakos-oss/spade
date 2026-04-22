@@ -18,6 +18,7 @@ import JsonLd from "./JsonLd";
 import PageTracker from "./components/PageTracker";
 import StickyBookBar from "./components/StickyBookBar";
 import ChatWidgetLazy from "./components/ChatWidgetLazy";
+import CookieBanner from "./components/CookieBanner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -199,30 +200,31 @@ export default async function RootLayout({
         <style dangerouslySetInnerHTML={{ __html: themeCss }} />
         <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
         <JsonLd />
-        {analytics.gtm && (
+        {/* Analytics scripts are consent-gated: they only run after the user
+            picks "Accept all" in the cookie banner. The banner stores its
+            choice in localStorage["oakline_cookie_consent_v1"] and fires a
+            'oakline-consent-changed' event so these blocks pick it up live. */}
+        {(analytics.gtm || analytics.ga4 || analytics.metaPixel) && (
           <script
             dangerouslySetInnerHTML={{
-              __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${analytics.gtm}');`,
-            }}
-          />
-        )}
-        {analytics.ga4 && (
-          <>
-            <script
-              async
-              src={`https://www.googletagmanager.com/gtag/js?id=${analytics.ga4}`}
-            />
-            <script
-              dangerouslySetInnerHTML={{
-                __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${analytics.ga4}');`,
-              }}
-            />
-          </>
-        )}
-        {analytics.metaPixel && (
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${analytics.metaPixel}');fbq('track','PageView');`,
+              __html: `
+(function(){
+  function hasConsent() {
+    try { return localStorage.getItem("oakline_cookie_consent_v1") === "all"; } catch(e) { return false; }
+  }
+  function load() {
+    if (!hasConsent()) return;
+    if (window.__oaklineAnalyticsLoaded) return;
+    window.__oaklineAnalyticsLoaded = true;
+    ${analytics.gtm ? `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${analytics.gtm}');` : ""}
+    ${analytics.ga4 ? `var ga=document.createElement('script');ga.async=true;ga.src='https://www.googletagmanager.com/gtag/js?id=${analytics.ga4}';document.head.appendChild(ga);window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${analytics.ga4}');` : ""}
+    ${analytics.metaPixel ? `!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${analytics.metaPixel}');fbq('track','PageView');` : ""}
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", load);
+  else load();
+  window.addEventListener("oakline-consent-changed", load);
+})();
+              `,
             }}
           />
         )}
@@ -265,6 +267,7 @@ export default async function RootLayout({
                       <PageTracker />
                       <StickyBookBar />
                       <ChatWidgetLazy />
+                      <CookieBanner />
                     </CartProvider>
                   </EditorProvider>
                 </NavProvider>

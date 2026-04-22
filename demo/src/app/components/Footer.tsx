@@ -199,6 +199,14 @@ export default function Footer() {
           {pick(f.copy_en, f.copy_el)
             .replace("{year}", String(new Date().getFullYear()))
             .replace(/©\s*\d{4}/, `© ${new Date().getFullYear()}`)}
+          {" · "}
+          <Link href="/privacy" className="hover:underline">
+            {lang === "el" ? "Απόρρητο" : "Privacy"}
+          </Link>
+          {" · "}
+          <Link href="/terms" className="hover:underline">
+            {lang === "el" ? "Όροι" : "Terms"}
+          </Link>
         </p>
         <p>
           {lang === "el" ? "Σχεδιασμός " : "Designed by "}
