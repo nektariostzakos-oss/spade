@@ -1,8 +1,10 @@
 import crypto from "crypto";
 import { promises as fs } from "fs";
 import path from "path";
+import { withFileLock } from "./fileLock";
 
 const FILE = path.join(process.cwd(), "data", "gift-cards.json");
+const LOCK = "gift-cards.json";
 
 export type GiftCard = {
   id: string;
@@ -63,26 +65,32 @@ export async function createGiftCard(input: {
   recipient?: string;
   orderId?: string;
 }): Promise<GiftCard> {
-  const all = await readAll();
-  // Retry until the code is unique (effectively never collides — 32^8 ≈ 1e12).
-  let code = generateGiftCardCode();
-  while (all.some((g) => g.code === code)) code = generateGiftCardCode();
-  const gc: GiftCard = {
-    id: `gc_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 6)}`,
-    code,
-    amount: input.amount,
-    balance: input.amount,
-    buyerName: input.buyerName,
-    buyerEmail: input.buyerEmail,
-    recipient: input.recipient,
-    orderId: input.orderId,
-    issuedAt: new Date().toISOString(),
-    status: "active",
-    redemptions: [],
-  };
-  all.push(gc);
-  await writeAll(all);
-  return gc;
+  // Reject nonsensical amounts server-side — defence in depth behind the
+  // orders route which already clamps.
+  if (!Number.isFinite(input.amount) || input.amount <= 0) {
+    throw new Error("Gift card amount must be positive.");
+  }
+  return withFileLock(LOCK, async () => {
+    const all = await readAll();
+    let code = generateGiftCardCode();
+    while (all.some((g) => g.code === code)) code = generateGiftCardCode();
+    const gc: GiftCard = {
+      id: `gc_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 6)}`,
+      code,
+      amount: input.amount,
+      balance: input.amount,
+      buyerName: input.buyerName,
+      buyerEmail: input.buyerEmail,
+      recipient: input.recipient,
+      orderId: input.orderId,
+      issuedAt: new Date().toISOString(),
+      status: "active",
+      redemptions: [],
+    };
+    all.push(gc);
+    await writeAll(all);
+    return gc;
+  });
 }
 
 /**
@@ -94,16 +102,43 @@ export async function redeemGiftCard(
   amount: number,
   note?: string
 ): Promise<{ ok: true; card: GiftCard } | { ok: false; error: string }> {
-  if (amount <= 0) return { ok: false, error: "Amount must be positive." };
-  const all = await readAll();
-  const idx = all.findIndex((g) => g.code === code.toUpperCase().trim());
-  if (idx < 0) return { ok: false, error: "Code not found." };
-  const gc = all[idx];
-  if (gc.status !== "active") return { ok: false, error: `Card is ${gc.status}.` };
-  if (amount > gc.balance) return { ok: false, error: `Insufficient balance (£${gc.balance.toFixed(2)} left).` };
-  gc.balance = Number((gc.balance - amount).toFixed(2));
-  gc.redemptions.push({ at: new Date().toISOString(), amount, note });
-  if (gc.balance <= 0) gc.status = "redeemed";
-  await writeAll(all);
-  return { ok: true, card: gc };
+  if (!Number.isFinite(amount) || amount <= 0)
+    return { ok: false, error: "Amount must be positive." };
+  return withFileLock(LOCK, async () => {
+    const all = await readAll();
+    const idx = all.findIndex((g) => g.code === code.toUpperCase().trim());
+    if (idx < 0) return { ok: false, error: "Code not found." };
+    const gc = all[idx];
+    if (gc.status !== "active") return { ok: false, error: `Card is ${gc.status}.` };
+    if (amount > gc.balance)
+      return { ok: false, error: `Insufficient balance (£${gc.balance.toFixed(2)} left).` };
+    gc.balance = Number((gc.balance - amount).toFixed(2));
+    gc.redemptions.push({ at: new Date().toISOString(), amount, note });
+    if (gc.balance <= 0) gc.status = "redeemed";
+    await writeAll(all);
+    return { ok: true, card: gc };
+  });
+}
+
+/** Deactivate all gift cards issued against a specific order — called when
+ * an order is cancelled so the refunded buyer can't also spend the card. */
+export async function deactivateGiftCardsForOrder(orderId: string): Promise<number> {
+  return withFileLock(LOCK, async () => {
+    const all = await readAll();
+    let n = 0;
+    for (const gc of all) {
+      if (gc.orderId === orderId && gc.status === "active") {
+        gc.status = "expired";
+        gc.redemptions.push({
+          at: new Date().toISOString(),
+          amount: gc.balance,
+          note: `Deactivated — order ${orderId} cancelled`,
+        });
+        gc.balance = 0;
+        n++;
+      }
+    }
+    if (n > 0) await writeAll(all);
+    return n;
+  });
 }

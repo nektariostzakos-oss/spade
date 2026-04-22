@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isAdmin } from "../../../../lib/auth";
 import { updateOrderStatus, type OrderStatus } from "../../../../lib/orders";
+import { deactivateGiftCardsForOrder } from "../../../../lib/giftCards";
 
 export async function PATCH(
   req: NextRequest,
@@ -17,5 +18,13 @@ export async function PATCH(
   }
   const o = await updateOrderStatus(id, status as OrderStatus);
   if (!o) return NextResponse.json({ error: "Not found" }, { status: 404 });
-  return NextResponse.json({ order: o });
+
+  // Cancelling an order that issued gift cards should invalidate those
+  // codes — otherwise the refunded buyer can still spend the balance.
+  let giftsDeactivated = 0;
+  if (status === "cancelled") {
+    giftsDeactivated = await deactivateGiftCardsForOrder(id);
+  }
+
+  return NextResponse.json({ order: o, giftsDeactivated });
 }

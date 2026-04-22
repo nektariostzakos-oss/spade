@@ -6,6 +6,7 @@ import {
   listBookings,
   type NewBooking,
 } from "../../../lib/bookings";
+import { getSlotsForDay } from "../../../lib/services";
 import { isStaff } from "../../../lib/auth";
 import { sendBookingConfirmation } from "../../../lib/email";
 import { allowAction, clientIp } from "../../../lib/rateLimit";
@@ -167,6 +168,67 @@ export async function POST(req: NextRequest) {
         { error: "That time is in the past." },
         { status: 400 }
       );
+    }
+
+    // SERVER-SIDE AVAILABILITY ENFORCEMENT — don't trust the client slot.
+    // 1. Reject bookings outside business opening hours / closed days
+    // 2. Reject bookings that overlap an existing booking (buffer-aware)
+    // 3. Reject bookings outside the chosen stylist's working hours / break
+    // Admin walk-ins (staff callers) are exempt — front desk may need to
+    // override for in-person edge cases (regular who insists on 09:30 etc).
+    if (!actor) {
+      const [y, mm, dd] = String(body.date).split("-").map(Number);
+      const dow = new Date(Date.UTC(y, (mm || 1) - 1, dd || 1)).getUTCDay();
+      const validSlots = getSlotsForDay(dow, business.hours);
+      if (validSlots.length === 0) {
+        return NextResponse.json({ error: "We're closed on that day." }, { status: 400 });
+      }
+      if (!validSlots.includes(String(body.time))) {
+        return NextResponse.json(
+          { error: "That time is outside our opening hours." },
+          { status: 400 }
+        );
+      }
+
+      // Staff availability
+      if (String(body.barberId) !== "any") {
+        const staff = (await listAdminStaff()).find((s) => s.id === String(body.barberId));
+        if (staff) {
+          const filter = slotFilterForStaff(staff, dow);
+          if (filter === null) {
+            return NextResponse.json(
+              { error: "That stylist isn't working on that day." },
+              { status: 400 }
+            );
+          }
+          if (!filter(String(body.time))) {
+            return NextResponse.json(
+              { error: "That stylist isn't available at that time." },
+              { status: 400 }
+            );
+          }
+        }
+      }
+
+      // Buffer-aware overlap check against existing bookings
+      const services = await listAdminServices();
+      const bufferById = new Map(
+        services.map((s) => [s.id, Math.max(0, Number(s.bufferMinutes) || 0)])
+      );
+      const occupied = await getOccupiedSlots(
+        String(body.date),
+        String(body.barberId),
+        (sid) => bufferById.get(sid) ?? 0
+      );
+      if (occupied.includes(String(body.time))) {
+        return NextResponse.json(
+          { error: "That slot was just taken. Pick another time." },
+          { status: 409 }
+        );
+      }
+
+      // Force walkIn=false for public callers — staff-only flag
+      body.walkIn = false;
     }
 
     const booking = await createBooking(body);

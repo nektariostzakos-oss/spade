@@ -1,7 +1,9 @@
 import { promises as fs } from "fs";
 import path from "path";
+import { withFileLock } from "./fileLock";
 
 const FILE = path.join(process.cwd(), "data", "orders.json");
+const LOCK = "orders.json";
 
 export type OrderLine = {
   id: string;
@@ -50,26 +52,30 @@ export async function listOrders(): Promise<Order[]> {
 export async function createOrder(
   input: Omit<Order, "id" | "status" | "createdAt">
 ): Promise<Order> {
-  const all = await readAll();
-  const order: Order = {
-    ...input,
-    id: `o_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 6)}`,
-    status: "new",
-    createdAt: new Date().toISOString(),
-  };
-  all.push(order);
-  await writeAll(all);
-  return order;
+  return withFileLock(LOCK, async () => {
+    const all = await readAll();
+    const order: Order = {
+      ...input,
+      id: `o_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 6)}`,
+      status: "new",
+      createdAt: new Date().toISOString(),
+    };
+    all.push(order);
+    await writeAll(all);
+    return order;
+  });
 }
 
 export async function updateOrderStatus(
   id: string,
   status: OrderStatus
 ): Promise<Order | null> {
-  const all = await readAll();
-  const idx = all.findIndex((o) => o.id === id);
-  if (idx === -1) return null;
-  all[idx].status = status;
-  await writeAll(all);
-  return all[idx];
+  return withFileLock(LOCK, async () => {
+    const all = await readAll();
+    const idx = all.findIndex((o) => o.id === id);
+    if (idx === -1) return null;
+    all[idx].status = status;
+    await writeAll(all);
+    return all[idx];
+  });
 }

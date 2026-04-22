@@ -2,8 +2,10 @@ import { promises as fs } from "fs";
 import path from "path";
 import { wallClockInTzToUtc } from "./tz";
 import { loadBusiness } from "./settings";
+import { withFileLock } from "./fileLock";
 
 const FILE = path.join(process.cwd(), "data", "bookings.json");
+const LOCK = "bookings.json";
 
 export type BookingStatus = "pending" | "confirmed" | "completed" | "cancelled";
 
@@ -103,66 +105,79 @@ export async function getOccupiedSlots(
 }
 
 export async function createBooking(input: NewBooking): Promise<Booking> {
-  const all = await readAll();
-  const conflict = all.find(
-    (b) =>
-      b.date === input.date &&
-      b.time === input.time &&
-      b.status !== "cancelled" &&
-      (b.barberId === input.barberId || input.barberId === "any")
-  );
-  if (conflict) {
-    throw new Error("That slot was just taken. Pick another time.");
-  }
-  const booking: Booking = {
-    ...input,
-    id: `b_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 7)}`,
-    // Conflict check passed → slot was free → auto-confirm.
-    status: "confirmed",
-    createdAt: new Date().toISOString(),
-  };
-  all.push(booking);
-  await writeAll(all);
-  return booking;
+  return withFileLock(LOCK, async () => {
+    const all = await readAll();
+    const conflict = all.find(
+      (b) =>
+        b.date === input.date &&
+        b.time === input.time &&
+        b.status !== "cancelled" &&
+        (b.barberId === input.barberId || input.barberId === "any")
+    );
+    if (conflict) {
+      throw new Error("That slot was just taken. Pick another time.");
+    }
+    const booking: Booking = {
+      ...input,
+      id: `b_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 7)}`,
+      status: "confirmed",
+      createdAt: new Date().toISOString(),
+    };
+    all.push(booking);
+    await writeAll(all);
+    return booking;
+  });
 }
 
 export async function updateStatus(
   id: string,
   status: BookingStatus
 ): Promise<Booking | null> {
-  const all = await readAll();
-  const idx = all.findIndex((b) => b.id === id);
-  if (idx === -1) return null;
-  all[idx].status = status;
-  await writeAll(all);
-  return all[idx];
+  return withFileLock(LOCK, async () => {
+    const all = await readAll();
+    const idx = all.findIndex((b) => b.id === id);
+    if (idx === -1) return null;
+    // Enforce state machine — terminal states can't be resurrected.
+    const current = all[idx].status;
+    const TERMINAL: BookingStatus[] = ["cancelled", "completed"];
+    if (TERMINAL.includes(current) && status !== current) {
+      throw new Error(`Cannot change booking from ${current} to ${status}.`);
+    }
+    all[idx].status = status;
+    await writeAll(all);
+    return all[idx];
+  });
 }
 
 export async function deleteBooking(id: string): Promise<boolean> {
-  const all = await readAll();
-  const next = all.filter((b) => b.id !== id);
-  if (next.length === all.length) return false;
-  await writeAll(next);
-  return true;
+  return withFileLock(LOCK, async () => {
+    const all = await readAll();
+    const next = all.filter((b) => b.id !== id);
+    if (next.length === all.length) return false;
+    await writeAll(next);
+    return true;
+  });
 }
 
-/**
- * Mark a booking as reminded (used by the 30-min reminder cron).
- */
+/** Mark a booking as reminded (used by the 30-min reminder cron). */
 export async function markReminded(id: string): Promise<void> {
-  const all = await readAll();
-  const idx = all.findIndex((b) => b.id === id);
-  if (idx === -1) return;
-  all[idx].remindedAt = new Date().toISOString();
-  await writeAll(all);
+  await withFileLock(LOCK, async () => {
+    const all = await readAll();
+    const idx = all.findIndex((b) => b.id === id);
+    if (idx === -1) return;
+    all[idx].remindedAt = new Date().toISOString();
+    await writeAll(all);
+  });
 }
 
 export async function markReviewRequested(id: string): Promise<void> {
-  const all = await readAll();
-  const idx = all.findIndex((b) => b.id === id);
-  if (idx === -1) return;
-  all[idx].reviewedAt = new Date().toISOString();
-  await writeAll(all);
+  await withFileLock(LOCK, async () => {
+    const all = await readAll();
+    const idx = all.findIndex((b) => b.id === id);
+    if (idx === -1) return;
+    all[idx].reviewedAt = new Date().toISOString();
+    await writeAll(all);
+  });
 }
 
 /**

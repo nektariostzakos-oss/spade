@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createOrder, listOrders } from "../../../lib/orders";
 import { isStaff } from "../../../lib/auth";
-import { reserveStock } from "../../../lib/products";
+import { listProducts, releaseStock, reserveStock } from "../../../lib/products";
 import { allowAction, clientIp } from "../../../lib/rateLimit";
 import { createGiftCard } from "../../../lib/giftCards";
 
@@ -49,53 +49,78 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Invalid phone." }, { status: 400 });
     }
 
+    // SERVER-SIDE PRICE AUTHORITY — never trust client-supplied prices.
+    // Look up each line against the catalog, build an authoritative
+    // items[] with canonical price + name + slug, then compute subtotal.
+    // Rejects any unknown product id.
+    const catalog = await listProducts();
+    type IncomingLine = { id: string; qty: number };
+    const incoming = body.items as IncomingLine[];
+    const normalized: Array<{
+      id: string;
+      slug: string;
+      name: string;
+      price: number;
+      qty: number;
+    }> = [];
+    for (const raw of incoming) {
+      const qty = Math.max(1, Math.floor(Number(raw.qty) || 1));
+      const product = catalog.find((p) => p.id === raw.id);
+      if (!product) {
+        return NextResponse.json(
+          { error: `Unknown product: ${String(raw.id)}` },
+          { status: 400 }
+        );
+      }
+      const nameLocalised = body.lang === "el"
+        ? product.name_el || product.name_en
+        : product.name_en;
+      normalized.push({
+        id: product.id,
+        slug: product.slug,
+        name: nameLocalised,
+        price: Number(product.price) || 0,
+        qty,
+      });
+    }
+
     // Reserve stock atomically.
-    const reserve = await reserveStock(
-      body.items.map((it: { id: string; qty: number }) => ({
-        id: it.id,
-        qty: Number(it.qty) || 1,
-      }))
-    );
+    const reserve = await reserveStock(normalized.map((it) => ({ id: it.id, qty: it.qty })));
     if (!reserve.ok) {
       return NextResponse.json({ error: reserve.error }, { status: 409 });
     }
 
-    const subtotal = body.items.reduce(
-      (s: number, it: { price: number; qty: number }) =>
-        s + Number(it.price) * Number(it.qty),
-      0
-    );
+    const subtotal = normalized.reduce((s, it) => s + it.price * it.qty, 0);
 
-    const order = await createOrder({
-      items: body.items,
-      subtotal,
-      name: body.name,
-      phone: body.phone,
-      email: body.email,
-      address: body.address,
-      city: body.city,
-      postal: body.postal,
-      notes: body.notes ?? "",
-      lang: body.lang === "el" ? "el" : "en",
-    });
+    let order;
+    try {
+      order = await createOrder({
+        items: normalized,
+        subtotal,
+        name: body.name,
+        phone: body.phone,
+        email: body.email,
+        address: body.address,
+        city: body.city,
+        postal: body.postal,
+        notes: body.notes ?? "",
+        lang: body.lang === "el" ? "el" : "en",
+      });
+    } catch (err) {
+      // Roll stock back so we don't oversell because of a downstream failure.
+      await releaseStock(normalized.map((it) => ({ id: it.id, qty: it.qty })));
+      throw err;
+    }
 
-    // Auto-issue a gift card for each voucher line. We detect vouchers
-    // by slug prefix (gift-voucher-*) which is how the demo products
-    // are seeded. One card per quantity; each card carries the line price
-    // as its full balance (matches the customer's intent — a £100 voucher
-    // should let them redeem £100).
+    // Auto-issue a gift card for each voucher line. Voucher detection is
+    // now authoritative — uses the catalog slug, not client-sent name.
     const gifts: Array<{ code: string; amount: number }> = [];
-    for (const it of body.items as Array<{ id: string; slug?: string; name?: string; price: number; qty: number }>) {
-      const slug = (it.slug || "").toLowerCase();
-      const isVoucher =
-        slug.startsWith("gift-voucher") ||
-        (it.name || "").toLowerCase().includes("gift voucher") ||
-        (it.name || "").toLowerCase().includes("δωροεπιταγ");
+    for (const it of normalized) {
+      const isVoucher = it.slug.toLowerCase().startsWith("gift-voucher");
       if (!isVoucher) continue;
-      const qty = Math.max(1, Number(it.qty) || 1);
-      for (let i = 0; i < qty; i++) {
+      for (let i = 0; i < it.qty; i++) {
         const gc = await createGiftCard({
-          amount: Number(it.price) || 0,
+          amount: it.price, // canonical, from products.json
           buyerName: body.name,
           buyerEmail: body.email,
           recipient: body.notes || undefined,
