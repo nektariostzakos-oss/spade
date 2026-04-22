@@ -10,6 +10,7 @@ import CouponsPanel from "./CouponsPanel";
 import BlogPanel from "./BlogPanel";
 import UsersPanel from "./UsersPanel";
 import ToolsPanel from "./ToolsPanel";
+import GiftCardsPanel from "./GiftCardsPanel";
 
 type Me = { id: string; email: string; role: "admin" | "barber"; barberId?: string };
 
@@ -19,6 +20,7 @@ type Section =
   | "services"
   | "staff"
   | "coupons"
+  | "gifts"
   | "blog"
   | "users"
   | "tools";
@@ -32,9 +34,10 @@ const SECTIONS: { id: Section; label: string; hint?: string }[] = [
   { id: "services", label: "3. Services", hint: "Menu, prices, duration, buffers, add-ons" },
   { id: "theme", label: "4. Theme", hint: "Colours and fonts" },
   { id: "coupons", label: "5. Coupons", hint: "Promo codes + referral rewards" },
-  { id: "blog", label: "6. Blog", hint: "Journal articles and categories" },
-  { id: "users", label: "7. Users", hint: "Invite admin / stylist accounts" },
-  { id: "tools", label: "8. Tools", hint: "Backup, import, GDPR export" },
+  { id: "gifts", label: "6. Gift cards", hint: "Auto-issued codes, redeem at the till" },
+  { id: "blog", label: "7. Blog", hint: "Journal articles and categories" },
+  { id: "users", label: "8. Users", hint: "Invite admin / stylist accounts" },
+  { id: "tools", label: "9. Tools", hint: "Backup, import, GDPR export" },
 ];
 
 export default function SettingsHub({ me }: { me: Me }) {
@@ -78,6 +81,7 @@ export default function SettingsHub({ me }: { me: Me }) {
       {section === "services" && <ServicesPanel />}
       {section === "staff" && <StaffPanel />}
       {section === "coupons" && <CouponsPanel />}
+      {section === "gifts" && <GiftCardsPanel />}
       {section === "blog" && <BlogPanel />}
       {section === "users" && <UsersPanel me={me} />}
       {section === "tools" && <ToolsPanel />}

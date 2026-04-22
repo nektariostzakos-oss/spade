@@ -3,6 +3,7 @@ import { createOrder, listOrders } from "../../../lib/orders";
 import { isStaff } from "../../../lib/auth";
 import { reserveStock } from "../../../lib/products";
 import { allowAction, clientIp } from "../../../lib/rateLimit";
+import { createGiftCard } from "../../../lib/giftCards";
 
 export async function GET() {
   if (!(await isStaff())) {
@@ -78,7 +79,33 @@ export async function POST(req: NextRequest) {
       lang: body.lang === "el" ? "el" : "en",
     });
 
-    return NextResponse.json({ order }, { status: 201 });
+    // Auto-issue a gift card for each voucher line. We detect vouchers
+    // by slug prefix (gift-voucher-*) which is how the demo products
+    // are seeded. One card per quantity; each card carries the line price
+    // as its full balance (matches the customer's intent — a £100 voucher
+    // should let them redeem £100).
+    const gifts: Array<{ code: string; amount: number }> = [];
+    for (const it of body.items as Array<{ id: string; slug?: string; name?: string; price: number; qty: number }>) {
+      const slug = (it.slug || "").toLowerCase();
+      const isVoucher =
+        slug.startsWith("gift-voucher") ||
+        (it.name || "").toLowerCase().includes("gift voucher") ||
+        (it.name || "").toLowerCase().includes("δωροεπιταγ");
+      if (!isVoucher) continue;
+      const qty = Math.max(1, Number(it.qty) || 1);
+      for (let i = 0; i < qty; i++) {
+        const gc = await createGiftCard({
+          amount: Number(it.price) || 0,
+          buyerName: body.name,
+          buyerEmail: body.email,
+          recipient: body.notes || undefined,
+          orderId: order.id,
+        });
+        gifts.push({ code: gc.code, amount: gc.amount });
+      }
+    }
+
+    return NextResponse.json({ order, gifts }, { status: 201 });
   } catch (e) {
     return NextResponse.json(
       { error: e instanceof Error ? e.message : "Order failed" },

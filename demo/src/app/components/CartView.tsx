@@ -24,7 +24,7 @@ export default function CartView() {
   });
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [done, setDone] = useState<{ id: string } | null>(null);
+  const [done, setDone] = useState<{ id: string; gifts?: Array<{ code: string; amount: number }> } | null>(null);
 
   async function checkout() {
     setSubmitting(true);
@@ -49,7 +49,7 @@ export default function CartView() {
       setError(d.error || "Order failed");
       return;
     }
-    setDone({ id: d.order.id });
+    setDone({ id: d.order.id, gifts: Array.isArray(d.gifts) ? d.gifts : [] });
     clear();
   }
 
@@ -75,6 +75,27 @@ export default function CartView() {
           <p className="mt-2 text-xs uppercase tracking-widest text-white/40">
             {lang === "el" ? "Κωδικός" : "Reference"} · {done.id}
           </p>
+
+          {done.gifts && done.gifts.length > 0 && (
+            <div className="mx-auto mt-6 max-w-md rounded-xl border border-[#c9a961]/40 bg-black/40 p-4 text-left">
+              <p className="mb-2 text-[10px] uppercase tracking-[0.3em] text-[#c9a961]">
+                {lang === "el" ? "Κωδικοί δωροεπιταγής" : "Gift card codes"}
+              </p>
+              <ul className="space-y-1.5 text-sm">
+                {done.gifts.map((g, i) => (
+                  <li key={i} className="flex items-center justify-between gap-3">
+                    <code className="rounded bg-white/5 px-2 py-1 font-mono text-[#c9a961]">{g.code}</code>
+                    <span className="text-white/70">£{g.amount}</span>
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-3 text-xs text-white/50">
+                {lang === "el"
+                  ? "Φυλάξτε τον κωδικό — σας τον χρειάζονται στο ταμείο για εξαργύρωση."
+                  : "Save the code — show it at the till to redeem in the chair."}
+              </p>
+            </div>
+          )}
           <Link
             href="/shop"
             className="mt-10 inline-block rounded-full bg-white px-6 py-3 text-sm font-medium text-black"
