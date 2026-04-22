@@ -72,8 +72,8 @@ export default function UsersPanel({
   async function changeMyPassword(e: React.FormEvent) {
     e.preventDefault();
     if (!me) return;
-    if (pwForm.next.length < 6) {
-      setPwForm((p) => ({ ...p, msg: "At least 6 characters." }));
+    if (pwForm.next.length < 8) {
+      setPwForm((p) => ({ ...p, msg: "At least 8 characters." }));
       return;
     }
     setPwForm((p) => ({ ...p, busy: true, msg: "" }));

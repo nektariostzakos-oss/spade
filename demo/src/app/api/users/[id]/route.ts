@@ -12,9 +12,9 @@ export async function PATCH(
   }
   const { id } = await params;
   const body = await req.json();
-  if (!body.password || String(body.password).length < 6) {
+  if (!body.password || String(body.password).length < 8) {
     return NextResponse.json(
-      { error: "Password must be at least 6 characters" },
+      { error: "Password must be at least 8 characters" },
       { status: 400 }
     );
   }
