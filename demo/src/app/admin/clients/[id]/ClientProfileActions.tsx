@@ -13,6 +13,7 @@ export default function ClientProfileActions({ client }: { client: Client }) {
   const [loyaltyPoints, setLoyaltyPoints] = useState(
     client.loyaltyPoints != null ? String(client.loyaltyPoints) : ""
   );
+  const [patchTestAt, setPatchTestAt] = useState(client.patchTestAt ?? "");
   const [staff, setStaff] = useState<Staff[]>([]);
   const [saving, setSaving] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
@@ -41,6 +42,7 @@ export default function ClientProfileActions({ client }: { client: Client }) {
           notes: notes || undefined,
           tags: tags ? tags.split(",").map((t) => t.trim()).filter(Boolean) : undefined,
           loyaltyPoints: loyaltyPoints === "" ? undefined : Number(loyaltyPoints),
+          patchTestAt: patchTestAt || undefined,
         }),
       });
       if (!r.ok) {
@@ -76,6 +78,37 @@ export default function ClientProfileActions({ client }: { client: Client }) {
           </select>
         </div>
         <Field label="Loyalty points (override)" value={loyaltyPoints} onChange={setLoyaltyPoints} placeholder="auto" />
+        <div>
+          <label className="mb-2 block text-xs uppercase tracking-widest text-white/40">
+            Patch test completed on
+          </label>
+          <div className="flex gap-2">
+            <input
+              type="date"
+              value={patchTestAt ? patchTestAt.slice(0, 10) : ""}
+              onChange={(e) => setPatchTestAt(e.target.value ? new Date(e.target.value).toISOString() : "")}
+              style={{ colorScheme: "dark" }}
+              className="flex-1 rounded-md border border-white/10 bg-white/5 px-3 py-2 text-sm text-white"
+            />
+            <button
+              type="button"
+              onClick={() => setPatchTestAt(new Date().toISOString())}
+              className="rounded-md border border-white/15 px-3 py-2 text-xs uppercase tracking-widest text-white/70 hover:bg-white/10"
+              title="Mark as done today"
+            >
+              Today
+            </button>
+            {patchTestAt && (
+              <button
+                type="button"
+                onClick={() => setPatchTestAt("")}
+                className="rounded-md border border-white/15 px-3 py-2 text-xs uppercase tracking-widest text-white/50 hover:text-white"
+              >
+                Clear
+              </button>
+            )}
+          </div>
+        </div>
         <Field label="Tags (comma-separated)" value={tags} onChange={setTags} placeholder="VIP, colour, allergies" />
         <div className="sm:col-span-2">
           <label className="mb-2 block text-xs uppercase tracking-widest text-white/40">

@@ -16,6 +16,7 @@ import { listAdminServices } from "../../../lib/customServices";
 import { listAdminStaff, slotFilterForStaff } from "../../../lib/customStaff";
 import { signBookingId } from "../../../lib/bookingToken";
 import { redeemCoupon, validateCoupon } from "../../../lib/coupons";
+import { findClientByContact } from "../../../lib/clients";
 
 const MAX_FIELD = 200;
 const MAX_NOTES = 1000;
@@ -231,6 +232,24 @@ export async function POST(req: NextRequest) {
 
       // Force walkIn=false for public callers — staff-only flag
       body.walkIn = false;
+
+      // Patch-test gate for chemical services. If the service is flagged
+      // requiresPatchTest and we can find no record of a completed test
+      // on this client (matched by email or phone), reject with a clear
+      // message so the UI can redirect them to book a patch test first.
+      const svc = services.find((s) => s.id === String(body.serviceId));
+      if (svc?.requiresPatchTest) {
+        const client = await findClientByContact(String(body.email || ""), String(body.phone || ""));
+        if (!client?.patchTestAt) {
+          return NextResponse.json(
+            {
+              error:
+                "This service requires a 48h patch test before your first visit. Please contact us to arrange one — we'll do it free of charge.",
+            },
+            { status: 400 }
+          );
+        }
+      }
     }
 
     // Coupon handling for bookings. Server-side; same semantics as orders.

@@ -20,6 +20,9 @@ export type Client = {
   /** Loyalty punch count — hits threshold → next service free. Computed from
    * bookingCount unless the admin overrides manually. */
   loyaltyPoints?: number;
+  /** ISO timestamp when the client's 48h colour patch test was completed.
+   * Gating flag for services with requiresPatchTest. */
+  patchTestAt?: string;
 };
 
 async function readAll(): Promise<Client[]> {
@@ -128,6 +131,21 @@ export async function listClients(): Promise<EnrichedClient[]> {
 }
 
 /**
+ * Look up a client by email or phone (same keying as listClients uses
+ * internally). Used by server-side gates that only have contact info from
+ * the booking form — e.g. enforcing a completed patch test before colour.
+ */
+export async function findClientByContact(
+  email?: string,
+  phone?: string
+): Promise<Client | null> {
+  const all = await readAll();
+  const k = keyOf({ email: email ?? "", phone: phone ?? "" });
+  if (!k) return null;
+  return all.find((c) => keyOf(c) === k) ?? null;
+}
+
+/**
  * Full detail view of one client — row from clients.json plus their full
  * booking and order history. Used by the admin client profile page.
  */
@@ -189,7 +207,7 @@ export async function deleteClient(id: string): Promise<boolean> {
  */
 export async function patchClientById(
   id: string,
-  patch: Partial<Pick<Client, "notes" | "tags" | "birthday" | "preferredStaffId" | "loyaltyPoints" | "name" | "email" | "phone">>
+  patch: Partial<Pick<Client, "notes" | "tags" | "birthday" | "preferredStaffId" | "loyaltyPoints" | "name" | "email" | "phone" | "patchTestAt">>
 ): Promise<Client | null> {
   const all = await readAll();
   const idx = all.findIndex((c) => c.id === id);
