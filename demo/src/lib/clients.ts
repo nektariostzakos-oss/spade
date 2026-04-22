@@ -13,6 +13,13 @@ export type Client = {
   notes?: string;
   tags?: string[];
   createdAt: string;
+  /** ISO month-day only, "YYYY-MM-DD" or "--MM-DD". Used for loyalty perks. */
+  birthday?: string;
+  /** Staff id this client likes to book with (if any). */
+  preferredStaffId?: string;
+  /** Loyalty punch count — hits threshold → next service free. Computed from
+   * bookingCount unless the admin overrides manually. */
+  loyaltyPoints?: number;
 };
 
 async function readAll(): Promise<Client[]> {
@@ -42,7 +49,22 @@ export type EnrichedClient = Client & {
   orderCount: number;
   lifetimeValue: number;
   lastSeen: string | null;
+  /** bookings with status "cancelled" that were user-cancelled within 4h, or
+   * flagged by admin. Used for reputation / deposit decisions. */
+  noShowCount: number;
+  /** True when today is in the two-week window around the client's birthday. */
+  birthdayThisMonth: boolean;
 };
+
+function isBirthdayThisMonth(birthday: string | undefined): boolean {
+  if (!birthday) return false;
+  // Accept "YYYY-MM-DD" or "--MM-DD" or "MM-DD".
+  const m = birthday.match(/(\d{2})-(\d{2})$/);
+  if (!m) return false;
+  const bMonth = parseInt(m[1], 10);
+  const now = new Date();
+  return bMonth === now.getMonth() + 1;
+}
 
 export async function listClients(): Promise<EnrichedClient[]> {
   const [stored, bookings, orders] = await Promise.all([
@@ -95,6 +117,8 @@ export async function listClients(): Promise<EnrichedClient[]> {
       ...c,
       bookingCount: bs.length,
       orderCount: os.length,
+      noShowCount: bs.filter((b) => b.status === "cancelled").length,
+      birthdayThisMonth: isBirthdayThisMonth(c.birthday),
       lifetimeValue: bookingRevenue + orderRevenue,
       lastSeen: dates.at(-1) ?? null,
     });
@@ -103,8 +127,30 @@ export async function listClients(): Promise<EnrichedClient[]> {
   return enriched;
 }
 
+/**
+ * Full detail view of one client — row from clients.json plus their full
+ * booking and order history. Used by the admin client profile page.
+ */
+export async function getClientDetail(id: string): Promise<
+  | null
+  | (EnrichedClient & {
+      bookings: Awaited<ReturnType<typeof listBookings>>;
+      orders: Awaited<ReturnType<typeof listOrders>>;
+    })
+> {
+  const list = await listClients();
+  const found = list.find((c) => c.id === id);
+  if (!found) return null;
+  const [allB, allO] = await Promise.all([listBookings(), listOrders()]);
+  const k = keyOf(found);
+  const bookings = allB.filter((b) => keyOf({ email: b.email, phone: b.phone }) === k);
+  const orders = allO.filter((o) => keyOf({ email: o.email, phone: o.phone }) === k);
+  return { ...found, bookings, orders };
+}
+
 export async function upsertClient(
-  input: Pick<Client, "name" | "email" | "phone"> & Partial<Pick<Client, "notes" | "tags">>
+  input: Pick<Client, "name" | "email" | "phone"> &
+    Partial<Pick<Client, "notes" | "tags" | "birthday" | "preferredStaffId" | "loyaltyPoints">>
 ): Promise<Client> {
   const all = await readAll();
   const k = keyOf(input);
@@ -134,6 +180,44 @@ export async function deleteClient(id: string): Promise<boolean> {
   if (next.length === all.length) return false;
   await writeAll(next);
   return true;
+}
+
+/**
+ * Patch an existing client row by id. If the client doesn't exist in the
+ * stored file yet (common when they were implicitly created from a
+ * booking), upsert a fresh row using their email/phone key.
+ */
+export async function patchClientById(
+  id: string,
+  patch: Partial<Pick<Client, "notes" | "tags" | "birthday" | "preferredStaffId" | "loyaltyPoints" | "name" | "email" | "phone">>
+): Promise<Client | null> {
+  const all = await readAll();
+  const idx = all.findIndex((c) => c.id === id);
+  if (idx >= 0) {
+    all[idx] = { ...all[idx], ...patch };
+    await writeAll(all);
+    return all[idx];
+  }
+  // Implicit client (from bookings only) — look up via listClients to get the
+  // email/phone, then persist a new stored row.
+  const fromJoin = await listClients();
+  const base = fromJoin.find((c) => c.id === id);
+  if (!base) return null;
+  const fresh: Client = {
+    id,
+    name: patch.name ?? base.name,
+    email: patch.email ?? base.email,
+    phone: patch.phone ?? base.phone,
+    notes: patch.notes,
+    tags: patch.tags,
+    birthday: patch.birthday,
+    preferredStaffId: patch.preferredStaffId,
+    loyaltyPoints: patch.loyaltyPoints,
+    createdAt: base.createdAt,
+  };
+  all.push(fresh);
+  await writeAll(all);
+  return fresh;
 }
 
 export async function importClients(

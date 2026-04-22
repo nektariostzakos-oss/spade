@@ -195,7 +195,9 @@ export default function ClientsPanel() {
                 key={c.id}
                 className="grid gap-1 px-4 py-3 text-sm sm:px-5 lg:grid-cols-[1.2fr_1.4fr_1fr_80px_80px_100px_80px] lg:items-center lg:gap-3"
               >
-                <div className="font-medium text-white">{c.name}</div>
+                <a href={`/admin/clients/${encodeURIComponent(c.id)}`} className="font-medium text-white hover:text-[#c9a961]">
+                  {c.name}
+                </a>
                 <a href={`mailto:${c.email}`} className="truncate text-white/75 hover:text-white">
                   {c.email || <span className="text-white/30">—</span>}
                 </a>

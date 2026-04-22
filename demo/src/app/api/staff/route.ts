@@ -20,8 +20,10 @@ export async function POST(req: NextRequest) {
     specialties: Array.isArray(body.specialties) ? body.specialties : [],
     enabled: body.enabled !== false,
     workDays: Array.isArray(body.workDays) ? body.workDays.map(Number) : [1, 2, 3, 4, 5, 6],
-    startTime: String(body.startTime || "09:00"),
+    startTime: String(body.startTime || "10:00"),
     endTime: String(body.endTime || "21:00"),
+    breakStart: body.breakStart ? String(body.breakStart) : undefined,
+    breakEnd: body.breakEnd ? String(body.breakEnd) : undefined,
     order: Number(body.order) || 0,
   });
   return NextResponse.json({ member: item });
