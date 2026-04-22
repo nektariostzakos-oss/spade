@@ -80,15 +80,30 @@ def copy_code(stage: Path):
         shutil.copytree(demos_src, stage / "demos")
 
 
-def copy_demo_data(stage: Path):
-    shutil.copytree(SRC / "data", stage / "data")
-
-
 def write_clean_data(stage: Path):
     d = stage / "data"
     d.mkdir()
     for name, value in CLEAN_DATA.items():
         (d / name).write_text(json.dumps(value, indent=2, ensure_ascii=False))
+
+
+def write_demo_data(stage: Path):
+    """
+    Demo ZIP = CLEAN defaults + canonical showcase overlay from
+    demos/barber/data/. Single source of truth: the wizard reads from the
+    same folder when you pick "demo" mode, so the ZIP you download and the
+    wizard's demo option produce identical seeded sites.
+    """
+    d = stage / "data"
+    d.mkdir()
+    for name, value in CLEAN_DATA.items():
+        (d / name).write_text(json.dumps(value, indent=2, ensure_ascii=False))
+
+    showcase = SRC / "demos" / "barber" / "data"
+    if showcase.exists():
+        for child in showcase.iterdir():
+            if child.is_file() and child.suffix == ".json":
+                shutil.copy2(child, d / child.name)
 
 
 def build_zip(stage: Path, out: Path):
@@ -126,16 +141,18 @@ def build_tgz(stage: Path, out: Path):
             tf.add(child, arcname=child.name, filter=_filter)
 
 
-# Demo variant — full Oakline showcase content + seeded data
+# Demo variant — clean base + canonical showcase overlay (single source of
+# truth: demo/demos/barber/data/, which is also what the wizard reads from
+# in demo mode).
 demo_stage = ROOT / ".zip-stage-demo"
 reset(demo_stage)
 copy_code(demo_stage)
-copy_demo_data(demo_stage)
+write_demo_data(demo_stage)
 build_zip(demo_stage, DEMO_ZIP)
 build_tgz(demo_stage, DEMO_TGZ)
 shutil.rmtree(demo_stage)
-print(f"Built: {DEMO_ZIP.name}  {DEMO_ZIP.stat().st_size:>8} bytes  (Oakline demo)")
-print(f"Built: {DEMO_TGZ.name}  {DEMO_TGZ.stat().st_size:>8} bytes  (Oakline demo)")
+print(f"Built: {DEMO_ZIP.name}  {DEMO_ZIP.stat().st_size:>8} bytes  (showcase)")
+print(f"Built: {DEMO_TGZ.name}  {DEMO_TGZ.stat().st_size:>8} bytes  (showcase)")
 
 # Clean variant — same code, blank data → wizard runs on first /admin login
 clean_stage = ROOT / ".zip-stage-clean"
