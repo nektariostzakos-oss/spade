@@ -14,6 +14,8 @@ type Svc = {
   bufferMinutes?: number;
   fromPrice?: boolean;
   requiresPatchTest?: boolean;
+  /** Comma-separated service IDs offered as add-ons during booking. */
+  addOnIds?: string[];
   category?: string;
   enabled: boolean;
   order: number;
@@ -77,6 +79,16 @@ export default function ServicesPanel() {
             <input type="checkbox" checked={!!draft.requiresPatchTest} onChange={(e) => setDraft({ ...draft, requiresPatchTest: e.target.checked })} />
             <span className="text-sm">Requires patch test (48h before, for new clients)</span>
           </label>
+          <F
+            label="Add-on service IDs (comma-separated)"
+            value={(draft.addOnIds ?? []).join(", ")}
+            onChange={(v) =>
+              setDraft({
+                ...draft,
+                addOnIds: v.split(",").map((s) => s.trim()).filter(Boolean),
+              })
+            }
+          />
           <F label="Description (EN)" value={draft.desc} onChange={(v) => setDraft({ ...draft, desc: v })} textarea />
           <F label="Description (EL)" value={draft.desc_el || ""} onChange={(v) => setDraft({ ...draft, desc_el: v })} textarea />
           <label className="flex items-center gap-2 sm:col-span-2">

@@ -683,6 +683,11 @@ export default function SettingsPanel() {
           onChange={(v) => setBusinessLocal({ ...business, timezone: v })}
         />
         <Field
+          label="Review URL (Google / Trustpilot / etc.)"
+          value={business.reviewUrl || ""}
+          onChange={(v) => setBusinessLocal({ ...business, reviewUrl: v })}
+        />
+        <Field
           label="Phone"
           value={business.phone}
           onChange={(v) => setBusinessLocal({ ...business, phone: v })}

@@ -51,6 +51,9 @@ export type BusinessSettings = {
   };
   priceRange: string;
   timezone?: string; // IANA name, e.g. "Europe/Athens". Used for slot/today calcs.
+  /** Target link for the post-visit review email. Defaults to a Google
+   * search for the business name + city if not set. */
+  reviewUrl?: string;
 };
 
 export type NavLink = {

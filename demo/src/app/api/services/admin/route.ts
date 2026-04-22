@@ -23,6 +23,7 @@ export async function POST(req: NextRequest) {
     bufferMinutes: Number(body.bufferMinutes) || 0,
     fromPrice: body.fromPrice === true,
     requiresPatchTest: body.requiresPatchTest === true,
+    addOnIds: Array.isArray(body.addOnIds) ? body.addOnIds.map(String) : undefined,
     category: body.category,
     enabled: body.enabled !== false,
     order: Number(body.order) || 0,

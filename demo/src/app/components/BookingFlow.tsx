@@ -25,6 +25,7 @@ type LiveService = {
   tkey?: string;
   fromPrice?: boolean;
   requiresPatchTest?: boolean;
+  addOnIds?: string[];
 };
 
 type Step = 1 | 2 | 3 | 4 | 5;
@@ -69,6 +70,7 @@ export default function BookingFlow() {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [notes, setNotes] = useState("");
+  const [addOnIds, setAddOnIds] = useState<string[]>([]);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [done, setDone] = useState<{ ref: string; manageToken?: string } | null>(null);
@@ -94,7 +96,7 @@ export default function BookingFlow() {
       .then((r) => r.ok ? r.json() : null)
       .then((d) => {
         if (!d?.services?.length) return;
-        setLiveOverride(d.services.map((s: { id: string; name: string; desc: string; price: number; duration: number; fromPrice?: boolean; requiresPatchTest?: boolean }) => ({
+        setLiveOverride(d.services.map((s: { id: string; name: string; desc: string; price: number; duration: number; fromPrice?: boolean; requiresPatchTest?: boolean; addOnIds?: string[] }) => ({
           id: s.id,
           name_en: s.name,
           name_el: s.name,
@@ -104,6 +106,7 @@ export default function BookingFlow() {
           duration: s.duration,
           fromPrice: s.fromPrice,
           requiresPatchTest: s.requiresPatchTest,
+          addOnIds: s.addOnIds,
         })));
       })
       .catch(() => {});
@@ -177,26 +180,40 @@ export default function BookingFlow() {
       const res = await fetch("/api/bookings", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({
-          serviceId: service.id,
-          // Send the user-facing (localized) name so emails read in their language.
-          serviceName: pickName(service),
-          price: service.price,
-          duration: service.duration,
-          barberId: barber.id,
-          barberName:
-            lang === "el" && barber.id === "any"
-              ? "Όποιος είναι ελεύθερος"
-              : barber.name,
-          date,
-          time,
-          name,
-          phone,
-          email,
-          notes,
-          lang,
-          website: honeypot,
-        }),
+        body: (() => {
+          // Fold chosen add-ons into the booking: bump price + duration, add a
+          // "+ Add-on name" line to the stored service name so admin + emails
+          // see everything the client signed up for in one place.
+          const addOns = (service.addOnIds ?? [])
+            .filter((id) => addOnIds.includes(id))
+            .map((id) => services.find((s) => s.id === id))
+            .filter((s): s is LiveService => !!s);
+          const totalPrice = service.price + addOns.reduce((n, a) => n + a.price, 0);
+          const totalDuration = service.duration + addOns.reduce((n, a) => n + a.duration, 0);
+          const nameWithAddOns = addOns.length
+            ? `${pickName(service)} + ${addOns.map((a) => pickName(a)).join(" + ")}`
+            : pickName(service);
+
+          return JSON.stringify({
+            serviceId: service.id,
+            serviceName: nameWithAddOns,
+            price: totalPrice,
+            duration: totalDuration,
+            barberId: barber.id,
+            barberName:
+              lang === "el" && barber.id === "any"
+                ? "Όποιος είναι ελεύθερος"
+                : barber.name,
+            date,
+            time,
+            name,
+            phone,
+            email,
+            notes,
+            lang,
+            website: honeypot,
+          });
+        })(),
       });
       const d = await res.json();
       if (!res.ok) throw new Error(d.error || t("book.error.network"));
@@ -540,6 +557,43 @@ export default function BookingFlow() {
                 transition={{ duration: 0.3 }}
               >
                 <h3 className="mb-6 font-serif text-2xl">{t("book.step.details")}</h3>
+
+                {service && service.addOnIds && service.addOnIds.length > 0 && (
+                  <div className="mb-6 rounded-xl border border-white/10 bg-white/[0.02] p-4">
+                    <p className="text-[10px] uppercase tracking-[0.3em] text-[#c9a961]">
+                      {lang === "el" ? "Πρόσθεσε" : "Add to your visit"}
+                    </p>
+                    <div className="mt-3 space-y-2">
+                      {service.addOnIds.map((addOnId) => {
+                        const addOn = services.find((s) => s.id === addOnId);
+                        if (!addOn) return null;
+                        const checked = addOnIds.includes(addOnId);
+                        return (
+                          <label key={addOnId} className={`flex cursor-pointer items-center justify-between rounded-lg border px-4 py-3 transition-colors ${checked ? "border-[#c9a961] bg-[#c9a961]/10" : "border-white/10 bg-white/[0.02] hover:border-white/25"}`}>
+                            <div className="flex items-center gap-3">
+                              <input
+                                type="checkbox"
+                                checked={checked}
+                                onChange={(e) => {
+                                  setAddOnIds((prev) =>
+                                    e.target.checked ? [...prev, addOnId] : prev.filter((x) => x !== addOnId)
+                                  );
+                                }}
+                                style={{ accentColor: "#c9a961" }}
+                              />
+                              <div>
+                                <div className="text-sm text-white">{pickName(addOn)}</div>
+                                <div className="text-xs text-white/50">{pickDesc(addOn)}</div>
+                              </div>
+                            </div>
+                            <div className="text-sm text-[#c9a961]">+£{addOn.price}</div>
+                          </label>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
                 <div className="grid gap-4 sm:grid-cols-2">
                   <Field
                     id="booking-name"
