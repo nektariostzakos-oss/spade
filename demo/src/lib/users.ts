@@ -100,9 +100,9 @@ export async function ensureSeedAdmin(): Promise<void> {
   if (all.length > 0) return;
   const seed: User = {
     id: `u_${Date.now().toString(36)}`,
-    email: "admin@oakline.studio",
+    email: "admin@yoursalon.local",
     role: "admin",
-    passwordHash: hashPassword("oakline2026"),
+    passwordHash: hashPassword("change-me"),
     createdAt: new Date().toISOString(),
     // Fresh installs MUST change this before using anything.
     mustChangePassword: true,

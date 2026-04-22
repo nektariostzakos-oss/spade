@@ -2,7 +2,7 @@ import ResetForm from "./ResetForm";
 import RequestForm from "./RequestForm";
 
 export const metadata = {
-  title: "Reset password — Oakline Admin",
+  title: "Reset password — Admin",
   robots: { index: false, follow: false, nocache: true },
 };
 
@@ -18,7 +18,7 @@ export default async function ResetPage({
     <main className="flex min-h-screen items-center justify-center bg-[#0a0806] px-6">
       <div className="w-full max-w-md rounded-2xl border border-white/10 bg-white/[0.03] p-10 backdrop-blur">
         <p className="text-xs uppercase tracking-[0.3em] text-[#c9a961]">
-          Oakline · Admin
+          Admin
         </p>
         <h1 className="mt-2 font-serif text-3xl font-semibold text-white">
           Reset password

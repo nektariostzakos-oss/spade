@@ -12,7 +12,7 @@ import { loadBranding } from "../../../../lib/settings";
  * PUT  { token, password } → set new password if token is valid & unexpired.
  */
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://oakline.studio";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://yoursalon.local";
 
 export async function POST(req: NextRequest) {
   const ip = clientIp(req);
@@ -34,8 +34,8 @@ export async function POST(req: NextRequest) {
 
   const token = await signResetToken(user.id);
   const url = `${SITE_URL}/admin/reset?t=${encodeURIComponent(token)}`;
-  const branding = await loadBranding().catch(() => ({ wordmark: "Oakline" }));
-  const brand = branding.wordmark || "Oakline";
+  const branding = await loadBranding().catch(() => ({ wordmark: "Your Salon" }));
+  const brand = branding.wordmark || "Your Salon";
   const subject = `${brand} admin — reset your password`;
   const bodyText =
     `A password reset was requested for this account.\n\n` +

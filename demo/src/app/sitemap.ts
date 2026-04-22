@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { listProducts } from "../lib/products";
 import { listPages } from "../lib/pages";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://oakline.studio";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://yoursalon.local";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();

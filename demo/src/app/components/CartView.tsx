@@ -29,7 +29,7 @@ export default function CartView() {
   // Restore + persist form draft so a refresh mid-checkout doesn't wipe it.
   useEffect(() => {
     try {
-      const raw = window.localStorage.getItem("oakline_cart_draft_v1");
+      const raw = window.localStorage.getItem("atelier_cart_draft_v1");
       if (raw) {
         const d = JSON.parse(raw) as Partial<typeof form>;
         setForm((f) => ({ ...f, ...d, website: "" }));
@@ -39,7 +39,7 @@ export default function CartView() {
   useEffect(() => {
     try {
       const { website: _website, ...persist } = form;
-      window.localStorage.setItem("oakline_cart_draft_v1", JSON.stringify(persist));
+      window.localStorage.setItem("atelier_cart_draft_v1", JSON.stringify(persist));
     } catch {}
   }, [form]);
 
@@ -66,7 +66,7 @@ export default function CartView() {
       setError(d.error || "Order failed");
       return;
     }
-    try { window.localStorage.removeItem("oakline_cart_draft_v1"); } catch {}
+    try { window.localStorage.removeItem("atelier_cart_draft_v1"); } catch {}
     clear();
     // Stripe configured? Bounce straight to hosted Checkout. Otherwise we
     // show the in-app "thanks, we'll contact you about payment" screen.

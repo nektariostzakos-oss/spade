@@ -7,7 +7,7 @@ import { getLaunchChecklist } from "../../lib/launchChecklist";
 import AdminDashboard from "../components/AdminDashboard";
 
 export const metadata = {
-  title: "Admin · Bookings — Oakline",
+  title: "Admin · Bookings — Your Salon",
   robots: { index: false, follow: false, nocache: true },
 };
 

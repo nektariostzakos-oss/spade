@@ -78,7 +78,7 @@ export default function BookingFlow() {
   // switch shouldn't force the user to re-type everything.
   useEffect(() => {
     try {
-      const raw = window.localStorage.getItem("oakline_book_draft_v1");
+      const raw = window.localStorage.getItem("atelier_book_draft_v1");
       if (!raw) return;
       const d = JSON.parse(raw) as Partial<Record<string, string | string[] | number>>;
       if (typeof d.serviceId === "string" && !initialServiceId && d.serviceId) setServiceId(d.serviceId);
@@ -99,7 +99,7 @@ export default function BookingFlow() {
     if (typeof window === "undefined") return;
     try {
       window.localStorage.setItem(
-        "oakline_book_draft_v1",
+        "atelier_book_draft_v1",
         JSON.stringify({ serviceId, barberId, date, time, name, phone, email, notes, addOnIds })
       );
     } catch {}
@@ -253,7 +253,7 @@ export default function BookingFlow() {
       if (!res.ok) throw new Error(d.error || t("book.error.network"));
       if (d.appliedCoupon) setAppliedCoupon(d.appliedCoupon);
       setDone({ ref: d.booking.id, manageToken: d.manageToken });
-      try { window.localStorage.removeItem("oakline_book_draft_v1"); } catch {}
+      try { window.localStorage.removeItem("atelier_book_draft_v1"); } catch {}
     } catch (e) {
       setError(e instanceof Error ? e.message : t("book.error.network"));
     } finally {
@@ -309,7 +309,7 @@ export default function BookingFlow() {
               const startDt = new Date(`${date}T${time}:00`);
               const endDt = new Date(startDt.getTime() + (service?.duration ?? 30) * 60_000);
               const fmt = (d: Date) => d.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
-              const brand = business.name || "Oakline";
+              const brand = business.name || "Your Salon";
               const title = `${pickName(service!)} · ${brand}`;
               const details = [
                 `${t("book.sum.service")}: ${pickName(service!)}`,
@@ -320,9 +320,9 @@ export default function BookingFlow() {
               const icsLines = [
                 "BEGIN:VCALENDAR",
                 "VERSION:2.0",
-                "PRODID:-//Oakline//Booking//EN",
+                "PRODID:-//Your Salon//Booking//EN",
                 "BEGIN:VEVENT",
-                `UID:${done.ref}@oakline.studio`,
+                `UID:${done.ref}@yoursalon.local`,
                 `DTSTAMP:${fmt(new Date())}`,
                 `DTSTART:${fmt(startDt)}`,
                 `DTEND:${fmt(endDt)}`,
@@ -344,7 +344,7 @@ export default function BookingFlow() {
                   </a>
                   <a
                     href={ics}
-                    download={`oakline-${done.ref}.ics`}
+                    download={`atelier-${done.ref}.ics`}
                     className="inline-flex items-center gap-2 rounded-full border border-white/20 px-5 py-2.5 text-xs font-semibold uppercase tracking-widest text-white hover:border-white/40"
                   >
                     {lang === "el" ? "Apple / Outlook (.ics)" : "Apple / Outlook (.ics)"}

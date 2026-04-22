@@ -67,7 +67,7 @@ type Branding = {
 const EMPTY_BRANDING: Branding = {
   logoUrl: "/brand/default-logo.svg",
   faviconUrl: "/favicon.ico",
-  wordmark: "OAKLINE",
+  wordmark: "YOUR SALON",
   tagline_en: "Scissors · London",
   tagline_el: "Ψαλίδι · Λονδίνο",
 };
@@ -83,7 +83,7 @@ const DAYS: { key: BusinessHours["day"]; label: string }[] = [
 ];
 
 const EMPTY_BUSINESS: BusinessSettings = {
-  name: "Oakline Scissors",
+  name: "Your Salon",
   streetAddress: "",
   city: "",
   postalCode: "",
@@ -1200,7 +1200,7 @@ export default function SettingsPanel() {
           label="Wordmark"
           value={branding.wordmark}
           onChange={(v) => setBrandingLocal({ ...branding, wordmark: v })}
-          placeholder="OAKLINE"
+          placeholder="YOUR SALON"
         />
         <div />
 
@@ -1524,7 +1524,7 @@ export default function SettingsPanel() {
             label="Username"
             value={smtp.user}
             onChange={(v) => setSmtp({ ...smtp, user: v })}
-            placeholder="hello@oakline.studio"
+            placeholder="hello@yoursalon.local"
           />
           <Field
             label="Password / API key"
@@ -1536,7 +1536,7 @@ export default function SettingsPanel() {
             label="From address"
             value={smtp.from}
             onChange={(v) => setSmtp({ ...smtp, from: v })}
-            placeholder='Oakline Scissors <hello@oakline.studio>'
+            placeholder='Your Salon <hello@yoursalon.local>'
           />
           <div>
             <label className="mb-2 block text-xs uppercase tracking-widest text-white/40">

@@ -11,7 +11,10 @@ import {
   type EmailTemplate,
 } from "./settings";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://oakline.studio";
+// Falls back to localhost if NEXT_PUBLIC_SITE_URL isn't set — a clean
+// install will still send emails, and the manage-booking link will just
+// point to the dev server until the env var is configured.
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 const LOG_FILE = path.join(process.cwd(), "data", "emails.log.json");
 
@@ -37,7 +40,9 @@ async function buildTransport() {
 
 async function fromAddress() {
   const s = await loadSmtp();
-  return s.from || `Oakline Scissors <${s.user || "hello@oakline.studio"}>`;
+  // Generic sender for fresh installs. Owner should override in Settings →
+  // Email → "From address" once their real sender is wired up.
+  return s.from || `Your Salon <${s.user || "hello@example.com"}>`;
 }
 
 async function appendLog(entry: SentEmail) {
@@ -302,7 +307,7 @@ function safeUrl(u: string | undefined | null): string | null {
 export async function sendReviewRequest(b: Booking) {
   const biz = await loadBusiness();
   const lang = b.lang === "el" ? "el" : "en";
-  const brand = biz.name || "Oakline";
+  const brand = biz.name || "Your Salon";
   const reviewUrl =
     safeUrl((biz as { reviewUrl?: string }).reviewUrl) ||
     safeUrl(process.env.NEXT_PUBLIC_REVIEW_URL) ||

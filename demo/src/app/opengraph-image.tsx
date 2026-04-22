@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import { loadBranding, loadBusiness } from "../lib/settings";
 
-export const alt = "Oakline Scissors — London";
+export const alt = "Your Salon";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -10,10 +10,10 @@ export default async function OgImage() {
     loadBranding().catch(() => null),
     loadBusiness().catch(() => null),
   ]);
-  const wordmark = branding?.wordmark || business?.name || "Oakline";
+  const wordmark = branding?.wordmark || business?.name || "Your Salon";
   const tagline =
-    branding?.tagline_en || "Precision cuts, colour with care, London craft";
-  const city = business?.city || "London";
+    branding?.tagline_en || "Cuts, colour, care";
+  const city = business?.city || "";
   const gold = "#c9a961";
   const bg = "#0a0806";
 
@@ -84,7 +84,7 @@ export default async function OgImage() {
           }}
         >
           <span>Book online · Walk-ins welcome</span>
-          <span style={{ color: gold }}>oakline.studio</span>
+          <span style={{ color: gold }}>yoursalon.com</span>
         </div>
       </div>
     ),

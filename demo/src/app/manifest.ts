@@ -2,10 +2,10 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Oakline Scissors London",
-    short_name: "Oakline",
+    name: "Your Salon",
+    short_name: "Your Salon",
     description:
-      "Oakline Scissors — a precision hair studio in South Kensington, London. Cuts, colour and care.",
+      "Your Salon — a precision hair studio in South Kensington, London. Cuts, colour and care.",
     start_url: "/",
     display: "standalone",
     background_color: "#0a0806",

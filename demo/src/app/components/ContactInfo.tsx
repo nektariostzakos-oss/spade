@@ -119,7 +119,7 @@ export default function ContactInfo() {
         >
           <Image
             src={c.image}
-            alt="Oakline Scissors shop front"
+            alt="Your Salon shop front"
             fill
             sizes="(max-width: 1024px) 100vw, 50vw"
             className="object-cover"

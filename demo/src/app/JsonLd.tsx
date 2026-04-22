@@ -3,7 +3,7 @@ import { loadContent } from "../lib/content";
 import { SERVICES } from "../lib/services";
 import { listProducts } from "../lib/products";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://oakline.studio";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://yoursalon.local";
 
 const DAY_NAME: Record<string, string> = {
   mon: "Monday",

@@ -10,7 +10,7 @@ import { useLang } from "../../lib/i18n";
  * scripts (layout.tsx) are already guarded by consent via this flag so they
  * don't fire until the visitor opts in.
  */
-const KEY = "oakline_cookie_consent_v1";
+const KEY = "atelier_cookie_consent_v1";
 
 export type Consent = "all" | "essential" | null;
 
@@ -38,7 +38,7 @@ export default function CookieBanner() {
     } catch {}
     setDecided(true);
     // Notify layout / analytics hooks that consent changed.
-    window.dispatchEvent(new CustomEvent("oakline-consent-changed", { detail: v }));
+    window.dispatchEvent(new CustomEvent("atelier-consent-changed", { detail: v }));
   }
 
   if (decided === null || decided === true) return null;

@@ -11,7 +11,7 @@ type StoredSeo = Partial<{
   ogImage: string;
 }>;
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://oakline.studio";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://yoursalon.local";
 
 export async function buildPageMetadata(
   section: string,

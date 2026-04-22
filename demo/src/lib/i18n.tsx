@@ -78,7 +78,7 @@ const STRINGS: Record<Lang, Strings> = {
     "page.team.eyebrow": "Our team",
     "page.team.title": "Three barbers. One standard.",
     "page.team.sub":
-      "The chairs at Oakline are run by three stylists who care about the work and the people in front of them.",
+      "The chairs at Your Salon are run by three stylists who care about the work and the people in front of them.",
     "page.contact.eyebrow": "Contact",
     "page.contact.title": "Find us in South Kensington.",
     "page.contact.sub":
@@ -125,7 +125,7 @@ const STRINGS: Record<Lang, Strings> = {
     "about.eyebrow": "Our story",
     "about.title": "A hair studio, the way it should be.",
     "about.p1":
-      "Oakline opened in South Kensington in 2018 with one chair, one stylist, and a stubborn idea: take the time, do the work properly, and people come back.",
+      "Your Salon opened in South Kensington in 2018 with one chair, one stylist, and a stubborn idea: take the time, do the work properly, and people come back.",
     "about.p2":
       "Eight years later we've added two more chairs and a small team — but the philosophy hasn't budged. No production line. No rushing. Just sharp work in a quiet, well-lit room with good music and proper coffee.",
     "about.p3":
@@ -160,7 +160,7 @@ const STRINGS: Record<Lang, Strings> = {
     "contact.phone.label": "Phone",
     "contact.phone.value": "+30 27440 00000",
     "contact.email.label": "Email",
-    "contact.email.value": "hello@oakline.studio",
+    "contact.email.value": "hello@yoursalon.local",
     "contact.hours.label": "Hours",
     "contact.hours.value": "Mon–Sat · 09:00–21:00\nSunday · Closed",
 
@@ -171,7 +171,7 @@ const STRINGS: Record<Lang, Strings> = {
     "footer.shop": "Shop",
     "footer.visit": "Visit",
     "footer.contact": "Contact",
-    "footer.copy": "© {year} Oakline Scissors · London, UK",
+    "footer.copy": "© {year} Your Salon · London, UK",
 
     // Booking flow
     "book.step.service": "Pick a service",
@@ -367,7 +367,7 @@ const STRINGS: Record<Lang, Strings> = {
     "contact.phone.label": "Τηλεφωνο",
     "contact.phone.value": "+44 20 7946 0412",
     "contact.email.label": "Email",
-    "contact.email.value": "hello@oakline.studio",
+    "contact.email.value": "hello@yoursalon.local",
     "contact.hours.label": "Ωραριο",
     "contact.hours.value": "Δευ, Τετ · 10:00–17:00\nΤρι, Πεμ · 10:00–14:00 & 17:00–21:00\nΠαρ, Σαβ · 10:00–21:00\nΚυριακή · Κλειστά",
 
@@ -378,7 +378,7 @@ const STRINGS: Record<Lang, Strings> = {
     "footer.shop": "Καταστημα",
     "footer.visit": "Που θα μας βρεις",
     "footer.contact": "Επικοινωνια",
-    "footer.copy": "© {year} Oakline Scissors · Λονδίνο, UK",
+    "footer.copy": "© {year} Your Salon · Λονδίνο, UK",
 
     // Booking flow
     "book.step.service": "Υπηρεσία",

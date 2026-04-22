@@ -2,7 +2,7 @@ import LoginForm from "../../components/LoginForm";
 import { loadSettings } from "../../../lib/settings";
 
 export const metadata = {
-  title: "Sign in — Oakline Admin",
+  title: "Sign in — Admin",
   robots: { index: false, follow: false, nocache: true },
 };
 
@@ -19,7 +19,7 @@ export default async function LoginPage() {
     <main className="flex min-h-screen items-center justify-center bg-[#0a0806] px-6">
       <div className="w-full max-w-md rounded-2xl border border-white/10 bg-white/[0.03] p-10 backdrop-blur">
         <p className="text-xs uppercase tracking-[0.3em] text-[#c9a961]">
-          Oakline · Admin
+          Admin
         </p>
         <h1 className="mt-2 font-serif text-3xl font-semibold text-white">
           Sign in
@@ -40,8 +40,8 @@ export default async function LoginPage() {
         </p>
         {showSeed && (
           <p className="mt-6 text-xs text-white/30">
-            Default admin: <code className="text-[#c9a961]">admin@oakline.studio</code> /{" "}
-            <code className="text-[#c9a961]">oakline2026</code>.
+            Default admin: <code className="text-[#c9a961]">admin@yoursalon.local</code> /{" "}
+            <code className="text-[#c9a961]">change-me</code>.
             Change it from the Settings tab after first login.
           </p>
         )}

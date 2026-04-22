@@ -213,12 +213,16 @@ export async function loadIndustryId(): Promise<string> {
   return typeof s.industryId === "string" ? s.industryId : "barber";
 }
 
+// NB: these are the factory defaults a fresh ("clean") install falls back
+// to BEFORE the Install Wizard runs. Keep them generic so nobody inherits
+// someone else's brand. The bundled demo ZIP overrides them via a populated
+// data/settings.json with real copy.
 export const DEFAULT_BRANDING: BrandingSettings = {
-  logoUrl: "/brand/default-logo.svg",
-  faviconUrl: "/favicon.ico",
-  wordmark: "OAKLINE",
-  tagline_en: "Scissors · London",
-  tagline_el: "Ψαλίδι · Λονδίνο",
+  logoUrl: "",
+  faviconUrl: "",
+  wordmark: "YOUR SALON",
+  tagline_en: "Haircare · Your City",
+  tagline_el: "Κομμωτήριο · Πόλη",
 };
 
 export const DEFAULT_ANALYTICS: AnalyticsSettings = {
@@ -261,24 +265,27 @@ export const DEFAULT_NAV: NavSettings = {
   bookHref: "/book",
 };
 
+// Generic factory default — clean installs fall back to this until the owner
+// runs the wizard. Hours / currency / priceRange are reasonable mid-market
+// placeholders; everything else is clearly "please edit me".
 export const DEFAULT_BUSINESS: BusinessSettings = {
-  name: "Oakline Scissors",
-  streetAddress: "47 Cranley Mews",
-  city: "London",
-  postalCode: "SW7 3BY",
+  name: "Your Salon",
+  streetAddress: "",
+  city: "",
+  postalCode: "",
   country: "GB",
-  phone: "+44 20 7946 0412",
-  email: "hello@oakline.studio",
+  phone: "",
+  email: "",
   timezone: "Europe/London",
-  latitude: 51.4935,
-  longitude: -0.1781,
+  latitude: null,
+  longitude: null,
   hours: [
-    { day: "mon", open: "10:00", close: "17:00", closed: false },
-    { day: "tue", open: "10:00", close: "14:00", closed: false, open2: "17:00", close2: "21:00" },
-    { day: "wed", open: "10:00", close: "17:00", closed: false },
-    { day: "thu", open: "10:00", close: "14:00", closed: false, open2: "17:00", close2: "21:00" },
-    { day: "fri", open: "10:00", close: "21:00", closed: false },
-    { day: "sat", open: "10:00", close: "21:00", closed: false },
+    { day: "mon", open: "10:00", close: "19:00", closed: false },
+    { day: "tue", open: "10:00", close: "19:00", closed: false },
+    { day: "wed", open: "10:00", close: "19:00", closed: false },
+    { day: "thu", open: "10:00", close: "19:00", closed: false },
+    { day: "fri", open: "10:00", close: "19:00", closed: false },
+    { day: "sat", open: "10:00", close: "17:00", closed: false },
     { day: "sun", open: "00:00", close: "00:00", closed: true },
   ],
   social: {
@@ -287,7 +294,13 @@ export const DEFAULT_BUSINESS: BusinessSettings = {
     whatsapp: "",
     tiktok: "",
   },
-  priceRange: "£££",
+  priceRange: "££",
+  bookingRules: {
+    leadTimeMinutes: 45,
+    cancellationWindowHours: 4,
+    depositPercent: 0,
+    noShowFeePercent: 50,
+  },
 };
 
 const DEFAULTS: AppSettings = {

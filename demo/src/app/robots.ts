@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://oakline.studio";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://yoursalon.local";
 
 const AI_CRAWLERS = [
   "GPTBot",

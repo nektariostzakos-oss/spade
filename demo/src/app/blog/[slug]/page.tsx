@@ -5,7 +5,7 @@ import Image from "next/image";
 import { findPage, listPages } from "../../../lib/pages";
 import { loadBranding, loadBusiness } from "../../../lib/settings";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://oakline.studio";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://yoursalon.local";
 
 // Static-generate each published post at build time. New posts added after
 // deploy are served via on-demand SSG (cached after first hit).
@@ -77,10 +77,10 @@ export default async function BlogPostPage({
     image: post.image || undefined,
     datePublished: post.publishedAt,
     dateModified: post.updatedAt || post.publishedAt,
-    author: { "@type": "Organization", name: branding.wordmark || business.name || "Oakline" },
+    author: { "@type": "Organization", name: branding.wordmark || business.name || "Your Salon" },
     publisher: {
       "@type": "Organization",
-      name: branding.wordmark || business.name || "Oakline",
+      name: branding.wordmark || business.name || "Your Salon",
       logo: branding.logoUrl ? { "@type": "ImageObject", url: branding.logoUrl } : undefined,
     },
     mainEntityOfPage: { "@type": "WebPage", "@id": `${SITE_URL}/blog/${post.slug}` },

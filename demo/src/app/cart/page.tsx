@@ -2,7 +2,7 @@ import TranslatedPageHeader from "../components/TranslatedPageHeader";
 import CartView from "../components/CartView";
 
 export const metadata = {
-  title: "Cart — Oakline Scissors",
+  title: "Cart — Your Salon",
   alternates: { canonical: "/cart" },
   robots: { index: false, follow: true },
 };

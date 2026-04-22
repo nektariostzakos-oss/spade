@@ -64,7 +64,7 @@ function isLightColor(bg: string): boolean {
   return l > 160;
 }
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://oakline.studio";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 export async function generateMetadata(): Promise<Metadata> {
   const branding = await loadBranding();
@@ -84,23 +84,20 @@ export async function generateMetadata(): Promise<Metadata> {
     metadataBase: new URL(SITE_URL),
     title: {
       default: homeTitle,
-      template: "%s · Oakline Scissors London",
+      template: `%s · ${business.name || "Your Salon"}`,
     },
     description: homeDesc,
     keywords: [
-      "hair salon London",
-      "scissors cut London",
-      "Oakline Scissors",
-      "salon near me",
-      "South Kensington hair",
-      "precision haircut London",
-      "hairdresser SW7",
-      "colour salon London",
-    ],
-    applicationName: "Oakline Scissors",
-    authors: [{ name: "Oakline Scissors" }],
-    creator: "Oakline Scissors London",
-    publisher: "Oakline Scissors London",
+      "hair salon",
+      "haircut",
+      "barber",
+      "beauty studio",
+      business.city || "",
+    ].filter(Boolean),
+    applicationName: business.name || "Your Salon",
+    authors: [{ name: business.name || "Your Salon" }],
+    creator: business.name || "Your Salon",
+    publisher: business.name || "Your Salon",
     alternates: {
       canonical: "/",
       languages: {
@@ -113,13 +110,13 @@ export async function generateMetadata(): Promise<Metadata> {
       locale: "en_GB",
       alternateLocale: ["en_US"],
       url: SITE_URL,
-      siteName: "Oakline Scissors London",
+      siteName: business.name || "Your Salon",
       title: homeTitle,
       description: homeDesc,
       ...(homeOg
         ? {
             images: [
-              { url: homeOg, width: 1200, height: 630, alt: "Oakline Scissors · London salon" },
+              { url: homeOg, width: 1200, height: 630, alt: business.name || "Your Salon" },
             ],
           }
         : {}),
@@ -196,33 +193,33 @@ export default async function RootLayout({
         <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="" />
         <link rel="dns-prefetch" href="https://images.unsplash.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link rel="alternate" type="application/rss+xml" title="Oakline Blog · RSS" href="/blog/rss.xml" />
+        <link rel="alternate" type="application/rss+xml" title={`${initialBusiness.name || "Your Salon"} Blog · RSS`} href="/blog/rss.xml" />
         <style dangerouslySetInnerHTML={{ __html: themeCss }} />
         <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
         <JsonLd />
         {/* Analytics scripts are consent-gated: they only run after the user
             picks "Accept all" in the cookie banner. The banner stores its
-            choice in localStorage["oakline_cookie_consent_v1"] and fires a
-            'oakline-consent-changed' event so these blocks pick it up live. */}
+            choice in localStorage["atelier_cookie_consent_v1"] and fires a
+            'atelier-consent-changed' event so these blocks pick it up live. */}
         {(analytics.gtm || analytics.ga4 || analytics.metaPixel) && (
           <script
             dangerouslySetInnerHTML={{
               __html: `
 (function(){
   function hasConsent() {
-    try { return localStorage.getItem("oakline_cookie_consent_v1") === "all"; } catch(e) { return false; }
+    try { return localStorage.getItem("atelier_cookie_consent_v1") === "all"; } catch(e) { return false; }
   }
   function load() {
     if (!hasConsent()) return;
-    if (window.__oaklineAnalyticsLoaded) return;
-    window.__oaklineAnalyticsLoaded = true;
+    if (window.__atelierAnalyticsLoaded) return;
+    window.__atelierAnalyticsLoaded = true;
     ${analytics.gtm ? `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${analytics.gtm}');` : ""}
     ${analytics.ga4 ? `var ga=document.createElement('script');ga.async=true;ga.src='https://www.googletagmanager.com/gtag/js?id=${analytics.ga4}';document.head.appendChild(ga);window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${analytics.ga4}');` : ""}
     ${analytics.metaPixel ? `!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${analytics.metaPixel}');fbq('track','PageView');` : ""}
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", load);
   else load();
-  window.addEventListener("oakline-consent-changed", load);
+  window.addEventListener("atelier-consent-changed", load);
 })();
               `,
             }}

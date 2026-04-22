@@ -158,7 +158,7 @@ export default function AdminDashboard({
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3">
           <div>
             <p className="text-[10px] uppercase tracking-[0.3em] text-[#c9a961] sm:text-xs">
-              Oakline · Admin
+              Admin
             </p>
             <h1 className="mt-0.5 font-serif text-xl font-semibold sm:mt-1 sm:text-2xl">
               Dashboard

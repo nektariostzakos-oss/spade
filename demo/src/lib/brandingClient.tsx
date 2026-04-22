@@ -10,12 +10,14 @@ import {
 } from "react";
 import type { BrandingSettings } from "./settings";
 
+// Client-side fallback — kept generic so a clean install doesn't flash
+// someone else's brand on first paint.
 const DEFAULT_BRANDING: BrandingSettings = {
-  logoUrl: "/brand/default-logo.svg",
-  faviconUrl: "/favicon.ico",
-  wordmark: "OAKLINE",
-  tagline_en: "Scissors · London",
-  tagline_el: "Ψαλίδι · Λονδίνο",
+  logoUrl: "",
+  faviconUrl: "",
+  wordmark: "YOUR SALON",
+  tagline_en: "Haircare · Your City",
+  tagline_el: "Κομμωτήριο · Πόλη",
 };
 
 type Ctx = {

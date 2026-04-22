@@ -108,7 +108,7 @@ export default function Footer() {
                   className="block font-serif text-2xl font-semibold tracking-wider"
                   style={{ color: "var(--foreground)" }}
                 >
-                  {branding.wordmark || "OAKLINE"}
+                  {branding.wordmark || "YOUR SALON"}
                 </span>
                 {footerTagline && (
                   <span

@@ -81,7 +81,7 @@ export default async function SchedulePage({
         <div className="flex items-baseline justify-between">
           <div>
             <p className="text-[10px] uppercase tracking-[0.3em] text-black/60">
-              {business.name || "Oakline"} · {business.city || ""}
+              {business.name || "Your Salon"} · {business.city || ""}
             </p>
             <h1 className="mt-1 font-serif text-3xl">
               {dowName} · {date}
@@ -146,7 +146,7 @@ export default async function SchedulePage({
       </div>
 
       <footer className="mx-auto mt-8 max-w-5xl border-t border-black/20 pt-3 text-center text-[10px] text-black/40">
-        Printed {new Date().toISOString().slice(0, 10)} · {business.name || "Oakline"}
+        Printed {new Date().toISOString().slice(0, 10)} · {business.name || "Your Salon"}
       </footer>
     </main>
   );

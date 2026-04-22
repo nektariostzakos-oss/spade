@@ -13,8 +13,8 @@ function clip(s: string, max: number): string {
 }
 
 export function seoDefaults(page: string, b: BusinessSettings): SeoBlock {
-  const name = b.name || "Oakline Scissors";
-  const city = b.city || "London";
+  const name = b.name || "Your Salon";
+  const city = b.city || "Your City";
   const phone = b.phone || "";
   const addr = [b.streetAddress, b.city].filter(Boolean).join(", ");
 

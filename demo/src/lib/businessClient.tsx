@@ -10,28 +10,31 @@ import {
 } from "react";
 import type { BusinessSettings } from "./settings";
 
+// Client-side fallback when /api/business hasn't returned yet (first paint
+// on a freshly-installed site). Kept generic so the flash doesn't show
+// someone else's brand.
 const DEFAULT: BusinessSettings = {
-  name: "Oakline Scissors",
-  streetAddress: "47 Cranley Mews",
-  city: "London",
-  postalCode: "SW7 3BY",
+  name: "Your Salon",
+  streetAddress: "",
+  city: "",
+  postalCode: "",
   country: "GB",
-  phone: "+44 20 7946 0412",
-  email: "hello@oakline.studio",
+  phone: "",
+  email: "",
   timezone: "Europe/London",
-  latitude: 51.4935,
-  longitude: -0.1781,
+  latitude: null,
+  longitude: null,
   hours: [
-    { day: "mon", open: "10:00", close: "17:00", closed: false },
-    { day: "tue", open: "10:00", close: "14:00", closed: false, open2: "17:00", close2: "21:00" },
-    { day: "wed", open: "10:00", close: "17:00", closed: false },
-    { day: "thu", open: "10:00", close: "14:00", closed: false, open2: "17:00", close2: "21:00" },
-    { day: "fri", open: "10:00", close: "21:00", closed: false },
-    { day: "sat", open: "10:00", close: "21:00", closed: false },
+    { day: "mon", open: "10:00", close: "19:00", closed: false },
+    { day: "tue", open: "10:00", close: "19:00", closed: false },
+    { day: "wed", open: "10:00", close: "19:00", closed: false },
+    { day: "thu", open: "10:00", close: "19:00", closed: false },
+    { day: "fri", open: "10:00", close: "19:00", closed: false },
+    { day: "sat", open: "10:00", close: "17:00", closed: false },
     { day: "sun", open: "00:00", close: "00:00", closed: true },
   ],
   social: { instagram: "", facebook: "", whatsapp: "", tiktok: "" },
-  priceRange: "£££",
+  priceRange: "££",
 };
 
 type Ctx = {
