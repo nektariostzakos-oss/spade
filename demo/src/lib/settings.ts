@@ -194,9 +194,9 @@ export const DEFAULT_TEMPLATES: EmailTemplates = {
     subject_en: "{business} — your booking is confirmed",
     subject_el: "{business} — το ραντεβού σας επιβεβαιώθηκε",
     body_en:
-      "Hi {name},\n\nYour booking is confirmed:\n\n· {service} (€{price})\n· With {barber}\n· On {date} at {time}\n\nWe'll send a reminder 8 hours before. Need to reschedule or cancel? Reply to this email or call us at {phone}.\n\nSee you soon,\n{business}",
+      "Hi {name},\n\nYour booking is confirmed:\n\n· {service} (£{price})\n· With {barber}\n· On {date} at {time}\n\nWe'll send a reminder 8 hours before. Need to reschedule or cancel? Reply to this email or call us at {phone}.\n\nSee you soon,\n{business}",
     body_el:
-      "Γεια σου {name},\n\nΤο ραντεβού σου επιβεβαιώθηκε:\n\n· {service} (€{price})\n· Με τον/την {barber}\n· Στις {date} και ώρα {time}\n\nΘα σου στείλουμε υπενθύμιση 8 ώρες πριν. Αν χρειαστεί να αλλάξεις ή να ακυρώσεις, απάντησε σε αυτό το email ή πάρε μας τηλέφωνο στο {phone}.\n\nΘα σε δούμε σύντομα,\n{business}",
+      "Γεια σου {name},\n\nΤο ραντεβού σου επιβεβαιώθηκε:\n\n· {service} (£{price})\n· Με τον/την {barber}\n· Στις {date} και ώρα {time}\n\nΘα σου στείλουμε υπενθύμιση 8 ώρες πριν. Αν χρειαστεί να αλλάξεις ή να ακυρώσεις, απάντησε σε αυτό το email ή πάρε μας τηλέφωνο στο {phone}.\n\nΘα σε δούμε σύντομα,\n{business}",
   },
   reminder: {
     subject_en: "Reminder · Your {business} appointment in 8 hours",
@@ -249,7 +249,7 @@ export const DEFAULT_BUSINESS: BusinessSettings = {
     whatsapp: "",
     tiktok: "",
   },
-  priceRange: "€€",
+  priceRange: "£££",
 };
 
 const DEFAULTS: AppSettings = {

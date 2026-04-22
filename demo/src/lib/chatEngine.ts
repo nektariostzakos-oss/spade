@@ -208,8 +208,8 @@ const INTENTS: Intent[] = [
       return {
         intent: "haircut",
         text: lang === "el"
-          ? `**${svc.name}** · ${svc.duration} λεπτά · €${svc.price}\n${svc.desc}`
-          : `**${svc.name}** · ${svc.duration} min · €${svc.price}\n${svc.desc}`,
+          ? `**${svc.name}** · ${svc.duration} λεπτά · £${svc.price}\n${svc.desc}`
+          : `**${svc.name}** · ${svc.duration} min · £${svc.price}\n${svc.desc}`,
         actions: [{ label: lang === "el" ? "Κλείστε αυτή την υπηρεσία" : "Book this service", href: "/book" }],
       };
     },
@@ -224,8 +224,8 @@ const INTENTS: Intent[] = [
         intent: "beard",
         text: svc
           ? (lang === "el"
-              ? `**${svc.name}** · ${svc.duration} λεπτά · €${svc.price}\n${svc.desc}`
-              : `**${svc.name}** · ${svc.duration} min · €${svc.price}\n${svc.desc}`)
+              ? `**${svc.name}** · ${svc.duration} λεπτά · £${svc.price}\n${svc.desc}`
+              : `**${svc.name}** · ${svc.duration} min · £${svc.price}\n${svc.desc}`)
           : (lang === "el" ? "Δουλεύουμε μούσι και ξύρισμα με ξυράφι — ρωτήστε μας στο μαγαζί." : "We do beard work and straight-razor shaves — ask us in the shop."),
         actions: [{ label: lang === "el" ? "Κράτηση" : "Book now", href: "/book" }],
       };
@@ -244,8 +244,8 @@ const INTENTS: Intent[] = [
       return {
         intent: "gift",
         text: lang === "el"
-          ? "Δωροεπιταγές:\n" + gifts.slice(0, 4).map((p) => `· ${p.name_en} — €${p.price}`).join("\n")
-          : "Gift vouchers available:\n" + gifts.slice(0, 4).map((p) => `· ${p.name_en} — €${p.price}`).join("\n"),
+          ? "Δωροεπιταγές:\n" + gifts.slice(0, 4).map((p) => `· ${p.name_en} — £${p.price}`).join("\n")
+          : "Gift vouchers available:\n" + gifts.slice(0, 4).map((p) => `· ${p.name_en} — £${p.price}`).join("\n"),
         actions: [{ label: lang === "el" ? "Όλες οι δωροεπιταγές" : "See all vouchers", href: "/shop" }],
       };
     },
@@ -260,8 +260,8 @@ const INTENTS: Intent[] = [
       return {
         intent: "products",
         text: lang === "el"
-          ? `${ctx.products.length} προϊόντα στο κατάστημα · ${cats.join(" · ")}. Τιμές από €${Math.min(...ctx.products.map((p) => p.price))}.`
-          : `${ctx.products.length} products in the shop · ${cats.join(" · ")}. Prices from €${Math.min(...ctx.products.map((p) => p.price))}.`,
+          ? `${ctx.products.length} προϊόντα στο κατάστημα · ${cats.join(" · ")}. Τιμές από £${Math.min(...ctx.products.map((p) => p.price))}.`
+          : `${ctx.products.length} products in the shop · ${cats.join(" · ")}. Prices from £${Math.min(...ctx.products.map((p) => p.price))}.`,
         actions: [{ label: lang === "el" ? "Δείτε το κατάστημα" : "Visit the shop", href: "/shop" }],
       };
     },
@@ -294,8 +294,8 @@ const INTENTS: Intent[] = [
       return {
         intent: "price",
         text: lang === "el"
-          ? `Οι τιμές μας κυμαίνονται από €${min} έως €${max}. Λεπτομέρειες:\n${formatServiceList(ctx.services, lang)}`
-          : `Our prices range from €${min} to €${max}. Full list:\n${formatServiceList(ctx.services, lang)}`,
+          ? `Οι τιμές μας κυμαίνονται από £${min} έως £${max}. Λεπτομέρειες:\n${formatServiceList(ctx.services, lang)}`
+          : `Our prices range from £${min} to £${max}. Full list:\n${formatServiceList(ctx.services, lang)}`,
         actions: [{ label: lang === "el" ? "Όλες οι υπηρεσίες" : "All services", href: "/services" }],
       };
     },
@@ -346,7 +346,7 @@ function formatHours(b: BusinessSettings, lang: Lang): string {
 
 function formatServiceList(services: ChatCtx["services"], lang: Lang): string {
   if (services.length === 0) return lang === "el" ? "Δείτε τη σελίδα υπηρεσιών." : "See the services page.";
-  return services.slice(0, 8).map((s) => `· ${s.name} · ${s.duration}${lang === "el" ? " λεπτά" : " min"} · €${s.price}`).join("\n");
+  return services.slice(0, 8).map((s) => `· ${s.name} · ${s.duration}${lang === "el" ? " λεπτά" : " min"} · £${s.price}`).join("\n");
 }
 
 function findFaqMatch(text: string, faq: ChatCtx["faq"], lang: Lang): ChatReply | null {

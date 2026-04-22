@@ -159,7 +159,7 @@ export default function CartView() {
                   </div>
                 </div>
                 <p className="font-serif text-lg text-[#c9a961]">
-                  €{(it.price * it.qty).toFixed(2)}
+                  £{(it.price * it.qty).toFixed(2)}
                 </p>
               </motion.div>
             ))}
@@ -175,7 +175,7 @@ export default function CartView() {
               {lang === "el" ? "Υποσύνολο" : "Subtotal"}
             </span>
             <span className="font-serif text-xl text-[#c9a961]">
-              €{total.toFixed(2)}
+              £{total.toFixed(2)}
             </span>
           </div>
           <p className="mt-3 text-xs text-white/45">

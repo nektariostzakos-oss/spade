@@ -653,7 +653,7 @@ export default function SettingsPanel() {
           onChange={(v) => setBusinessLocal({ ...business, name: v })}
         />
         <Field
-          label="Price range (€ to €€€€)"
+          label="Price range (£ to ££££)"
           value={business.priceRange}
           onChange={(v) => setBusinessLocal({ ...business, priceRange: v })}
         />

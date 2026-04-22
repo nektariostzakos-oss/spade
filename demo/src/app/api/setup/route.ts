@@ -143,7 +143,7 @@ export async function POST(req: NextRequest) {
       { day: "sun", open: "00:00", close: "00:00", closed: true },
     ],
     social: { instagram: "", facebook: "", whatsapp: "", tiktok: "" },
-    priceRange: "€€",
+    priceRange: "££",
   };
 
   // 6. Save content sections

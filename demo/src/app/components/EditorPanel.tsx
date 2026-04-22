@@ -201,7 +201,7 @@ function renderForm(
           fields={[
             { key: "name_en", label: "Name (EN)" },
             { key: "name_el", label: "Name (EL)" },
-            { key: "price", label: "Price (€)" },
+            { key: "price", label: "Price (£)" },
             { key: "duration", label: "Duration (min)" },
             { key: "desc_en", label: "Description (EN)", textarea: true },
             { key: "desc_el", label: "Description (EL)", textarea: true },

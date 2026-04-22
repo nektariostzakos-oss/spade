@@ -270,7 +270,7 @@ export default function AdminDashboard({
           <Stat label="Today" value={stats.todayCount.toString()} />
           <Stat label="Upcoming" value={stats.upcomingCount.toString()} />
           <Stat label="Pending review" value={stats.pending.toString()} />
-          <Stat label="Revenue · completed" value={`€${stats.revenue}`} />
+          <Stat label="Revenue · completed" value={`£${stats.revenue}`} />
         </div>
 
         <div className="mt-8 flex flex-wrap items-center gap-2">
@@ -376,7 +376,7 @@ export default function AdminDashboard({
                 </div>
                 <div>
                   <p className="text-white">{b.name}</p>
-                  <p className="text-xs text-white/40">€{b.price} · {b.duration}m</p>
+                  <p className="text-xs text-white/40">£{b.price} · {b.duration}m</p>
                 </div>
                 <div className="text-white/85">{b.serviceName}</div>
                 <div className="text-white/85">{b.barberName}</div>

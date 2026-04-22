@@ -183,7 +183,7 @@ export const INDUSTRY_PRESETS: IndustryPreset[] = [
     services: [
       { name_en: "Trial Lesson", name_el: "Δοκιμαστικό Μάθημα", price: 0, duration: 30, desc_en: "Free intro session.", desc_el: "Δωρεάν γνωριμία." },
       { name_en: "Single Lesson", name_el: "Ένα Μάθημα", price: 30, duration: 60, desc_en: "One-hour session.", desc_el: "Μάθημα μίας ώρας." },
-      { name_en: "4-Lesson Pack", name_el: "Πακέτο 4 Μαθημάτων", price: 110, duration: 0, desc_en: "Save €10 on a pack.", desc_el: "Κερδίζεις €10 στο πακέτο." },
+      { name_en: "4-Lesson Pack", name_el: "Πακέτο 4 Μαθημάτων", price: 110, duration: 0, desc_en: "Save £10 on a pack.", desc_el: "Κερδίζεις £10 στο πακέτο." },
       { name_en: "Exam Prep", name_el: "Προετοιμασία Εξετάσεων", price: 250, duration: 0, desc_en: "10-hour intensive.", desc_el: "10 ώρες εντατικά." },
     ],
     bookCta_en: "Book a lesson",

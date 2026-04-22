@@ -78,7 +78,7 @@ export async function validateCoupon(
     return { ok: false, error: "Code has expired." };
   if (c.maxUses && c.uses >= c.maxUses) return { ok: false, error: "Code is fully redeemed." };
   if (c.minTotal && total < c.minTotal)
-    return { ok: false, error: `Minimum €${c.minTotal} required.` };
+    return { ok: false, error: `Minimum £${c.minTotal} required.` };
   if (c.appliesTo !== "all" && c.appliesTo !== scope)
     return { ok: false, error: `Code doesn't apply to ${scope}.` };
   const discount = c.kind === "percent" ? (total * c.value) / 100 : Math.min(c.value, total);

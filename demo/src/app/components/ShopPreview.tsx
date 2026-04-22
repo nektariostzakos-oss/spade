@@ -81,7 +81,7 @@ export default function ShopPreview() {
                     {pick(p.name_en, p.name_el)}
                   </h3>
                   <p className="mt-3 font-serif text-2xl text-[#c9a961]">
-                    €{p.price}
+                    £{p.price}
                   </p>
                 </div>
               </Link>

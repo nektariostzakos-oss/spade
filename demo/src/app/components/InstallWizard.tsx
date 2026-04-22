@@ -445,13 +445,13 @@ function Welcome({ onStart }: { onStart: () => void }) {
       <div className="mt-10 rounded-2xl border border-white/10 bg-white/[0.02] p-5">
         <p className="text-[10px] uppercase tracking-[0.3em] text-[#7b95e8]">What you're replacing</p>
         <div className="mt-4 grid gap-2 text-xs sm:grid-cols-4">
-          <ReplaceRow tool="Calendly" cost="€10/mo" />
-          <ReplaceRow tool="Shopify Lite" cost="€30/mo" />
-          <ReplaceRow tool="Mailchimp" cost="€15/mo" />
-          <ReplaceRow tool="Squarespace" cost="€25/mo" />
+          <ReplaceRow tool="Calendly" cost="£10/mo" />
+          <ReplaceRow tool="Shopify Lite" cost="£30/mo" />
+          <ReplaceRow tool="Mailchimp" cost="£15/mo" />
+          <ReplaceRow tool="Squarespace" cost="£25/mo" />
         </div>
         <p className="mt-4 text-xs text-white/55">
-          ≈ <span className="text-white">€80/mo</span> in subscriptions — replaced by one installed site you own.
+          ≈ <span className="text-white">£80/mo</span> in subscriptions — replaced by one installed site you own.
         </p>
       </div>
 

@@ -2752,5 +2752,176 @@
     "sid": "tp9rshpwpdmo7u6z97",
     "id": "v_mo8qvua4_mhe2",
     "createdAt": "2026-04-21T14:54:31.180Z"
+  },
+  {
+    "path": "/",
+    "ref": "",
+    "lang": "el-GR",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo92kgkw_oz97",
+    "createdAt": "2026-04-21T20:21:35.600Z"
+  },
+  {
+    "path": "/",
+    "ref": "",
+    "lang": "el-GR",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo92kita_k442",
+    "createdAt": "2026-04-21T20:21:38.494Z"
+  },
+  {
+    "path": "/book",
+    "ref": "",
+    "lang": "en-US",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo92kz3o_999z",
+    "createdAt": "2026-04-21T20:21:59.604Z"
+  },
+  {
+    "path": "/contact",
+    "ref": "",
+    "lang": "en-US",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo92leql_jz2i",
+    "createdAt": "2026-04-21T20:22:19.869Z"
+  },
+  {
+    "path": "/services",
+    "ref": "",
+    "lang": "en-US",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo92m2sy_gp1g",
+    "createdAt": "2026-04-21T20:22:51.058Z"
+  },
+  {
+    "path": "/shop",
+    "ref": "",
+    "lang": "en-US",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo92m3zn_oazi",
+    "createdAt": "2026-04-21T20:22:52.595Z"
+  },
+  {
+    "path": "/gallery",
+    "ref": "",
+    "lang": "en-US",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo92m4t2_jo7e",
+    "createdAt": "2026-04-21T20:22:53.654Z"
+  },
+  {
+    "path": "/about",
+    "ref": "",
+    "lang": "en-US",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo92m5n5_wunu",
+    "createdAt": "2026-04-21T20:22:54.737Z"
+  },
+  {
+    "path": "/contact",
+    "ref": "",
+    "lang": "en-US",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo92m6ae_221e",
+    "createdAt": "2026-04-21T20:22:55.574Z"
+  },
+  {
+    "path": "/blog",
+    "ref": "",
+    "lang": "en-US",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo92m74f_m7bu",
+    "createdAt": "2026-04-21T20:22:56.655Z"
+  },
+  {
+    "path": "/",
+    "ref": "",
+    "lang": "en-US",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo92m8gg_zgca",
+    "createdAt": "2026-04-21T20:22:58.384Z"
+  },
+  {
+    "path": "/",
+    "ref": "",
+    "lang": "el-GR",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_mo92mbke_23w9",
+    "createdAt": "2026-04-21T20:23:02.414Z"
+  },
+  {
+    "path": "/",
+    "ref": "",
+    "lang": "el-GR",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_moa098l9_lx7b",
+    "createdAt": "2026-04-22T12:04:38.973Z"
+  },
+  {
+    "path": "/",
+    "ref": "",
+    "lang": "el-GR",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_moa09hog_sy1g",
+    "createdAt": "2026-04-22T12:04:50.752Z"
+  },
+  {
+    "path": "/contact",
+    "ref": "",
+    "lang": "en-US",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_moa09ppy_e6qa",
+    "createdAt": "2026-04-22T12:05:01.174Z"
+  },
+  {
+    "path": "/blog",
+    "ref": "",
+    "lang": "en-US",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_moa0a5mc_e2v2",
+    "createdAt": "2026-04-22T12:05:21.780Z"
+  },
+  {
+    "path": "/contact",
+    "ref": "",
+    "lang": "el-GR",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_moa0aq97_bdso",
+    "createdAt": "2026-04-22T12:05:48.523Z"
+  },
+  {
+    "path": "/about",
+    "ref": "",
+    "lang": "el-GR",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_moa0atk9_avbc",
+    "createdAt": "2026-04-22T12:05:52.809Z"
+  },
+  {
+    "path": "/",
+    "ref": "",
+    "lang": "el-GR",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "sid": "tp9rshpwpdmo7u6z97",
+    "id": "v_moa0awrt_9ew4",
+    "createdAt": "2026-04-22T12:05:56.969Z"
   }
 ]

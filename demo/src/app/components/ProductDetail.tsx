@@ -62,7 +62,7 @@ export default function ProductDetail({ product }: { product: Product }) {
             {pick(product.shortDesc_en, product.shortDesc_el)}
           </p>
           <p className="mt-6 font-serif text-5xl text-[#c9a961]">
-            €{product.price}
+            £{product.price}
           </p>
 
           <div className="mt-8 flex items-center gap-4">

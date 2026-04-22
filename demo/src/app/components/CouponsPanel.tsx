@@ -63,11 +63,11 @@ export default function CouponsPanel() {
               <label className="mb-1 block text-[10px] uppercase tracking-widest text-white/45">Kind</label>
               <select value={draft.kind} onChange={(e) => setDraft({ ...draft, kind: e.target.value as "percent" | "fixed" })} style={{ colorScheme: "dark" }} className="w-full rounded-lg border border-white/10 bg-[#14110d] px-3 py-2 text-sm">
                 <option value="percent">Percent %</option>
-                <option value="fixed">Fixed €</option>
+                <option value="fixed">Fixed £</option>
               </select>
             </div>
             <F label="Value" type="number" value={String(draft.value)} onChange={(v) => setDraft({ ...draft, value: Number(v) || 0 })} />
-            <F label="Min total €" type="number" value={String(draft.minTotal)} onChange={(v) => setDraft({ ...draft, minTotal: Number(v) || 0 })} />
+            <F label="Min total £" type="number" value={String(draft.minTotal)} onChange={(v) => setDraft({ ...draft, minTotal: Number(v) || 0 })} />
             <F label="Max uses (0 = ∞)" type="number" value={String(draft.maxUses)} onChange={(v) => setDraft({ ...draft, maxUses: Number(v) || 0 })} />
             <F label="Expires at (YYYY-MM-DD)" value={draft.expiresAt} onChange={(v) => setDraft({ ...draft, expiresAt: v })} />
             <div>
@@ -96,7 +96,7 @@ export default function CouponsPanel() {
             <div className="flex-1">
               <p className="font-mono text-lg text-[#c9a961]">{c.code}</p>
               <p className="text-xs text-white/50">
-                {c.kind === "percent" ? `${c.value}% off` : `€${c.value} off`} · {c.appliesTo} · {c.uses}/{c.maxUses || "∞"} uses
+                {c.kind === "percent" ? `${c.value}% off` : `£${c.value} off`} · {c.appliesTo} · {c.uses}/{c.maxUses || "∞"} uses
                 {c.expiresAt && ` · expires ${c.expiresAt}`}
               </p>
             </div>

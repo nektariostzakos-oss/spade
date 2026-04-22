@@ -58,7 +58,7 @@ export default function ServicesMenu() {
               <p className="hidden text-sm uppercase tracking-widest text-white/40 sm:block">
                 {s.duration} {t("minutes")}
               </p>
-              <p className="font-serif text-2xl text-[#c9a961]">€{s.price}</p>
+              <p className="font-serif text-2xl text-[#c9a961]">£{s.price}</p>
               <Link
                 href={`/book?service=${s.id}`}
                 className="hidden rounded-full border border-white/20 px-5 py-2 text-xs uppercase tracking-widest text-white/80 transition-colors hover:bg-white/10 sm:inline-block"

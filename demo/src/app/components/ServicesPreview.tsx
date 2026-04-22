@@ -85,7 +85,7 @@ export default function ServicesPreview() {
               <p className="hidden text-sm uppercase tracking-widest text-white/40 sm:block">
                 {s.duration} {t("minutes")}
               </p>
-              <p className="font-serif text-2xl text-[#c9a961]">€{s.price}</p>
+              <p className="font-serif text-2xl text-[#c9a961]">£{s.price}</p>
             </motion.div>
           ))}
         </div>

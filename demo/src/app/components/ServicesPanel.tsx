@@ -61,7 +61,7 @@ export default function ServicesPanel() {
           <F label="Name (EN)" value={draft.name} onChange={(v) => setDraft({ ...draft, name: v })} />
           <F label="Name (EL)" value={draft.name_el || ""} onChange={(v) => setDraft({ ...draft, name_el: v })} />
           <F label="Duration (min)" type="number" value={String(draft.duration)} onChange={(v) => setDraft({ ...draft, duration: Number(v) || 0 })} />
-          <F label="Price (€)" type="number" value={String(draft.price)} onChange={(v) => setDraft({ ...draft, price: Number(v) || 0 })} />
+          <F label="Price (£)" type="number" value={String(draft.price)} onChange={(v) => setDraft({ ...draft, price: Number(v) || 0 })} />
           <F label="Category" value={draft.category || ""} onChange={(v) => setDraft({ ...draft, category: v })} />
           <F label="Order" type="number" value={String(draft.order)} onChange={(v) => setDraft({ ...draft, order: Number(v) || 0 })} />
           <F label="Description (EN)" value={draft.desc} onChange={(v) => setDraft({ ...draft, desc: v })} textarea />
@@ -90,7 +90,7 @@ export default function ServicesPanel() {
           <div key={s.id} className="flex flex-wrap items-center gap-3 border-b border-white/10 p-4 last:border-b-0">
             <div className="min-w-0 flex-1">
               <p className="font-medium">{s.name} {!s.enabled && <span className="text-xs text-white/40">· disabled</span>}</p>
-              <p className="text-xs text-white/50">€{s.price} · {s.duration}m {s.category && `· ${s.category}`}</p>
+              <p className="text-xs text-white/50">£{s.price} · {s.duration}m {s.category && `· ${s.category}`}</p>
             </div>
             <div className="flex gap-2">
               <button onClick={() => setDraft({ ...s })} className="rounded-full border border-white/15 px-3 py-1 text-xs uppercase tracking-widest text-white/80 hover:bg-white/10">Edit</button>

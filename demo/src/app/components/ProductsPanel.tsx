@@ -114,7 +114,7 @@ export default function ProductsPanel() {
         </div>
         <div className="grid gap-3 sm:grid-cols-2">
           <F label="Slug (URL)" value={draft.slug} onChange={(v) => setDraft({ ...draft, slug: v })} />
-          <F label="Price (€)" type="number" value={String(draft.price)} onChange={(v) => setDraft({ ...draft, price: Number(v) || 0 })} />
+          <F label="Price (£)" type="number" value={String(draft.price)} onChange={(v) => setDraft({ ...draft, price: Number(v) || 0 })} />
           <F label="Stock" type="number" value={String(draft.stock)} onChange={(v) => setDraft({ ...draft, stock: Number(v) || 0 })} />
           <div>
             <label className="mb-1 block text-[10px] uppercase tracking-widest text-white/45">
@@ -220,7 +220,7 @@ export default function ProductsPanel() {
               <div className="min-w-0 flex-1">
                 <p className="truncate font-medium">{p.name_en}</p>
                 <p className="truncate text-xs text-white/50">
-                  {p.category_en} · €{p.price} · stock {p.stock}
+                  {p.category_en} · £{p.price} · stock {p.stock}
                 </p>
               </div>
               <div className="flex gap-2">

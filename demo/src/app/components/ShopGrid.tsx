@@ -98,7 +98,7 @@ export default function ShopGrid({ products }: { products: Product[] }) {
                     {pick(p.shortDesc_en, p.shortDesc_el)}
                   </p>
                   <p className="mt-4 font-serif text-2xl text-[#c9a961]">
-                    €{p.price}
+                    £{p.price}
                   </p>
                 </div>
               </Link>

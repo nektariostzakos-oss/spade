@@ -49,7 +49,7 @@ export default function OrdersPanel() {
       <div className="mb-6 grid gap-4 sm:grid-cols-3">
         <Stat label="Orders" value={orders.length.toString()} />
         <Stat label="New" value={stats.new.toString()} />
-        <Stat label="Revenue" value={`€${stats.revenue.toFixed(2)}`} />
+        <Stat label="Revenue" value={`£${stats.revenue.toFixed(2)}`} />
       </div>
 
       {orders.length === 0 ? (
@@ -73,7 +73,7 @@ export default function OrdersPanel() {
                   <span className="font-medium">{o.name}</span>
                   <span className="text-white/40">·</span>
                   <span className="font-serif text-lg text-[#c9a961]">
-                    €{o.subtotal.toFixed(2)}
+                    £{o.subtotal.toFixed(2)}
                   </span>
                   <span className="text-white/40">
                     · {o.items.reduce((s, i) => s + i.qty, 0)} items
@@ -112,7 +112,7 @@ export default function OrdersPanel() {
                           {it.qty} × {it.name}
                         </span>
                         <span className="text-[#c9a961]">
-                          €{(it.price * it.qty).toFixed(2)}
+                          £{(it.price * it.qty).toFixed(2)}
                         </span>
                       </li>
                     ))}

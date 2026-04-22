@@ -98,8 +98,8 @@ export default function AnalyticsPanel() {
 
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         <Kpi label="Bookings" value={kpis.totalBookings.toString()} sub={`${kpis.completedBookings} completed · ${kpis.pendingBookings} pending`} />
-        <Kpi label="Booking revenue" value={`€${kpis.bookingRevenue.toFixed(0)}`} sub={`Avg ticket €${kpis.avgTicket.toFixed(1)}`} />
-        <Kpi label="Orders" value={kpis.orderCount.toString()} sub={`€${kpis.orderRevenue.toFixed(0)} revenue`} />
+        <Kpi label="Booking revenue" value={`£${kpis.bookingRevenue.toFixed(0)}`} sub={`Avg ticket £${kpis.avgTicket.toFixed(1)}`} />
+        <Kpi label="Orders" value={kpis.orderCount.toString()} sub={`£${kpis.orderRevenue.toFixed(0)} revenue`} />
         <Kpi label="Pageviews" value={kpis.totalViews.toString()} sub={`${kpis.uniqueVisitors} unique · ${kpis.conversion.toFixed(2)}% → book`} />
       </div>
 
@@ -107,11 +107,11 @@ export default function AnalyticsPanel() {
       <TrendCard title="Revenue (booking + orders)" series={series} keys={["revenue", "orderRevenue"]} labels={["Bookings", "Orders"]} money />
 
       <div className="grid gap-5 lg:grid-cols-2">
-        <BarCard title="Top services" rows={breakdowns.topServices.map((s) => ({ label: s.name, value: s.count, hint: `€${s.revenue}` }))} />
-        <BarCard title="Top products" rows={breakdowns.topProducts.map((p) => ({ label: p.name, value: p.qty, hint: `€${p.revenue.toFixed(0)}` }))} />
+        <BarCard title="Top services" rows={breakdowns.topServices.map((s) => ({ label: s.name, value: s.count, hint: `£${s.revenue}` }))} />
+        <BarCard title="Top products" rows={breakdowns.topProducts.map((p) => ({ label: p.name, value: p.qty, hint: `£${p.revenue.toFixed(0)}` }))} />
         <BarCard title="Top pages" rows={breakdowns.topPages.map((p) => ({ label: p.path || "/", value: p.count }))} />
         <BarCard title="Top referrers" rows={breakdowns.topReferrers.map((r) => ({ label: r.source, value: r.count }))} />
-        <BarCard title="Barbers" rows={breakdowns.topBarbers.map((b) => ({ label: b.name, value: b.count, hint: `€${b.revenue}` }))} />
+        <BarCard title="Barbers" rows={breakdowns.topBarbers.map((b) => ({ label: b.name, value: b.count, hint: `£${b.revenue}` }))} />
         <BarCard
           title="Peak days"
           rows={breakdowns.dowHistogram.map((v, i) => ({ label: DOW[i], value: v })).sort((a, b) => b.value - a.value)}
@@ -201,7 +201,7 @@ function TrendCard({
       <div className="mt-2 flex justify-between text-[10px] text-white/40">
         <span>{series[0]?.date}</span>
         <span>
-          Max: {money ? `€${max.toFixed(0)}` : max}
+          Max: {money ? `£${max.toFixed(0)}` : max}
         </span>
         <span>{series.at(-1)?.date}</span>
       </div>

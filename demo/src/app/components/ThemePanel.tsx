@@ -473,9 +473,9 @@ function LivePreview({ theme, typography }: { theme: Theme; typography: Typograp
 
         <div className="mt-10 grid gap-4 sm:grid-cols-3">
           {[
-            { title: "Men's Cut", price: "€12", duration: "30 min" },
-            { title: "Beard Sculpt", price: "€10", duration: "20 min" },
-            { title: "Full Grooming", price: "€18", duration: "60 min" },
+            { title: "Men's Cut", price: "£12", duration: "30 min" },
+            { title: "Beard Sculpt", price: "£10", duration: "20 min" },
+            { title: "Full Grooming", price: "£18", duration: "60 min" },
           ].map((s) => (
             <div
               key={s.title}

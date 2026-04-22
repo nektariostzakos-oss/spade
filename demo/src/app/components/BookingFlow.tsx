@@ -308,7 +308,7 @@ export default function BookingFlow() {
                       <div className="flex items-start justify-between gap-4">
                         <p className="font-serif text-lg">{pickName(s)}</p>
                         <p className="font-serif text-lg text-[#c9a961]">
-                          €{s.price}
+                          £{s.price}
                         </p>
                       </div>
                       <p className="mt-1 text-xs uppercase tracking-widest text-white/40">
@@ -599,7 +599,7 @@ export default function BookingFlow() {
               >
                 <h3 className="mb-6 font-serif text-2xl">{t("book.step.confirm")}</h3>
                 <dl className="divide-y divide-white/10 border-y border-white/10">
-                  <Row label={t("book.sum.service")} value={`${pickName(service)} · €${service.price}`} />
+                  <Row label={t("book.sum.service")} value={`${pickName(service)} · £${service.price}`} />
                   <Row label={t("book.sum.duration")} value={`${service.duration} ${t("minutes")}`} />
                   <Row label={t("book.sum.barber")} value={barber.name} />
                   <Row label={t("book.sum.date")} value={date} />

@@ -94,7 +94,7 @@ export async function GET() {
 
   lines.push("## Services & pricing");
   for (const s of svc) {
-    const bits = [s.name, `€${s.price}`, s.duration ? `${s.duration} min` : ""]
+    const bits = [s.name, `£${s.price}`, s.duration ? `${s.duration} min` : ""]
       .filter(Boolean)
       .join(" — ");
     lines.push(`- ${bits}${s.desc ? `. ${s.desc}` : ""}`);
@@ -105,7 +105,7 @@ export async function GET() {
     lines.push("## Shop (top items)");
     for (const p of products.slice(0, 20)) {
       lines.push(
-        `- ${p.name_en || p.name_el} — €${p.price} — ${SITE_URL}/shop/${p.slug}`
+        `- ${p.name_en || p.name_el} — £${p.price} — ${SITE_URL}/shop/${p.slug}`
       );
     }
     lines.push("");

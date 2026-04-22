@@ -128,7 +128,7 @@ export default function ClientsPanel() {
       <div className="mb-5 grid gap-3 sm:grid-cols-3">
         <Kpi label="Total clients" value={clients.length.toString()} />
         <Kpi label="With email" value={withEmail.toString()} />
-        <Kpi label="Lifetime value" value={`€${totalLtv.toFixed(0)}`} />
+        <Kpi label="Lifetime value" value={`£${totalLtv.toFixed(0)}`} />
       </div>
 
       {msg && (
@@ -204,7 +204,7 @@ export default function ClientsPanel() {
                 </a>
                 <div className="text-white/80 lg:text-right">{c.bookingCount}</div>
                 <div className="text-white/80 lg:text-right">{c.orderCount}</div>
-                <div className="text-[#c9a961] lg:text-right">€{c.lifetimeValue.toFixed(0)}</div>
+                <div className="text-[#c9a961] lg:text-right">£{c.lifetimeValue.toFixed(0)}</div>
                 <div className="lg:text-right">
                   <button
                     onClick={() => remove(c.id)}
