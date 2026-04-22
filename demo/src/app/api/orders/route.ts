@@ -5,6 +5,7 @@ import { listProducts, releaseStock, reserveStock } from "../../../lib/products"
 import { allowAction, clientIp } from "../../../lib/rateLimit";
 import { createGiftCard } from "../../../lib/giftCards";
 import { redeemCoupon, validateCoupon } from "../../../lib/coupons";
+import { createCheckoutSession } from "../../../lib/stripe";
 
 export async function GET() {
   if (!(await isStaff())) {
@@ -164,7 +165,27 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    return NextResponse.json({ order, gifts, appliedCoupon }, { status: 201 });
+    // If Stripe is configured, create a Checkout Session and send the
+    // customer there. Otherwise fall back to the "we'll contact you" flow.
+    let checkoutUrl: string | null = null;
+    try {
+      const origin = new URL(req.url).origin;
+      const session = await createCheckoutSession({
+        lineItems: normalized.map((it) => ({ name: it.name, amount: it.price, qty: it.qty })),
+        customerEmail: body.email,
+        successUrl: `${origin}/shop/thanks?order=${encodeURIComponent(order.id)}`,
+        cancelUrl: `${origin}/cart?order=${encodeURIComponent(order.id)}&cancelled=1`,
+        orderId: order.id,
+      });
+      checkoutUrl = session?.url ?? null;
+    } catch (err) {
+      console.error("[orders] Stripe session failed", err instanceof Error ? err.message : err);
+    }
+
+    return NextResponse.json(
+      { order, gifts, appliedCoupon, checkoutUrl },
+      { status: 201 }
+    );
   } catch (e) {
     return NextResponse.json(
       { error: e instanceof Error ? e.message : "Order failed" },

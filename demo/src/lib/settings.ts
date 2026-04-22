@@ -106,6 +106,17 @@ export type AiSettings = {
   unsplashKey?: string;
 };
 
+export type PaymentsSettings = {
+  /** Stripe secret key (sk_live_… / sk_test_…). Leave blank to disable
+   * card checkout — orders fall back to "we'll contact you about payment". */
+  stripeSecretKey?: string;
+  /** Publishable key (pk_…). Used for redirect-to-Checkout flows only,
+   * so it doesn't need to be exposed to the client bundle. */
+  stripePublishableKey?: string;
+  /** Currency code (GBP / EUR / USD). Defaults to GBP. */
+  currency?: string;
+};
+
 export type ThemeSettings = {
   background: string;
   foreground: string;
@@ -178,12 +189,24 @@ export type AppSettings = {
   templates?: EmailTemplates;
   analytics?: AnalyticsSettings;
   ai?: AiSettings;
+  payments?: PaymentsSettings;
   theme?: ThemeSettings;
   typography?: TypographySettings;
   bookingMode?: BookingMode;
   industryId?: string;
   onboarded?: boolean;
 };
+
+export async function loadPayments(): Promise<PaymentsSettings> {
+  const s = await loadSettings();
+  return s.payments ?? {};
+}
+
+export async function savePayments(p: PaymentsSettings): Promise<PaymentsSettings> {
+  const s = await loadSettings();
+  await saveSettings({ ...s, payments: { ...(s.payments ?? {}), ...p } });
+  return (await loadSettings()).payments ?? {};
+}
 
 export async function loadIndustryId(): Promise<string> {
   const s = await loadSettings();

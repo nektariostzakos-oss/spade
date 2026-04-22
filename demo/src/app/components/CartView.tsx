@@ -66,9 +66,15 @@ export default function CartView() {
       setError(d.error || "Order failed");
       return;
     }
-    setDone({ id: d.order.id, gifts: Array.isArray(d.gifts) ? d.gifts : [] });
-    clear();
     try { window.localStorage.removeItem("oakline_cart_draft_v1"); } catch {}
+    clear();
+    // Stripe configured? Bounce straight to hosted Checkout. Otherwise we
+    // show the in-app "thanks, we'll contact you about payment" screen.
+    if (typeof d.checkoutUrl === "string" && d.checkoutUrl) {
+      window.location.href = d.checkoutUrl;
+      return;
+    }
+    setDone({ id: d.order.id, gifts: Array.isArray(d.gifts) ? d.gifts : [] });
   }
 
   if (done) {

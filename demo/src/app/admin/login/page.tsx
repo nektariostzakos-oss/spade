@@ -30,6 +30,14 @@ export default async function LoginPage() {
         <div className="mt-8">
           <LoginForm />
         </div>
+        <p className="mt-4 text-right">
+          <a
+            href="/admin/reset"
+            className="text-xs text-white/40 hover:text-[#c9a961]"
+          >
+            Forgot password?
+          </a>
+        </p>
         {showSeed && (
           <p className="mt-6 text-xs text-white/30">
             Default admin: <code className="text-[#c9a961]">admin@oakline.studio</code> /{" "}

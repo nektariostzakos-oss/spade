@@ -262,6 +262,11 @@ export async function manageBookingUrl(id: string): Promise<string> {
   return `${SITE_URL}/b/${encodeURIComponent(id)}?t=${token}`;
 }
 
+/** Plain-text one-shot send — for password resets, generic alerts, etc. */
+export async function sendPlainEmail(to: string, subject: string, body: string) {
+  return sendOne(to, subject, body);
+}
+
 export async function sendBookingConfirmation(b: Booking) {
   const lang = b.lang === "el" ? "el" : "en";
   const { confirmation } = await loadTemplates();
