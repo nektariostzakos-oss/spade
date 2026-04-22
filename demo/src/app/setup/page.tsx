@@ -8,13 +8,13 @@ export const metadata = {
   robots: { index: false, follow: false, nocache: true },
 };
 
-export default async function SetupPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ force?: string }>;
-}) {
+export default async function SetupPage() {
+  // Once onboarded we hard-redirect to /admin. There is intentionally no
+  // `?force=1` bypass — re-running the wizard on a live site would overwrite
+  // users.json and every setting without any auth, which is a full takeover
+  // vector. A legitimate owner who wants to reinstall from scratch can delete
+  // data/settings.json (documented in DEPLOY.md).
   const s = await loadSettings();
-  const sp = await searchParams;
-  if (s.onboarded && sp.force !== "1") redirect("/admin");
+  if (s.onboarded) redirect("/admin");
   return <InstallWizard />;
 }

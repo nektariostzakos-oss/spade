@@ -2,9 +2,35 @@ import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { promises as fs } from "fs";
 import path from "path";
+import { randomBytes } from "crypto";
 import { loadSettings, saveSettings, type BusinessSettings } from "../../../lib/settings";
 import { createUser, findUserByEmail, signSession } from "../../../lib/users";
 import { recordInstall } from "../../../lib/installStats";
+
+// Crypto-strong random password for invited teammates. They can't use it to
+// log in directly — the account is flagged mustChangePassword, and the
+// teammate is expected to hit /admin/reset with their email.
+function randomTeammatePassword(): string {
+  return randomBytes(18).toString("base64url");
+}
+
+function sameOrigin(req: NextRequest): boolean {
+  const origin = req.headers.get("origin");
+  const referer = req.headers.get("referer");
+  const host = req.headers.get("host");
+  if (!host) return true; // local dev curl — allow
+  const expected = new Set([`http://${host}`, `https://${host}`]);
+  if (origin && expected.has(origin)) return true;
+  if (referer) {
+    try {
+      const r = new URL(referer);
+      if (expected.has(`${r.protocol}//${r.host}`)) return true;
+    } catch {}
+  }
+  // No Origin and no matching Referer → refuse. Browsers always send one for
+  // same-site POSTs, so a missing pair means a cross-site form submission.
+  return !origin && !referer;
+}
 
 const DATA_DIR = path.join(process.cwd(), "data");
 const DEMOS_DIR = path.join(process.cwd(), "demos");
@@ -66,6 +92,10 @@ async function writeEmptyArray(dst: string) {
 }
 
 export async function POST(req: NextRequest) {
+  if (!sameOrigin(req)) {
+    return NextResponse.json({ error: "Cross-origin install requests refused." }, { status: 403 });
+  }
+
   const current = await loadSettings();
   if (current.onboarded) {
     return NextResponse.json(
@@ -137,15 +167,19 @@ export async function POST(req: NextRequest) {
     role: "admin",
   });
 
-  // 3b. Invited teammates (placeholder passwords — they'll reset on first login)
+  // 3b. Invited teammates — crypto-strong placeholder, flagged must-change.
+  // Teammates activate via "Forgot password" on /admin/login. We deliberately
+  // don't log or email the generated password; it exists only to satisfy the
+  // passwordHash requirement until they set their own.
   if (Array.isArray(body.teammates)) {
     for (const email of body.teammates) {
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) continue;
       try {
         await createUser({
           email,
-          password: Math.random().toString(36).slice(2) + Math.random().toString(36).slice(2),
+          password: randomTeammatePassword(),
           role: "barber",
+          mustChangePassword: true,
         });
       } catch {
         // skip duplicates
@@ -184,15 +218,24 @@ export async function POST(req: NextRequest) {
     | { links?: Array<{ id: string; label_en: string; label_el: string; href: string; enabled?: boolean }>; bookLabel_en?: string; bookLabel_el?: string; bookHref?: string }
     | undefined;
 
+  // If the buyer picked "demo" mode we keep the template's own wordmark/logo
+  // so the seeded content still looks coherent. On "clean" mode we always
+  // stamp the buyer's business name — otherwise the template's brand bleeds
+  // into their live site (e.g. "SPADE" showing up on a yoga studio).
+  const useTemplateBrand = body.mode === "demo";
   await saveSettings({
     ...current,
     business,
     branding: {
-      logoUrl: metaBranding.logoUrl || "/brand/default-logo.svg",
-      faviconUrl: metaBranding.faviconUrl || "/favicon.ico",
-      wordmark: metaBranding.wordmark || body.business.name.toUpperCase(),
-      tagline_en: metaBranding.tagline_en || "",
-      tagline_el: metaBranding.tagline_el || metaBranding.tagline_en || "",
+      logoUrl: useTemplateBrand ? (metaBranding.logoUrl || "") : "",
+      faviconUrl: useTemplateBrand ? (metaBranding.faviconUrl || "") : "",
+      wordmark: useTemplateBrand && metaBranding.wordmark
+        ? metaBranding.wordmark
+        : body.business.name.toUpperCase().slice(0, 24),
+      tagline_en: useTemplateBrand ? (metaBranding.tagline_en || "") : "",
+      tagline_el: useTemplateBrand
+        ? (metaBranding.tagline_el || metaBranding.tagline_en || "")
+        : "",
     },
     nav: metaNav && Array.isArray(metaNav.links) && metaNav.links.length > 0
       ? {
@@ -206,15 +249,22 @@ export async function POST(req: NextRequest) {
     typography: Object.keys(metaTypography).length > 0 ? (metaTypography as never) : current.typography,
     bookingMode: meta.bookingMode === "reservation" ? "reservation" : "appointment",
     industryId: typeof meta.industryId === "string" ? (meta.industryId as string) : "barber",
-    onboarded: true,
+    // NB: onboarded stays false here — we only flip it after the session is
+    // successfully signed below. Otherwise a cookie failure locks the buyer
+    // out of the wizard AND the admin, with no recovery path.
+    onboarded: false,
   });
 
-  // Record installation for the counter
-  await recordInstall().catch(() => {});
-
-  // 5. Sign in
+  // 5. Sign in — must succeed before we flip onboarded, so a failure here
+  // leaves the buyer able to retry the install rather than stranded.
   const user = await findUserByEmail(body.admin.email);
-  if (user) {
+  if (!user) {
+    return NextResponse.json(
+      { error: "Admin account was not created. Try again." },
+      { status: 500 }
+    );
+  }
+  try {
     const token = await signSession(user.id);
     const c = await cookies();
     c.set(COOKIE, token, {
@@ -224,7 +274,16 @@ export async function POST(req: NextRequest) {
       path: "/",
       maxAge: 60 * 60 * 8,
     });
+  } catch (e) {
+    return NextResponse.json(
+      { error: "Could not sign you in. Try visiting /admin/login." },
+      { status: 500 }
+    );
   }
+
+  // Session is live — lock in the install.
+  await saveSettings({ ...(await loadSettings()), onboarded: true });
+  await recordInstall().catch(() => {});
 
   return NextResponse.json({
     ok: true,

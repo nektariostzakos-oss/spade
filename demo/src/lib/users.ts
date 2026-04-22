@@ -133,6 +133,7 @@ export async function createUser(input: {
   role: Role;
   password: string;
   barberId?: string;
+  mustChangePassword?: boolean;
 }): Promise<PublicUser> {
   const all = await readAll();
   if (all.some((u) => u.email.toLowerCase() === input.email.toLowerCase())) {
@@ -145,6 +146,7 @@ export async function createUser(input: {
     barberId: input.role === "barber" ? input.barberId : undefined,
     passwordHash: hashPassword(input.password),
     createdAt: new Date().toISOString(),
+    ...(input.mustChangePassword ? { mustChangePassword: true } : {}),
   };
   all.push(u);
   await writeAll(all);

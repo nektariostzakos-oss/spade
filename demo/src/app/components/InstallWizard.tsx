@@ -5,7 +5,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { qrToSvg } from "../../lib/qr";
 import { lookupPostal } from "../../lib/postalLookup";
 
-const DRAFT_KEY = "spade_install_draft_v1";
+// NB: bumped from spade_install_draft_v1 after the generic rebrand — any older
+// draft carries stale template IDs / wordmarks from the Spade era, so we
+// deliberately don't offer to resume those. Old key will be ignored.
+const DRAFT_KEY = "atelier_install_draft_v1";
 
 function slugify(s: string) {
   return s.toLowerCase().trim().replace(/[^a-z0-9\s-]/g, "").replace(/\s+/g, "-").replace(/-+/g, "-");

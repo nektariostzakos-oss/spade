@@ -22,6 +22,11 @@ export default function ForcePasswordChange({
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
 
+  async function logout() {
+    try { await fetch("/api/auth", { method: "DELETE" }); } catch {}
+    window.location.href = "/admin/login";
+  }
+
   async function save() {
     setMsg(null);
     if (pw.length < 8) return setMsg("At least 8 characters.");
@@ -88,6 +93,13 @@ export default function ForcePasswordChange({
             className="w-full rounded-full bg-[#c9a961] px-5 py-2.5 text-xs font-semibold uppercase tracking-widest text-black disabled:opacity-40"
           >
             {busy ? "Saving…" : "Save and continue"}
+          </button>
+          <button
+            type="button"
+            onClick={logout}
+            className="w-full text-center text-[10px] uppercase tracking-[0.25em] text-white/40 hover:text-white/70"
+          >
+            Sign out instead
           </button>
         </div>
       </div>

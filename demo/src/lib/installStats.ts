@@ -12,7 +12,9 @@ export async function readStats(): Promise<InstallStats> {
   try {
     return JSON.parse(await fs.readFile(FILE, "utf-8")) as InstallStats;
   } catch {
-    return { total: 147, recent: [] };
+    // Fresh install — no inflated fake baseline. The counter earns its first
+    // tick the moment a buyer actually finishes the wizard.
+    return { total: 0, recent: [] };
   }
 }
 
