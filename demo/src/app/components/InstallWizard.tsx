@@ -44,6 +44,15 @@ type Template = {
 // Retained so old drafts that stored `mode` still deserialise; unused now.
 type Mode = "demo" | "clean";
 
+type HourRow = {
+  day: "mon" | "tue" | "wed" | "thu" | "fri" | "sat" | "sun";
+  open: string;   // "HH:MM"
+  close: string;
+  closed: boolean;
+  open2?: string; // optional second window for split-shift shops
+  close2?: string;
+};
+
 type Business = {
   name: string;
   streetAddress: string;
@@ -52,7 +61,38 @@ type Business = {
   country: string;
   phone: string;
   email: string;
+  timezone: string;  // IANA zone id, e.g. "Europe/London"
+  hours: HourRow[];  // 7 entries, monday-first
 };
+
+const DEFAULT_HOURS: HourRow[] = [
+  { day: "mon", open: "10:00", close: "19:00", closed: false },
+  { day: "tue", open: "10:00", close: "19:00", closed: false },
+  { day: "wed", open: "10:00", close: "19:00", closed: false },
+  { day: "thu", open: "10:00", close: "19:00", closed: false },
+  { day: "fri", open: "10:00", close: "19:00", closed: false },
+  { day: "sat", open: "10:00", close: "17:00", closed: false },
+  { day: "sun", open: "00:00", close: "00:00", closed: true },
+];
+
+// Small curated list — covers most salon markets. The wizard also allows
+// free-text fallback for any IANA zone if yours isn't here.
+const COMMON_TIMEZONES: { id: string; label: string }[] = [
+  { id: "Europe/London", label: "London · GMT" },
+  { id: "Europe/Athens", label: "Athens · EET" },
+  { id: "Europe/Paris", label: "Paris · CET" },
+  { id: "Europe/Berlin", label: "Berlin · CET" },
+  { id: "Europe/Madrid", label: "Madrid · CET" },
+  { id: "Europe/Rome", label: "Rome · CET" },
+  { id: "Europe/Amsterdam", label: "Amsterdam · CET" },
+  { id: "Europe/Lisbon", label: "Lisbon · WET" },
+  { id: "Europe/Dublin", label: "Dublin · GMT" },
+  { id: "Europe/Istanbul", label: "Istanbul · TRT" },
+  { id: "Asia/Nicosia", label: "Nicosia · EET" },
+  { id: "America/New_York", label: "New York · ET" },
+  { id: "America/Chicago", label: "Chicago · CT" },
+  { id: "America/Los_Angeles", label: "Los Angeles · PT" },
+];
 
 type Admin = { email: string; password: string; confirm: string };
 
@@ -75,6 +115,7 @@ export default function InstallWizard() {
   const [business, setBusiness] = useState<Business>({
     name: "", streetAddress: "", city: "", postalCode: "",
     country: "GR", phone: "", email: "",
+    timezone: "Europe/London", hours: DEFAULT_HOURS,
   });
   const [admin, setAdmin] = useState<Admin>({ email: "", password: "", confirm: "" });
   const [installing, setInstalling] = useState(false);
@@ -93,14 +134,18 @@ export default function InstallWizard() {
     });
     fetch("/api/install-stats").then((r) => r.json()).then(setStats).catch(() => {});
 
-    // Browser auto-detect for country + locale
+    // Browser auto-detect for country + timezone. We always seed the detected
+    // IANA zone on first paint — the hours / booking engine is timezone-safe
+    // and picking the wrong zone silently breaks every booking slot.
     try {
       const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
       const lang = (navigator.language || "").toLowerCase();
       const detected = detectCountry(tz, lang);
-      if (detected) {
-        setBusiness((b) => (b.country === "GR" ? { ...b, country: detected } : b));
-      }
+      setBusiness((b) => ({
+        ...b,
+        country: b.country === "GR" && detected ? detected : b.country,
+        timezone: tz || b.timezone,
+      }));
     } catch {}
 
     // Resume draft
@@ -170,7 +215,13 @@ export default function InstallWizard() {
 
   const canNext = useMemo(() => {
     if (step === 1) return !!selected;
-    if (step === 2) return business.name.trim().length > 0 && business.city.trim().length > 0;
+    if (step === 2) {
+      const hasBasics = business.name.trim().length > 0 && business.city.trim().length > 0;
+      const emailOk = !business.email || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(business.email);
+      const hasTz = !!business.timezone.trim();
+      const hasOpenDay = business.hours.some((h) => !h.closed);
+      return hasBasics && emailOk && hasTz && hasOpenDay;
+    }
     if (step === 3) {
       const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(admin.email);
       return emailOk && admin.password.length >= 8 && admin.password === admin.confirm;
@@ -1129,9 +1180,9 @@ function BusinessStep({ value, onChange }: { value: Business; onChange: (v: Busi
         <Field label="Business name *" value={value.name} onChange={updateName} placeholder="Your Salon" />
         <Field label="City *" value={value.city} onChange={(v) => onChange({ ...value, city: v })} placeholder="London" />
         <Field label="Street address" value={value.streetAddress} onChange={(v) => onChange({ ...value, streetAddress: v })} placeholder="47 Cranley Mews" />
-        <Field label="Postal code (→ autofills city)" value={value.postalCode} onChange={updatePostal} placeholder="20300" />
-        <Field label="Country (ISO)" value={value.country} onChange={(v) => onChange({ ...value, country: v })} placeholder="GR" />
-        <Field label="Phone" value={value.phone} onChange={(v) => onChange({ ...value, phone: v })} placeholder="+30 694 532 5780" />
+        <Field label="Postal code (→ autofills city)" value={value.postalCode} onChange={updatePostal} placeholder="SW7 3BY" />
+        <Field label="Country (ISO)" value={value.country} onChange={(v) => onChange({ ...value, country: v })} placeholder="GB" />
+        <Field label="Phone" value={value.phone} onChange={(v) => onChange({ ...value, phone: v })} placeholder="+44 20 7946 0412" />
         <div className="sm:col-span-2">
           <Field label="Public email" value={value.email} onChange={(v) => onChange({ ...value, email: v })} placeholder="hello@yourdomain.com" />
           {value.name && (
@@ -1141,7 +1192,127 @@ function BusinessStep({ value, onChange }: { value: Business; onChange: (v: Busi
           )}
         </div>
       </div>
+
+      {/* Timezone — mandatory. Booking slots, reminder sends, and the daily
+          schedule all derive from this. Wrong zone = every slot off by hours. */}
+      <div className="mt-8 rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+        <p className="text-[10px] uppercase tracking-[0.3em] text-[#c9a961]">Timezone *</p>
+        <p className="mt-1 text-xs text-white/55">
+          Every booking slot, reminder, and schedule view is rendered in this
+          zone. Pick where the shop physically is — not where you are now.
+        </p>
+        <div className="mt-3 flex flex-wrap gap-2">
+          <select
+            value={COMMON_TIMEZONES.some((t) => t.id === value.timezone) ? value.timezone : "__custom"}
+            onChange={(e) => {
+              const v = e.target.value;
+              if (v !== "__custom") onChange({ ...value, timezone: v });
+            }}
+            className="flex-1 min-w-[220px] rounded-xl border border-white/15 bg-white/[0.04] px-4 py-2.5 text-sm text-white outline-none focus:border-[#c9a961]/60"
+          >
+            {COMMON_TIMEZONES.map((tz) => (
+              <option key={tz.id} value={tz.id} className="bg-[#0b0d13]">
+                {tz.label} · {tz.id}
+              </option>
+            ))}
+            <option value="__custom" className="bg-[#0b0d13]">Custom (type below)</option>
+          </select>
+          <input
+            value={value.timezone}
+            onChange={(e) => onChange({ ...value, timezone: e.target.value })}
+            placeholder="Europe/London"
+            className="flex-1 min-w-[180px] rounded-xl border border-white/15 bg-white/[0.04] px-4 py-2.5 font-mono text-sm text-white placeholder-white/30 outline-none focus:border-[#c9a961]/60"
+          />
+        </div>
+      </div>
+
+      {/* Opening hours — mandatory, at least one day open. The booking
+          engine refuses slots outside these, so a blank schedule = a silent
+          "bookings are closed forever" for the buyer. */}
+      <div className="mt-6 rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+        <p className="text-[10px] uppercase tracking-[0.3em] text-[#c9a961]">Opening hours *</p>
+        <p className="mt-1 text-xs text-white/55">
+          Tick a day as closed to block bookings that day. Split hours (e.g. a
+          midday break) are supported — hit &ldquo;+ split&rdquo; on any open day.
+        </p>
+        <div className="mt-4 divide-y divide-white/5">
+          {value.hours.map((h, i) => (
+            <HourRowEditor
+              key={h.day}
+              row={h}
+              onChange={(next) => {
+                const copy = [...value.hours];
+                copy[i] = next;
+                onChange({ ...value, hours: copy });
+              }}
+            />
+          ))}
+        </div>
+      </div>
     </div>
+  );
+}
+
+const DAY_LABELS: Record<HourRow["day"], string> = {
+  mon: "Mon", tue: "Tue", wed: "Wed", thu: "Thu",
+  fri: "Fri", sat: "Sat", sun: "Sun",
+};
+
+function HourRowEditor({ row, onChange }: { row: HourRow; onChange: (r: HourRow) => void }) {
+  const hasSplit = !!(row.open2 && row.close2);
+  return (
+    <div className="flex flex-wrap items-center gap-2 py-2.5 text-xs">
+      <div className="w-10 font-semibold text-white/80">{DAY_LABELS[row.day]}</div>
+      <label className="flex items-center gap-1.5 text-[10px] uppercase tracking-widest text-white/60">
+        <input
+          type="checkbox"
+          checked={row.closed}
+          onChange={(e) => onChange({ ...row, closed: e.target.checked })}
+          className="h-3.5 w-3.5 accent-[#c9a961]"
+        />
+        Closed
+      </label>
+      {!row.closed && (
+        <>
+          <TimeInput value={row.open} onChange={(v) => onChange({ ...row, open: v })} />
+          <span className="text-white/40">–</span>
+          <TimeInput value={row.close} onChange={(v) => onChange({ ...row, close: v })} />
+          {hasSplit ? (
+            <>
+              <span className="text-white/40">,</span>
+              <TimeInput value={row.open2 || ""} onChange={(v) => onChange({ ...row, open2: v })} />
+              <span className="text-white/40">–</span>
+              <TimeInput value={row.close2 || ""} onChange={(v) => onChange({ ...row, close2: v })} />
+              <button
+                onClick={() => onChange({ ...row, open2: undefined, close2: undefined })}
+                className="text-[10px] uppercase tracking-widest text-white/40 hover:text-red-300"
+                title="Remove second window"
+              >
+                − split
+              </button>
+            </>
+          ) : (
+            <button
+              onClick={() => onChange({ ...row, open2: "17:00", close2: "20:00" })}
+              className="rounded-full border border-white/15 px-2.5 py-0.5 text-[9px] uppercase tracking-widest text-white/60 hover:bg-white/10"
+            >
+              + split
+            </button>
+          )}
+        </>
+      )}
+    </div>
+  );
+}
+
+function TimeInput({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+  return (
+    <input
+      type="time"
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      className="w-24 rounded-md border border-white/15 bg-white/[0.04] px-2 py-1 font-mono text-xs text-white outline-none focus:border-[#c9a961]/60"
+    />
   );
 }
 
@@ -1402,6 +1573,24 @@ function ReviewStep({
           {teammates.length > 0 && (
             <p className="mt-2 text-xs text-white/60">+ {teammates.length} teammate{teammates.length === 1 ? "" : "s"} invited</p>
           )}
+        </ReviewCard>
+        <ReviewCard title="Timezone">
+          <p className="font-mono text-sm">{business.timezone}</p>
+          <p className="mt-1 text-xs text-white/50">All booking slots & reminders rendered in this zone</p>
+        </ReviewCard>
+        <ReviewCard title="Opening hours">
+          <ul className="space-y-0.5 text-xs text-white/75 font-mono">
+            {business.hours.map((h) => (
+              <li key={h.day} className="flex justify-between gap-3">
+                <span className="uppercase text-white/50">{h.day}</span>
+                <span>
+                  {h.closed
+                    ? "closed"
+                    : `${h.open}–${h.close}${h.open2 && h.close2 ? `, ${h.open2}–${h.close2}` : ""}`}
+                </span>
+              </li>
+            ))}
+          </ul>
         </ReviewCard>
       </div>
 

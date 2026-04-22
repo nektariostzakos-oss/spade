@@ -47,6 +47,15 @@ type Input = {
     postalCode?: string;
     phone?: string;
     email?: string;
+    timezone?: string;
+    hours?: Array<{
+      day: string;
+      open: string;
+      close: string;
+      closed: boolean;
+      open2?: string;
+      close2?: string;
+    }>;
   };
   admin: {
     email: string;
@@ -213,25 +222,40 @@ export async function POST(req: NextRequest) {
   }
 
   // 4. Settings: business, branding, theme, typography, nav from template meta
+  const ALLOWED_DAYS = new Set(["mon","tue","wed","thu","fri","sat","sun"]);
+  const providedHours = Array.isArray(body.business.hours)
+    ? body.business.hours
+        .filter((h): h is NonNullable<typeof h> => !!h && ALLOWED_DAYS.has(h.day))
+        .map((h) => ({
+          day: h.day as "mon" | "tue" | "wed" | "thu" | "fri" | "sat" | "sun",
+          open: String(h.open || "09:00"),
+          close: String(h.close || "18:00"),
+          closed: !!h.closed,
+          ...(h.open2 && h.close2 ? { open2: String(h.open2), close2: String(h.close2) } : {}),
+        }))
+    : [];
+  const hoursInput = providedHours.length === 7 ? providedHours : [
+    { day: "mon" as const, open: "10:00", close: "19:00", closed: false },
+    { day: "tue" as const, open: "10:00", close: "19:00", closed: false },
+    { day: "wed" as const, open: "10:00", close: "19:00", closed: false },
+    { day: "thu" as const, open: "10:00", close: "19:00", closed: false },
+    { day: "fri" as const, open: "10:00", close: "19:00", closed: false },
+    { day: "sat" as const, open: "10:00", close: "17:00", closed: false },
+    { day: "sun" as const, open: "00:00", close: "00:00", closed: true },
+  ];
+
   const business: BusinessSettings = {
     name: body.business.name,
     streetAddress: body.business.streetAddress || "",
     city: body.business.city,
     postalCode: body.business.postalCode || "",
-    country: body.business.country || "GR",
+    country: body.business.country || "GB",
     phone: body.business.phone || "",
     email: body.business.email || body.admin.email,
+    timezone: body.business.timezone || "Europe/London",
     latitude: null,
     longitude: null,
-    hours: [
-      { day: "mon", open: "09:00", close: "21:00", closed: false },
-      { day: "tue", open: "09:00", close: "21:00", closed: false },
-      { day: "wed", open: "09:00", close: "21:00", closed: false },
-      { day: "thu", open: "09:00", close: "21:00", closed: false },
-      { day: "fri", open: "09:00", close: "21:00", closed: false },
-      { day: "sat", open: "09:00", close: "21:00", closed: false },
-      { day: "sun", open: "00:00", close: "00:00", closed: true },
-    ],
+    hours: hoursInput,
     social: { instagram: "", facebook: "", whatsapp: "", tiktok: "" },
     priceRange: "££",
   };
