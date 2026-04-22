@@ -23,23 +23,27 @@ type Section =
   | "users"
   | "tools";
 
-const SECTIONS: { id: Section; label: string }[] = [
-  { id: "general", label: "General" },
-  { id: "theme", label: "Theme" },
-  { id: "services", label: "Services" },
-  { id: "staff", label: "Staff" },
-  { id: "coupons", label: "Coupons" },
-  { id: "blog", label: "Blog" },
-  { id: "users", label: "Users" },
-  { id: "tools", label: "Tools" },
+// Order mirrors the launch checklist — setup first, staff + services next,
+// then look-and-feel, then marketing, and finally admin-ops tools. The
+// numeric prefix makes the flow obvious to new owners.
+const SECTIONS: { id: Section; label: string; hint?: string }[] = [
+  { id: "general", label: "1. Setup", hint: "Brand, business details, hours, email, analytics" },
+  { id: "staff", label: "2. Staff", hint: "Add stylists and their weekly availability" },
+  { id: "services", label: "3. Services", hint: "Menu, prices, duration, buffers, add-ons" },
+  { id: "theme", label: "4. Theme", hint: "Colours and fonts" },
+  { id: "coupons", label: "5. Coupons", hint: "Promo codes + referral rewards" },
+  { id: "blog", label: "6. Blog", hint: "Journal articles and categories" },
+  { id: "users", label: "7. Users", hint: "Invite admin / stylist accounts" },
+  { id: "tools", label: "8. Tools", hint: "Backup, import, GDPR export" },
 ];
 
 export default function SettingsHub({ me }: { me: Me }) {
   const [section, setSection] = useState<Section>("general");
 
+  const current = SECTIONS.find((s) => s.id === section);
   return (
     <div>
-      <div className="mb-6 flex items-center gap-1 overflow-x-auto whitespace-nowrap rounded-full border border-white/15 bg-white/[0.04] p-1 backdrop-blur sm:inline-flex sm:whitespace-normal">
+      <div className="mb-3 flex items-center gap-1 overflow-x-auto whitespace-nowrap rounded-full border border-white/15 bg-white/[0.04] p-1 backdrop-blur sm:inline-flex sm:whitespace-normal">
         {SECTIONS.map((s) => {
           const active = section === s.id;
           return (
@@ -62,6 +66,12 @@ export default function SettingsHub({ me }: { me: Me }) {
           );
         })}
       </div>
+
+      {current?.hint && (
+        <p className="mb-6 text-xs uppercase tracking-widest text-white/40">
+          {current.hint}
+        </p>
+      )}
 
       {section === "general" && <SettingsPanel />}
       {section === "theme" && <ThemePanel />}

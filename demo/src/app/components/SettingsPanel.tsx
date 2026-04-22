@@ -640,7 +640,7 @@ export default function SettingsPanel() {
     </div>
 
     <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-8 backdrop-blur">
-      <h2 className="mb-1 font-serif text-2xl">Business info</h2>
+      <h2 className="mb-1 font-serif text-2xl">1. Business info</h2>
       <p className="mb-6 text-sm text-white/55">
         Address, phone, email, hours, socials. Feeds the footer, contact page,
         Google structured data, and map link.
@@ -891,7 +891,7 @@ export default function SettingsPanel() {
 
     {tab === "nav" && (
     <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-8 backdrop-blur">
-      <h2 className="mb-1 font-serif text-2xl">Navigation</h2>
+      <h2 className="mb-1 font-serif text-2xl">2. Navigation</h2>
       <p className="mb-6 text-sm text-white/55">
         Reorder, rename, hide, add, or remove nav links. The &quot;Book&quot;
         button sits on the right of the nav bar.
@@ -1008,7 +1008,7 @@ export default function SettingsPanel() {
 
     {tab === "brand" && (
     <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-8 backdrop-blur">
-      <h2 className="mb-1 font-serif text-2xl">Branding</h2>
+      <h2 className="mb-1 font-serif text-2xl">3. Branding</h2>
       <p className="mb-6 text-sm text-white/55">
         Upload your logo and favicon, set the wordmark and tagline. Applied
         site-wide.
@@ -1160,7 +1160,7 @@ export default function SettingsPanel() {
 
     {tab === "email" && (
     <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-8 backdrop-blur">
-      <h2 className="mb-1 font-serif text-2xl">Email templates</h2>
+      <h2 className="mb-1 font-serif text-2xl">4. Email templates</h2>
       <p className="mb-4 text-sm text-white/55">
         Customise the confirmation and 8-hour reminder emails. Use placeholders
         and they&apos;ll be replaced at send time.
@@ -1248,7 +1248,7 @@ export default function SettingsPanel() {
 
     {tab === "seo" && (
     <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-8 backdrop-blur">
-      <h2 className="mb-1 font-serif text-2xl">SEO · per page</h2>
+      <h2 className="mb-1 font-serif text-2xl">5. SEO · per page</h2>
       <p className="mb-6 text-sm text-white/55">
         Title + description + share image for each page. Shown in Google,
         Facebook/WhatsApp shares, and the browser tab.
@@ -1386,7 +1386,7 @@ export default function SettingsPanel() {
     {tab === "email" && (
     <div className="grid gap-6 lg:grid-cols-[1.2fr_1fr]">
       <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-8 backdrop-blur">
-        <h2 className="mb-1 font-serif text-2xl">Email delivery (SMTP)</h2>
+        <h2 className="mb-1 font-serif text-2xl">6. Email delivery (SMTP)</h2>
         <p className="mb-6 text-sm text-white/55">
           Pick your provider, paste the credentials, save. Confirmation +
           8-hour reminder emails will start going out from your account.
@@ -1491,7 +1491,7 @@ export default function SettingsPanel() {
       </div>
 
       <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-8 backdrop-blur">
-        <h2 className="mb-1 font-serif text-2xl">Send a test email</h2>
+        <h2 className="mb-1 font-serif text-2xl">7. Send a test email</h2>
         <p className="mb-6 text-sm text-white/55">
           Saves your settings first, then sends a tiny "it works" message.
         </p>
@@ -1537,7 +1537,7 @@ export default function SettingsPanel() {
 
     {tab === "analytics" && (
     <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-8 backdrop-blur">
-      <h2 className="mb-1 font-serif text-2xl">Analytics</h2>
+      <h2 className="mb-1 font-serif text-2xl">8. Analytics</h2>
       <p className="mb-6 text-sm text-white/55">
         Paste your tracking IDs. Scripts are injected site-wide only when an ID
         is set. Leave blank to disable.
