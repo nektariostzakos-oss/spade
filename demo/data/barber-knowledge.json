@@ -274,8 +274,8 @@
     ],
     "question_en": "Should I tip the barber?",
     "question_el": "Πρέπει να αφήσω φιλοδώρημα;",
-    "answer_en": "Tipping is appreciated, never expected. In Greece, most regulars tip €2–5 in cash, rounded up from the service price. If someone goes out of their way for you (a long consultation, an extra tidy-up between visits), a bigger tip is a nice gesture. Never feel obligated — a good review or a recommendation is worth more.",
-    "answer_el": "Το φιλοδώρημα εκτιμάται, δεν είναι υποχρεωτικό. Στην Ελλάδα, οι περισσότεροι αφήνουν €2-5 σε μετρητά. Αν κάποιος έκανε κάτι παραπάνω, λίγο μεγαλύτερο φιλοδώρημα είναι ευγενικό. Ένα καλό review ή σύσταση αξίζει περισσότερο."
+    "answer_en": "Tipping is appreciated, never expected. In the UK, most regulars tip £2–5 in cash, rounded up from the service price. If someone goes out of their way for you (a long consultation, an extra tidy-up between visits), a bigger tip is a nice gesture. Never feel obligated — a good review or a recommendation is worth more.",
+    "answer_el": "Το φιλοδώρημα εκτιμάται, δεν είναι υποχρεωτικό. Στο Ηνωμένο Βασίλειο, οι περισσότεροι αφήνουν £2–5 σε μετρητά. Αν κάποιος έκανε κάτι παραπάνω, λίγο μεγαλύτερο φιλοδώρημα είναι ευγενικό. Ένα καλό review ή σύσταση αξίζει περισσότερο."
   },
   {
     "id": "kb_how_long",
@@ -825,8 +825,8 @@
     ],
     "question_en": "I'm going to shave for the first time — any advice?",
     "question_el": "Πρώτο μου ξύρισμα — συμβουλές;",
-    "answer_en": "Three rules: (1) **Warm water first** — soften the hair 2 minutes. (2) **With the grain, not against** — find your growth direction, usually downward on cheeks, up on the neck. (3) **Light passes, sharp blade** — never press. Apply a good shaving cream (not soap), rinse the blade between strokes. Aftershave with witch hazel if you have sensitive skin. First time is easier with us — we do it for €5.",
-    "answer_el": "Τρεις κανόνες: (1) **Ζεστό νερό πρώτα** — μαλακώστε 2'. (2) **Με τη φορά τριχοφυΐας**, όχι αντίθετα. (3) **Απαλά, με αιχμηρή λεπίδα** — μην πιέζετε. Καλή κρέμα ξυρίσματος. Αν έχετε ευαίσθητο δέρμα, witch hazel μετά. Πιο εύκολο αν το κάνουμε εμείς — €5."
+    "answer_en": "Three rules: (1) **Warm water first** — soften the hair 2 minutes. (2) **With the grain, not against** — find your growth direction, usually downward on cheeks, up on the neck. (3) **Light passes, sharp blade** — never press. Apply a good shaving cream (not soap), rinse the blade between strokes. Aftershave with witch hazel if you have sensitive skin. First time is easier with us — we do it for £5.",
+    "answer_el": "Τρεις κανόνες: (1) **Ζεστό νερό πρώτα** — μαλακώστε 2'. (2) **Με τη φορά τριχοφυΐας**, όχι αντίθετα. (3) **Απαλά, με αιχμηρή λεπίδα** — μην πιέζετε. Καλή κρέμα ξυρίσματος. Αν έχετε ευαίσθητο δέρμα, witch hazel μετά. Πιο εύκολο αν το κάνουμε εμείς — £5."
   },
   {
     "id": "kb_shave_bumps",
@@ -957,8 +957,8 @@
     ],
     "question_en": "Can I buy a gift voucher for someone?",
     "question_el": "Μπορώ να αγοράσω δωροεπιταγή;",
-    "answer_en": "Yes — vouchers come in €30, €50, and €100 denominations (or custom amounts — ask us). Delivered as a printable PDF to their email or yours to print and give in person. Never expire. The €50 covers a cut + beard; €100 is the full grooming experience with a take-home product.",
-    "answer_el": "Ναι — δωροεπιταγές σε €30, €50 και €100 (ή προσαρμοσμένα). Ως εκτυπώσιμο PDF σε email ή δικό σας για παράδοση. Δε λήγουν ποτέ. €50 καλύπτει κούρεμα + μούσι. €100 είναι η πλήρης εμπειρία grooming."
+    "answer_en": "Yes — vouchers come in £30, £50, and £100 denominations (or custom amounts — ask us). Delivered as a printable PDF to their email or yours to print and give in person. Never expire. The £50 covers a cut + beard; £100 is the full grooming experience with a take-home product.",
+    "answer_el": "Ναι — δωροεπιταγές σε £30, £50 και £100 (ή προσαρμοσμένα). Ως εκτυπώσιμο PDF σε email ή δικό σας για παράδοση. Δε λήγουν ποτέ. £50 καλύπτει κούρεμα + μούσι. £100 είναι η πλήρης εμπειρία grooming."
   },
   {
     "id": "kb_cancel_reschedule",

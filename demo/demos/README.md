@@ -63,5 +63,5 @@ Plus `public/demos/<id>/cover.svg` (wizard card thumbnail) and `public/brand/<id
 
 | ID | Brand | Industry | Booking |
 |---|---|---|---|
-| `barber` | Spade | Barber shop | appointment |
+| `barber` | Oakline | Barber shop | appointment |
 | `restaurant` | Verde Cucina | Italian restaurant | reservation |
