@@ -107,15 +107,26 @@ export async function getOccupiedSlots(
 export async function createBooking(input: NewBooking): Promise<Booking> {
   return withFileLock(LOCK, async () => {
     const all = await readAll();
-    const conflict = all.find(
-      (b) =>
-        b.date === input.date &&
-        b.time === input.time &&
-        b.status !== "cancelled" &&
-        (b.barberId === input.barberId || input.barberId === "any")
-    );
+    // Overlap detection: reject the new booking if any *live* booking with
+    // the same stylist (or the "any" pool) has an interval that intersects
+    // the incoming one. Previously we only matched identical start times,
+    // so a 60-min booking at 10:00 didn't clash with a walk-in at 10:30.
+    const [nh, nm] = String(input.time).split(":").map(Number);
+    const newStart = nh * 60 + (nm || 0);
+    const newEnd = newStart + (Number(input.duration) || 30);
+    const conflict = all.find((b) => {
+      if (b.date !== input.date) return false;
+      if (b.status === "cancelled") return false;
+      if (b.barberId !== input.barberId && b.barberId !== "any" && input.barberId !== "any") {
+        return false;
+      }
+      const [bh, bm] = b.time.split(":").map(Number);
+      const bStart = bh * 60 + (bm || 0);
+      const bEnd = bStart + (Number(b.duration) || 30);
+      return newStart < bEnd && bStart < newEnd;
+    });
     if (conflict) {
-      throw new Error("That slot was just taken. Pick another time.");
+      throw new Error("That slot overlaps an existing booking. Pick another time.");
     }
     const booking: Booking = {
       ...input,
