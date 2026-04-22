@@ -64,8 +64,14 @@ export async function POST(req: NextRequest) {
       price: number;
       qty: number;
     }> = [];
+    if (incoming.length > 50) {
+      return NextResponse.json(
+        { error: "Too many line items." },
+        { status: 400 }
+      );
+    }
     for (const raw of incoming) {
-      const qty = Math.max(1, Math.floor(Number(raw.qty) || 1));
+      const qty = Math.min(99, Math.max(1, Math.floor(Number(raw.qty) || 1)));
       const product = catalog.find((p) => p.id === raw.id);
       if (!product) {
         return NextResponse.json(

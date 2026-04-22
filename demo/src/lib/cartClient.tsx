@@ -95,13 +95,17 @@ export function CartProvider({ children }: { children: ReactNode }) {
         write(next);
       },
       setQty: (id, q) => {
-        if (q <= 0) {
+        // Clamp: remove at 0, integer ≥ 1, max 99 (defensive — prevents a
+        // user spamming + into a wild quantity that later oversells stock).
+        const clamped = Math.floor(Number(q));
+        if (!Number.isFinite(clamped) || clamped <= 0) {
           const next = items.filter((i) => i.id !== id);
           setItems(next);
           write(next);
           return;
         }
-        const next = items.map((i) => (i.id === id ? { ...i, qty: q } : i));
+        const safe = Math.min(99, clamped);
+        const next = items.map((i) => (i.id === id ? { ...i, qty: safe } : i));
         setItems(next);
         write(next);
       },
