@@ -14,12 +14,14 @@ type Staff = {
   workDays: number[];
   startTime: string;
   endTime: string;
+  breakStart?: string;
+  breakEnd?: string;
   order: number;
 };
 
 const EMPTY: Staff = {
   id: "", name: "", role: "", bio: "", photo: "", specialties: [],
-  enabled: true, workDays: [1, 2, 3, 4, 5, 6], startTime: "09:00", endTime: "21:00", order: 0,
+  enabled: true, workDays: [1, 2, 3, 4, 5, 6], startTime: "10:00", endTime: "21:00", order: 0,
 };
 const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
@@ -71,6 +73,8 @@ export default function StaffPanel() {
           <F label="Specialties (comma separated)" value={draft.specialties.join(", ")} onChange={(v) => setDraft({ ...draft, specialties: v.split(",").map((s) => s.trim()).filter(Boolean) })} />
           <F label="Start time" value={draft.startTime} onChange={(v) => setDraft({ ...draft, startTime: v })} />
           <F label="End time" value={draft.endTime} onChange={(v) => setDraft({ ...draft, endTime: v })} />
+          <F label="Break start (optional)" value={draft.breakStart ?? ""} onChange={(v) => setDraft({ ...draft, breakStart: v || undefined })} />
+          <F label="Break end (optional)" value={draft.breakEnd ?? ""} onChange={(v) => setDraft({ ...draft, breakEnd: v || undefined })} />
           <F label="Order" type="number" value={String(draft.order)} onChange={(v) => setDraft({ ...draft, order: Number(v) || 0 })} />
           <label className="flex items-center gap-2">
             <input type="checkbox" checked={draft.enabled} onChange={(e) => setDraft({ ...draft, enabled: e.target.checked })} />
