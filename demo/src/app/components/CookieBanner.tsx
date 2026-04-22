@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useLang } from "../../lib/i18n";
 
 /**
@@ -27,10 +28,15 @@ export function getConsent(): Consent {
 export default function CookieBanner() {
   const [decided, setDecided] = useState<boolean | null>(null);
   const { lang } = useLang();
+  const pathname = usePathname();
 
   useEffect(() => {
     setDecided(getConsent() !== null);
   }, []);
+
+  // Don't show on setup/admin routes — those are internal surfaces, not
+  // public pages, so the consent question doesn't apply.
+  if (pathname?.startsWith("/setup") || pathname?.startsWith("/admin")) return null;
 
   function choose(v: Consent) {
     try {
