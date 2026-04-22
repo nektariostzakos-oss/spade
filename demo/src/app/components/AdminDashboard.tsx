@@ -16,6 +16,7 @@ import WaitlistPanel from "./WaitlistPanel";
 import BookingsCalendar from "./BookingsCalendar";
 import SettingsHub from "./SettingsHub";
 import LaunchChecklist from "./LaunchChecklist";
+import WalkInBookingModal from "./WalkInBookingModal";
 
 type Me = {
   id: string;
@@ -64,6 +65,7 @@ export default function AdminDashboard({
   const [bookings, setBookings] = useState(initial);
   const [filter, setFilter] = useState<"all" | BookingStatus>("all");
   const [day, setDay] = useState<"today" | "upcoming" | "all">("upcoming");
+  const [walkInOpen, setWalkInOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [busy, setBusy] = useState<string | null>(null);
   const [view, setView] = useState<"list" | "calendar">("list");
@@ -162,19 +164,28 @@ export default function AdminDashboard({
           </div>
           <div className="flex flex-wrap items-center gap-2 sm:gap-3">
             {isAdmin && (
-              <button
-                onClick={async () => {
-                  const r = await fetch("/api/cron/reminders");
-                  const d = await r.json();
-                  alert(
-                    `Checked ${d.checked} booking(s), ${d.sent} reminder(s) sent.`
-                  );
-                }}
-                className="rounded-full border border-[#c9a961]/40 bg-[#c9a961]/10 px-3 py-1.5 text-[10px] uppercase tracking-widest text-[#c9a961] transition-colors hover:bg-[#c9a961]/20 sm:px-4 sm:py-2 sm:text-xs"
-              >
-                <span className="hidden sm:inline">Run reminders</span>
-                <span className="sm:hidden">Reminders</span>
-              </button>
+              <>
+                <button
+                  onClick={() => setWalkInOpen(true)}
+                  className="rounded-full border border-[#c9a961]/40 bg-[#c9a961] px-3 py-1.5 text-[10px] uppercase tracking-widest text-black transition-colors hover:opacity-90 sm:px-4 sm:py-2 sm:text-xs"
+                >
+                  + Walk-in
+                </button>
+                <button
+                  onClick={async () => {
+                    const r = await fetch("/api/cron/reminders");
+                    const d = await r.json();
+                    const msg = d.reminders
+                      ? `Reminders: ${d.reminders.sent}/${d.reminders.checked}\nReviews: ${d.reviews?.sent ?? 0}/${d.reviews?.checked ?? 0}`
+                      : `Checked ${d.checked}, sent ${d.sent}`;
+                    alert(msg);
+                  }}
+                  className="rounded-full border border-[#c9a961]/40 bg-[#c9a961]/10 px-3 py-1.5 text-[10px] uppercase tracking-widest text-[#c9a961] transition-colors hover:bg-[#c9a961]/20 sm:px-4 sm:py-2 sm:text-xs"
+                >
+                  <span className="hidden sm:inline">Run cron</span>
+                  <span className="sm:hidden">Cron</span>
+                </button>
+              </>
             )}
             <a
               href="/"
@@ -466,6 +477,13 @@ export default function AdminDashboard({
           </>
         )}
       </div>
+
+      {walkInOpen && (
+        <WalkInBookingModal
+          onClose={() => setWalkInOpen(false)}
+          onCreated={() => router.refresh()}
+        />
+      )}
     </div>
   );
 }

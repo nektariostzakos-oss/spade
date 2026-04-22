@@ -64,27 +64,31 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     const ip = clientIp(req);
+    const actor = await isStaff();
 
-    // Rate limit: 5 bookings per hour per IP, 30 per day per IP.
-    if (!allowAction(`book:hour:${ip}`, 5, 60 * 60_000)) {
-      return NextResponse.json(
-        { error: "Too many booking attempts. Try again later." },
-        { status: 429 }
-      );
-    }
-    if (!allowAction(`book:day:${ip}`, 30, 24 * 60 * 60_000)) {
-      return NextResponse.json(
-        { error: "Daily booking limit reached." },
-        { status: 429 }
-      );
+    // Admin/staff create bookings through the walk-in modal — skip the
+    // anti-abuse gates (rate limit + honeypot). Public form still gets them.
+    if (!actor) {
+      if (!allowAction(`book:hour:${ip}`, 5, 60 * 60_000)) {
+        return NextResponse.json(
+          { error: "Too many booking attempts. Try again later." },
+          { status: 429 }
+        );
+      }
+      if (!allowAction(`book:day:${ip}`, 30, 24 * 60 * 60_000)) {
+        return NextResponse.json(
+          { error: "Daily booking limit reached." },
+          { status: 429 }
+        );
+      }
     }
 
     const body = (await req.json()) as NewBooking & {
       website?: string; // honeypot
     };
 
-    // Honeypot — real users never fill this hidden field.
-    if (typeof body.website === "string" && body.website.trim().length > 0) {
+    // Honeypot — real users never fill this hidden field. Skip for staff.
+    if (!actor && typeof body.website === "string" && body.website.trim().length > 0) {
       return NextResponse.json({ error: "Spam detected" }, { status: 400 });
     }
 

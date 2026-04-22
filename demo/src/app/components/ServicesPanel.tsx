@@ -11,6 +11,8 @@ type Svc = {
   desc_el?: string;
   duration: number;
   price: number;
+  bufferMinutes?: number;
+  fromPrice?: boolean;
   category?: string;
   enabled: boolean;
   order: number;
@@ -18,6 +20,7 @@ type Svc = {
 
 const EMPTY: Svc = {
   id: "", tkey: "", name: "", desc: "", duration: 30, price: 0,
+  bufferMinutes: 0, fromPrice: false,
   category: "", enabled: true, order: 0,
 };
 
@@ -62,8 +65,13 @@ export default function ServicesPanel() {
           <F label="Name (EL)" value={draft.name_el || ""} onChange={(v) => setDraft({ ...draft, name_el: v })} />
           <F label="Duration (min)" type="number" value={String(draft.duration)} onChange={(v) => setDraft({ ...draft, duration: Number(v) || 0 })} />
           <F label="Price (£)" type="number" value={String(draft.price)} onChange={(v) => setDraft({ ...draft, price: Number(v) || 0 })} />
+          <F label="Buffer after (min)" type="number" value={String(draft.bufferMinutes ?? 0)} onChange={(v) => setDraft({ ...draft, bufferMinutes: Number(v) || 0 })} />
           <F label="Category" value={draft.category || ""} onChange={(v) => setDraft({ ...draft, category: v })} />
           <F label="Order" type="number" value={String(draft.order)} onChange={(v) => setDraft({ ...draft, order: Number(v) || 0 })} />
+          <label className="flex items-center gap-2">
+            <input type="checkbox" checked={!!draft.fromPrice} onChange={(e) => setDraft({ ...draft, fromPrice: e.target.checked })} />
+            <span className="text-sm">Price is variable — show as "From £X"</span>
+          </label>
           <F label="Description (EN)" value={draft.desc} onChange={(v) => setDraft({ ...draft, desc: v })} textarea />
           <F label="Description (EL)" value={draft.desc_el || ""} onChange={(v) => setDraft({ ...draft, desc_el: v })} textarea />
           <label className="flex items-center gap-2 sm:col-span-2">

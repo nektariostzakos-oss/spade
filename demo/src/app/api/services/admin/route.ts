@@ -20,6 +20,8 @@ export async function POST(req: NextRequest) {
     desc_el: body.desc_el,
     duration: Number(body.duration) || 30,
     price: Number(body.price) || 0,
+    bufferMinutes: Number(body.bufferMinutes) || 0,
+    fromPrice: body.fromPrice === true,
     category: body.category,
     enabled: body.enabled !== false,
     order: Number(body.order) || 0,
