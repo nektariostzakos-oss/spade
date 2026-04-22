@@ -71,6 +71,8 @@ export default function BookingFlow() {
   const [email, setEmail] = useState("");
   const [notes, setNotes] = useState("");
   const [addOnIds, setAddOnIds] = useState<string[]>([]);
+  const [couponCode, setCouponCode] = useState("");
+  const [appliedCoupon, setAppliedCoupon] = useState<{ code: string; discount: number } | null>(null);
 
   // Restore any in-progress draft once, on mount. Browser refresh / tab
   // switch shouldn't force the user to re-type everything.
@@ -243,11 +245,13 @@ export default function BookingFlow() {
             notes,
             lang,
             website: honeypot,
+            couponCode: couponCode.trim() || undefined,
           });
         })(),
       });
       const d = await res.json();
       if (!res.ok) throw new Error(d.error || t("book.error.network"));
+      if (d.appliedCoupon) setAppliedCoupon(d.appliedCoupon);
       setDone({ ref: d.booking.id, manageToken: d.manageToken });
       try { window.localStorage.removeItem("oakline_book_draft_v1"); } catch {}
     } catch (e) {
@@ -739,6 +743,35 @@ export default function BookingFlow() {
                   {email && <Row label={t("book.fld.email")} value={email} />}
                   {notes && <Row label={t("book.sum.notes")} value={notes} />}
                 </dl>
+
+                {/* Coupon / promo code */}
+                <div className="mt-6 rounded-xl border border-white/10 bg-white/[0.02] p-4">
+                  <label className="mb-2 block text-[10px] uppercase tracking-[0.3em] text-[#c9a961]">
+                    {lang === "el" ? "Κωδικός έκπτωσης" : "Promo code"}
+                  </label>
+                  <div className="flex flex-wrap gap-2">
+                    <input
+                      value={couponCode}
+                      onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                      placeholder="CODE"
+                      className="flex-1 min-w-[140px] rounded-md border border-white/10 bg-white/5 px-3 py-2 text-sm font-mono uppercase text-white placeholder-white/30"
+                    />
+                  </div>
+                  {appliedCoupon && (
+                    <p className="mt-2 text-xs text-emerald-300">
+                      ✓ {appliedCoupon.code} · −£{appliedCoupon.discount.toFixed(2)}
+                    </p>
+                  )}
+                  <p className="mt-2 text-[10px] text-white/40">
+                    {lang === "el"
+                      ? `Ακύρωση δωρεάν έως ${business.bookingRules?.cancellationWindowHours ?? 4}ω πριν το ραντεβού.`
+                      : `Free cancellation up to ${business.bookingRules?.cancellationWindowHours ?? 4}h before the appointment.`}
+                    {(business.bookingRules?.noShowFeePercent ?? 0) > 0 &&
+                      (lang === "el"
+                        ? ` Μετά, χρέωση ${business.bookingRules!.noShowFeePercent}%.`
+                        : ` After that, ${business.bookingRules!.noShowFeePercent}% fee applies.`)}
+                  </p>
+                </div>
 
                 {error && (
                   <p className="mt-6 rounded-lg border border-red-400/40 bg-red-500/10 p-3 text-sm text-red-300">

@@ -14,7 +14,7 @@ export type NextSlotInfo = {
   booked: boolean;       // true if no slot available
 } | null;
 
-export default function Hero({ nextSlot }: { nextSlot?: NextSlotInfo }) {
+export default function Hero({ nextSlot, minPrice }: { nextSlot?: NextSlotInfo; minPrice?: number | null }) {
   const { t, lang } = useLang();
   const c = useSection("hero", {
     pill_en: t("hero.pill"),
@@ -177,13 +177,21 @@ export default function Hero({ nextSlot }: { nextSlot?: NextSlotInfo }) {
             transition={{ duration: 0.8, delay: 1 }}
             className="mt-10 flex flex-wrap items-center gap-4"
           >
-            <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
+            <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} className="flex flex-col items-start">
               <Link
                 href="/book"
                 className="inline-flex items-center gap-2 rounded-full bg-[#c9a961] px-8 py-4 text-sm font-semibold uppercase tracking-widest text-black"
               >
                 {t("cta.book")}
               </Link>
+              {typeof minPrice === "number" && minPrice > 0 && (
+                <span
+                  className="mt-2 text-[10px] uppercase tracking-[0.3em]"
+                  style={{ color: "var(--muted-2)" }}
+                >
+                  {lang === "el" ? `από £${minPrice}` : `From £${minPrice}`}
+                </span>
+              )}
             </motion.div>
             <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
               <Link

@@ -10,6 +10,7 @@ import AvailabilitySnapshot from "./components/AvailabilitySnapshot";
 import TransformationsStrip from "./components/TransformationsStrip";
 import { getTakenSlots } from "../lib/bookings";
 import { getSlotsForDay } from "../lib/services";
+import { getActiveServices } from "../lib/customServices";
 import { loadBusiness } from "../lib/settings";
 import { todayIsoInTz, nowMinutesInTz, dayOfWeekInTz, dateAtOffsetInTz } from "../lib/tz";
 
@@ -72,10 +73,15 @@ async function computeNextSlot(): Promise<NextSlotInfo> {
 }
 
 export default async function Home() {
-  const nextSlot = await computeNextSlot();
+  const [nextSlot, services] = await Promise.all([
+    computeNextSlot(),
+    getActiveServices().catch(() => []),
+  ]);
+  const priced = services.filter((s) => s.price > 0).map((s) => s.price);
+  const minPrice = priced.length > 0 ? Math.min(...priced) : null;
   return (
     <main className="relative">
-      <Hero nextSlot={nextSlot} />
+      <Hero nextSlot={nextSlot} minPrice={minPrice} />
       <AvailabilitySnapshot />
       <InfoStrip />
       <ServicesPreview />
