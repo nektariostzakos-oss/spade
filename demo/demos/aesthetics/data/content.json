@@ -1,0 +1,155 @@
+{
+  "page_home": {
+    "bgImage": "",
+    "bgOpacity": "0.25"
+  },
+  "hero": {
+    "pill_en": "Taking new clients",
+    "pill_el": "Δεχόμαστε νέους πελάτες",
+    "title_en": "Your skin",
+    "title_el": "Το δέρμα σου",
+    "titleAccent_en": "is your canvas.",
+    "titleAccent_el": "είναι ο καμβάς σου.",
+    "subtitle_en": "Results-driven facials, Hydrafacial, microneedling and dermaplaning on the Main Line. Every treatment is personalised the moment you sit down.",
+    "subtitle_el": "Θεραπείες προσώπου με αποτελέσματα, Hydrafacial, microneedling και dermaplaning στο Ardmore. Κάθε ραντεβού είναι φτιαγμένο στα μέτρα σου.",
+    "meta1_en": "★★★★★ Main-Line favourite · 400+ reviews",
+    "meta1_el": "★★★★★ Αγαπημένο του Main Line · 400+ κριτικές",
+    "meta2_en": "Open today · 09:00–17:00",
+    "meta2_el": "Σήμερα ανοιχτά · 09:00–17:00",
+    "bgImage": "/demos/aesthetics/hero.jpg",
+    "bgVideo": "",
+    "bgVideoPoster": "",
+    "sideImage": "/demos/aesthetics/hero-side.jpg"
+  },
+  "info": {
+    "items": [
+      { "title_en": "Award-winning spa", "title_el": "Βραβευμένο spa", "desc_en": "Serving the Main Line and Philadelphia since 2018.", "desc_el": "Main Line & Philadelphia από το 2018." },
+      { "title_en": "Clinical skincare only", "title_el": "Κλινικά προϊόντα μόνο", "desc_en": "SkinBetter Science, Face Reality, Skinscript — curated for results.", "desc_el": "SkinBetter Science, Face Reality, Skinscript — επιλεγμένα για αποτέλεσμα." },
+      { "title_en": "Restorative by design", "title_el": "Χαλαρωτικό εξ αρχής", "desc_en": "Advanced technique paired with intentional touch. You leave glowing.", "desc_el": "Προηγμένη τεχνική με φροντίδα. Φεύγεις να λάμπεις." }
+    ]
+  },
+  "services": {
+    "eyebrow_en": "Treatment menu",
+    "eyebrow_el": "Κατάλογος θεραπειών",
+    "title_en": "Facials built around your skin, not a trend.",
+    "title_el": "Θεραπείες φτιαγμένες για το δικό σου δέρμα.",
+    "items": []
+  },
+  "gallery_strip": {
+    "eyebrow_en": "Before · after · in the chair",
+    "eyebrow_el": "Πριν · μετά · στην καρέκλα",
+    "title_en": "Real skin, real results.",
+    "title_el": "Πραγματικό δέρμα, πραγματικά αποτελέσματα.",
+    "images": [
+      "/demos/aesthetics/gallery-1.jpg",
+      "/demos/aesthetics/gallery-2.jpg",
+      "/demos/aesthetics/gallery-3.jpg",
+      "/demos/aesthetics/gallery-4.jpg"
+    ]
+  },
+  "gallery": {
+    "items": []
+  },
+  "about": {
+    "eyebrow_en": "About",
+    "eyebrow_el": "Σχετικά",
+    "title_en": "Master Aesthetician, Vicki Tasiopoulos.",
+    "title_el": "Master Aesthetician, Vicki Tasiopoulos.",
+    "p1_en": "Founded by award-winning esthetician Vicki Tasiopoulos, the studio is a destination for results-driven, personalised skincare. Vicki blends clinical expertise with a restorative spa experience — guided by education, integrity, and doing what is best for each client's skin.",
+    "p1_el": "Με ιδρύτρια τη βραβευμένη aesthetician Vicki Tasiopoulos, το στούντιο είναι ένας προορισμός για εξατομικευμένη φροντίδα δέρματος με αποτέλεσμα. Συνδυάζει κλινική γνώση με χαλαρωτική εμπειρία spa.",
+    "p2_en": "No facial is ever one-size-fits-all. Every treatment is customised in real time, supported by professional-grade brands we trust. Advanced techniques paired with intentional touch — results without sacrificing the relaxation.",
+    "p2_el": "Καμία θεραπεία δεν είναι τυποποιημένη. Προσαρμόζεται την ίδια στιγμή, με προϊόντα επαγγελματικού επιπέδου. Τεχνική με φροντίδα — αποτέλεσμα χωρίς να χάνεις τη χαλάρωση."
+  },
+  "team": {
+    "eyebrow_en": "The team",
+    "eyebrow_el": "Η ομάδα",
+    "title_en": "One set of hands. A decade of training.",
+    "title_el": "Ένα ζευγάρι χέρια. Μια δεκαετία εκπαίδευση.",
+    "members": []
+  },
+  "faq": {
+    "eyebrow_en": "Before you book",
+    "eyebrow_el": "Πριν κλείσεις",
+    "title_en": "Common questions.",
+    "title_el": "Συχνές ερωτήσεις.",
+    "items": [
+      { "q_en": "Do I need a consultation first?", "q_el": "Χρειάζομαι consultation πρώτα;", "a_en": "Every new client starts with the New Client Assessment Facial so we can map your skin properly before any aggressive treatment.", "a_el": "Κάθε νέος πελάτης ξεκινά με το New Client Assessment Facial για να δούμε καλά το δέρμα σου πριν από έντονες θεραπείες." },
+      { "q_en": "What's your cancellation policy?", "q_el": "Ακύρωση;", "a_en": "Cancellations within 24 hours of your appointment are charged 50% of the service. Please reschedule by the morning of the day before.", "a_el": "Ακύρωση μέσα σε 24 ώρες χρεώνεται 50%. Άλλαξε ραντεβού μέχρι το πρωί της προηγούμενης μέρας." },
+      { "q_en": "Can I add Dermaplaning to any facial?", "q_el": "Προσθήκη Dermaplaning;", "a_en": "Yes — add $50 for a glass-finish base on most signature facials.", "a_el": "Ναι — +$50 σε περισσότερες θεραπείες signature για τέλειο φινίρισμα." }
+    ]
+  },
+  "contact": {
+    "image": "/demos/aesthetics/studio.jpg",
+    "blocks": [
+      { "label_en": "Visit", "label_el": "Επισκέψου", "value_en": "40 E Montgomery Ave\nArdmore, PA 19003", "value_el": "40 E Montgomery Ave\nArdmore, PA 19003" },
+      { "label_en": "Email", "label_el": "Email", "value_en": "info@theskinartiste.com", "value_el": "info@theskinartiste.com" },
+      { "label_en": "Instagram", "label_el": "Instagram", "value_en": "@theskinartiste", "value_el": "@theskinartiste" }
+    ]
+  },
+  "testimonials": {
+    "eyebrow_en": "Clients say",
+    "eyebrow_el": "Οι πελάτες λένε",
+    "title_en": "Loved by the Main Line.",
+    "title_el": "Αγαπημένο στο Main Line.",
+    "items": [
+      { "quote_en": "Not only is her studio beautiful — you leave glowing and feeling so relaxed.", "quote_el": "Όμορφο στούντιο — φεύγεις να λάμπεις και χαλαρωμένη.", "author_en": "Main Line client", "author_el": "Πελάτισσα Main Line" },
+      { "quote_en": "She's taken steps to seek out continuing education and certifications — and it shows on your skin.", "quote_el": "Συνεχίζει εκπαίδευση και πιστοποιήσεις — φαίνεται στο δέρμα.", "author_en": "Long-time client", "author_el": "Πελάτισσα ετών" }
+    ]
+  },
+  "cta": {
+    "eyebrow_en": "Book your chair",
+    "eyebrow_el": "Κλείσε το ραντεβού σου",
+    "title_en": "Ready to let your skin work for you?",
+    "title_el": "Έτοιμη να αφήσεις το δέρμα σου να δουλέψει για σένα;",
+    "subtitle_en": "New clients start with an Assessment Facial — it maps your skin and locks in the right pathway.",
+    "subtitle_el": "Οι νέοι πελάτες ξεκινούν με Assessment Facial — βάζει τη σωστή πορεία."
+  },
+  "page_services": {
+    "eyebrow_en": "Treatment menu",
+    "eyebrow_el": "Κατάλογος θεραπειών",
+    "title_en": "Every facial is a consultation.",
+    "title_el": "Κάθε θεραπεία είναι και consultation.",
+    "sub_en": "Clinical-grade actives, advanced technique, and a spa-quality finish. Below are the signature treatments — add-ons selected together in the chair.",
+    "sub_el": "Κλινικά προϊόντα, προηγμένη τεχνική, spa φινίρισμα. Παρακάτω τα κύρια treatments — τα add-ons επιλέγονται μαζί στην καρέκλα."
+  },
+  "page_gallery": {
+    "eyebrow_en": "Recent work",
+    "eyebrow_el": "Πρόσφατες δουλειές",
+    "title_en": "Before & after the treatment.",
+    "title_el": "Πριν και μετά τη θεραπεία.",
+    "sub_en": "Real results from real clients. Every photo with written permission.",
+    "sub_el": "Αληθινά αποτελέσματα, αληθινοί πελάτες. Όλες οι φωτογραφίες με γραπτή άδεια."
+  },
+  "page_team": {
+    "eyebrow_en": "Meet Vicki",
+    "eyebrow_el": "Γνώρισε τη Vicki",
+    "title_en": "The hands behind the glow.",
+    "title_el": "Τα χέρια πίσω από το λαμπερό αποτέλεσμα.",
+    "sub_en": "Master aesthetician. A decade of continuing education. One-on-one attention.",
+    "sub_el": "Master aesthetician. Δεκαετία εκπαίδευσης. Προσωπική φροντίδα."
+  },
+  "page_contact": {
+    "eyebrow_en": "Visit the studio",
+    "eyebrow_el": "Επισκέψου το στούντιο",
+    "title_en": "40 E Montgomery Ave.",
+    "title_el": "40 E Montgomery Ave.",
+    "sub_en": "Ardmore, on the Main Line. Free street parking.",
+    "sub_el": "Ardmore, στο Main Line. Δωρεάν πάρκινγκ."
+  },
+  "page_book": {
+    "eyebrow_en": "Book a treatment",
+    "eyebrow_el": "Κλείσε ραντεβού",
+    "title_en": "Pick a treatment. Pick a time. Done.",
+    "title_el": "Διάλεξε θεραπεία. Διάλεξε ώρα. Τέλος.",
+    "sub_en": "New clients must start with an Assessment Facial.",
+    "sub_el": "Οι νέοι πελάτες ξεκινούν με Assessment Facial."
+  },
+  "footer": {
+    "lede_en": "Results-driven, personalised skincare on the Main Line.",
+    "lede_el": "Εξατομικευμένη φροντίδα δέρματος στο Main Line.",
+    "cta_en": "Book a treatment",
+    "cta_el": "Κλείσε ραντεβού",
+    "copy_en": "© {year} The Skin Artisté · Ardmore, PA",
+    "copy_el": "© {year} The Skin Artisté · Ardmore, PA"
+  }
+}

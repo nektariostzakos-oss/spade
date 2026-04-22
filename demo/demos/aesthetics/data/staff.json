@@ -1,0 +1,15 @@
+[
+  {
+    "id": "staff_vicki",
+    "name": "Vicki Tasiopoulos",
+    "role": "Master Aesthetician · Founder",
+    "bio": "Vicki has been providing luxury facial treatments, Hydrafacial and Dermaplaning services on the Main Line and Philadelphia area since 2018. She blends clinical expertise with a deeply restorative spa experience.",
+    "photo": "/demos/aesthetics/vicki.jpg",
+    "specialties": ["Hydrafacial", "Dermaplaning", "Sculptural Facial Massage", "Corrective Skincare"],
+    "enabled": true,
+    "workDays": [1, 2, 3, 4, 5, 6],
+    "startTime": "09:00",
+    "endTime": "17:00",
+    "order": 1
+  }
+]

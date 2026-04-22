@@ -1,0 +1,10 @@
+[
+  {
+    "id": "u_aesth_seed",
+    "email": "admin@theskinartiste.local",
+    "role": "admin",
+    "passwordHash": "4608a8dbc1bf710251f9f9e2d3ba177c:08edc1ea30d2c8f4a6e3dec8398443902dabcd8c9faffadcb9d259264da619bd",
+    "createdAt": "2026-04-22T00:00:00.000Z",
+    "mustChangePassword": true
+  }
+]

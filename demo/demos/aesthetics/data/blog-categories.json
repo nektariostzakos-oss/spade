@@ -1,0 +1,6 @@
+[
+  { "id": "skincare", "slug": "skincare", "name_en": "Skincare", "name_el": "Φροντίδα δέρματος", "description_en": "Home regimens, ingredient deep-dives and protocols.", "description_el": "Ρουτίνες σπιτιού, ανάλυση ενεργών συστατικών.", "order": 1 },
+  { "id": "treatments", "slug": "treatments", "name_en": "Treatments", "name_el": "Θεραπείες", "description_en": "Hydrafacial, microneedling, peels — explained.", "description_el": "Hydrafacial, microneedling, peels — αναλυτικά.", "order": 2 },
+  { "id": "acne", "slug": "acne", "name_en": "Acne", "name_el": "Ακμή", "description_en": "The Face Reality programme and clearing science.", "description_el": "Το πρόγραμμα Face Reality και η επιστήμη της καθαρής επιδερμίδας.", "order": 3 },
+  { "id": "bridal", "slug": "bridal", "name_en": "Bridal", "name_el": "Νυφικό", "description_en": "Skin planning in the months leading to the big day.", "description_el": "Προετοιμασία δέρματος τους μήνες πριν τον γάμο.", "order": 4 }
+]

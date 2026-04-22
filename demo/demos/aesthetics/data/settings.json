@@ -1,0 +1,79 @@
+{
+  "smtp": { "host": "", "port": 587, "user": "", "pass": "", "from": "", "secure": "tls" },
+  "branding": {
+    "logoUrl": "/demos/aesthetics/brand-logo.png",
+    "logoUrlDark": "/demos/aesthetics/brand-logo.png",
+    "faviconUrl": "/demos/aesthetics/favicon.png",
+    "wordmark": "THE SKIN ARTISTÉ",
+    "tagline_en": "Aesthetics · Ardmore",
+    "tagline_el": "Αισθητική · Ardmore"
+  },
+  "business": {
+    "name": "The Skin Artisté",
+    "streetAddress": "40 E Montgomery Ave",
+    "city": "Ardmore",
+    "postalCode": "19003",
+    "country": "US",
+    "phone": "",
+    "email": "info@theskinartiste.com",
+    "timezone": "America/New_York",
+    "latitude": 40.005,
+    "longitude": -75.290,
+    "hours": [
+      { "day": "mon", "open": "09:00", "close": "17:00", "closed": false },
+      { "day": "tue", "open": "09:00", "close": "17:00", "closed": false },
+      { "day": "wed", "open": "09:00", "close": "17:00", "closed": false },
+      { "day": "thu", "open": "09:00", "close": "17:00", "closed": false },
+      { "day": "fri", "open": "09:00", "close": "17:00", "closed": false },
+      { "day": "sat", "open": "09:00", "close": "17:00", "closed": false },
+      { "day": "sun", "open": "00:00", "close": "00:00", "closed": true }
+    ],
+    "social": {
+      "instagram": "https://instagram.com/theskinartiste",
+      "facebook": "",
+      "whatsapp": "",
+      "tiktok": ""
+    },
+    "priceRange": "$$$"
+  },
+  "theme": {
+    "background": "#faf6f0",
+    "foreground": "#2b1c14",
+    "primary": "#b88957",
+    "primaryAccent": "#d8a977",
+    "surface": "rgba(43, 28, 20, 0.04)",
+    "surfaceStrong": "rgba(43, 28, 20, 0.08)",
+    "border": "rgba(43, 28, 20, 0.12)",
+    "borderStrong": "rgba(43, 28, 20, 0.22)",
+    "muted": "rgba(43, 28, 20, 0.65)",
+    "muted2": "rgba(43, 28, 20, 0.45)"
+  },
+  "typography": {
+    "headingFont": "cormorant",
+    "bodyFont": "inter"
+  },
+  "nav": {
+    "links": [
+      { "id": "home", "label_en": "Home", "label_el": "Αρχική", "href": "/", "enabled": true },
+      { "id": "services", "label_en": "Services", "label_el": "Υπηρεσίες", "href": "/services", "enabled": true },
+      { "id": "memberships", "label_en": "Memberships", "label_el": "Συνδρομές", "href": "/memberships", "enabled": true },
+      { "id": "shop", "label_en": "Shop", "label_el": "Κατάστημα", "href": "/shop", "enabled": true },
+      { "id": "gallery", "label_en": "Gallery", "label_el": "Γκαλερί", "href": "/gallery", "enabled": true },
+      { "id": "about", "label_en": "About", "label_el": "Σχετικά", "href": "/about", "enabled": true },
+      { "id": "contact", "label_en": "Contact", "label_el": "Επικοινωνία", "href": "/contact", "enabled": true },
+      { "id": "blog", "label_en": "Journal", "label_el": "Blog", "href": "/blog", "enabled": true }
+    ],
+    "bookLabel_en": "Book a treatment",
+    "bookLabel_el": "Κλείσε ραντεβού",
+    "bookHref": "/book"
+  },
+  "bookingRules": {
+    "leadTimeMinutes": 120,
+    "cancellationWindowHours": 24,
+    "depositPercent": 0,
+    "noShowFeePercent": 50
+  },
+  "industryId": "aesthetics",
+  "bookingMode": "appointment",
+  "onboarded": true
+}
