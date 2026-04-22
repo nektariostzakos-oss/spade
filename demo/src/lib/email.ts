@@ -275,3 +275,27 @@ export async function sendBookingReminder(b: Booking) {
   const { subject, body } = await renderTemplate(reminder, lang, b);
   return sendOne(b.email, subject, body);
 }
+
+/**
+ * Post-visit review request. Asks the client to leave a Google review
+ * (or any link the business sets via NEXT_PUBLIC_REVIEW_URL / Settings in
+ * future). Sent 2–24h after a completed booking.
+ */
+export async function sendReviewRequest(b: Booking) {
+  const biz = await loadBusiness();
+  const lang = b.lang === "el" ? "el" : "en";
+  const brand = biz.name || "Oakline";
+  const reviewUrl = (biz as { reviewUrl?: string }).reviewUrl ||
+    process.env.NEXT_PUBLIC_REVIEW_URL ||
+    `https://www.google.com/search?q=${encodeURIComponent(brand + " " + (biz.city || "") + " reviews")}`;
+
+  const subject = lang === "el"
+    ? `${brand} — πώς σου φάνηκε;`
+    : `${brand} — how did we do?`;
+
+  const body = lang === "el"
+    ? `Γεια σου ${b.name},\n\nΕυχαριστούμε που μας εμπιστεύτηκες. Αν σου άρεσε η εμπειρία, μια σύντομη κριτική μας βοηθά πολύ:\n\n${reviewUrl}\n\nΤα λέμε σύντομα,\n${brand}`
+    : `Hi ${b.name},\n\nThanks for sitting in the chair with us. If you enjoyed it, a quick review means a lot:\n\n${reviewUrl}\n\nSee you soon,\n${brand}`;
+
+  return sendOne(b.email, subject, body);
+}

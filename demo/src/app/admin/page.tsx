@@ -3,6 +3,7 @@ import { currentUser } from "../../lib/auth";
 import { listBookings } from "../../lib/bookings";
 import { isSmtpConfigured } from "../../lib/email";
 import { loadSettings } from "../../lib/settings";
+import { getLaunchChecklist } from "../../lib/launchChecklist";
 import AdminDashboard from "../components/AdminDashboard";
 
 export const metadata = {
@@ -16,11 +17,13 @@ export default async function AdminPage() {
   const bookings = await listBookings();
   const smtp = await isSmtpConfigured();
   const settings = await loadSettings();
+  const checklist = await getLaunchChecklist();
   return (
     <AdminDashboard
       initial={bookings}
       smtpReady={smtp}
       onboarded={!!settings.onboarded}
+      checklist={checklist}
       me={{
         id: user.id,
         email: user.email,

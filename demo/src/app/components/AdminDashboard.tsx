@@ -15,6 +15,7 @@ import ReviewsPanel from "./ReviewsPanel";
 import WaitlistPanel from "./WaitlistPanel";
 import BookingsCalendar from "./BookingsCalendar";
 import SettingsHub from "./SettingsHub";
+import LaunchChecklist from "./LaunchChecklist";
 
 type Me = {
   id: string;
@@ -47,11 +48,17 @@ export default function AdminDashboard({
   smtpReady = false,
   onboarded = true,
   me,
+  checklist,
 }: {
   initial: Booking[];
   smtpReady?: boolean;
   onboarded?: boolean;
   me: Me;
+  checklist?: {
+    items: import("../../lib/launchChecklist").ChecklistItem[];
+    doneCount: number;
+    totalRequired: number;
+  };
 }) {
   const router = useRouter();
   const [bookings, setBookings] = useState(initial);
@@ -231,6 +238,16 @@ export default function AdminDashboard({
             );
           })}
         </div>
+
+        {checklist && checklist.doneCount < checklist.totalRequired && isAdmin && (
+          <div className="mb-6">
+            <LaunchChecklist
+              items={checklist.items}
+              doneCount={checklist.doneCount}
+              totalRequired={checklist.totalRequired}
+            />
+          </div>
+        )}
 
         {!smtpReady && isAdmin && (
           <div className="mb-6 rounded-xl border border-amber-400/40 bg-amber-500/10 p-4 text-sm text-amber-200">

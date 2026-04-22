@@ -4,8 +4,13 @@
  * In production behind serverless you'd disable this and use Vercel Cron
  * pointing at /api/cron/reminders instead.
  */
-import { dueForReminder, markReminded } from "./bookings";
-import { sendBookingReminder } from "./email";
+import {
+  dueForReminder,
+  dueForReviewRequest,
+  markReminded,
+  markReviewRequested,
+} from "./bookings";
+import { sendBookingReminder, sendReviewRequest } from "./email";
 
 declare global {
   // eslint-disable-next-line no-var
@@ -16,10 +21,17 @@ const FIVE_MIN = 5 * 60 * 1000;
 
 async function tick() {
   try {
-    const due = await dueForReminder();
-    for (const b of due) {
+    const [reminders, reviews] = await Promise.all([
+      dueForReminder(),
+      dueForReviewRequest(),
+    ]);
+    for (const b of reminders) {
       await sendBookingReminder(b);
       await markReminded(b.id);
+    }
+    for (const b of reviews) {
+      await sendReviewRequest(b);
+      await markReviewRequested(b.id);
     }
   } catch {
     // swallow — never crash the boot loop

@@ -25,6 +25,10 @@ export type Booking = {
   createdAt: string;
   lang?: "en" | "el";
   remindedAt?: string;
+  /** Set by the cron when the post-visit review email has been sent. */
+  reviewedAt?: string;
+  /** True when this booking bypassed the public form (walk-in / in-shop). */
+  walkIn?: boolean;
 };
 
 export type NewBooking = Omit<Booking, "id" | "status" | "createdAt">;
@@ -151,6 +155,34 @@ export async function markReminded(id: string): Promise<void> {
   if (idx === -1) return;
   all[idx].remindedAt = new Date().toISOString();
   await writeAll(all);
+}
+
+export async function markReviewRequested(id: string): Promise<void> {
+  const all = await readAll();
+  const idx = all.findIndex((b) => b.id === id);
+  if (idx === -1) return;
+  all[idx].reviewedAt = new Date().toISOString();
+  await writeAll(all);
+}
+
+/**
+ * Bookings that finished 2–24h ago, are marked completed, have an email,
+ * and haven't received a review request yet. Cron picks these up.
+ */
+export async function dueForReviewRequest(): Promise<Booking[]> {
+  const [all, business] = await Promise.all([readAll(), loadBusiness()]);
+  const tz = business.timezone || "Europe/Athens";
+  const now = Date.now();
+  const minAgeMs = 2 * 60 * 60_000;
+  const maxAgeMs = 24 * 60 * 60_000;
+  return all.filter((b) => {
+    if (b.status !== "completed") return false;
+    if (b.reviewedAt) return false;
+    if (!b.email) return false;
+    const slotEnd = wallClockInTzToUtc(b.date, b.time, tz) + (b.duration || 30) * 60_000;
+    const age = now - slotEnd;
+    return age >= minAgeMs && age <= maxAgeMs;
+  });
 }
 
 /**
