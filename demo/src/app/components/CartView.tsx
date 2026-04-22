@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "../../lib/cartClient";
 import { useLang } from "../../lib/i18n";
@@ -25,6 +25,23 @@ export default function CartView() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [done, setDone] = useState<{ id: string; gifts?: Array<{ code: string; amount: number }> } | null>(null);
+
+  // Restore + persist form draft so a refresh mid-checkout doesn't wipe it.
+  useEffect(() => {
+    try {
+      const raw = window.localStorage.getItem("oakline_cart_draft_v1");
+      if (raw) {
+        const d = JSON.parse(raw) as Partial<typeof form>;
+        setForm((f) => ({ ...f, ...d, website: "" }));
+      }
+    } catch {}
+  }, []);
+  useEffect(() => {
+    try {
+      const { website: _website, ...persist } = form;
+      window.localStorage.setItem("oakline_cart_draft_v1", JSON.stringify(persist));
+    } catch {}
+  }, [form]);
 
   async function checkout() {
     setSubmitting(true);
@@ -51,6 +68,7 @@ export default function CartView() {
     }
     setDone({ id: d.order.id, gifts: Array.isArray(d.gifts) ? d.gifts : [] });
     clear();
+    try { window.localStorage.removeItem("oakline_cart_draft_v1"); } catch {}
   }
 
   if (done) {

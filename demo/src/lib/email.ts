@@ -281,12 +281,26 @@ export async function sendBookingReminder(b: Booking) {
  * (or any link the business sets via NEXT_PUBLIC_REVIEW_URL / Settings in
  * future). Sent 2–24h after a completed booking.
  */
+function safeUrl(u: string | undefined | null): string | null {
+  if (!u) return null;
+  const trimmed = u.trim();
+  if (!trimmed) return null;
+  try {
+    const parsed = new URL(trimmed);
+    if (parsed.protocol !== "https:" && parsed.protocol !== "http:") return null;
+    return parsed.toString();
+  } catch {
+    return null;
+  }
+}
+
 export async function sendReviewRequest(b: Booking) {
   const biz = await loadBusiness();
   const lang = b.lang === "el" ? "el" : "en";
   const brand = biz.name || "Oakline";
-  const reviewUrl = (biz as { reviewUrl?: string }).reviewUrl ||
-    process.env.NEXT_PUBLIC_REVIEW_URL ||
+  const reviewUrl =
+    safeUrl((biz as { reviewUrl?: string }).reviewUrl) ||
+    safeUrl(process.env.NEXT_PUBLIC_REVIEW_URL) ||
     `https://www.google.com/search?q=${encodeURIComponent(brand + " " + (biz.city || "") + " reviews")}`;
 
   const subject = lang === "el"
