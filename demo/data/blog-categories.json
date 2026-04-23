@@ -1,6 +1,8 @@
 [
-  { "id": "skincare", "slug": "skincare", "name_en": "Skincare", "name_el": "Φροντίδα δέρματος", "description_en": "Home regimens, ingredient deep-dives and protocols.", "description_el": "Ρουτίνες σπιτιού, ανάλυση ενεργών συστατικών.", "order": 1 },
-  { "id": "treatments", "slug": "treatments", "name_en": "Treatments", "name_el": "Θεραπείες", "description_en": "Hydrafacial, microneedling, peels — explained.", "description_el": "Hydrafacial, microneedling, peels — αναλυτικά.", "order": 2 },
-  { "id": "acne", "slug": "acne", "name_en": "Acne", "name_el": "Ακμή", "description_en": "The Face Reality programme and clearing science.", "description_el": "Το πρόγραμμα Face Reality και η επιστήμη της καθαρής επιδερμίδας.", "order": 3 },
-  { "id": "bridal", "slug": "bridal", "name_en": "Bridal", "name_el": "Νυφικό", "description_en": "Skin planning in the months leading to the big day.", "description_el": "Προετοιμασία δέρματος τους μήνες πριν τον γάμο.", "order": 4 }
+  { "id": "cat_grooming", "name": "Grooming tips", "slug": "grooming-tips", "order": 0 },
+  { "id": "cat_styling", "name": "Styling guides", "slug": "styling-guides", "order": 1 },
+  { "id": "cat_beard", "name": "Beard care", "slug": "beard-care", "order": 2 },
+  { "id": "cat_hair", "name": "Hair care", "slug": "hair-care", "order": 3 },
+  { "id": "cat_chair", "name": "Behind the chair", "slug": "behind-the-chair", "order": 4 },
+  { "id": "cat_news", "name": "News", "slug": "news", "order": 5 }
 ]
