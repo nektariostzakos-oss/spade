@@ -1,0 +1,13 @@
+{
+  "name": "@toolbox/config",
+  "version": "0.0.0",
+  "private": true,
+  "files": ["typescript", "tailwind"],
+  "exports": {
+    "./tsconfig/base.json": "./typescript/base.json",
+    "./tsconfig/nextjs.json": "./typescript/nextjs.json",
+    "./tsconfig/node.json": "./typescript/node.json",
+    "./tsconfig/react-library.json": "./typescript/react-library.json",
+    "./tailwind-preset": "./tailwind/preset.ts"
+  }
+}

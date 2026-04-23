@@ -1,0 +1,12 @@
+{
+  "extends": "@toolbox/config/tsconfig/react-library.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "types": ["react-native", "node"],
+    "allowJs": true
+  },
+  "include": ["app", "**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules", ".expo", "dist", "babel.config.js"]
+}

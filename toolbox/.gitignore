@@ -1,0 +1,54 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build output
+dist/
+build/
+.next/
+.turbo/
+.expo/
+*.tsbuildinfo
+
+# Env
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Test
+coverage/
+.nyc_output/
+playwright-report/
+test-results/
+
+# Prisma
+packages/db/prisma/migrations/dev.db*
+
+# Expo
+apps/native/.expo/
+apps/native/dist/
+apps/native/web-build/
+apps/native/ios/
+apps/native/android/
+*.orig.*
+
+# Docker volumes
+infra/volumes/
